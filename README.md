@@ -4,23 +4,40 @@ A repeatable **idle-roguelite template** for CrazyGames: one shared engine, many
 
 Full design & production doctrine: [`docs/IDLE_FORGE_ENGINE_SPEC.md`](docs/IDLE_FORGE_ENGINE_SPEC.md).
 
-## Run it
+## Play it
 
 No build step — plain ES modules, DOM/CSS UI + canvas-2D playfield (no WebGL, per spec Part L):
 
 ```sh
-python3 -m http.server 8080
+npm start          # or: python3 -m http.server 8080
 # open http://localhost:8080
 ```
 
-Without the CrazyGames SDK (local dev, adblock) every SDK call no-ops safely and rewarded ads are simulated so placements stay testable.
+Without the CrazyGames SDK (local dev, adblock) every SDK call no-ops safely and rewarded ads are simulated with a ~1.5s delay, so every placement stays testable offline.
+
+**What to look for in a manual pass**, in the order the player hits it: the tutorial prompt and first tap payout; the first generator affordable within ~15s; a level-up pick around 75s; the descend button unlocking once the band quota fills; stability draining once you're below the surface (shore up, or take the once-per-run revive); then cash out on the Prestige tab and confirm gems buy permanent upgrades that carry into the next run. To re-test the first-run experience, clear the save: `localStorage.clear()` in the console, then reload. To exercise offline earnings without waiting, close the tab for a couple of minutes and reopen — the claim modal with its 2× ad offer appears above one minute away.
 
 ## Test it
 
 ```sh
-node test/economy.test.mjs   # formula unit tests (cost/bulk/prestige/offline math)
-node test/sim.test.mjs       # 20-minute headless full-loop simulation + save round-trip
+npm test           # all three layers
 ```
+
+Or individually:
+
+```sh
+npm run test:unit    # 15 formula assertions: cost curves, closed-form bulk buy,
+                     # prestige roots, offline caps, clock-rollback safety
+npm run test:sim     # 20-minute headless bot run: loop invariants, death ->
+                     # prestige conversion, save round-trip, offline/rollback
+npm run test:smoke   # real browser (Playwright): load time, tutorial, tapping,
+                     # purchase, tabs, rewarded-ad reward, idle accrual, save
+                     # persistence across reload, right-click suppression
+```
+
+`test:smoke` needs Playwright (`npm i`); it skips cleanly rather than failing if Playwright isn't installed. Add `--headed` (`npm run test:smoke:headed`) to watch it drive the game, or set `SMOKE_SCREENSHOT=out.png` to capture a frame.
+
+The sim is the tuning instrument: it prints runs ended, level-up picks, max depth band, and time-to-first-prestige for a 20-minute session. After changing any economy constant in a theme pack, run it and check those numbers still describe a 12–18 minute run — that is the Basic Launch playtime gate in miniature.
 
 ## Architecture
 
