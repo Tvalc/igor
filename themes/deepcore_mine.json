@@ -1,0 +1,48 @@
+{
+  "themeId": "deepcore_mine",
+  "displayName": "Deepcore: Idle Dwarven Mine",
+  "version": "1.0.0",
+  "engineVersion": "1.x",
+  "fantasy": "Dig ever deeper; each depth band is richer and deadlier.",
+  "signatureMechanic": "depthBands",
+  "palette": { "primary": "#c8842a", "bg": "#1a1410", "accent": "#ffd24a" },
+  "resources": {
+    "primary":  { "id": "ore",      "name": "Ore",           "icon": "art/ore.webp",     "abbrev": "Ore" },
+    "prestige": { "id": "gems",     "name": "Deep Gems",     "icon": "art/gems.webp" },
+    "premium":  { "id": "crystals", "name": "Star Crystals", "icon": "art/crystal.webp" }
+  },
+  "generators": [
+    { "id": "pick",     "name": "Rusty Pick",    "baseCost": 10,     "costGrowth": 1.11, "baseProd": 1,    "icon": "art/g_pick.webp" },
+    { "id": "cart",     "name": "Ore Cart",      "baseCost": 120,    "costGrowth": 1.13, "baseProd": 8,    "icon": "art/g_cart.webp" },
+    { "id": "drill",    "name": "Steam Drill",   "baseCost": 1500,   "costGrowth": 1.14, "baseProd": 55,   "icon": "art/g_drill.webp" },
+    { "id": "elevator", "name": "Deep Elevator", "baseCost": 20000,  "costGrowth": 1.15, "baseProd": 400,  "icon": "art/g_elev.webp" },
+    { "id": "refinery", "name": "Ore Refinery",  "baseCost": 300000, "costGrowth": 1.15, "baseProd": 3200, "icon": "art/g_ref.webp" }
+  ],
+  "milestoneBonuses": { "counts": [25, 50, 100, 200], "multiplier": 2 },
+  "economy": {
+    "prestigeDivisor": 1000000,
+    "prestigeExponent": 0.5,
+    "prestigePerLevelBonusPct": 2,
+    "offlineRate": 0.5,
+    "offlineCapHoursBase": 3,
+    "firstWallSeconds": 540
+  },
+  "run": { "targetRunSeconds": 900, "levelUpEverySeconds": 75, "upgradePoolSize": 24 },
+  "signatureConfig": {
+    "depthBands": { "bandCount": 8, "richnessMultiplierPerBand": 3.5, "dangerMultiplierPerBand": 2.2 }
+  },
+  "ads": {
+    "offlineDoubler": true,
+    "reviveOncePerRun": true,
+    "boost2xMinutes": 5,
+    "rerollUpgrade": true,
+    "skipWall": true,
+    "dailyFreeCurrency": true
+  },
+  "audio": { "music": "audio/mine_theme.mp3", "sfx": "audio/mine_sfx.json" },
+  "zones": [
+    { "id": "surface", "name": "Surface Shaft",   "bg": "art/bg_surface.webp" },
+    { "id": "caverns", "name": "Crystal Caverns", "bg": "art/bg_caverns.webp" },
+    { "id": "magma",   "name": "Magma Depths",    "bg": "art/bg_magma.webp" }
+  ]
+}
