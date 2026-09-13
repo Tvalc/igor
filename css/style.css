@@ -294,3 +294,56 @@ body {
   .playfield { min-height: 140px; }
   .res-value { font-size: 19px; }
 }
+
+/* ---------- full-screen states: title, pause, confirm ---------- */
+.screen-host { position: absolute; inset: 0; pointer-events: none; z-index: 40; }
+.screen {
+  position: absolute; inset: 0; pointer-events: auto;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px 18px;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(200, 132, 42, 0.16), transparent 62%),
+    rgba(6, 4, 3, 0.92);
+}
+/* The title is a clean slate — a shop list showing through it reads as a bug.
+   Pause is the opposite: you want to see the run you froze. */
+.screen.start, .screen.confirm {
+  background:
+    radial-gradient(circle at 50% 38%, rgba(200, 132, 42, 0.18), transparent 62%),
+    #0a0705;
+}
+.screen-inner {
+  width: 100%; max-width: 320px;
+  display: flex; flex-direction: column; gap: 10px;
+  text-align: center;
+}
+.screen-title {
+  font-size: 34px; font-weight: 900; line-height: 1.02;
+  letter-spacing: -0.5px; color: var(--c-accent);
+  text-wrap: balance;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.55);
+}
+.screen.pause .screen-title, .screen.confirm .screen-title { font-size: 26px; }
+.screen-sub {
+  font-size: 12px; font-weight: 700; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--c-primary);
+  margin-top: -4px;
+}
+.screen-blurb { margin: 2px 0 6px; font-size: 12.5px; line-height: 1.5; color: var(--c-dim); }
+
+.screen-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 2px 0 6px; }
+.screen-stat {
+  padding: 9px 4px; border-radius: 10px;
+  background: var(--c-panel); border: 1px solid var(--c-line);
+}
+.screen-stat-v { font-size: 18px; font-weight: 800; color: var(--c-text); font-variant-numeric: tabular-nums; }
+.screen-stat-k { font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.6px; color: var(--c-dim); }
+
+.btn-play { background: var(--c-accent); color: #1a1005; font-size: 16px; }
+.btn-danger { background: var(--c-danger); color: #fff; }
+.screen-sound { font-size: 11px; padding: 6px 10px; align-self: center; }
+
+/* The title screen earns one flourish: the lamp glow breathing behind it. */
+.screen.start { animation: screenIn 0.35s ease-out; }
+@keyframes screenIn { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .screen.start { animation: none; } }

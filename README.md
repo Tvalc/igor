@@ -54,7 +54,7 @@ npm run test:smoke      # real browser (Playwright): load time, idle earning, dr
                         # input, first purchase, all three tabs, banner slot,
                         # rewarded offer + its non-ad path, save persistence,
                         # right-click suppression, frame rate
-npm run test:smoke:dist # the same 17 checks against the built single-file bundle,
+npm run test:smoke:dist # the same 30 checks against the built single-file bundle,
                         # so a broken build fails here and not after deploy
 ```
 
@@ -92,6 +92,27 @@ src/engine/
     index.js                    signature-mechanic module registry
     depthBands.js               Deepcore's novel system: descend for richness vs. danger
 ```
+
+## Screens and controls
+
+The game opens on a **title screen** — nothing simulates behind it, so nobody
+takes damage while reading. It offers **Continue** to anyone with banked
+progress (including a reload mid-run) and **Start mining** to a genuinely new
+player, plus a stat row once at least one run has finished.
+
+**Pause** is the `⏸` button in the HUD or the `Escape` key, and backgrounding
+the tab pauses too. Pausing freezes the simulation outright and discards the
+time spent in the menu, so resuming never dumps a backlog of ticks into the
+run. From pause you can resume, end the run and bank its gems, toggle sound, or
+reset.
+
+**Reset all progress** is reachable from both screens, always asks first, and
+defaults to backing out. It erases gems, permanent upgrades, premium currency
+and depth records, wipes the stored save, and returns to the title. Sound
+preference deliberately survives.
+
+Movement is drag-anywhere on the field, or WASD / arrow keys. Mining and
+fighting are automatic — position is the only input that matters.
 
 ## Reading the screen
 
@@ -140,8 +161,8 @@ From `npm run test:sim` (30 simulated minutes per profile, one bot each):
 
 | Profile | Runs | Avg run | Longest | Deepest | Gems |
 |---|---|---|---|---|---|
-| greedy (descend on sight) | 15 | 111s | 268s | 7 | 9 |
-| careful (bank levels first) | 5 | 323s | 333s | 6 | 16 |
+| greedy (descend on sight) | 17 | 102s | 261s | 7 | 7 |
+| careful (bank levels first) | 5 | 339s | 439s | 7 | 18 |
 
 Careful play triples run length and nearly doubles gem yield, which is the
 risk/reward the descent mechanic exists to create — the suite fails if that

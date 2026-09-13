@@ -71,6 +71,13 @@ export function dataSet(key, value) {
   } catch (e) {}
 }
 
+export function dataRemove(key) {
+  try {
+    if (state.sdk?.data) { state.sdk.data.removeItem(key); return; }
+    localStorage.removeItem(key);
+  } catch (e) {}
+}
+
 // One-time copy of a legacy localStorage save into the Data Module.
 export function migrateLegacyKey(key) {
   try {

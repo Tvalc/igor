@@ -18,6 +18,7 @@ function playProfile(name, { descendPolicy, kite }) {
   const game = new Game(theme);
   game.startRun();
   const runs = [];
+  let levelUps = 0;
   let ticks = 0;
   const MAX_TICKS = 30 * 60 / STEP; // 30 simulated minutes
 
@@ -39,6 +40,7 @@ function playProfile(name, { descendPolicy, kite }) {
       const hurt = game.field.hp() / game.field.maxHpValue() < 0.5;
       const pick = (hurt && picks.find(p => ['maxHp', 'hpRegen', 'damageTaken'].includes(p.effect.type))) || picks[0];
       game.run.choose(pick, false);
+      levelUps++;
     }
 
     // spend: richest generator we can afford
@@ -68,7 +70,7 @@ function playProfile(name, { descendPolicy, kite }) {
     }
   }
 
-  return { name, game, runs };
+  return { name, game, runs, levelUps };
 }
 
 // The engine records run length on endRun; capture it for the sim.
@@ -91,7 +93,7 @@ for (const p of [greedy, careful]) {
   const avg = p.runs.length ? p.runs.reduce((a, b) => a + b, 0) / p.runs.length : 0;
   const max = p.runs.length ? Math.max(...p.runs) : 0;
   console.log(`${p.name.padEnd(8)} runs=${String(p.runs.length).padStart(3)}  avg=${avg.toFixed(0)}s  longest=${max}s  ` +
-    `deepest=${p.game.state.stats.bestDepth + 1}  gems=${p.game.state.prestige.held}  ` +
+    `deepest=${p.game.state.stats.bestDepth + 1}  levelUps=${p.levelUps}  gems=${p.game.state.prestige.held}  ` +
     `lifetime=${p.game.state.prestige.lifetime.serialize()}`);
 }
 
@@ -102,7 +104,7 @@ console.log('\n--- invariants ---');
 assert.ok(greedy.runs.length >= 1, 'greedy bot dies at depth (danger is real)');
 assert.ok(greedy.game.state.prestige.held > 0, 'deaths convert into prestige currency');
 assert.ok(greedy.game.state.stats.bestDepth >= 2, `descent progresses (got depth ${greedy.game.state.stats.bestDepth + 1})`);
-assert.ok(careful.game.state.run.level >= 3, 'roguelite level-ups fire');
+assert.ok(careful.levelUps >= 3, `roguelite level-ups fire (got ${careful.levelUps} across the session)`);
 // Careful play must be rewarded: longer runs than reckless play, or the
 // risk/reward of the descent mechanic is not actually working.
 assert.ok(cAvg > gAvg, `careful play outlasts greedy (careful ${cAvg.toFixed(0)}s vs greedy ${gAvg.toFixed(0)}s)`);

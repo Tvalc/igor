@@ -38,6 +38,14 @@ export function persist(game) {
   sdk.dataSet(saveKey(game.theme.themeId), serialize(game));
 }
 
+// Wipe the stored save for a theme. Used by the "reset progress" flow, which
+// is destructive and always confirmed in the UI before reaching here.
+export function clear(themeId) {
+  const key = saveKey(themeId);
+  try { sdk.dataRemove(key); } catch (e) {}
+  try { localStorage.removeItem(key); } catch (e) {}
+}
+
 export function load(themeId) {
   const key = saveKey(themeId);
   sdk.migrateLegacyKey(key);

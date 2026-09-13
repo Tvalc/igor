@@ -87,6 +87,20 @@ await page.waitForSelector('.hud', { timeout: 10000 });
 const loadMs = Date.now() - t0;
 check('loads under 10s (gate requirement)', loadMs < 10000, `${loadMs}ms`);
 
+// The game must open on a title screen, not mid-run.
+check('opens on a start screen', await page.locator('.screen.start').count() === 1);
+check('start screen offers a play button',
+  (await page.locator('.btn-play').textContent()).length > 3,
+  (await page.locator('.btn-play').textContent()).trim());
+// Nothing should be simulating while the title screen is up.
+const oreAtTitle = await page.locator('.res-value').textContent();
+await page.waitForTimeout(1200);
+check('sim is frozen behind the start screen',
+  (await page.locator('.res-value').textContent()) === oreAtTitle);
+await page.click('.btn-play');
+await page.waitForTimeout(200);
+check('play dismisses the start screen', await page.locator('.screen').count() === 0);
+
 check('first-run coach shows an instruction',
   (await page.locator('.coach').textContent().catch(() => '')).length > 10);
 check('health and depth bars render', await page.locator('.bar.health').count() === 1
@@ -154,6 +168,10 @@ check('rewarded 2x boost grants its reward',
 // Save persistence across a reload.
 await page.reload({ waitUntil: 'domcontentloaded' });
 await page.waitForSelector('.hud', { timeout: 10000 });
+check('returning player is offered Continue',
+  (await page.locator('.btn-play').textContent()).includes('Continue'));
+await page.click('.btn-play');
+await page.waitForTimeout(300);
 const restored = parseFloat(await page.locator('.res-value').textContent());
 check('save persists across reload', restored > 0, `${restored} ore`);
 
@@ -163,6 +181,48 @@ const menuSuppressed = await page.evaluate(() => {
   return e.defaultPrevented;
 });
 check('right-click context menu disabled', menuSuppressed);
+
+// Pause: reachable from the HUD and from Escape, and it must freeze the sim.
+await page.click('#btn-pause');
+await page.waitForTimeout(150);
+check('pause screen opens from the HUD', await page.locator('.screen.pause').count() === 1);
+const oreAtPause = await page.locator('.res-value').textContent();
+await page.waitForTimeout(1200);
+check('sim is frozen while paused',
+  (await page.locator('.res-value').textContent()) === oreAtPause);
+await page.keyboard.press('Escape');
+await page.waitForTimeout(150);
+check('Escape resumes from pause', await page.locator('.screen').count() === 0);
+await page.waitForTimeout(1200);
+check('sim runs again after resume',
+  (await page.locator('.res-value').textContent()) !== oreAtPause);
+
+// Reset must confirm first, and then actually wipe the save.
+await page.keyboard.press('Escape');
+await page.waitForTimeout(150);
+await page.click('.screen.pause .btn-quiet');
+await page.waitForTimeout(150);
+check('reset asks for confirmation', await page.locator('.screen.confirm').count() === 1);
+await page.click('.screen.confirm .btn-quiet');
+await page.waitForTimeout(150);
+check('declining the reset keeps you in the pause screen',
+  await page.locator('.screen.pause').count() === 1);
+await page.click('.screen.pause .btn-quiet');
+await page.waitForTimeout(150);
+await page.click('.btn-danger');
+await page.waitForTimeout(250);
+check('confirming the reset wipes progress and returns to the title',
+  await page.locator('.screen.start').count() === 1
+  && parseFloat(await page.locator('.res-value').textContent()) === 0);
+check('a wiped save leaves no stored progress',
+  await page.evaluate(() => {
+    const k = Object.keys(localStorage).find(x => x.startsWith('idleforge_'));
+    if (!k) return true;
+    const v = JSON.parse(localStorage.getItem(k));
+    return (v.prestige?.held ?? 0) === 0 && (v.res?.premium ?? 0) === 0;
+  }));
+await page.click('.btn-play');
+await page.waitForTimeout(200);
 
 // Frame budget: the field must animate, not stall, on a low-end device.
 const fps = await page.evaluate(() => new Promise(res => {

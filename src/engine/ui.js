@@ -24,6 +24,9 @@ export class UI {
     this.root = root;
     this.tab = 'crew';
     this.modalOpen = false;
+    this.screenOpen = false;
+    this.started = false;
+    this.pendingOffline = null;
     this.wallBanner = null;
     game.ui = this;
     this.build();
@@ -41,6 +44,7 @@ export class UI {
       this.tabs = el('nav', 'tabs'),
       this.panel = el('main', 'panel'),
       this.modalHost = el('div', 'modal-host'),
+      this.screenHost = el('div', 'screen-host'),
       this.toastHost = el('div', 'toast-host'),
     );
 
@@ -61,7 +65,173 @@ export class UI {
     this.buildSigBar();
     this.renderHeader();
     this.renderPanel();
-    this.startCoach();
+    this.bindPauseKey();
+  }
+
+  // ---------- start / pause screens ----------
+
+  bindPauseKey() {
+    window.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      e.preventDefault();
+      if (this.screenOpen) { if (this.screenKind === 'pause') this.resume(); }
+      else if (this.started) this.showPause();
+    });
+  }
+
+  // One screen at a time, full-bleed over the game. Opening a screen freezes
+  // the simulation outright rather than just hiding it, so nothing kills the
+  // player while they are reading a menu.
+  screen(kind) {
+    this.screenHost.innerHTML = '';
+    this.screenOpen = true;
+    this.screenKind = kind;
+    this.game.paused = true;
+    sdk.gameplayStop();
+    const box = el('div', `screen ${kind}`);
+    const inner = el('div', 'screen-inner');
+    box.append(inner);
+    this.screenHost.append(box);
+    return inner;
+  }
+
+  closeScreen() {
+    this.screenHost.innerHTML = '';
+    this.screenOpen = false;
+    this.screenKind = null;
+  }
+
+  statRow(pairs) {
+    const row = el('div', 'screen-stats');
+    for (const [k, v] of pairs) {
+      const cell = el('div', 'screen-stat');
+      cell.append(el('div', 'screen-stat-v', v), el('div', 'screen-stat-k', k));
+      row.append(cell);
+    }
+    return row;
+  }
+
+  showStart(offlineOffer) {
+    const g = this.game, t = g.theme;
+    this.pendingOffline = offlineOffer ?? null;
+    // Two different questions. Any banked ore at all means there is something
+    // to come back to, so the button must say Continue — offering "Start" to a
+    // player mid-run reads as "your progress is gone". The stats row is a
+    // separate matter: it only means anything once a run has finished.
+    const hasProgress = g.state.stats.runs > 0 || g.state.prestige.held > 0
+      || g.state.prestige.lifetime.gt(0);
+    const hasHistory = g.state.stats.runs > 0;
+    const returning = hasProgress;
+    const m = this.screen('start');
+    const [name, ...rest] = t.displayName.split(':');
+    m.append(el('div', 'screen-title', name.trim()));
+    if (rest.length) m.append(el('div', 'screen-sub', rest.join(':').trim()));
+    m.append(el('p', 'screen-blurb', t.fantasy));
+
+    if (hasHistory) {
+      m.append(this.statRow([
+        ['Expeditions', String(g.state.stats.runs)],
+        [t.resources.prestige.name, String(g.state.prestige.held)],
+        ['Best depth', String(g.state.stats.bestDepth + 1)],
+      ]));
+    }
+
+    const play = el('button', 'btn btn-big btn-play', returning ? '⛏ Continue' : '⛏ Start mining');
+    play.onclick = () => this.beginPlay();
+    m.append(play);
+
+    if (returning) {
+      const fresh = el('button', 'btn btn-quiet', '↺ Reset all progress');
+      fresh.onclick = () => this.confirmReset('start');
+      m.append(fresh);
+    }
+    m.append(this.soundToggle());
+  }
+
+  showPause() {
+    const g = this.game, t = g.theme;
+    const m = this.screen('pause');
+    m.append(el('div', 'screen-title', 'Paused'));
+    m.append(this.statRow([
+      ['This run', fmtTime(g.state.run.seconds)],
+      ['Depth', String(g.signature.band + 1)],
+      ['Cleared', String(g.field.kills())],
+    ]));
+
+    const resume = el('button', 'btn btn-big btn-play', '▶ Resume');
+    resume.onclick = () => this.resume();
+    m.append(resume);
+
+    const gain = g.prestigeGainNow();
+    const restart = el('button', 'btn', gain > 0
+      ? `↻ End run — bank ${gain} 💎`
+      : '↻ Restart run');
+    restart.onclick = () => {
+      const summary = g.endRun('voluntary');
+      this.closeScreen();
+      if (summary) this.showRunSummary(summary);
+      else { g.startRun(); this.resume(); }
+    };
+    m.append(restart);
+
+    const fresh = el('button', 'btn btn-quiet', '↺ Reset all progress');
+    fresh.onclick = () => this.confirmReset('pause');
+    m.append(fresh);
+    m.append(this.soundToggle());
+  }
+
+  soundToggle() {
+    const b = el('button', 'btn btn-quiet screen-sound', isMuted() ? '🔇 Sound off' : '🔊 Sound on');
+    b.onclick = () => {
+      setMuted(!isMuted());
+      this.game.state.settings.muted = isMuted();
+      b.textContent = isMuted() ? '🔇 Sound off' : '🔊 Sound on';
+      this.hdr.mute.textContent = isMuted() ? '🔇' : '🔊';
+    };
+    return b;
+  }
+
+  // Reset is irreversible, so it asks plainly and defaults to backing out.
+  confirmReset(from) {
+    const g = this.game, t = g.theme;
+    const m = this.screen('confirm');
+    m.append(el('div', 'screen-title', 'Reset everything?'));
+    m.append(el('p', 'screen-blurb',
+      `This erases your ${t.resources.prestige.name}, permanent upgrades, ${t.resources.premium.name} and depth records. It cannot be undone.`));
+    const yes = el('button', 'btn btn-big btn-danger', 'Erase and start over');
+    yes.onclick = () => {
+      g.hardReset();
+      this.closeScreen();
+      this.started = false;
+      this.renderPanel();
+      this.showStart(null);
+      this.toast('Progress reset');
+    };
+    const no = el('button', 'btn btn-quiet', 'Keep my progress');
+    no.onclick = () => {
+      this.closeScreen();
+      if (from === 'pause') this.showPause(); else this.showStart(this.pendingOffline);
+    };
+    m.append(yes, no);
+  }
+
+  beginPlay() {
+    const g = this.game;
+    this.closeScreen();
+    const offer = this.pendingOffline;
+    this.pendingOffline = null;
+    const go = () => {
+      if (!g.state.run.active) g.startRun();
+      this.resume();
+      if (!this.started) { this.started = true; this.startCoach(); }
+    };
+    if (offer) { this.showOfflineClaim(offer, go); } else go();
+  }
+
+  resume() {
+    this.closeScreen();
+    this.game.paused = false;
+    sdk.gameplayStart();
   }
 
   // ---------- input: drag to move, WASD/arrows on desktop ----------
@@ -116,8 +286,11 @@ export class UI {
     const STEP = 0.05;
     setInterval(() => {
       const now = performance.now();
-      acc += Math.min(0.5, (now - last) / 1000);
+      const elapsed = (now - last) / 1000;
       last = now;
+      // A screen freezes the sim and discards the time spent reading it, so a
+      // long pause never dumps a backlog of ticks into the run on resume.
+      acc = this.screenOpen ? 0 : acc + Math.min(0.5, elapsed);
       while (acc >= STEP) { this.game.tick(STEP); acc -= STEP; }
       this.renderHeader();
       this.renderSigBar();
@@ -161,6 +334,7 @@ export class UI {
           <span class="res-premium"></span>
         </div>
         <div class="hud-buttons">
+          <button class="btn-icon" id="btn-pause" title="Pause (Esc)">⏸</button>
           <button class="btn-icon" id="btn-mute" title="Mute"></button>
           <button class="btn-boost" id="btn-boost"></button>
         </div>
@@ -172,7 +346,9 @@ export class UI {
       premium: this.header.querySelector('.res-premium'),
       boost: this.header.querySelector('#btn-boost'),
       mute: this.header.querySelector('#btn-mute'),
+      pause: this.header.querySelector('#btn-pause'),
     };
+    this.hdr.pause.onclick = () => { if (this.started && !this.screenOpen) this.showPause(); };
     this.hdr.boost.onclick = () => this.offerBoost();
     this.hdr.mute.onclick = () => {
       setMuted(!isMuted());
@@ -551,8 +727,9 @@ export class UI {
 
   // ---------- offline ----------
 
-  showOfflineClaim(offer) {
+  showOfflineClaim(offer, then) {
     const g = this.game, t = g.theme;
+    const done = () => { this.closeModal(); then?.(); };
     const m = this.modal('offline');
     m.append(
       el('h2', null, '⛏ The crew kept working'),
@@ -561,11 +738,11 @@ export class UI {
     );
     if (g.ads.enabled('offlineDoubler')) {
       const dbl = el('button', 'btn btn-ad btn-big', `📺 Take ${fmt(offer.amount.mulNum(2))} (2×)`);
-      dbl.onclick = () => { this.closeModal(); g.ads.offlineDoubler(() => g.claimOffline(offer, true)); };
+      dbl.onclick = () => { done(); g.ads.offlineDoubler(() => g.claimOffline(offer, true)); };
       m.append(dbl);
     }
     const claim = el('button', 'btn', `Take ${fmt(offer.amount)}`);
-    claim.onclick = () => { this.closeModal(); g.claimOffline(offer, false); };
+    claim.onclick = () => { done(); g.claimOffline(offer, false); };
     m.append(claim);
   }
 

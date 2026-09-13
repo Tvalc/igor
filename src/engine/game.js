@@ -39,23 +39,29 @@ const FIELD_EFFECTS = new Set([
   'damage', 'attackRate', 'attackRange', 'moveSpeed', 'maxHp', 'hpRegen', 'magnet', 'damageTaken',
 ]);
 
+// A fresh save, built in one place so hardReset() cannot drift from the
+// constructor and leave stale fields behind.
+function initialState(theme) {
+  return {
+    primary: Dec.zero(),
+    premium: 0,
+    gens: Object.fromEntries(theme.generators.map(g => [g.id, 0])),
+    runUpgrades: [],
+    metaUpgrades: {},
+    prestige: { held: 0, lifetime: Dec.zero() },
+    run: { seconds: 0, level: 0, active: true },
+    meta: { offlineCapHours: theme.economy.offlineCapHoursBase, unlocks: [theme.zones?.[0]?.id].filter(Boolean) },
+    boostUntil: 0,
+    stats: { firstUpgradeTracked: false, runs: 0, lastPlayedDay: null, prestigeTotalEarned: 0, bestDepth: 0 },
+    settings: { muted: false },
+  };
+}
+
 export class Game {
   constructor(theme) {
     this.theme = theme;
     this.metaUpgradeDefs = META_UPGRADES;
-    this.state = {
-      primary: Dec.zero(),
-      premium: 0,
-      gens: Object.fromEntries(theme.generators.map(g => [g.id, 0])),
-      runUpgrades: [],
-      metaUpgrades: {},
-      prestige: { held: 0, lifetime: Dec.zero() },
-      run: { seconds: 0, level: 0, active: true },
-      meta: { offlineCapHours: theme.economy.offlineCapHoursBase, unlocks: [theme.zones?.[0]?.id].filter(Boolean) },
-      boostUntil: 0,
-      stats: { firstUpgradeTracked: false, runs: 0, lastPlayedDay: null, prestigeTotalEarned: 0, bestDepth: 0 },
-      settings: { muted: false },
-    };
+    this.state = initialState(theme);
     this.paused = false;
     this.signature = createSignature(this);
     this.field = createField(this, theme.field ?? {});
@@ -288,6 +294,21 @@ export class Game {
     this.paused = false;
     sdk.gameplayStart();
     save.persist(this);
+  }
+
+  // Wipe every scrap of progress and begin again. Destructive; the UI confirms
+  // before calling this. Settings (like mute) deliberately survive.
+  hardReset() {
+    const keepMuted = this.state.settings.muted;
+    save.clear(this.theme.themeId);
+    this.state = initialState(this.theme);
+    this.state.settings.muted = keepMuted;
+    this.signature.hydrate?.({});
+    this.run.reset();
+    this.ads.reviveUsedThisRun = false;
+    this.recomputeMults();
+    this.startRun();
+    track('progress_reset');
   }
 
   revive() {

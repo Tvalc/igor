@@ -49,30 +49,28 @@ async function boot() {
   if (game.state.stats.lastPlayedDay && game.state.stats.lastPlayedDay !== today) track('day2_return');
   game.state.stats.lastPlayedDay = today;
 
-  // Offline earnings (clock-tamper-safe inside applyOffline)
-  const offer = game.applyOffline(lastSeen);
-  if (offer) ui.showOfflineClaim(offer);
-
-  if (!saved) game.startRun();
-  else if (!game.state.run.active) game.startRun();
+  // The game opens on the title screen rather than mid-run: nothing should be
+  // attacking the player while they read. Offline earnings (clock-tamper-safe
+  // inside applyOffline) are handed to the UI and claimed after Continue, so
+  // returning players are paid on the way in.
+  ui.showStart(game.applyOffline(lastSeen));
 
   sdk.loadingStop();
-  sdk.gameplayStart();
   track('game_start');
 
   // Autosave: 10s cadence + on hide/close (the Data Module debounces writes).
   // Hiding also stops the gameplay marker and pauses the sim, so a backgrounded
   // tab neither accrues a live run nor counts as active playtime.
   setInterval(() => save.persist(game), 10000);
+  // Backgrounding the tab pauses for real and surfaces the pause screen, so a
+  // player who tabs away does not come back to a corpse.
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
       save.persist(game);
       trackSessionLength();
       sdk.gameplayStop();
       game.paused = true;
-    } else if (game.state.run.active) {
-      game.paused = false;
-      sdk.gameplayStart();
+      if (ui.started && !ui.screenOpen && !ui.modalOpen) ui.showPause();
     }
   });
   window.addEventListener('beforeunload', () => save.persist(game));
