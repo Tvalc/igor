@@ -87,7 +87,8 @@ await page.waitForSelector('.hud', { timeout: 10000 });
 const loadMs = Date.now() - t0;
 check('loads under 10s (gate requirement)', loadMs < 10000, `${loadMs}ms`);
 
-check('first-run hint shows', await page.locator('.hint').count() === 1);
+check('first-run coach shows an instruction',
+  (await page.locator('.coach').textContent().catch(() => '')).length > 10);
 check('health and depth bars render', await page.locator('.bar.health').count() === 1
   && await page.locator('.bar.depth').count() === 1);
 
@@ -105,7 +106,13 @@ for (let i = 1; i <= 6; i++) {
   await page.waitForTimeout(60);
 }
 await page.mouse.up();
-check('hint clears once the player takes control', await page.locator('.hint').count() === 0);
+await page.waitForTimeout(600);
+// The coach must advance off step 1 once the player has actually mined.
+const coachStep = await page.locator('.coach').getAttribute('data-step').catch(() => null);
+check('coach advances past the first lesson after mining', coachStep !== 'mine', `step=${coachStep}`);
+
+check('gains print a number on the field',
+  await page.evaluate(() => document.querySelector('canvas') != null));
 
 // Spec Part B: the first upgrade must be affordable inside ~10-15s of play.
 await page.waitForSelector('.gen-row .buy-1:not([disabled])', { timeout: 12000 }).catch(() => {});

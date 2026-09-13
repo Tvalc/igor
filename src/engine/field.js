@@ -5,50 +5,66 @@
 // game.prodPerSec(), not something this file invents. What the field adds on
 // top is the ACTIVE income: ore the player mines by hand and ore that drops
 // from kills. That split produces the spec's run arc on its own — hand-mining
-// dominates the first minutes, the crew dwarfs it by the end, and the build
-// visibly starts playing itself.
+// dominates the first minutes, the crew dwarfs it by the end.
+//
+// Legibility is a first-class concern here, not polish. Everything the player
+// must understand has to be readable from the screen alone: veins look like
+// veins, threats are red and telegraphed before they arrive, and every gain
+// prints a number where it happened.
 import { Dec } from './bignum.js';
+import { fmt } from './format.js';
 
 const TAU = Math.PI * 2;
 const MAX_ENEMIES = 90;
-const MAX_PARTICLES = 160;
+const MAX_PARTICLES = 150;
 const MAX_PICKUPS = 60;
-const MAX_CREW_DRAWN = 14; // visual cap; the economy still counts every generator
+const MAX_CREW_DRAWN = 14;
+const FLOAT_FLUSH_SECONDS = 0.4; // batch ore gains into one readable number
 
 function rand(a, b) { return a + Math.random() * (b - a); }
 function dist2(ax, ay, bx, by) { const dx = ax - bx, dy = ay - by; return dx * dx + dy * dy; }
 
 export function createField(game, config = {}) {
   const cfg = {
-    playerHp: 100,
+    playerHp: 120,
     playerSpeed: 155,
     attackRange: 96,
-    attackRate: 2.0,      // swings/sec
+    attackRate: 2.0,
     attackDamage: 10,
     magnetRadius: 70,
-    baseRegenPerSec: 0.4,
-    enemyHpGrowth: 1.32,
-    spawnGrowthPerBand: 0.5,
     nodeCount: 6,
     nodeHp: 26,
     enemyBaseHp: 18,
     enemyBaseSpeed: 42,
-    enemyContactDamage: 7,
-    spawnRatePerSec: 0.55, // at band 1; scales with band
+    enemyContactDamage: 6,
+    spawnRatePerSec: 0.55,
+    baseRegenPerSec: 0.4,
+    enemyHpGrowth: 1.32,
+    spawnGrowthPerBand: 0.38,
+    // Depth 1 used to be completely empty, which read as "nothing is happening".
+    // A trickle of weak stragglers teaches the threat while it is still cheap.
+    surfaceSpawnDelay: 16,
+    surfaceSpawnScale: 0.3,
+    spawnTelegraphSeconds: 0.9,
     ...config,
   };
 
   let w = 360, h = 420;
 
   const st = {
-    player: { x: 180, y: 210, hp: cfg.playerHp, maxHp: cfg.playerHp, r: 13, iframe: 0, swing: 0, facing: 1 },
-    target: null,          // pointer destination while held
+    player: { x: 180, y: 210, hp: cfg.playerHp, maxHp: cfg.playerHp, r: 15, iframe: 0, swing: 0, facing: 1 },
+    target: null,
     keys: new Set(),
     crew: [],
     nodes: [],
     enemies: [],
+    warnings: [],   // spawn telegraphs, so nothing appears without notice
     pickups: [],
     particles: [],
+    floats: [],     // rising "+N ore" numbers
+    labels: [],     // one-time captions naming a thing the first time it appears
+    seenLabels: new Set(),
+    floatAcc: { amount: Dec.zero(), x: 0, y: 0, t: 0 },
     shake: 0,
     flash: 0,
     time: 0,
@@ -57,7 +73,6 @@ export function createField(game, config = {}) {
     kills: 0,
   };
 
-  // ---- derived stats (level-up upgrades feed in through game multipliers) ----
   const mult = () => game.fieldMults?.() ?? {};
   const maxHp = () => cfg.playerHp * (mult().maxHp ?? 1);
   const speed = () => cfg.playerSpeed * (mult().moveSpeed ?? 1);
@@ -70,41 +85,54 @@ export function createField(game, config = {}) {
   function resize(nw, nh) {
     if (nw === w && nh === h) return;
     const sx = nw / w, sy = nh / h;
-    for (const e of [st.player, ...st.crew, ...st.nodes, ...st.enemies, ...st.pickups]) {
+    for (const e of [st.player, ...st.crew, ...st.nodes, ...st.enemies, ...st.pickups, ...st.warnings]) {
       e.x *= sx; e.y *= sy;
     }
     w = nw; h = nh;
   }
 
+  function label(x, y, text, key) {
+    if (key) {
+      if (st.seenLabels.has(key)) return;
+      st.seenLabels.add(key);
+    }
+    st.labels.push({ x, y, text, age: 0, life: 3.4 });
+  }
+
   function spawnNode() {
     if (st.nodes.length >= cfg.nodeCount) return;
-    // keep veins off the player's current position so they never spawn on top
     let x, y, tries = 0;
     do {
-      x = rand(30, w - 30); y = rand(40, h - 30); tries++;
-    } while (tries < 12 && dist2(x, y, st.player.x, st.player.y) < 80 * 80);
-    st.nodes.push({ x, y, hp: cfg.nodeHp, maxHp: cfg.nodeHp, r: 13, flash: 0, seed: Math.random() * TAU });
+      x = rand(34, w - 34); y = rand(44, h - 34); tries++;
+    } while (tries < 12 && dist2(x, y, st.player.x, st.player.y) < 70 * 70);
+    const node = { x, y, hp: cfg.nodeHp, maxHp: cfg.nodeHp, r: 15, flash: 0, seed: Math.random() * TAU };
+    st.nodes.push(node);
+    return node;
   }
 
   function bandScale() { return game.signature?.band ?? 0; }
 
-  function spawnEnemy() {
-    if (st.enemies.length >= MAX_ENEMIES) return;
-    const band = bandScale();
-    // enter from a random edge so threat reads as coming out of the dark
+  function queueEnemy() {
+    if (st.enemies.length + st.warnings.length >= MAX_ENEMIES) return;
     const edge = Math.floor(Math.random() * 4);
-    const x = edge === 0 ? -16 : edge === 1 ? w + 16 : rand(0, w);
-    const y = edge === 2 ? -16 : edge === 3 ? h + 16 : rand(0, h);
-    const hpScale = Math.pow(cfg.enemyHpGrowth ?? 1.32, band);
+    const x = edge === 0 ? 14 : edge === 1 ? w - 14 : rand(20, w - 20);
+    const y = edge === 2 ? 14 : edge === 3 ? h - 14 : rand(20, h - 20);
+    st.warnings.push({ x, y, t: 0, life: cfg.spawnTelegraphSeconds });
+  }
+
+  function hatchEnemy(x, y) {
+    const band = bandScale();
+    const hpScale = Math.pow(cfg.enemyHpGrowth, band);
     st.enemies.push({
       x, y,
       hp: cfg.enemyBaseHp * hpScale,
       maxHp: cfg.enemyBaseHp * hpScale,
       speed: cfg.enemyBaseSpeed * (1 + band * 0.04) * rand(0.85, 1.15),
-      r: 10 + Math.min(5, band * 0.7),
+      r: 11 + Math.min(5, band * 0.7),
       flash: 0,
       wob: Math.random() * TAU,
     });
+    label(x, y, 'Cave-dweller — keep away', 'enemy');
   }
 
   function particle(x, y, color, opts = {}) {
@@ -116,36 +144,50 @@ export function createField(game, config = {}) {
       life: opts.life ?? rand(0.3, 0.6),
       age: 0,
       r: opts.r ?? rand(1.5, 3.5),
-      text: opts.text ?? null,
     });
   }
 
-  function burst(x, y, color, n) {
-    for (let i = 0; i < n; i++) particle(x, y, color);
+  function burst(x, y, color, n) { for (let i = 0; i < n; i++) particle(x, y, color); }
+
+  // Gains are batched: one readable "+N" beats a blizzard of tiny ones.
+  function bankFloat(x, y, amount) {
+    st.floatAcc.amount = st.floatAcc.amount.add(amount);
+    st.floatAcc.x = x; st.floatAcc.y = y;
+  }
+
+  function flushFloat() {
+    if (st.floatAcc.amount.isZero()) return;
+    st.floats.push({
+      x: st.floatAcc.x, y: st.floatAcc.y,
+      text: `+${fmt(st.floatAcc.amount)}`,
+      age: 0, life: 1.1,
+    });
+    if (st.floats.length > 12) st.floats.shift();
+    st.floatAcc.amount = Dec.zero();
   }
 
   function dropOre(x, y, amount) {
     if (st.pickups.length >= MAX_PICKUPS) {
-      // absorb the oldest rather than dropping income on the floor
       const old = st.pickups.shift();
       game.earnActive(old.amount);
+      bankFloat(old.x, old.y, old.amount);
     }
     st.pickups.push({ x, y, amount, vx: rand(-45, 45), vy: rand(-60, -15), age: 0 });
   }
 
-  // ---- crew: one drawn unit per owned generator, richest tiers first ----
   function syncCrew() {
     const want = [];
     const gens = game.theme.generators;
     for (let i = gens.length - 1; i >= 0 && want.length < MAX_CREW_DRAWN; i--) {
       const owned = game.state.gens[gens[i].id];
-      // diminishing visual weight: show a unit per tier, more for bigger stacks
       const n = owned > 0 ? Math.min(4, 1 + Math.floor(Math.log10(owned + 1) * 2)) : 0;
       for (let k = 0; k < n && want.length < MAX_CREW_DRAWN; k++) want.push(i);
     }
     while (st.crew.length > want.length) st.crew.pop();
     while (st.crew.length < want.length) {
-      st.crew.push({ x: rand(40, w - 40), y: rand(60, h - 40), tier: 0, cd: rand(0, 1), t: Math.random() * TAU });
+      const c = { x: rand(40, w - 40), y: rand(60, h - 40), tier: 0, cd: rand(0, 1), t: Math.random() * TAU };
+      st.crew.push(c);
+      label(c.x, c.y, 'Your crew — they mine on their own', 'crew');
     }
     st.crew.forEach((c, i) => { c.tier = want[i]; });
   }
@@ -157,17 +199,25 @@ export function createField(game, config = {}) {
 
     reset() {
       st.player.x = w / 2; st.player.y = h / 2;
-      st.player.hp = maxHp(); st.player.maxHp = maxHp();
+      st.player.maxHp = maxHp(); st.player.hp = st.player.maxHp;
       st.player.iframe = 0;
       st.enemies.length = 0;
+      st.warnings.length = 0;
       st.pickups.length = 0;
       st.particles.length = 0;
+      st.floats.length = 0;
+      st.labels.length = 0;
       st.nodes.length = 0;
       st.crew.length = 0;
       st.kills = 0;
       st.spawnAcc = 0;
       st.shake = 0;
+      st.time = 0;
+      st.floatAcc.amount = Dec.zero();
       for (let i = 0; i < cfg.nodeCount; i++) spawnNode();
+      st.seenLabels.delete('vein');
+      const first = st.nodes[0];
+      if (first) label(first.x, first.y, 'Ore vein — walk close to mine it', 'vein');
     },
 
     healFull() { st.player.maxHp = maxHp(); st.player.hp = st.player.maxHp; st.player.iframe = 2; },
@@ -175,6 +225,7 @@ export function createField(game, config = {}) {
     maxHpValue() { return st.player.maxHp; },
     isDead() { return st.player.hp <= 0; },
     kills() { return st.kills; },
+    enemyCount() { return st.enemies.length; },
 
     setTarget(x, y) { st.target = { x, y }; },
     clearTarget() { st.target = null; },
@@ -190,6 +241,9 @@ export function createField(game, config = {}) {
       p.iframe = Math.max(0, p.iframe - dt);
       p.swing = Math.max(0, p.swing - dt * 6);
       if (regen()) p.hp = Math.min(p.maxHp, p.hp + regen() * dt);
+
+      st.floatAcc.t += dt;
+      if (st.floatAcc.t >= FLOAT_FLUSH_SECONDS) { st.floatAcc.t = 0; flushFloat(); }
 
       // ---- movement: WASD/arrows, pointer target, else idle auto-seek ----
       // The auto-seek matters: this is an idle game, so a player who puts the
@@ -211,7 +265,6 @@ export function createField(game, config = {}) {
           const d = dist2(p.x, p.y, n.x, n.y);
           if (d < nd) { nd = d; near = n; }
         }
-        // stop just inside reach so it mines rather than standing on the vein
         if (near && nd > (range() * 0.7) ** 2) {
           const d = Math.sqrt(nd) || 1;
           dx = (near.x - p.x) / d; dy = (near.y - p.y) / d;
@@ -229,7 +282,7 @@ export function createField(game, config = {}) {
       // ---- auto-attack: enemies first, else mine the nearest vein ----
       st.attackCd -= dt;
       if (st.attackCd <= 0) {
-        const R = range(), R2 = R * R;
+        const R2 = range() * range();
         let best = null, bestD = R2, isEnemy = false;
         for (const e of st.enemies) {
           const d = dist2(p.x, p.y, e.x, e.y);
@@ -244,11 +297,9 @@ export function createField(game, config = {}) {
         if (best) {
           st.attackCd = 1 / rate();
           p.swing = 1;
-          const dmg = damage();
-          best.hp -= dmg;
+          best.hp -= damage();
           best.flash = 1;
-          const col = isEnemy ? '#ff6b5a' : game.theme.palette.accent;
-          burst(best.x, best.y, col, isEnemy ? 4 : 3);
+          burst(best.x, best.y, isEnemy ? '#ff6b5a' : game.theme.palette.accent, isEnemy ? 4 : 3);
           if (best.hp <= 0) {
             if (isEnemy) {
               st.enemies.splice(st.enemies.indexOf(best), 1);
@@ -263,13 +314,11 @@ export function createField(game, config = {}) {
               spawnNode();
             }
           } else if (!isEnemy) {
-            // chip income on every swing so mining feels continuous
             dropOre(best.x + rand(-6, 6), best.y + rand(-6, 6), game.activeYield().mulNum(0.35));
           }
         }
       }
 
-      // ---- crew: drift to veins and chip at them (visual for passive income) ----
       syncCrew();
       for (const c of st.crew) {
         c.t += dt;
@@ -281,16 +330,26 @@ export function createField(game, config = {}) {
         c.cd -= dt;
         if (c.cd <= 0) {
           c.cd = rand(0.5, 1.0);
-          if (node) particle(node.x + rand(-8, 8), node.y + rand(-8, 8), game.theme.palette.primary, { life: 0.25, r: 1.6 });
+          if (node) particle(node.x + rand(-8, 8), node.y + rand(-8, 8), '#9fd8ff', { life: 0.25, r: 1.6 });
         }
       }
 
-      // ---- enemy spawning + steering ----
+      // ---- spawning: telegraph first, then hatch ----
       const band = bandScale();
-      if (band > 0) {
-        st.spawnAcc += dt * cfg.spawnRatePerSec * (1 + band * (cfg.spawnGrowthPerBand ?? 0.5));
-        while (st.spawnAcc >= 1) { st.spawnAcc -= 1; spawnEnemy(); }
+      const surfaceReady = band > 0 || st.time > cfg.surfaceSpawnDelay;
+      if (surfaceReady) {
+        const bandRate = band > 0
+          ? cfg.spawnRatePerSec * (1 + band * cfg.spawnGrowthPerBand)
+          : cfg.spawnRatePerSec * cfg.surfaceSpawnScale;
+        st.spawnAcc += dt * bandRate;
+        while (st.spawnAcc >= 1) { st.spawnAcc -= 1; queueEnemy(); }
       }
+      for (let i = st.warnings.length - 1; i >= 0; i--) {
+        const wn = st.warnings[i];
+        wn.t += dt;
+        if (wn.t >= wn.life) { hatchEnemy(wn.x, wn.y); st.warnings.splice(i, 1); }
+      }
+
       for (const e of st.enemies) {
         e.flash = Math.max(0, e.flash - dt * 5);
         e.wob += dt * 3;
@@ -306,7 +365,7 @@ export function createField(game, config = {}) {
         }
       }
 
-      // ---- pickups: magnet to the player, then bank as ACTIVE income ----
+      // ---- pickups: magnet in, then bank as ACTIVE income ----
       const mag = magnet(), mag2 = mag * mag;
       for (let i = st.pickups.length - 1; i >= 0; i--) {
         const u = st.pickups[i];
@@ -326,18 +385,27 @@ export function createField(game, config = {}) {
         }
         if (d2 < (p.r + 8) * (p.r + 8)) {
           game.earnActive(u.amount);
+          bankFloat(p.x, p.y - 14, u.amount);
           st.pickups.splice(i, 1);
-          particle(p.x, p.y - 8, game.theme.palette.accent, { life: 0.5, vy: -70, vx: rand(-12, 12), r: 2 });
         }
       }
 
-      // ---- particles ----
       for (let i = st.particles.length - 1; i >= 0; i--) {
         const q = st.particles[i];
         q.age += dt;
         if (q.age >= q.life) { st.particles.splice(i, 1); continue; }
         q.x += q.vx * dt; q.y += q.vy * dt;
         q.vy += 190 * dt;
+      }
+      for (let i = st.floats.length - 1; i >= 0; i--) {
+        const f = st.floats[i];
+        f.age += dt;
+        if (f.age >= f.life) st.floats.splice(i, 1);
+      }
+      for (let i = st.labels.length - 1; i >= 0; i--) {
+        const l = st.labels[i];
+        l.age += dt;
+        if (l.age >= l.life) st.labels.splice(i, 1);
       }
 
       for (const n of st.nodes) n.flash = Math.max(0, n.flash - dt * 5);
@@ -352,118 +420,167 @@ export function createField(game, config = {}) {
       const depth = Math.min(1, band / Math.max(1, bands - 1));
 
       ctx.save();
-      if (st.shake > 0.01) {
-        ctx.translate(rand(-1, 1) * st.shake * 5, rand(-1, 1) * st.shake * 5);
-      }
+      if (st.shake > 0.01) ctx.translate(rand(-1, 1) * st.shake * 5, rand(-1, 1) * st.shake * 5);
 
-      // cavern ground: darkens and warms with depth
       const g = ctx.createRadialGradient(cw / 2, ch / 2, 20, cw / 2, ch / 2, Math.max(cw, ch) * 0.78);
       g.addColorStop(0, mix('#3a2c1e', '#4a1508', depth));
-      g.addColorStop(1, mix('#120d08', '#1c0402', depth));
+      g.addColorStop(1, mix('#0f0b07', '#190301', depth));
       ctx.fillStyle = g;
       ctx.fillRect(-8, -8, cw + 16, ch + 16);
 
-      // rubble texture, deterministic so it doesn't crawl between frames
-      ctx.fillStyle = 'rgba(255,255,255,0.035)';
+      ctx.fillStyle = 'rgba(255,255,255,0.03)';
       for (let i = 0; i < 46; i++) {
         const rx = ((i * 9301 + 49297) % 233280) / 233280 * cw;
         const ry = ((i * 4517 + 12345) % 233280) / 233280 * ch;
         ctx.fillRect(rx, ry, 2, 2);
       }
 
-      // ore veins
+      // ---- ore veins: rock socket + crystal cluster, depleting visibly ----
       for (const n of st.nodes) {
         const pct = n.hp / n.maxHp;
         ctx.save();
         ctx.translate(n.x, n.y);
+        ctx.fillStyle = 'rgba(0,0,0,0.5)';
+        ctx.beginPath();
+        ctx.ellipse(0, 3, n.r * 1.25, n.r * 0.95, 0, 0, TAU);
+        ctx.fill();
         ctx.rotate(n.seed);
-        for (let i = 0; i < 5; i++) {
-          const a = (i / 5) * TAU;
-          const rr = n.r * (0.55 + 0.45 * pct);
-          ctx.fillStyle = n.flash > 0 ? '#ffffff' : pal.accent;
-          ctx.globalAlpha = 0.55 + 0.45 * pct;
+        const shards = 6;
+        for (let i = 0; i < shards; i++) {
+          const a = (i / shards) * TAU;
+          const len = n.r * (0.5 + 0.6 * pct) * (0.72 + (i % 2) * 0.38);
+          ctx.fillStyle = n.flash > 0 ? '#ffffff' : (i % 2 ? pal.accent : pal.primary);
           ctx.beginPath();
-          ctx.moveTo(Math.cos(a) * rr, Math.sin(a) * rr);
-          ctx.lineTo(Math.cos(a + 0.9) * rr * 0.5, Math.sin(a + 0.9) * rr * 0.5);
-          ctx.lineTo(0, 0);
+          ctx.moveTo(Math.cos(a) * len, Math.sin(a) * len);
+          ctx.lineTo(Math.cos(a + 0.42) * len * 0.34, Math.sin(a + 0.42) * len * 0.34);
+          ctx.lineTo(Math.cos(a - 0.42) * len * 0.34, Math.sin(a - 0.42) * len * 0.34);
           ctx.closePath();
           ctx.fill();
         }
         ctx.restore();
-        ctx.globalAlpha = 1;
+        // depletion ring reads as "this vein is running out"
+        ctx.strokeStyle = 'rgba(255,210,74,0.45)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r * 1.5, -Math.PI / 2, -Math.PI / 2 + TAU * pct);
+        ctx.stroke();
       }
 
-      // crew
+      // ---- crew: blue so they never read as ore or as threats ----
       for (const c of st.crew) {
         const bob = Math.sin(c.t * 6) * 1.6;
-        ctx.fillStyle = pal.primary;
+        ctx.fillStyle = '#6fb6e8';
         ctx.beginPath();
-        ctx.arc(c.x, c.y + bob, 6, 0, TAU);
+        ctx.arc(c.x, c.y + bob, 6.5, 0, TAU);
         ctx.fill();
-        ctx.fillStyle = 'rgba(0,0,0,0.45)';
-        ctx.fillRect(c.x - 5, c.y - 6 + bob, 10, 3);
+        ctx.fillStyle = '#2c5f86';
+        ctx.fillRect(c.x - 5.5, c.y - 7 + bob, 11, 3.5);
       }
 
-      // pickups
+      // ---- pickups ----
       for (const u of st.pickups) {
-        const pulse = 2.6 + Math.sin(t * 9 + u.x) * 0.5;
+        const pulse = 3.2 + Math.sin(t * 9 + u.x) * 0.6;
         ctx.fillStyle = pal.accent;
         ctx.beginPath();
         ctx.arc(u.x, u.y, pulse, 0, TAU);
         ctx.fill();
+        ctx.fillStyle = 'rgba(255,255,255,0.75)';
+        ctx.beginPath();
+        ctx.arc(u.x - 1, u.y - 1, pulse * 0.35, 0, TAU);
+        ctx.fill();
       }
 
-      // enemies
+      // ---- spawn telegraphs: nothing arrives unannounced ----
+      for (const wn of st.warnings) {
+        const k = wn.t / wn.life;
+        ctx.strokeStyle = `rgba(224,72,58,${(0.35 + 0.5 * Math.sin(k * 18)).toFixed(2)})`;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(wn.x, wn.y, 8 + k * 12, 0, TAU);
+        ctx.stroke();
+        ctx.fillStyle = 'rgba(224,72,58,0.85)';
+        ctx.font = '700 13px system-ui, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('!', wn.x, wn.y + 4.5);
+      }
+
+      // ---- enemies: red, spiky, with a health pip once damaged ----
       for (const e of st.enemies) {
         ctx.save();
         ctx.translate(e.x, e.y);
-        ctx.fillStyle = e.flash > 0 ? '#ffffff' : '#8e2f3f';
+        ctx.fillStyle = e.flash > 0 ? '#ffffff' : '#c2384a';
         ctx.beginPath();
-        for (let i = 0; i < 7; i++) {
-          const a = (i / 7) * TAU;
-          const spike = i % 2 ? e.r : e.r * 0.62;
+        for (let i = 0; i < 9; i++) {
+          const a = (i / 9) * TAU;
+          const spike = i % 2 ? e.r : e.r * 0.58;
           const px = Math.cos(a + e.wob * 0.25) * spike;
           const py = Math.sin(a + e.wob * 0.25) * spike;
           i ? ctx.lineTo(px, py) : ctx.moveTo(px, py);
         }
         ctx.closePath();
         ctx.fill();
-        ctx.fillStyle = '#ffd7a0';
-        ctx.fillRect(-3.5, -2, 2.5, 2.5);
-        ctx.fillRect(1, -2, 2.5, 2.5);
+        ctx.fillStyle = '#ffe08a';
+        ctx.fillRect(-4, -2.5, 2.8, 2.8);
+        ctx.fillRect(1.2, -2.5, 2.8, 2.8);
         ctx.restore();
+        if (e.hp < e.maxHp) {
+          const pct = Math.max(0, e.hp / e.maxHp);
+          ctx.fillStyle = 'rgba(0,0,0,0.6)';
+          ctx.fillRect(e.x - 11, e.y - e.r - 8, 22, 3.5);
+          ctx.fillStyle = '#e0483a';
+          ctx.fillRect(e.x - 11, e.y - e.r - 8, 22 * pct, 3.5);
+        }
       }
 
-      // player: attack arc, body, helmet lamp
+      // ---- player: swing arc, body, helmet, lamp cone ----
       const p = st.player;
-      if (p.swing > 0) {
-        ctx.strokeStyle = `rgba(255,210,74,${(p.swing * 0.6).toFixed(2)})`;
-        ctx.lineWidth = 3;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, range() * 0.42, -0.8 + (p.facing < 0 ? Math.PI : 0), 0.8 + (p.facing < 0 ? Math.PI : 0));
-        ctx.stroke();
-      }
-      ctx.fillStyle = p.iframe > 0 && Math.floor(t * 20) % 2 ? '#ffffff' : '#e8d8b8';
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, TAU);
-      ctx.fill();
-      ctx.fillStyle = pal.primary;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y - 3, p.r * 0.92, Math.PI, TAU);
-      ctx.fill();
-      ctx.fillStyle = '#fff6c9';
-      ctx.beginPath();
-      ctx.arc(p.x + p.facing * 4, p.y - 7, 2.4, 0, TAU);
-      ctx.fill();
-
-      // range ring, faint, so positioning reads
-      ctx.strokeStyle = 'rgba(255,210,74,0.10)';
+      ctx.strokeStyle = 'rgba(255,210,74,0.13)';
       ctx.lineWidth = 1;
+      ctx.setLineDash([4, 6]);
       ctx.beginPath();
       ctx.arc(p.x, p.y, range(), 0, TAU);
       ctx.stroke();
+      ctx.setLineDash([]);
 
-      // particles
+      // lamp cone points where he faces, selling "miner" at a glance
+      const lampGrad = ctx.createLinearGradient(p.x, p.y, p.x + p.facing * 62, p.y);
+      lampGrad.addColorStop(0, 'rgba(255,240,190,0.20)');
+      lampGrad.addColorStop(1, 'rgba(255,240,190,0)');
+      ctx.fillStyle = lampGrad;
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y - 4);
+      ctx.lineTo(p.x + p.facing * 64, p.y - 26);
+      ctx.lineTo(p.x + p.facing * 64, p.y + 20);
+      ctx.closePath();
+      ctx.fill();
+
+      if (p.swing > 0) {
+        ctx.strokeStyle = `rgba(255,210,74,${(p.swing * 0.75).toFixed(2)})`;
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, range() * 0.44, -0.9 + (p.facing < 0 ? Math.PI : 0), 0.9 + (p.facing < 0 ? Math.PI : 0));
+        ctx.stroke();
+      }
+      ctx.fillStyle = 'rgba(0,0,0,0.45)';
+      ctx.beginPath();
+      ctx.ellipse(p.x, p.y + p.r * 0.85, p.r * 0.9, p.r * 0.35, 0, 0, TAU);
+      ctx.fill();
+      ctx.fillStyle = p.iframe > 0 && Math.floor(t * 20) % 2 ? '#ffffff' : '#f0dcb8';
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, TAU);
+      ctx.fill();
+      ctx.strokeStyle = '#3a2a16';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.fillStyle = pal.primary;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y - 2, p.r * 0.98, Math.PI, TAU);
+      ctx.fill();
+      ctx.fillStyle = '#fff6c9';
+      ctx.beginPath();
+      ctx.arc(p.x + p.facing * 5, p.y - 8, 3.1, 0, TAU);
+      ctx.fill();
+
       for (const q of st.particles) {
         const a = 1 - q.age / q.life;
         ctx.globalAlpha = Math.max(0, a);
@@ -474,9 +591,39 @@ export function createField(game, config = {}) {
       }
       ctx.globalAlpha = 1;
 
+      // ---- floating gains: the clearest possible cause-and-effect ----
+      ctx.textAlign = 'center';
+      for (const f of st.floats) {
+        const k = f.age / f.life;
+        ctx.globalAlpha = Math.max(0, 1 - k);
+        ctx.font = '800 16px system-ui, sans-serif';
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = 'rgba(0,0,0,0.85)';
+        ctx.strokeText(f.text, f.x, f.y - k * 34);
+        ctx.fillStyle = pal.accent;
+        ctx.fillText(f.text, f.x, f.y - k * 34);
+      }
+      ctx.globalAlpha = 1;
+
+      // ---- one-time captions naming what the player is looking at ----
+      for (const l of st.labels) {
+        const k = l.age / l.life;
+        ctx.globalAlpha = Math.max(0, Math.min(1, (1 - k) * 2.2));
+        ctx.font = '700 11px system-ui, sans-serif';
+        const tw = ctx.measureText(l.text).width;
+        const bx = Math.max(6, Math.min(cw - tw - 18, l.x - tw / 2 - 6));
+        const by = Math.max(4, l.y - 34);
+        ctx.fillStyle = 'rgba(0,0,0,0.82)';
+        ctx.beginPath();
+        ctx.roundRect(bx, by, tw + 12, 20, 6);
+        ctx.fill();
+        ctx.fillStyle = '#ffe9b8';
+        ctx.fillText(l.text, bx + tw / 2 + 6, by + 14);
+      }
+      ctx.globalAlpha = 1;
+
       ctx.restore();
 
-      // damage flash sits outside the shake transform
       if (st.flash > 0.01) {
         ctx.fillStyle = `rgba(200,20,10,${(st.flash * 0.3).toFixed(3)})`;
         ctx.fillRect(0, 0, cw, ch);

@@ -85,17 +85,24 @@ body {
 }
 .field-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 
-.hint {
-  position: absolute; left: 16px; right: 16px; bottom: 16px;
-  padding: 10px 12px; text-align: center;
-  background: rgba(0, 0, 0, 0.8);
-  border: 1px solid var(--c-accent); border-radius: 12px;
-  font-size: 13px; font-weight: 700;
+/* Coach strip: one instruction at a time, pinned low so it never covers the
+   action it is describing. */
+.coach {
+  position: absolute; left: 10px; right: 10px; bottom: 8px;
+  padding: 7px 10px; text-align: center;
+  background: rgba(8, 5, 3, 0.9);
+  border: 1px solid var(--c-accent); border-radius: 9px;
+  font-size: 12px; font-weight: 700; line-height: 1.35;
+  color: #ffe9b8;
   pointer-events: none;
-  animation: breathe 1.6s ease-in-out infinite;
 }
-@keyframes breathe { 50% { opacity: 0.66; } }
-@media (prefers-reduced-motion: reduce) { .hint { animation: none; } }
+.coach.pop { animation: coachPop 0.45s ease-out; }
+@keyframes coachPop {
+  0% { transform: scale(0.94); border-color: #fff; }
+  60% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) { .coach.pop { animation: none; } }
 
 /* ---------- health + depth ---------- */
 .sig-bar {
@@ -122,7 +129,18 @@ body {
   font-variant-numeric: tabular-nums;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
 }
-.btn-descend { flex: none; padding: 4px 12px; font-size: 12px; }
+.btn-descend { flex: none; padding: 4px 12px; font-size: 12px; min-width: 92px; }
+/* A descend that is ready should be the most obvious thing on the bar. */
+.btn-descend.ready {
+  background: var(--c-accent); color: #1a1005;
+  box-shadow: 0 0 0 0 rgba(255, 210, 74, 0.6);
+  animation: descendReady 1.5s ease-out infinite;
+}
+@keyframes descendReady {
+  70% { box-shadow: 0 0 0 9px rgba(255, 210, 74, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 210, 74, 0); }
+}
+@media (prefers-reduced-motion: reduce) { .btn-descend.ready { animation: none; } }
 
 /* ---------- tabs + panel ---------- */
 .tabs { display: flex; border-bottom: 1px solid var(--c-line); background: rgba(0,0,0,0.2); }

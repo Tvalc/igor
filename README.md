@@ -54,7 +54,7 @@ npm run test:smoke      # real browser (Playwright): load time, idle earning, dr
                         # input, first purchase, all three tabs, banner slot,
                         # rewarded offer + its non-ad path, save persistence,
                         # right-click suppression, frame rate
-npm run test:smoke:dist # the same 16 checks against the built single-file bundle,
+npm run test:smoke:dist # the same 17 checks against the built single-file bundle,
                         # so a broken build fails here and not after deploy
 ```
 
@@ -93,6 +93,23 @@ src/engine/
     depthBands.js               Deepcore's novel system: descend for richness vs. danger
 ```
 
+## Reading the screen
+
+Everything the player must understand is readable from the field alone:
+
+- **Gold crystal clusters in a rock socket** are ore veins; the ring around one
+  drains as it depletes.
+- **Blue figures** are your hired crew, mining on their own. Blue never means
+  ore and never means danger.
+- **Red spiky shapes** are cave-dwellers. Contact costs health.
+- **A pulsing red `!`** telegraphs a spawn about a second before it arrives, so
+  nothing appears without warning.
+- **Floating `+N`** prints every gain where it happened, batched so it stays
+  readable instead of flooding.
+- **One-time captions** name each thing the first time it appears.
+- The **coach strip** teaches one lesson at a time and advances only once the
+  player has actually done it.
+
 ## The loop
 
 An active run in a cavern. You drag to move; the miner swings automatically at
@@ -123,15 +140,20 @@ From `npm run test:sim` (30 simulated minutes per profile, one bot each):
 
 | Profile | Runs | Avg run | Longest | Deepest | Gems |
 |---|---|---|---|---|---|
-| greedy (descend on sight) | 7 | 211s | 240s | 6 | 8 |
-| careful (bank levels first) | 4 | 401s | 558s | 6 | 25 |
+| greedy (descend on sight) | 15 | 111s | 268s | 7 | 9 |
+| careful (bank levels first) | 5 | 323s | 333s | 6 | 16 |
 
-Careful play roughly doubles run length and triples gem yield, which is the
-risk/reward the descent mechanic exists to create. Runs land around 3–9 minutes
-rather than the spec's 12–18; a session spans several runs and clears the
-10-minute playtime gate comfortably, and more run-ends means more run-end
-interstitials, but single-run length is still short of the spec target and is
-the main open tuning question.
+Careful play triples run length and nearly doubles gem yield, which is the
+risk/reward the descent mechanic exists to create — the suite fails if that
+ordering ever inverts. Runs land around 2–6 minutes rather than the spec's
+12–18; a session spans several runs and clears the 10-minute playtime gate
+comfortably, and more run-ends means more run-end interstitials, but single-run
+length is still short of the spec target and is the main open tuning question.
+
+**First-minute pacing** (a player who hires crew when prompted but plays no
+better than that): first threat on screen at ~21s, first descent at ~20s. Both
+were minutes away before the legibility pass, which is what made the game
+unreadable — the player never reached the mechanic the game is built around.
 
 ## Non-negotiables baked into the engine
 

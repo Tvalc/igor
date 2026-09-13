@@ -61,7 +61,7 @@ export class UI {
     this.buildSigBar();
     this.renderHeader();
     this.renderPanel();
-    this.showHint();
+    this.startCoach();
   }
 
   // ---------- input: drag to move, WASD/arrows on desktop ----------
@@ -74,7 +74,6 @@ export class UI {
     };
     const down = (e) => {
       unlockAudio();
-      this.dismissHint();
       this.playfield.setPointerCapture?.(e.pointerId);
       const p = toLocal(e);
       f.setTarget(p.x, p.y);
@@ -100,7 +99,6 @@ export class UI {
       if (['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(k)) {
         e.preventDefault();
         unlockAudio();
-        this.dismissHint();
         f.keyDown(k);
       }
     });
@@ -124,6 +122,7 @@ export class UI {
       this.renderHeader();
       this.renderSigBar();
       this.refreshPanel();
+      this.tickCoach(0.05);
       this.maybeOfferWall();
     }, 50);
 
@@ -188,7 +187,10 @@ export class UI {
     const g = this.game, t = g.theme;
     const boostLeft = Math.max(0, g.state.boostUntil - Date.now());
     this.hdr.value.textContent = fmt(g.state.primary);
-    this.hdr.rate.textContent = `${fmt(g.prodPerSec())}/s from crew`;
+    const hasCrew = Object.values(g.state.gens).some(n => n > 0);
+    this.hdr.rate.textContent = hasCrew
+      ? `${fmt(g.prodPerSec())}/s from crew`
+      : 'Hire crew to earn while idle';
     this.hdr.prestige.textContent = `💎 ${g.state.prestige.held}`;
     this.hdr.premium.textContent = `💠 ${g.state.premium}`;
     this.hdr.boost.classList.toggle('active', boostLeft > 0);
@@ -227,10 +229,12 @@ export class UI {
     this.sig.hpText.textContent = `♥ ${Math.max(0, Math.ceil(hp))} / ${Math.round(maxHp)}`;
     const p = g.signature.panel();
     this.sig.dFill.style.width = `${p.progress * 100}%`;
-    this.sig.dText.textContent = `${p.title} · ${p.subtitle}`;
     const a = p.actions.find(x => x.id === 'descend');
-    this.sig.descend.textContent = a.label;
+    // Ready: name the reward. Not ready: name what is still required.
+    this.sig.dText.textContent = a.enabled ? `${p.title} — ready to descend` : `${p.title} · ${p.progressLabel}`;
+    this.sig.descend.textContent = a.enabled && p.nextMultiplier ? `⬇ ${p.nextMultiplier} ore` : a.label;
     this.sig.descend.disabled = !a.enabled;
+    this.sig.descend.classList.toggle('ready', a.enabled);
     this.sig.descend.title = a.enabled ? a.hint : p.progressLabel;
   }
 
@@ -592,19 +596,67 @@ export class UI {
 
   // ---------- hint / modal / toast ----------
 
-  showHint() {
-    // Anyone who has already banked ore or finished a run knows the controls;
-    // reloading mid-run should not replay the tutorial.
-    const g = this.game;
-    if (g.state.stats.runs > 0 || g.state.prestige.lifetime.gt(50)) return;
-    this.hintEl = el('div', 'hint', '👆 Drag to move — you mine and fight automatically');
-    this.playfield.append(this.hintEl);
+  // The coach teaches one thing at a time and advances only when the player
+  // has actually done it. A single hint that vanishes on first touch left
+  // people staring at a screen they could not read.
+  coachSteps() {
+    const t = this.game.theme;
+    return [
+      { id: 'mine', text: `Walk onto a glowing vein — you swing automatically`,
+        done: (g) => g.state.prestige.lifetime.gt(5) },
+      { id: 'hire', text: `${fmt(this.game.state.primary)} ${t.resources.primary.name} — hire a ${t.generators[0].name} below`,
+        done: (g) => Object.values(g.state.gens).some(n => n > 0) },
+      { id: 'crew', text: 'Blue crew mine for you — even while you are away',
+        hold: 7 },
+      { id: 'descend', text: 'Fill the Depth bar, then Descend: richer ore, but you will not be alone',
+        done: (g) => g.signature.band > 0 },
+    ];
   }
 
-  dismissHint() {
-    if (!this.hintEl) return;
-    this.hintEl.remove();
-    this.hintEl = null;
+  startCoach() {
+    const g = this.game;
+    // Returning players already know this; never replay it.
+    if (g.state.stats.runs > 0 || g.state.prestige.lifetime.gt(200)) return;
+    this.coachIndex = 0;
+    this.coachHeld = 0;
+    this.coachEl = el('div', 'coach');
+    this.playfield.append(this.coachEl);
+    this.renderCoach();
+  }
+
+  renderCoach() {
+    if (!this.coachEl) return;
+    const steps = this.coachSteps();
+    const step = steps[this.coachIndex];
+    if (!step) { this.endCoach(); return; }
+    this.coachEl.textContent = step.text;
+    this.coachEl.dataset.step = step.id;
+  }
+
+  tickCoach(dt) {
+    if (!this.coachEl) return;
+    const steps = this.coachSteps();
+    const step = steps[this.coachIndex];
+    if (!step) { this.endCoach(); return; }
+    this.coachHeld += dt;
+    const satisfied = step.hold ? this.coachHeld >= step.hold : step.done(this.game);
+    if (satisfied) {
+      this.coachIndex += 1;
+      this.coachHeld = 0;
+      if (this.coachIndex >= steps.length) { this.endCoach(); return; }
+      this.coachEl.classList.remove('pop');
+      void this.coachEl.offsetWidth; // restart the attention animation
+      this.coachEl.classList.add('pop');
+      this.renderCoach();
+    } else if (step.id === 'hire') {
+      this.renderCoach(); // keep the live ore count in the prompt
+    }
+  }
+
+  endCoach() {
+    if (!this.coachEl) return;
+    this.coachEl.remove();
+    this.coachEl = null;
     track('tutorial_complete');
   }
 

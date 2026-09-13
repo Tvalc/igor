@@ -16,9 +16,13 @@ export function createDepthBands(game, config) {
   const st = { band: 0, minedThisBand: Dec.zero(), deepestReached: 0 };
 
   // Quota rides the same exponential family as generator costs, so descending
-  // paces against the economy rather than against a wall-clock timer.
+  // paces against the economy rather than against a wall-clock timer. The first
+  // step is deliberately cheap: descending is the mechanic the whole game hangs
+  // on, and a player who has not seen it in the first minute has not met the
+  // game yet. Later steps widen fast (x26 per band against x2.2 income), and
+  // that widening gap is the wall that eventually ends a run.
   function quota() {
-    return Dec.powOf(26, st.band + 1).mulNum(40);
+    return Dec.powOf(26, st.band).mulNum(150);
   }
 
   function canDescend() {
@@ -53,14 +57,15 @@ export function createDepthBands(game, config) {
       return {
         title: `Depth ${st.band + 1}/${bandCount}`,
         subtitle: `ore ×${fmt(Math.pow(richnessPerBand, st.band))}`,
+        nextMultiplier: st.band < bandCount - 1 ? `×${richnessPerBand.toFixed(1)}` : null,
         progress: Math.min(1, st.minedThisBand.div(q).toNumber()),
         progressLabel: st.band >= bandCount - 1
           ? 'Bottom of the world'
-          : `${fmt(st.minedThisBand)} / ${fmt(q)} to descend`,
+          : `mine ${fmt(q.sub(st.minedThisBand))} more to descend`,
         actions: [{
           id: 'descend',
           label: st.band >= bandCount - 1 ? '⛏ Max depth' : '⬇ Descend',
-          hint: 'Richer ore. Worse company.',
+          hint: `Ore ×${richnessPerBand.toFixed(1)} deeper down — and far more of them`,
           enabled: canDescend(),
           onClick: descend,
         }],
