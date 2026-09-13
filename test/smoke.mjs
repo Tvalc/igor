@@ -85,59 +85,85 @@ const t0 = Date.now();
 await page.goto(`http://localhost:${PORT}/`, { waitUntil: 'domcontentloaded' });
 await page.waitForSelector('.hud', { timeout: 10000 });
 const loadMs = Date.now() - t0;
-// The Basic Launch gate is <10s load; locally it should be well under 2s.
 check('loads under 10s (gate requirement)', loadMs < 10000, `${loadMs}ms`);
 
-check('tutorial shows on a fresh save', await page.locator('.tutorial').count() === 1);
+check('first-run hint shows', await page.locator('.hint').count() === 1);
+check('health and depth bars render', await page.locator('.bar.health').count() === 1
+  && await page.locator('.bar.depth').count() === 1);
 
-// Tap to mine, which should also advance the tutorial past step 1.
-for (let i = 0; i < 40; i++) await page.click('.playfield');
-await page.waitForTimeout(300);
-const ore = await page.locator('.res-value').textContent();
-check('tapping earns currency', parseFloat(ore) > 0, `${ore.trim()} ore`);
+// The field must earn with no input at all — it is an idle game first.
+await page.waitForTimeout(2500);
+const idleOre = parseFloat(await page.locator('.res-value').textContent());
+check('earns with zero input (idle auto-seek)', idleOre > 0, `${idleOre} ore`);
 
+// Drag across the playfield: the miner should follow and the hint should clear.
+const box = await page.locator('.playfield').boundingBox();
+await page.mouse.move(box.x + box.width * 0.3, box.y + box.height * 0.4);
+await page.mouse.down();
+for (let i = 1; i <= 6; i++) {
+  await page.mouse.move(box.x + box.width * (0.3 + i * 0.06), box.y + box.height * (0.4 + i * 0.04));
+  await page.waitForTimeout(60);
+}
+await page.mouse.up();
+check('hint clears once the player takes control', await page.locator('.hint').count() === 0);
+
+// Spec Part B: the first upgrade must be affordable inside ~10-15s of play.
+await page.waitForSelector('.gen-row .buy-1:not([disabled])', { timeout: 12000 }).catch(() => {});
 const buy = page.locator('.gen-row .buy-1').first();
 const couldBuy = await buy.isEnabled();
 if (couldBuy) await buy.click();
-await page.waitForTimeout(200);
-check('first generator affordable and purchasable within ~40 taps',
-  couldBuy && (await page.locator('.gen-owned').first().textContent()).includes('×'));
+await page.waitForTimeout(250);
+check('first crew affordable within 12s and purchasable', couldBuy
+  && (await page.locator('.gen-owned').first().textContent()).includes('\u00d7'));
+
+check('crew purchase raises passive rate',
+  parseFloat(await page.locator('.res-rate').textContent()) > 0,
+  (await page.locator('.res-rate').textContent()).trim());
+
+await page.click('.tab-btn[data-tab="shop"]');
+await page.waitForTimeout(150);
+check('shop tab renders with a non-ad currency balance', await page.locator('.shop-balance').count() === 1);
 
 await page.click('.tab-btn[data-tab="prestige"]');
 await page.waitForTimeout(150);
 check('prestige tab renders', await page.locator('#btn-prestige').count() === 1);
 check('meta upgrade tree renders', await page.locator('.meta-row').count() > 0);
-await page.click('.tab-btn[data-tab="mine"]');
 
-// Rewarded ad path: without the SDK, sdk.js simulates a ~1.5s ad, so the
-// reward must land exactly as it would after a real adFinished.
+// Every menu screen carries a banner slot for the SDK to fill (spec Part E).
+check('menu screens carry a banner slot', await page.locator('.banner-slot').count() === 1);
+await page.click('.tab-btn[data-tab="crew"]');
+
+// Rewarded flow: the offer must present a non-ad alternative alongside the ad.
 await page.click('#btn-boost');
+await page.waitForTimeout(200);
+const adBtns = await page.locator('.modal .btn-ad').count();
+const altBtns = await page.locator('.modal .btn').count();
+check('rewarded offer presents an ad path and a non-ad path', adBtns >= 1 && altBtns > adBtns);
+await page.click('.modal .btn-ad');
 await page.waitForTimeout(2200);
 check('rewarded 2x boost grants its reward',
-  (await page.locator('#btn-boost').textContent()).includes('2×'));
-
-// Idle production must accrue with no further input.
-const before = await page.locator('.res-value').textContent();
-await page.waitForTimeout(3000);
-const after = await page.locator('.res-value').textContent();
-check('idle production accrues without input', parseFloat(after) > parseFloat(before),
-  `${before.trim()} -> ${after.trim()}`);
+  (await page.locator('#btn-boost').textContent()).includes('\u26a1'));
 
 // Save persistence across a reload.
 await page.reload({ waitUntil: 'domcontentloaded' });
 await page.waitForSelector('.hud', { timeout: 10000 });
-const restored = await page.locator('.res-value').textContent();
-check('save persists across reload', parseFloat(restored) > 0, `${restored.trim()} ore`);
-check('tutorial does not replay for a returning player',
-  await page.locator('.tutorial').count() === 0);
+const restored = parseFloat(await page.locator('.res-value').textContent());
+check('save persists across reload', restored > 0, `${restored} ore`);
 
-// Right-click must be suppressed (CrazyGames requirement).
 const menuSuppressed = await page.evaluate(() => {
   const e = new MouseEvent('contextmenu', { bubbles: true, cancelable: true });
   document.body.dispatchEvent(e);
   return e.defaultPrevented;
 });
 check('right-click context menu disabled', menuSuppressed);
+
+// Frame budget: the field must animate, not stall, on a low-end device.
+const fps = await page.evaluate(() => new Promise(res => {
+  let n = 0; const t0 = performance.now();
+  const tick = () => { n++; performance.now() - t0 < 1000 ? requestAnimationFrame(tick) : res(n); };
+  requestAnimationFrame(tick);
+}));
+check('playfield animates at >=30fps', fps >= 30, `${fps}fps`);
 
 if (process.env.SMOKE_SCREENSHOT) {
   await page.screenshot({ path: process.env.SMOKE_SCREENSHOT });

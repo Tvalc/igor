@@ -60,10 +60,20 @@ async function boot() {
   sdk.gameplayStart();
   track('game_start');
 
-  // Autosave: 10s cadence + on hide/close (the Data Module debounces writes)
+  // Autosave: 10s cadence + on hide/close (the Data Module debounces writes).
+  // Hiding also stops the gameplay marker and pauses the sim, so a backgrounded
+  // tab neither accrues a live run nor counts as active playtime.
   setInterval(() => save.persist(game), 10000);
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) { save.persist(game); trackSessionLength(); }
+    if (document.hidden) {
+      save.persist(game);
+      trackSessionLength();
+      sdk.gameplayStop();
+      game.paused = true;
+    } else if (game.state.run.active) {
+      game.paused = false;
+      sdk.gameplayStart();
+    }
   });
   window.addEventListener('beforeunload', () => save.persist(game));
 }

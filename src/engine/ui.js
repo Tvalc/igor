@@ -1,9 +1,10 @@
 // DOM/CSS UI + canvas-2D playfield (spec Part L: no WebGL anywhere).
-// All menus (generators, prestige tree, modals) are DOM so they render fast on
-// low-end devices and stay outside the game loop; the canvas draws only the
-// animated playfield via the signature module.
+// Menus are DOM so they stay fast on low-end devices and outside the game
+// loop; the canvas draws only the active field via field.js.
 import { fmt, fmtTime } from './format.js';
 import { track } from './analytics.js';
+import * as sdk from './sdk.js';
+import { sfx, unlock as unlockAudio, setMuted, isMuted } from './audio.js';
 
 function el(tag, cls, text) {
   const n = document.createElement(tag);
@@ -12,14 +13,18 @@ function el(tag, cls, text) {
   return n;
 }
 
+const REROLL_CRYSTAL_COST = 1;
+const SKIP_CRYSTAL_COST = 1;
+const BOOST_CRYSTAL_COST = 2;
+const REVIVE_CRYSTAL_COST = 3;
+
 export class UI {
   constructor(game, root) {
     this.game = game;
     this.root = root;
-    this.tab = 'mine';
-    this.particles = [];
-    this.tapCount = 0;
-    this.tutorialStep = this.game.state.stats.runs > 0 || this.game.state.gens[game.theme.generators[0].id] > 0 ? 2 : 0;
+    this.tab = 'crew';
+    this.modalOpen = false;
+    this.wallBanner = null;
     game.ui = this;
     this.build();
     this.startLoops();
@@ -32,7 +37,7 @@ export class UI {
     this.root.append(
       this.header = el('header', 'hud'),
       this.playfield = el('div', 'playfield'),
-      this.sigPanel = el('div', 'sig-panel'),
+      this.sigBar = el('div', 'sig-bar'),
       this.tabs = el('nav', 'tabs'),
       this.panel = el('main', 'panel'),
       this.modalHost = el('div', 'modal-host'),
@@ -42,9 +47,9 @@ export class UI {
     this.canvas = el('canvas', 'field-canvas');
     this.playfield.append(this.canvas);
     this.ctx = this.canvas.getContext('2d');
-    this.playfield.addEventListener('pointerdown', (e) => this.onTap(e));
+    this.bindInput();
 
-    for (const [id, label] of [['mine', '⛏ Mine'], ['prestige', '💎 Prestige']]) {
+    for (const [id, label] of [['crew', '⛏ Crew'], ['shop', '💠 Shop'], ['prestige', '💎 Prestige']]) {
       const b = el('button', 'tab-btn', label);
       b.dataset.tab = id;
       b.addEventListener('click', () => { this.tab = id; this.renderPanel(); });
@@ -52,33 +57,79 @@ export class UI {
     }
 
     document.addEventListener('contextmenu', (e) => e.preventDefault()); // CrazyGames requirement
+    this.buildHeader();
+    this.buildSigBar();
     this.renderHeader();
     this.renderPanel();
-    if (this.tutorialStep < 2) this.showTutorial();
+    this.showHint();
+  }
+
+  // ---------- input: drag to move, WASD/arrows on desktop ----------
+
+  bindInput() {
+    const f = this.game.field;
+    const toLocal = (e) => {
+      const r = this.canvas.getBoundingClientRect();
+      return { x: e.clientX - r.left, y: e.clientY - r.top };
+    };
+    const down = (e) => {
+      unlockAudio();
+      this.dismissHint();
+      this.playfield.setPointerCapture?.(e.pointerId);
+      const p = toLocal(e);
+      f.setTarget(p.x, p.y);
+      this.dragging = true;
+    };
+    const move = (e) => {
+      if (!this.dragging) return;
+      const p = toLocal(e);
+      f.setTarget(p.x, p.y);
+    };
+    const up = (e) => {
+      this.dragging = false;
+      f.clearTarget();
+      this.playfield.releasePointerCapture?.(e.pointerId);
+    };
+    this.playfield.addEventListener('pointerdown', down);
+    this.playfield.addEventListener('pointermove', move);
+    this.playfield.addEventListener('pointerup', up);
+    this.playfield.addEventListener('pointercancel', up);
+
+    window.addEventListener('keydown', (e) => {
+      const k = e.key.toLowerCase();
+      if (['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(k)) {
+        e.preventDefault();
+        unlockAudio();
+        this.dismissHint();
+        f.keyDown(k);
+      }
+    });
+    window.addEventListener('keyup', (e) => f.keyUp(e.key.toLowerCase()));
+    window.addEventListener('blur', () => { f.clearTarget(); this.dragging = false; });
   }
 
   // ---------- loops ----------
 
   startLoops() {
-    // Logic + DOM refresh at 10 Hz; canvas at rAF (auto-throttled by browser)
+    // Fixed-step logic at 20Hz keeps the sim deterministic and cheap; the
+    // canvas runs on rAF so motion stays smooth independent of that step.
     let last = performance.now();
+    let acc = 0;
+    const STEP = 0.05;
     setInterval(() => {
       const now = performance.now();
-      const dt = Math.min(1, (now - last) / 1000);
+      acc += Math.min(0.5, (now - last) / 1000);
       last = now;
-      this.game.tick(dt);
+      while (acc >= STEP) { this.game.tick(STEP); acc -= STEP; }
       this.renderHeader();
-      this.renderSigPanel();
+      this.renderSigBar();
       this.refreshPanel();
       this.maybeOfferWall();
-    }, 100);
+    }, 50);
 
     const draw = (tms) => {
       this.resizeCanvas();
-      const { ctx, canvas } = this;
-      const w = canvas.width, h = canvas.height;
-      this.game.signature.render?.(ctx, w, h, tms / 1000);
-      this.drawParticles(ctx, tms / 1000);
+      this.game.field.render(this.ctx, this.canvas.width, this.canvas.height, tms / 1000);
       requestAnimationFrame(draw);
     };
     requestAnimationFrame(draw);
@@ -93,110 +144,128 @@ export class UI {
     }
   }
 
-  // ---------- header (built once; updated in place so buttons never get
-  // swapped out from under a mid-press finger) ----------
+  // ---------- header ----------
 
   buildHeader() {
     const g = this.game, t = g.theme;
     this.header.innerHTML = `
-      <div class="res-primary">
-        <span class="res-name">${t.resources.primary.name}</span>
-        <span class="res-value"></span>
+      <div class="hud-left">
+        <div class="res-row">
+          <span class="res-value"></span>
+          <span class="res-name">${t.resources.primary.name}</span>
+        </div>
         <span class="res-rate"></span>
       </div>
-      <div class="res-side">
-        <span class="res-prestige"></span>
-        <button class="btn-boost" id="btn-boost"></button>
+      <div class="hud-right">
+        <div class="hud-currencies">
+          <span class="res-prestige"></span>
+          <span class="res-premium"></span>
+        </div>
+        <div class="hud-buttons">
+          <button class="btn-icon" id="btn-mute" title="Mute"></button>
+          <button class="btn-boost" id="btn-boost"></button>
+        </div>
       </div>`;
     this.hdr = {
       value: this.header.querySelector('.res-value'),
       rate: this.header.querySelector('.res-rate'),
       prestige: this.header.querySelector('.res-prestige'),
+      premium: this.header.querySelector('.res-premium'),
       boost: this.header.querySelector('#btn-boost'),
+      mute: this.header.querySelector('#btn-mute'),
     };
-    this.hdr.boost.onclick = () => {
-      if (Date.now() < g.state.boostUntil) return;
-      g.ads.boost2x(() => { g.applyBoost2x(); this.toast('2× production active!'); });
+    this.hdr.boost.onclick = () => this.offerBoost();
+    this.hdr.mute.onclick = () => {
+      setMuted(!isMuted());
+      g.state.settings.muted = isMuted();
+      this.hdr.mute.textContent = isMuted() ? '🔇' : '🔊';
     };
+    setMuted(!!g.state.settings.muted);
+    this.hdr.mute.textContent = isMuted() ? '🔇' : '🔊';
   }
 
   renderHeader() {
-    if (!this.hdr) this.buildHeader();
     const g = this.game, t = g.theme;
     const boostLeft = Math.max(0, g.state.boostUntil - Date.now());
     this.hdr.value.textContent = fmt(g.state.primary);
-    this.hdr.rate.textContent = `${fmt(g.prodPerSec())}/s`;
-    this.hdr.prestige.textContent = `💎 ${g.state.prestige.held} ${t.resources.prestige.name}`;
+    this.hdr.rate.textContent = `${fmt(g.prodPerSec())}/s from crew`;
+    this.hdr.prestige.textContent = `💎 ${g.state.prestige.held}`;
+    this.hdr.premium.textContent = `💠 ${g.state.premium}`;
     this.hdr.boost.classList.toggle('active', boostLeft > 0);
-    this.hdr.boost.textContent = boostLeft ? `⚡ 2× ${fmtTime(boostLeft / 1000)}` : '📺 2× boost';
+    this.hdr.boost.textContent = boostLeft ? `⚡ ${fmtTime(boostLeft / 1000)}` : '2×';
   }
 
-  // ---------- signature panel (same build-once pattern; action buttons are
-  // persistent slots keyed by action id) ----------
+  // ---------- signature bar: health + depth ----------
 
-  buildSigPanel(p) {
-    this.sigPanel.innerHTML = `
-      <div class="sig-title"></div>
-      <div class="bar stability"><div class="bar-fill"></div><span></span></div>
-      <div class="bar descend"><div class="bar-fill"></div><span></span></div>
-      <div class="sig-actions"></div>`;
-    const host = this.sigPanel.querySelector('.sig-actions');
+  buildSigBar() {
+    this.sigBar.innerHTML = `
+      <div class="bar health"><div class="bar-fill"></div><span></span></div>
+      <div class="depth-row">
+        <div class="bar depth"><div class="bar-fill"></div><span></span></div>
+        <button class="btn btn-descend" id="btn-descend"></button>
+      </div>`;
     this.sig = {
-      title: this.sigPanel.querySelector('.sig-title'),
-      stabFill: this.sigPanel.querySelector('.stability .bar-fill'),
-      stabText: this.sigPanel.querySelector('.stability span'),
-      descFill: this.sigPanel.querySelector('.descend .bar-fill'),
-      descText: this.sigPanel.querySelector('.descend span'),
-      buttons: {},
+      hpFill: this.sigBar.querySelector('.health .bar-fill'),
+      hpText: this.sigBar.querySelector('.health span'),
+      dFill: this.sigBar.querySelector('.depth .bar-fill'),
+      dText: this.sigBar.querySelector('.depth span'),
+      descend: this.sigBar.querySelector('#btn-descend'),
     };
-    for (const a of p.actions) {
-      const b = el('button', 'btn sig-btn');
-      b.onclick = () => this.sigActionById[a.id]?.onClick();
-      host.append(b);
-      this.sig.buttons[a.id] = b;
-    }
+    this.sig.descend.onclick = () => {
+      const p = this.game.signature.panel();
+      const a = p.actions.find(x => x.id === 'descend');
+      if (a?.enabled) { a.onClick(); this.renderSigBar(); }
+    };
   }
 
-  renderSigPanel() {
-    const p = this.game.signature.panel?.();
-    if (!p) { this.sigPanel.hidden = true; return; }
-    this.sigPanel.hidden = false;
-    if (!this.sig) this.buildSigPanel(p);
-    this.sigActionById = Object.fromEntries(p.actions.map(a => [a.id, a]));
-    this.sig.title.textContent = p.title;
-    this.sig.stabFill.style.width = `${p.stability}%`;
-    this.sig.stabText.textContent = `Stability ${Math.round(p.stability)}%`;
-    this.sig.descFill.style.width = `${p.descendProgress * 100}%`;
-    this.sig.descText.textContent = p.descendLabel;
-    for (const a of p.actions) {
-      const b = this.sig.buttons[a.id];
-      if (!b) continue;
-      b.textContent = a.label;
-      b.disabled = !a.enabled;
-    }
+  renderSigBar() {
+    const g = this.game;
+    const hp = g.field.hp(), maxHp = g.field.maxHpValue();
+    const pct = Math.max(0, Math.min(1, hp / maxHp));
+    this.sig.hpFill.style.width = `${pct * 100}%`;
+    this.sig.hpFill.classList.toggle('low', pct < 0.34);
+    this.sig.hpText.textContent = `♥ ${Math.max(0, Math.ceil(hp))} / ${Math.round(maxHp)}`;
+    const p = g.signature.panel();
+    this.sig.dFill.style.width = `${p.progress * 100}%`;
+    this.sig.dText.textContent = `${p.title} · ${p.subtitle}`;
+    const a = p.actions.find(x => x.id === 'descend');
+    this.sig.descend.textContent = a.label;
+    this.sig.descend.disabled = !a.enabled;
+    this.sig.descend.title = a.enabled ? a.hint : p.progressLabel;
   }
 
   // ---------- panels ----------
 
   renderPanel() {
     for (const b of this.tabs.children) b.classList.toggle('on', b.dataset.tab === this.tab);
+    sdk.clearAllBanners();
     this.panel.innerHTML = '';
-    if (this.tab === 'mine') this.renderGenerators();
+    if (this.tab === 'crew') this.renderCrew();
+    else if (this.tab === 'shop') this.renderShop();
     else this.renderPrestige();
+    this.attachBanner();
+  }
+
+  // Menu screens carry a banner slot; the SDK fills it when present and the
+  // container simply stays empty otherwise (adblock / local dev).
+  attachBanner() {
+    const slot = el('div', 'banner-slot');
+    slot.id = `banner-${this.tab}`;
+    this.panel.append(slot);
+    sdk.requestBanner(slot.id, 320, 50);
   }
 
   refreshPanel() {
-    // cheap in-place refresh of dynamic bits (costs/affordability) at 10 Hz
-    if (this.tab === 'mine') {
+    if (this.tab === 'crew') {
       for (const row of this.panel.querySelectorAll('.gen-row')) {
         const g = this.game.theme.generators.find(x => x.id === row.dataset.gen);
-        this.fillGenRow(row, g);
+        if (g) this.fillGenRow(row, g);
       }
-    } else {
+    } else if (this.tab === 'prestige') {
       const gainEl = this.panel.querySelector('.prestige-gain');
       if (gainEl) {
         const gain = this.game.prestigeGainNow();
-        gainEl.textContent = `Cash out now for +${gain} ${this.game.theme.resources.prestige.name}`;
+        gainEl.textContent = `+${gain} 💎 ${this.game.theme.resources.prestige.name}`;
         const btn = this.panel.querySelector('#btn-prestige');
         if (btn) btn.disabled = gain < 1 || !this.game.state.run.active;
       }
@@ -207,7 +276,9 @@ export class UI {
     }
   }
 
-  renderGenerators() {
+  renderCrew() {
+    const note = el('p', 'panel-note', 'Crew mine on their own — they are the figures working the veins on screen.');
+    this.panel.append(note);
     for (const g of this.game.theme.generators) {
       const row = el('div', 'gen-row');
       row.dataset.gen = g.id;
@@ -221,8 +292,8 @@ export class UI {
           <button class="btn buy-1"></button>
           <button class="btn buy-max"></button>
         </div>`;
-      row.querySelector('.buy-1').onclick = () => { if (this.game.buyGenerator(g, 1)) this.afterBuy(); };
-      row.querySelector('.buy-max').onclick = () => { if (this.game.buyGenerator(g, 'max')) this.afterBuy(); };
+      row.querySelector('.buy-1').onclick = () => this.game.buyGenerator(g, 1) && this.renderHeader();
+      row.querySelector('.buy-max').onclick = () => this.game.buyGenerator(g, 'max') && this.renderHeader();
       this.fillGenRow(row, g);
       this.panel.append(row);
     }
@@ -238,16 +309,52 @@ export class UI {
       ? `${fmt(g.baseProd * owned)}/s base`
       : `${fmt(g.baseProd)}/s each`;
     const b1 = row.querySelector('.buy-1');
-    b1.textContent = `Buy 1 — ${fmt(cost1)}`;
+    b1.textContent = `${fmt(cost1)}`;
     b1.disabled = !game.state.primary.gte(cost1);
     const bm = row.querySelector('.buy-max');
-    bm.textContent = maxN > 1 ? `Max ×${maxN} — ${fmt(game.genCost(g, maxN))}` : 'Max';
+    bm.textContent = maxN > 1 ? `Max ×${maxN}` : 'Max';
     bm.disabled = maxN < 1;
   }
 
-  afterBuy() {
-    this.renderHeader();
-    if (this.tutorialStep === 1) this.advanceTutorial();
+  renderShop() {
+    const g = this.game, t = g.theme;
+    const wrap = el('div', 'shop-wrap');
+    wrap.innerHTML = `
+      <div class="shop-head">
+        <div class="shop-balance">💠 ${g.state.premium} ${t.resources.premium.name}</div>
+        <p class="panel-note">Earned by reaching new depths. Spent to skip an ad.</p>
+      </div>`;
+    this.panel.append(wrap);
+
+    const daily = el('div', 'meta-row');
+    daily.innerHTML = `
+      <div class="gen-info">
+        <div class="gen-name">Supply Drop</div>
+        <div class="gen-prod">+3 ${t.resources.premium.name}, once per session</div>
+      </div>`;
+    const dailyBtn = el('button', 'btn btn-ad', g.ads.dailyClaimUsedThisSession ? 'Claimed' : '📺 Claim');
+    dailyBtn.disabled = g.ads.dailyClaimUsedThisSession || !g.ads.enabled('dailyFreeCurrency');
+    dailyBtn.onclick = () => {
+      g.ads.dailyFreeCurrency(() => {
+        g.grantPremium(3);
+        sfx.buy();
+        this.toast(`+3 ${t.resources.premium.name}`);
+        this.renderPanel();
+      });
+    };
+    daily.append(dailyBtn);
+    this.panel.append(daily);
+
+    const boost = el('div', 'meta-row');
+    boost.innerHTML = `
+      <div class="gen-info">
+        <div class="gen-name">Double Output</div>
+        <div class="gen-prod">2× all ore for ${t.ads?.boost2xMinutes ?? 5} minutes</div>
+      </div>`;
+    const boostBtn = el('button', 'btn', 'Activate');
+    boostBtn.onclick = () => this.offerBoost();
+    boost.append(boostBtn);
+    this.panel.append(boost);
   }
 
   renderPrestige() {
@@ -255,15 +362,17 @@ export class UI {
     const wrap = el('div', 'prestige-wrap');
     wrap.innerHTML = `
       <div class="prestige-card">
+        <div class="prestige-label">Cash out this expedition</div>
         <div class="prestige-gain"></div>
-        <p class="prestige-hint">Ends the run: ${t.resources.primary.name} and gear reset, ${t.resources.prestige.name} are forever (+${t.economy.prestigePerLevelBonusPct}% production each).</p>
-        <button class="btn btn-big" id="btn-prestige">💎 Cash out & restart</button>
+        <p class="prestige-hint">Ends the run. ${t.resources.primary.name} and crew reset; ${t.resources.prestige.name} are forever, +${t.economy.prestigePerLevelBonusPct}% output each.</p>
+        <button class="btn btn-big" id="btn-prestige">💎 Cash out &amp; dig again</button>
       </div>
       <h3 class="meta-head">Permanent upgrades</h3>`;
     wrap.querySelector('#btn-prestige').onclick = () => {
       const summary = g.endRun('voluntary');
       if (summary) this.showRunSummary(summary);
     };
+    this.panel.append(wrap);
     for (const def of g.metaUpgradeDefs) {
       const owned = !!g.state.metaUpgrades[def.id];
       const row = el('div', 'meta-row');
@@ -276,100 +385,119 @@ export class UI {
       const btn = row.querySelector('button');
       btn.disabled = owned || g.state.prestige.held < def.cost;
       btn.onclick = () => { if (g.buyMetaUpgrade(def.id)) this.renderPanel(); };
-      wrap.append(row);
-    }
-    this.panel.append(wrap);
-  }
-
-  // ---------- tap ----------
-
-  onTap(e) {
-    const gain = this.game.tap();
-    if (gain.isZero()) return;
-    const r = this.playfield.getBoundingClientRect();
-    this.particles.push({ x: e.clientX - r.left, y: e.clientY - r.top, t0: performance.now() / 1000, text: `+${fmt(gain)}` });
-    if (this.particles.length > 24) this.particles.shift();
-    this.tapCount += 1;
-    if (this.tutorialStep === 0 && this.tapCount >= 3) this.advanceTutorial();
-  }
-
-  drawParticles(ctx, t) {
-    this.particles = this.particles.filter(p => t - p.t0 < 1);
-    ctx.textAlign = 'center';
-    ctx.font = '700 16px system-ui, sans-serif';
-    for (const p of this.particles) {
-      const age = t - p.t0;
-      ctx.fillStyle = `rgba(255, 210, 74, ${(1 - age).toFixed(2)})`;
-      ctx.fillText(p.text, p.x, p.y - age * 48);
+      this.panel.append(row);
     }
   }
 
-  // ---------- tutorial (2 steps, ≤15s) ----------
+  // ---------- ad offers (every one has a non-ad path, per spec Part E) ----------
 
-  showTutorial() {
-    this.tutorialEl = el('div', 'tutorial', this.tutorialStep === 0
-      ? `👆 Tap the shaft to mine ${this.game.theme.resources.primary.name}!`
-      : `Buy your first ${this.game.theme.generators[0].name} below ⬇`);
-    this.root.append(this.tutorialEl);
+  offerBoost() {
+    const g = this.game;
+    if (Date.now() < g.state.boostUntil) return;
+    this.choiceModal({
+      title: '⚡ Double Output',
+      body: `2× all ore for ${g.theme.ads?.boost2xMinutes ?? 5} minutes.`,
+      adLabel: '📺 Watch to activate',
+      onAd: () => g.ads.boost2x(() => { g.applyBoost2x(); this.toast('2× output active'); }),
+      altLabel: `💠 ${BOOST_CRYSTAL_COST}`,
+      altEnabled: g.state.premium >= BOOST_CRYSTAL_COST,
+      onAlt: () => { g.state.premium -= BOOST_CRYSTAL_COST; g.applyBoost2x(); this.toast('2× output active'); },
+    });
   }
 
-  advanceTutorial() {
-    this.tutorialStep += 1;
-    this.tutorialEl?.remove();
-    if (this.tutorialStep === 1) this.showTutorial();
-    else track('tutorial_complete');
+  choiceModal({ title, body, adLabel, onAd, altLabel, altEnabled, onAlt, dismissLabel = 'Not now', onDismiss }) {
+    const m = this.modal('choice');
+    m.append(el('h2', null, title));
+    if (body) m.append(el('p', null, body));
+    const ad = el('button', 'btn btn-ad btn-big', adLabel);
+    ad.onclick = () => { this.closeModal(); onAd(); };
+    m.append(ad);
+    if (altLabel) {
+      const alt = el('button', 'btn', altLabel);
+      alt.disabled = !altEnabled;
+      alt.onclick = () => { this.closeModal(); onAlt(); };
+      m.append(alt);
+    }
+    const no = el('button', 'btn btn-quiet', dismissLabel);
+    no.onclick = () => { this.closeModal(); onDismiss?.(); };
+    m.append(no);
   }
 
   // ---------- level up ----------
 
   showLevelUp(choices, wasReroll) {
     const g = this.game;
+    sfx.levelUp();
     const m = this.modal('level-up');
-    m.append(el('h2', null, `Level ${g.state.run.level + 1}! Pick one:`));
+    m.append(el('h2', null, `Level ${g.state.run.level + 1}`));
+    m.append(el('p', null, 'Pick one. It lasts this run only.'));
     const cards = el('div', 'choice-cards');
     for (const c of choices) {
       const card = el('button', `choice ${c.rare ? 'rare' : ''}`);
       card.append(el('div', 'choice-name', c.name), el('div', 'choice-desc', c.desc));
-      card.onclick = () => { this.closeModal(); g.run.choose(c, wasReroll); };
+      card.onclick = () => { this.closeModal(); g.run.choose(c, wasReroll); sfx.buy(); };
       cards.append(card);
     }
     m.append(cards);
-    if (g.ads.enabled('rerollUpgrade') && !wasReroll) {
-      const rb = el('button', 'btn btn-ad', '📺 Reroll choices');
+    if (!wasReroll && g.ads.enabled('rerollUpgrade')) {
+      const row = el('div', 'modal-row');
+      const rb = el('button', 'btn btn-ad', '📺 Reroll');
       rb.onclick = () => g.ads.rerollUpgrade(() => g.run.reroll());
-      m.append(rb);
+      const cb = el('button', 'btn', `💠 ${REROLL_CRYSTAL_COST} Reroll`);
+      cb.disabled = g.state.premium < REROLL_CRYSTAL_COST;
+      cb.onclick = () => { g.state.premium -= REROLL_CRYSTAL_COST; g.run.reroll(); };
+      row.append(rb, cb);
+      m.append(row);
     }
   }
 
-  // ---------- death / revive / summary ----------
+  // ---------- death / revive ----------
 
   onDying() {
     const g = this.game;
-    if (!g.ads.canRevive()) { this.onDeath(g.endRun('death')); return; }
+    sfx.hurt();
+    if (!g.ads.canRevive() && g.state.premium < REVIVE_CRYSTAL_COST) {
+      this.onDeath(g.endRun('death'));
+      return;
+    }
     const m = this.modal('revive');
-    m.append(el('h2', null, '💥 Cave-in!'));
+    m.append(el('h2', null, '💀 You went down'));
+    m.append(el('p', null, `Depth ${g.signature.band + 1} · ${fmtTime(g.state.run.seconds)} in`));
     const count = el('div', 'revive-count', '5');
     m.append(count);
     let left = 5;
     const timer = setInterval(() => {
       left -= 1;
       count.textContent = String(left);
-      if (left <= 0) { clearInterval(timer); decline(); }
+      if (left <= 0) decline();
     }, 1000);
     const decline = () => {
       clearInterval(timer);
       this.closeModal();
       this.onDeath(g.endRun('death'));
     };
-    const rb = el('button', 'btn btn-ad btn-big', '📺 Shore up & keep digging');
-    rb.onclick = () => {
+    if (g.ads.canRevive()) {
+      const rb = el('button', 'btn btn-ad btn-big', '📺 Get back up');
+      rb.onclick = () => {
+        clearInterval(timer);
+        this.closeModal();
+        g.ads.revive(() => { g.revive(); this.toast('Back on your feet'); });
+      };
+      m.append(rb);
+    }
+    const cb = el('button', 'btn', `💠 ${REVIVE_CRYSTAL_COST} Get back up`);
+    cb.disabled = g.state.premium < REVIVE_CRYSTAL_COST;
+    cb.onclick = () => {
       clearInterval(timer);
       this.closeModal();
-      g.ads.revive(() => { g.revive(); g.paused = false; this.toast('Back in action!'); });
+      g.state.premium -= REVIVE_CRYSTAL_COST;
+      g.revive();
+      this.toast('Back on your feet');
     };
-    const db = el('button', 'btn', 'Accept fate');
+    m.append(cb);
+    const db = el('button', 'btn btn-quiet', 'End the run');
     db.onclick = decline;
-    m.append(rb, db);
+    m.append(db);
   }
 
   onDeath(summary) { if (summary) this.showRunSummary(summary); }
@@ -377,22 +505,44 @@ export class UI {
   showRunSummary(summary) {
     const g = this.game, t = g.theme;
     g.paused = false;
+    // Reaching a new deepest band is the non-ad source of premium currency.
+    let crystals = 0;
+    if (summary.depth - 1 > (g.state.stats.bestDepthBanked ?? 0)) {
+      crystals = (summary.depth - 1) - (g.state.stats.bestDepthBanked ?? 0);
+      g.state.stats.bestDepthBanked = summary.depth - 1;
+      g.grantPremium(crystals);
+    }
     const m = this.modal('summary');
     m.append(
-      el('h2', null, summary.reason === 'death' ? '💥 The mine claimed you' : '🏁 Expedition complete'),
-      el('p', null, `Run: ${fmtTime(summary.runSeconds)} · Level ${summary.level}`),
-      el('p', null, `Lifetime ${t.resources.primary.name}: ${fmt(summary.lifetime)}`),
-      el('p', 'summary-gain', `+${summary.gain} 💎 ${t.resources.prestige.name}`),
+      el('h2', null, summary.reason === 'death' ? '💀 The deep took you' : '🏁 Expedition banked'),
+      el('div', 'summary-stats', ''),
     );
+    const stats = m.querySelector('.summary-stats');
+    for (const [k, v] of [
+      ['Time', fmtTime(summary.runSeconds)],
+      ['Depth', `${summary.depth}`],
+      ['Level', `${summary.level}`],
+      ['Cleared', `${summary.kills}`],
+    ]) {
+      const cell = el('div', 'summary-cell');
+      cell.append(el('div', 'summary-k', k), el('div', 'summary-v', v));
+      stats.append(cell);
+    }
+    m.append(el('p', 'summary-gain', `+${summary.gain} 💎 ${t.resources.prestige.name}`));
+    if (crystals > 0) m.append(el('p', 'summary-bonus', `New depth record · +${crystals} 💠 ${t.resources.premium.name}`));
     const btn = el('button', 'btn btn-big', '⛏ Dig again — stronger');
     btn.onclick = () => {
       this.closeModal();
       g.ads.runEndInterstitial(() => {
         g.startRun();
         this.renderPanel();
+        this.renderSigBar();
       });
     };
     m.append(btn);
+    const spend = el('button', 'btn btn-quiet', '💎 Spend gems first');
+    spend.onclick = () => { this.closeModal(); this.tab = 'prestige'; this.renderPanel(); };
+    m.append(spend);
   }
 
   // ---------- offline ----------
@@ -401,49 +551,62 @@ export class UI {
     const g = this.game, t = g.theme;
     const m = this.modal('offline');
     m.append(
-      el('h2', null, '⛏ While you were away…'),
-      el('p', null, `Your crew mined for ${fmtTime(offer.seconds)}:`),
+      el('h2', null, '⛏ The crew kept working'),
+      el('p', null, `${fmtTime(offer.seconds)} away`),
       el('p', 'summary-gain', `+${fmt(offer.amount)} ${t.resources.primary.name}`),
     );
-    const claim = el('button', 'btn', `Claim ${fmt(offer.amount)}`);
-    claim.onclick = () => { this.closeModal(); g.claimOffline(offer, false); };
-    m.append(claim);
     if (g.ads.enabled('offlineDoubler')) {
-      const dbl = el('button', 'btn btn-ad btn-big', `📺 Claim ${fmt(offer.amount.mulNum(2))} (2×)`);
-      dbl.onclick = () => {
-        this.closeModal();
-        g.ads.offlineDoubler(() => g.claimOffline(offer, true));
-      };
+      const dbl = el('button', 'btn btn-ad btn-big', `📺 Take ${fmt(offer.amount.mulNum(2))} (2×)`);
+      dbl.onclick = () => { this.closeModal(); g.ads.offlineDoubler(() => g.claimOffline(offer, true)); };
       m.append(dbl);
     }
+    const claim = el('button', 'btn', `Take ${fmt(offer.amount)}`);
+    claim.onclick = () => { this.closeModal(); g.claimOffline(offer, false); };
+    m.append(claim);
   }
 
-  // ---------- wall / skip offer ----------
+  // ---------- wall offer ----------
 
   maybeOfferWall() {
     const g = this.game;
     if (!g.state.run.active || this.wallBanner || this.modalOpen) return;
-    if (!g.run.checkWall()) return;
     if (!g.ads.enabled('skipWall')) return;
+    if (!g.run.checkWall()) return;
     const grant = g.prodPerSec().mulNum(90);
     if (grant.isZero()) return;
     const b = el('div', 'wall-banner');
-    b.append(el('span', null, 'Progress slowing?'));
-    const ad = el('button', 'btn btn-ad', `📺 +${fmt(grant)} instantly`);
-    ad.onclick = () => {
-      g.ads.skipWall(() => { g.earn(grant); this.toast(`+${fmt(grant)}!`); });
-      dismiss();
-    };
-    const x = el('button', 'btn-x', '✕');
+    b.append(el('span', null, 'Stuck for ore?'));
     const dismiss = () => { b.remove(); this.wallBanner = null; };
+    const ad = el('button', 'btn btn-ad', `📺 +${fmt(grant)}`);
+    ad.onclick = () => { g.ads.skipWall(() => { g.earn(grant); this.toast(`+${fmt(grant)}`); }); dismiss(); };
+    const alt = el('button', 'btn', `💠 ${SKIP_CRYSTAL_COST}`);
+    alt.disabled = g.state.premium < SKIP_CRYSTAL_COST;
+    alt.onclick = () => { g.state.premium -= SKIP_CRYSTAL_COST; g.earn(grant); this.toast(`+${fmt(grant)}`); dismiss(); };
+    const x = el('button', 'btn-x', '✕');
     x.onclick = dismiss;
-    b.append(ad, x);
+    b.append(ad, alt, x);
     this.root.append(b);
     this.wallBanner = b;
     setTimeout(dismiss, 20000);
   }
 
-  // ---------- modal / toast plumbing ----------
+  // ---------- hint / modal / toast ----------
+
+  showHint() {
+    // Anyone who has already banked ore or finished a run knows the controls;
+    // reloading mid-run should not replay the tutorial.
+    const g = this.game;
+    if (g.state.stats.runs > 0 || g.state.prestige.lifetime.gt(50)) return;
+    this.hintEl = el('div', 'hint', '👆 Drag to move — you mine and fight automatically');
+    this.playfield.append(this.hintEl);
+  }
+
+  dismissHint() {
+    if (!this.hintEl) return;
+    this.hintEl.remove();
+    this.hintEl = null;
+    track('tutorial_complete');
+  }
 
   modal(kind) {
     this.modalHost.innerHTML = '';
@@ -463,7 +626,7 @@ export class UI {
   toast(msg) {
     const n = el('div', 'toast', msg);
     this.toastHost.append(n);
-    setTimeout(() => n.classList.add('out'), 2200);
-    setTimeout(() => n.remove(), 2800);
+    setTimeout(() => n.classList.add('out'), 2000);
+    setTimeout(() => n.remove(), 2600);
   }
 }

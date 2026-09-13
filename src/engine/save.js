@@ -20,13 +20,14 @@ export function serialize(game) {
     v: SAVE_VERSION,
     themeId: game.theme.themeId,
     t: Date.now(),
-    res: { primary: s.primary.serialize() },
+    res: { primary: s.primary.serialize(), premium: s.premium },
     gens: { ...s.gens },
     runUpgrades: [...s.runUpgrades],
     metaUpgrades: { ...s.metaUpgrades },
     prestige: { held: s.prestige.held, lifetime: s.prestige.lifetime.serialize() },
     run: { seconds: s.run.seconds, level: s.run.level, active: s.run.active },
     signature: game.signature?.serialize() ?? null,
+    field: game.field?.serialize() ?? null,
     meta: { offlineCapHours: s.meta.offlineCapHours, unlocks: [...s.meta.unlocks] },
     stats: { ...s.stats },
     settings: { ...s.settings },
@@ -57,6 +58,7 @@ export function load(themeId) {
 export function hydrate(game, save) {
   const s = game.state;
   if (save.res?.primary) s.primary = Dec.parse(save.res.primary);
+  if (typeof save.res?.premium === 'number') s.premium = save.res.premium;
   if (save.gens) for (const id of Object.keys(s.gens)) {
     if (typeof save.gens[id] === 'number') s.gens[id] = save.gens[id];
   }
@@ -78,5 +80,6 @@ export function hydrate(game, save) {
   if (save.stats) s.stats = { ...s.stats, ...save.stats };
   if (save.settings) s.settings = { ...s.settings, ...save.settings };
   if (save.signature && game.signature?.hydrate) game.signature.hydrate(save.signature);
+  if (save.field && game.field?.hydrate) game.field.hydrate(save.field);
   return save.t ?? null;
 }

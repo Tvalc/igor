@@ -79,3 +79,28 @@ export function migrateLegacyKey(key) {
     if (local && !state.sdk.data.getItem(key)) state.sdk.data.setItem(key, local);
   } catch (e) {}
 }
+
+// ---- banners (spec Part E) ----
+// Idle games are menu-heavy, and CrazyGames flags banners as underutilized
+// passive revenue. Each menu screen owns a container; we request on show and
+// clear on hide so a banner never sits behind the active playfield.
+const bannerIds = new Set();
+
+export function requestBanner(containerId, width = 320, height = 50) {
+  if (!state.sdk?.banner) return false;
+  try {
+    state.sdk.banner.requestBanner({ id: containerId, width, height });
+    bannerIds.add(containerId);
+    return true;
+  } catch (e) { return false; }
+}
+
+export function clearBanner(containerId) {
+  if (!state.sdk?.banner || !bannerIds.has(containerId)) return;
+  try { state.sdk.banner.clearBanner(containerId); } catch (e) {}
+  bannerIds.delete(containerId);
+}
+
+export function clearAllBanners() {
+  for (const id of [...bannerIds]) clearBanner(id);
+}

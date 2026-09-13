@@ -45,7 +45,14 @@ async function collect(id) {
     .replace(IMPORT_NAMED, (_, names, spec) => {
       const dep = resolveId(id, spec);
       deps.push(dep);
-      return `const {${names}} = __m[${JSON.stringify(dep)}];`;
+      // `import { a as b }` becomes `const { a: b }` — destructuring renames
+      // with a colon, not `as`, and getting this wrong produces a bundle that
+      // parses nowhere (caught by `npm run test:smoke:dist`).
+      const bound = names.split(',').map(n => {
+        const m = n.trim().match(/^(\w+)\s+as\s+(\w+)$/);
+        return m ? `${m[1]}: ${m[2]}` : n.trim();
+      }).filter(Boolean).join(', ');
+      return `const {${bound}} = __m[${JSON.stringify(dep)}];`;
     })
     .replace(IMPORT_NS, (_, ns, spec) => {
       const dep = resolveId(id, spec);
