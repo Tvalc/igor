@@ -6,12 +6,32 @@ Full design & production doctrine: [`docs/IDLE_FORGE_ENGINE_SPEC.md`](docs/IDLE_
 
 ## Play it
 
-No build step — plain ES modules, DOM/CSS UI + canvas-2D playfield (no WebGL, per spec Part L):
+The source tree runs unbuilt — plain ES modules, DOM/CSS UI + canvas-2D playfield (no WebGL, per spec Part L). It must be served over HTTP rather than opened as a file, since ES modules and the theme-pack fetch are both origin-scoped:
 
 ```sh
 npm start          # or: python3 -m http.server 8080
 # open http://localhost:8080
 ```
+
+That serves from whichever machine runs the command — if you are driving a cloud/remote session, its localhost is not yours. To play on your own machine, clone first:
+
+```sh
+git clone https://github.com/Tvalc/igor.git && cd igor
+git checkout claude/idle-forge-engine-spec-it1gip
+npm start
+```
+
+## Build it
+
+`npm run build` inlines the whole module graph, the CSS, and the theme pack into a single self-contained `dist/index.html` (~60 KB) — the production shape spec Part L calls for, and openable directly from disk with no server:
+
+```sh
+npm run build            # dist/index.html, CrazyGames SDK tag included
+npm run build:preview    # dist/preview/index.html, SDK tag omitted for non-portal hosting
+npm run test:smoke:dist  # build, then run the full browser suite against the bundle
+```
+
+Build flags: `--theme themes/x.json` picks the variant, `--out <dir>` the destination, `--no-sdk` drops the portal SDK tag, `--minify` strips comments and blank lines. The build fails if the output crosses the 20MB gate.
 
 Without the CrazyGames SDK (local dev, adblock) every SDK call no-ops safely and rewarded ads are simulated with a ~1.5s delay, so every placement stays testable offline.
 
@@ -26,13 +46,15 @@ npm test           # all three layers
 Or individually:
 
 ```sh
-npm run test:unit    # 15 formula assertions: cost curves, closed-form bulk buy,
-                     # prestige roots, offline caps, clock-rollback safety
-npm run test:sim     # 20-minute headless bot run: loop invariants, death ->
-                     # prestige conversion, save round-trip, offline/rollback
-npm run test:smoke   # real browser (Playwright): load time, tutorial, tapping,
-                     # purchase, tabs, rewarded-ad reward, idle accrual, save
-                     # persistence across reload, right-click suppression
+npm run test:unit       # 15 formula assertions: cost curves, closed-form bulk buy,
+                        # prestige roots, offline caps, clock-rollback safety
+npm run test:sim        # 20-minute headless bot run: loop invariants, death ->
+                        # prestige conversion, save round-trip, offline/rollback
+npm run test:smoke      # real browser (Playwright): load time, tutorial, tapping,
+                        # purchase, tabs, rewarded-ad reward, idle accrual, save
+                        # persistence across reload, right-click suppression
+npm run test:smoke:dist # the same 11 checks against the built single-file bundle,
+                        # so a broken build fails here and not after deploy
 ```
 
 `test:smoke` needs Playwright (`npm i`); it skips cleanly rather than failing if Playwright isn't installed. Add `--headed` (`npm run test:smoke:headed`) to watch it drive the game, or set `SMOKE_SCREENSHOT=out.png` to capture a frame.

@@ -11,10 +11,14 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
 const HEADED = args.includes('--headed');
 const PORT = Number(args[args.indexOf('--port') + 1]) || 8123;
+// --root lets the same checks run against the built single-file bundle
+// (--root dist) as well as the unbundled source tree, so a build that breaks
+// the module inlining fails here rather than after deploy.
+const ROOT = path.resolve(REPO, args.includes('--root') ? args[args.indexOf('--root') + 1] : '.');
 
 // Playwright may live in a global install; try the local resolution first.
 function loadChromium() {

@@ -11,7 +11,10 @@ const THEME_URL = document.currentScript?.dataset?.theme
   ?? document.querySelector('meta[name="theme-pack"]')?.content
   ?? 'themes/deepcore_mine.json';
 
+// A single-file build (tools/build.mjs) inlines the pack so the game needs no
+// network at all; the fetch path is the unbundled dev/source-tree case.
 async function loadTheme() {
+  if (window.__THEME_PACK__) return window.__THEME_PACK__;
   const res = await fetch(THEME_URL);
   if (!res.ok) throw new Error(`Theme pack failed to load: ${THEME_URL}`);
   return res.json();
