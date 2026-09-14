@@ -35,7 +35,7 @@ Build flags: `--theme themes/x.json` picks the variant, `--out <dir>` the destin
 
 Without the CrazyGames SDK (local dev, adblock) every SDK call no-ops safely and rewarded ads are simulated with a ~1.5s delay, so every placement stays testable offline.
 
-**What to look for in a manual pass**, in the order the player hits it: ore ticking up before you touch anything; the first crew affordable inside ~10s; a level-up pick at 60s; the Descend button unlocking once the depth quota fills, and the cavern getting visibly busier after it; health dropping when something reaches you, and the revive offer at zero; then cash out on Prestige and confirm gems buy upgrades that carry into the next run. To re-test the first-run experience, clear the save: `localStorage.clear()` in the console, then reload. To exercise offline earnings without waiting, close the tab for a couple of minutes and reopen — the claim modal with its 2× ad offer appears above one minute away.
+**What to look for in a manual pass**, in the order the player hits it: nothing happening until you steer the miner (standing still is deliberately unproductive); the first crew affordable inside ~10s of actually playing; a level-up pick at 60s; the Descend button unlocking once the depth quota fills, and the cavern getting visibly busier after it; health dropping when something reaches you, and the revive offer at zero; then cash out on Prestige and confirm gems buy upgrades that carry into the next run. To re-test the first-run experience, clear the save: `localStorage.clear()` in the console, then reload. To exercise offline earnings without waiting, close the tab for a couple of minutes and reopen — the claim modal with its 2× ad offer appears above one minute away.
 
 ## Test it on a phone
 
@@ -62,8 +62,8 @@ npm run test:unit       # 15 formula assertions: cost curves, closed-form bulk b
                         # prestige roots, offline caps, clock-rollback safety
 npm run test:sim        # two 30-min bot profiles: run length, descent risk/reward,
                         # prestige payout, save round-trip, offline/rollback
-npm run test:smoke      # real browser (Playwright): load time, idle earning, drag
-                        # input, first purchase, all three tabs, banner slot,
+npm run test:smoke      # real browser (Playwright): load time, that idling does
+                        # NOT pay while steering does, first purchase, tabs, banner,
                         # rewarded offer + its non-ad path, save persistence,
                         # right-click suppression, frame rate
 npm run test:smoke:dist # the same 31 checks against the built single-file bundle,
