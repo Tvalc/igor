@@ -62,12 +62,15 @@ body {
 .hud-currencies { display: flex; gap: 8px; font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .hud-buttons { display: flex; gap: 5px; }
 .btn-icon {
-  padding: 5px 7px; font-size: 12px; line-height: 1;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 40px; min-height: 40px;
+  padding: 4px 6px; font-size: 15px; line-height: 1;
   background: var(--c-panel); color: var(--c-text);
-  border: 1px solid var(--c-line); border-radius: 8px; cursor: pointer;
+  border: 1px solid var(--c-line); border-radius: 9px; cursor: pointer;
 }
 .btn-boost {
-  padding: 5px 11px; font-size: 12px; font-weight: 800; line-height: 1.4;
+  min-height: 40px; min-width: 46px;
+  padding: 5px 11px; font-size: 13px; font-weight: 800; line-height: 1.4;
   background: var(--c-ad); color: #fff;
   border: none; border-radius: 8px; cursor: pointer;
   font-variant-numeric: tabular-nums;
@@ -78,7 +81,7 @@ body {
 .playfield {
   position: relative;
   flex: 1 1 auto;
-  min-height: 220px;
+  min-height: 170px;
   cursor: crosshair;
   touch-action: none;
   overflow: hidden;
@@ -129,7 +132,7 @@ body {
   font-variant-numeric: tabular-nums;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
 }
-.btn-descend { flex: none; padding: 4px 12px; font-size: 12px; min-width: 92px; }
+.btn-descend { flex: none; padding: 4px 12px; font-size: 12px; min-width: 96px; min-height: 40px; }
 /* A descend that is ready should be the most obvious thing on the bar. */
 .btn-descend.ready {
   background: var(--c-accent); color: #1a1005;
@@ -145,15 +148,18 @@ body {
 /* ---------- tabs + panel ---------- */
 .tabs { display: flex; border-bottom: 1px solid var(--c-line); background: rgba(0,0,0,0.2); }
 .tab-btn {
-  flex: 1; padding: 9px 4px; font-size: 13px; font-weight: 700;
+  flex: 1; min-height: 44px; padding: 9px 4px; font-size: 13px; font-weight: 700;
   background: none; border: none; color: var(--c-dim); cursor: pointer;
   border-bottom: 3px solid transparent;
 }
 .tab-btn.on { color: var(--c-accent); border-bottom-color: var(--c-accent); }
 
 .panel {
-  flex: 0 0 34%;
-  min-height: 150px;
+  /* Shrinkable (0 1, not 0 0): on a short phone the panel must give way or the
+     column overflows the viewport. It scrolls, so losing height costs nothing;
+     the playfield cannot scroll, so it keeps the slack. */
+  flex: 0 1 34%;
+  min-height: 120px;
   overflow-y: auto;
   padding: 9px 12px 16px;
   -webkit-overflow-scrolling: touch;
@@ -179,7 +185,7 @@ body {
 .gen-owned { color: var(--c-accent); font-size: 11px; }
 .gen-prod { font-size: 11px; color: var(--c-dim); font-variant-numeric: tabular-nums; }
 .gen-buy { display: flex; flex-direction: column; gap: 3px; flex: none; }
-.gen-buy .btn { min-width: 82px; padding: 6px 8px; }
+.gen-buy .btn { min-width: 84px; min-height: 34px; padding: 6px 8px; }
 
 /* ---------- buttons ---------- */
 .btn {
@@ -288,11 +294,43 @@ body {
   body { background: radial-gradient(circle at 50% 25%, #16110d, #050302); }
   #app { border-left: 1px solid var(--c-line); border-right: 1px solid var(--c-line); }
 }
-/* Landscape phones: the field would be squeezed, so trim the panel instead */
-@media (max-height: 520px) {
-  .panel { flex-basis: 30%; }
-  .playfield { min-height: 140px; }
-  .res-value { font-size: 19px; }
+/* Short screens (small phones with browser chrome, and landscape): trim the
+   fixed furniture rather than the playfield, which is the part that matters. */
+@media (max-height: 640px) {
+  .hud { padding: 5px 12px; }
+  .res-value { font-size: 20px; }
+  .panel { flex-basis: 29%; }
+  .sig-bar { padding: 5px 12px; gap: 4px; }
+  .gen-row, .meta-row { padding: 6px 8px; margin-bottom: 5px; }
+  .gen-icon { width: 30px; height: 30px; font-size: 15px; }
+}
+/* Landscape phones get a genuinely different layout rather than a squeeze:
+   stacking five bands into 360px of height cannot work, but the width is
+   suddenly abundant, so the playfield takes the left and the menus the right.
+   Grid areas do this without reordering the DOM. */
+@media (orientation: landscape) and (max-height: 560px) {
+  #app {
+    display: grid;
+    max-width: none;
+    grid-template-columns: 1fr minmax(230px, 42%);
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "hud   tabs"
+      "field panel"
+      "sig   panel";
+  }
+  .hud { grid-area: hud; }
+  .playfield { grid-area: field; min-height: 0; }
+  .sig-bar { grid-area: sig; border-top: none; }
+  .tabs { grid-area: tabs; border-left: 1px solid var(--c-line); }
+  .panel {
+    grid-area: panel; flex-basis: auto; min-height: 0;
+    border-left: 1px solid var(--c-line);
+  }
+  .hud-right { flex-direction: row; align-items: center; gap: 8px; }
+  .screen-inner { max-width: 300px; }
+  .screen-title { font-size: 26px; }
+  .screen-blurb { display: none; }
 }
 
 /* ---------- full-screen states: title, pause, confirm ---------- */

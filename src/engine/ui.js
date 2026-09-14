@@ -781,7 +781,7 @@ export class UI {
     return [
       { id: 'mine', text: `Walk onto a glowing vein — you swing automatically`,
         done: (g) => g.state.prestige.lifetime.gt(5) },
-      { id: 'hire', text: `${fmt(this.game.state.primary)} ${t.resources.primary.name} — hire a ${t.generators[0].name} below`,
+      { id: 'hire', text: `${fmt(this.game.state.primary)} ${t.resources.primary.name} — hire a ${t.generators[0].name} from the Crew list`,
         done: (g) => Object.values(g.state.gens).some(n => n > 0) },
       { id: 'crew', text: 'Blue crew mine for you — even while you are away',
         hold: 7 },

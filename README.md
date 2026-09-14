@@ -37,6 +37,18 @@ Without the CrazyGames SDK (local dev, adblock) every SDK call no-ops safely and
 
 **What to look for in a manual pass**, in the order the player hits it: ore ticking up before you touch anything; the first crew affordable inside ~10s; a level-up pick at 60s; the Descend button unlocking once the depth quota fills, and the cavern getting visibly busier after it; health dropping when something reaches you, and the revive offer at zero; then cash out on Prestige and confirm gems buy upgrades that carry into the next run. To re-test the first-run experience, clear the save: `localStorage.clear()` in the console, then reload. To exercise offline earnings without waiting, close the tab for a couple of minutes and reopen — the claim modal with its 2× ad offer appears above one minute away.
 
+## Test it on a phone
+
+The published preview opens on a phone like any other page — sign in to the
+same account and open the artifact link. For a local build, serve the repo and
+browse to your machine's LAN address from the phone (`http://<your-ip>:8080`),
+both devices on the same network.
+
+Layout is portrait-first and verified across five device profiles by
+`npm run test:mobile`; rotating to landscape switches to a two-column layout
+(playfield left, menus right) rather than squeezing five stacked bands into
+360px of height.
+
 ## Test it
 
 ```sh
@@ -56,6 +68,9 @@ npm run test:smoke      # real browser (Playwright): load time, idle earning, dr
                         # right-click suppression, frame rate
 npm run test:smoke:dist # the same 30 checks against the built single-file bundle,
                         # so a broken build fails here and not after deploy
+npm run test:mobile     # five device profiles, portrait and landscape: layout
+                        # overflow, horizontal scroll, touch-target sizes, real
+                        # touch input, and that the run actually simulates
 ```
 
 `test:smoke` needs Playwright (`npm i`); it skips cleanly rather than failing if Playwright isn't installed. Add `--headed` (`npm run test:smoke:headed`) to watch it drive the game, or set `SMOKE_SCREENSHOT=out.png` to capture a frame.

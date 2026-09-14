@@ -8,12 +8,14 @@
     "start": "python3 -m http.server 8080",
     "build": "node tools/build.mjs --minify",
     "build:preview": "node tools/build.mjs --no-sdk --minify --out dist/preview",
-    "test": "node test/economy.test.mjs && node test/sim.test.mjs && node test/smoke.mjs",
+    "test": "node test/economy.test.mjs && node test/sim.test.mjs && node test/smoke.mjs && node test/mobile.test.mjs",
     "test:unit": "node test/economy.test.mjs",
     "test:sim": "node test/sim.test.mjs",
     "test:smoke": "node test/smoke.mjs",
     "test:smoke:dist": "npm run build && node test/smoke.mjs --root dist",
-    "test:smoke:headed": "node test/smoke.mjs --headed"
+    "test:smoke:headed": "node test/smoke.mjs --headed",
+    "test:mobile": "node test/mobile.test.mjs",
+    "test:mobile:dist": "npm run build && node test/mobile.test.mjs --root dist"
   },
   "devDependencies": {
     "playwright": "^1.56.1"
