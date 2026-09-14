@@ -7,7 +7,9 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [claude/idle-forge-engine-spec-it1gip]
+    # Both, so merging the development branch to main keeps publishing
+    # without needing this file edited again.
+    branches: [main, claude/idle-forge-engine-spec-it1gip]
     paths-ignore: ['**.md']
   workflow_dispatch:
 
@@ -49,10 +51,24 @@ jobs:
           test "$SIZE" -lt 20971520
 
       - uses: actions/configure-pages@v5
+        id: pages
         with:
-          # Turns Pages on for the repo on the first run if it is not already
-          # enabled, so this needs no manual setup step.
+          # Turns Pages on automatically where the workflow token is allowed
+          # to. On most repos it is not, and the first run fails here with
+          # "Resource not accessible by integration" — that is a one-time
+          # settings change, not a problem with the build.
           enablement: true
+
+      - name: Explain a Pages enablement failure
+        if: failure() && steps.pages.outcome == 'failure'
+        run: |
+          echo "::error::GitHub Pages is not enabled for this repository yet."
+          echo "Enable it once, then re-run this workflow:"
+          echo "  https://github.com/${{ github.repository }}/settings/pages"
+          echo "  Build and deployment -> Source -> GitHub Actions"
+          echo "If the deploy job then reports that this branch cannot deploy,"
+          echo "allow it under Settings -> Environments -> github-pages,"
+          echo "or merge this branch into main."
 
       - uses: actions/upload-pages-artifact@v3
         with:
