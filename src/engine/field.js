@@ -18,6 +18,9 @@ const TAU = Math.PI * 2;
 const MAX_ENEMIES = 90;
 const MAX_PARTICLES = 150;
 const MAX_PICKUPS = 60;
+// Uncollected ore rots. Without this, standing still banked everything that
+// happened to die nearby and the run played itself.
+const PICKUP_LIFETIME = 11;
 const MAX_CREW_DRAWN = 14;
 const FLOAT_FLUSH_SECONDS = 0.4; // batch ore gains into one readable number
 
@@ -31,7 +34,7 @@ export function createField(game, config = {}) {
     attackRange: 96,
     attackRate: 2.0,
     attackDamage: 10,
-    magnetRadius: 70,
+    magnetRadius: 38,
     nodeCount: 6,
     nodeHp: 26,
     enemyBaseHp: 18,
@@ -101,10 +104,16 @@ export function createField(game, config = {}) {
 
   function spawnNode() {
     if (st.nodes.length >= cfg.nodeCount) return;
+    // Veins must spawn OUT OF REACH. A fixed 70px gap was smaller than the
+    // 96px swing radius, so ore spawned inside the miner's range and he
+    // cleared it standing still — the game played itself. Keyed to the live
+    // attack range so reach upgrades cannot reopen the same hole, and capped
+    // against the field so a small phone can still place a vein.
+    const clear = Math.min(range() * 1.2, Math.min(w, h) * 0.42);
     let x, y, tries = 0;
     do {
       x = rand(34, w - 34); y = rand(44, h - 34); tries++;
-    } while (tries < 12 && dist2(x, y, st.player.x, st.player.y) < 70 * 70);
+    } while (tries < 24 && dist2(x, y, st.player.x, st.player.y) < clear * clear);
     const node = { x, y, hp: cfg.nodeHp, maxHp: cfg.nodeHp, r: 15, flash: 0, seed: Math.random() * TAU };
     st.nodes.push(node);
     return node;
@@ -166,13 +175,22 @@ export function createField(game, config = {}) {
     st.floatAcc.amount = Dec.zero();
   }
 
-  function dropOre(x, y, amount) {
-    if (st.pickups.length >= MAX_PICKUPS) {
-      const old = st.pickups.shift();
-      game.earnActive(old.amount);
-      bankFloat(old.x, old.y, old.amount);
+  // awayFrom: kills happen where the enemy reached you, so their loot lands in
+  // your lap. Flinging it outward means even close kills need a step to
+  // collect, which is the difference between defending yourself and farming.
+  function dropOre(x, y, amount, awayFrom = null) {
+    // Overflow drops the oldest on the floor rather than banking it. Banking
+    // it turned a full field of uncollected ore into free income.
+    if (st.pickups.length >= MAX_PICKUPS) st.pickups.shift();
+    let vx = rand(-45, 45), vy = rand(-60, -15);
+    if (awayFrom) {
+      const dx = x - awayFrom.x, dy = y - awayFrom.y;
+      const d = Math.hypot(dx, dy) || 1;
+      const push = rand(90, 150);
+      vx = (dx / d) * push + rand(-25, 25);
+      vy = (dy / d) * push + rand(-25, 25);
     }
-    st.pickups.push({ x, y, amount, vx: rand(-45, 45), vy: rand(-60, -15), age: 0 });
+    st.pickups.push({ x, y, amount, vx, vy, age: 0 });
   }
 
   function syncCrew() {
@@ -245,10 +263,12 @@ export function createField(game, config = {}) {
       st.floatAcc.t += dt;
       if (st.floatAcc.t >= FLOAT_FLUSH_SECONDS) { st.floatAcc.t = 0; flushFloat(); }
 
-      // ---- movement: WASD/arrows, pointer target, else idle auto-seek ----
-      // The auto-seek matters: this is an idle game, so a player who puts the
-      // phone down still earns. It walks at a fraction of full speed and only
-      // toward ore, never toward danger, so playing actively is always better.
+      // ---- movement: WASD/arrows, pointer target, else auto-seek IF earned ----
+      // Auto-seek is deliberately NOT the default. The crew already provide the
+      // idle half of the income — prodPerSec accrues every tick wherever the
+      // miner stands — so steering him is the one thing that must stay the
+      // player's job. Hand-mining the first ore is the hook; automating it is
+      // a reward bought later with gems.
       let dx = 0, dy = 0, sp = speed();
       if (st.keys.size) {
         if (st.keys.has('a') || st.keys.has('arrowleft')) dx -= 1;
@@ -259,12 +279,14 @@ export function createField(game, config = {}) {
         const tx = st.target.x - p.x, ty = st.target.y - p.y;
         const d = Math.hypot(tx, ty);
         if (d > 4) { dx = tx / d; dy = ty / d; }
-      } else {
+      } else if (game.autoSeekEnabled?.()) {
         let near = null, nd = Infinity;
         for (const n of st.nodes) {
           const d = dist2(p.x, p.y, n.x, n.y);
           if (d < nd) { nd = d; near = n; }
         }
+        // Stops just inside reach so it mines rather than standing on the vein,
+        // and walks at half speed so steering yourself is always better.
         if (near && nd > (range() * 0.7) ** 2) {
           const d = Math.sqrt(nd) || 1;
           dx = (near.x - p.x) / d; dy = (near.y - p.y) / d;
@@ -300,21 +322,30 @@ export function createField(game, config = {}) {
           best.hp -= damage();
           best.flash = 1;
           burst(best.x, best.y, isEnemy ? '#ff6b5a' : game.theme.palette.accent, isEnemy ? 4 : 3);
+          // Ore you swing at is credited straight to you — you are mining it,
+          // and making players chase their own output around the floor is
+          // fiddly, not engaging. What makes mining active is that veins spawn
+          // out of reach, so you must walk to them. Loot from kills is the
+          // opposite: it drops where the thing died and has to be collected.
           if (best.hp <= 0) {
             if (isEnemy) {
               st.enemies.splice(st.enemies.indexOf(best), 1);
               st.kills++;
               st.shake = Math.min(1, st.shake + 0.22);
               burst(best.x, best.y, '#ff6b5a', 9);
-              dropOre(best.x, best.y, game.activeYield().mulNum(1.6));
+              dropOre(best.x, best.y, game.activeYield().mulNum(1.6), p);
             } else {
               st.nodes.splice(st.nodes.indexOf(best), 1);
               burst(best.x, best.y, game.theme.palette.accent, 10);
-              dropOre(best.x, best.y, game.activeYield().mulNum(2.2));
+              const haul = game.activeYield().mulNum(2.2);
+              game.earnActive(haul);
+              bankFloat(best.x, best.y, haul);
               spawnNode();
             }
           } else if (!isEnemy) {
-            dropOre(best.x + rand(-6, 6), best.y + rand(-6, 6), game.activeYield().mulNum(0.35));
+            const chip = game.activeYield().mulNum(0.35);
+            game.earnActive(chip);
+            bankFloat(best.x, best.y - 6, chip);
           }
         }
       }
@@ -370,6 +401,7 @@ export function createField(game, config = {}) {
       for (let i = st.pickups.length - 1; i >= 0; i--) {
         const u = st.pickups[i];
         u.age += dt;
+        if (u.age >= PICKUP_LIFETIME) { st.pickups.splice(i, 1); continue; }
         const d2 = dist2(u.x, u.y, p.x, p.y);
         if (d2 < mag2) {
           const d = Math.sqrt(d2) || 1;
@@ -479,6 +511,10 @@ export function createField(game, config = {}) {
 
       // ---- pickups ----
       for (const u of st.pickups) {
+        const left = PICKUP_LIFETIME - u.age;
+        // Blink out over the last two seconds so losing ore is visibly your
+        // own doing rather than something vanishing unexplained.
+        if (left < 2 && Math.floor(t * 8) % 2) continue;
         const pulse = 3.2 + Math.sin(t * 9 + u.x) * 0.6;
         ctx.fillStyle = pal.accent;
         ctx.beginPath();

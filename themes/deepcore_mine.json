@@ -133,7 +133,7 @@
     "attackRange": 96,
     "attackRate": 2.0,
     "attackDamage": 10,
-    "magnetRadius": 70,
+    "magnetRadius": 38,
     "nodeCount": 6,
     "nodeHp": 26,
     "enemyBaseHp": 18,

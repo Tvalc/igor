@@ -65,10 +65,14 @@ for (const [name, width, height] of PROFILES) {
   await page.tap('.btn-play');
   await page.waitForTimeout(1200);
 
-  // A real touch drag must move the miner, not scroll the page.
+  // Real touch must drive the miner. Tapping the centre proves nothing — that
+  // is where he already stands — and idling no longer earns, so the taps have
+  // to send him somewhere and he needs time to walk there and mine.
   const box = await page.locator('.playfield').boundingBox();
-  await page.touchscreen.tap(box.x + box.width * 0.4, box.y + box.height * 0.5);
-  await page.waitForTimeout(500);
+  for (const [fx, fy] of [[0.15, 0.22], [0.85, 0.28], [0.8, 0.82], [0.2, 0.78]]) {
+    await page.touchscreen.tap(box.x + box.width * fx, box.y + box.height * fy);
+    await page.waitForTimeout(1100);
+  }
 
   const r = await page.evaluate((minPx) => {
     const app = document.getElementById('app');
@@ -90,7 +94,7 @@ for (const [name, width, height] of PROFILES) {
   if (r.overflow) problems.push('layout overflows the viewport');
   if (r.hScroll) problems.push('page scrolls horizontally');
   if (r.tiny.length) problems.push(`${r.tiny.length} touch targets under ${MIN_TOUCH_PX}px (${r.tiny.map(x => `${x.t}=${x.h}`).join(', ')})`);
-  if (!(r.ore > 0)) problems.push('no ore earned — the run is not simulating');
+  if (!(r.ore > 0)) problems.push('touch input did not drive the miner — no ore earned after tapping four corners');
   if (r.fieldArea < 40000) problems.push(`playfield too small (${r.field})`);
   if (errors.length) problems.push(`page errors: ${errors.join('; ')}`);
 

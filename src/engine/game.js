@@ -32,6 +32,9 @@ const META_UPGRADES = [
   { id: 'offlineCap2', name: 'Automated Watch', desc: '+4h offline earnings cap', cost: 18, effect: { type: 'offlineCap', v: 4 } },
   { id: 'startBoost', name: 'Head Start', desc: 'Begin every run with a crew already working', cost: 8, effect: { type: 'startBank', v: 60 } },
   { id: 'richSeams', name: 'Rich Seams', desc: 'Hand-mined ore ×2, permanently', cost: 12, effect: { type: 'activeYield', v: 2 } },
+  // Automating your own mining is a reward, never the starting state: the
+  // opening has to be hands-on or there is no reason to touch the game.
+  { id: 'autoSeek', name: "Prospector's Instinct", desc: 'Your miner walks to the nearest vein when you are not steering', cost: 15, effect: { type: 'autoSeek', v: 1 } },
 ];
 
 // Effects that belong to the field sim rather than the economy.
@@ -104,13 +107,16 @@ export class Game {
     }
     for (const id of Object.keys(this.state.metaUpgrades)) {
       const def = META_UPGRADES.find(d => d.id === id);
-      if (def && def.effect.type !== 'offlineCap' && def.effect.type !== 'startBank') apply(def.effect);
+      if (def && !['offlineCap', 'startBank', 'autoSeek'].includes(def.effect.type)) apply(def.effect);
     }
     this._mults = m;
     this._field = f;
   }
 
   fieldMults() { return this._field; }
+
+  // Off until bought. See the movement block in field.js for why.
+  autoSeekEnabled() { return !!this.state.metaUpgrades.autoSeek; }
 
   // Combat power rides the economy: every crew hire makes your own swing hit
   // harder. Without this the two halves drift apart — income compounds while

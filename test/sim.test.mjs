@@ -48,20 +48,26 @@ function playProfile(name, { descendPolicy, kite }) {
       if (game.buyGenerator(theme.generators[i], 'max')) break;
     }
 
-    // kite: steer away from the nearest enemy when hurt, else let auto-seek mine
-    if (kite) {
-      const st = game.field.st;
-      const hpPct = game.field.hp() / game.field.maxHpValue();
-      if (hpPct < 0.55 && st.enemies.length) {
-        let near = st.enemies[0], nd = Infinity;
-        for (const e of st.enemies) {
-          const d = (e.x - st.player.x) ** 2 + (e.y - st.player.y) ** 2;
-          if (d < nd) { nd = d; near = e; }
-        }
-        game.field.setTarget(st.player.x - (near.x - st.player.x), st.player.y - (near.y - st.player.y));
-      } else {
-        game.field.clearTarget();
+    // Steering is the player's job now that auto-seek is an unlock, so both
+    // profiles drive the miner: toward ore normally, away from the nearest
+    // threat when hurt (careful only).
+    const st = game.field.st;
+    const hpPct = game.field.hp() / game.field.maxHpValue();
+    if (kite && hpPct < 0.55 && st.enemies.length) {
+      let near = st.enemies[0], nd = Infinity;
+      for (const e of st.enemies) {
+        const d = (e.x - st.player.x) ** 2 + (e.y - st.player.y) ** 2;
+        if (d < nd) { nd = d; near = e; }
       }
+      game.field.setTarget(st.player.x - (near.x - st.player.x), st.player.y - (near.y - st.player.y));
+    } else {
+      let near = null, nd = Infinity;
+      for (const c of [...st.pickups, ...st.nodes]) {
+        const d = (c.x - st.player.x) ** 2 + (c.y - st.player.y) ** 2;
+        if (d < nd) { nd = d; near = c; }
+      }
+      if (near) game.field.setTarget(near.x, near.y);
+      else game.field.clearTarget();
     }
 
     if (descendPolicy(game)) {
@@ -114,12 +120,43 @@ assert.ok(cAvg >= 60, `careful runs last at least a minute (got ${cAvg.toFixed(0
 console.log(`  ok - careful play outlasts greedy (${cAvg.toFixed(0)}s vs ${gAvg.toFixed(0)}s)`);
 console.log('  ok - deaths convert to prestige, descent progresses, level-ups fire');
 
-// --- idle behaviour: untouched, the game still earns (it is an idle game) ---
-const idle = new Game(theme);
-idle.startRun();
-for (let i = 0; i < 60 / STEP; i++) idle.tick(STEP);
-assert.ok(idle.state.primary.toNumber() > 10, 'untouched play still earns ore');
-console.log(`  ok - untouched for 60s earns ${idle.state.primary.toNumber().toFixed(0)} ore (first crew costs ${theme.generators[0].baseCost})`);
+// --- engagement: the opening must require the player, not play itself ---
+// This assertion used to demand the opposite — that an untouched run still
+// earns — which is what let the game auto-collect its own way to the first
+// crew purchase. The crew provide the idle income; steering the miner is the
+// part that has to stay the player's job.
+function idleOre(seconds, { unlock = false, steer = false } = {}) {
+  const g = new Game(theme);
+  if (unlock) { g.state.metaUpgrades.autoSeek = true; g.recomputeMults(); }
+  g.startRun();
+  for (let i = 0; i < seconds / STEP; i++) {
+    g.tick(STEP);
+    if (steer) {
+      const st = g.field.st;
+      let near = null, nd = Infinity;
+      for (const c of [...st.pickups, ...st.nodes]) {
+        const d = (c.x - st.player.x) ** 2 + (c.y - st.player.y) ** 2;
+        if (d < nd) { nd = d; near = c; }
+      }
+      if (near) g.field.setTarget(near.x, near.y);
+    }
+  }
+  return g.state.primary.toNumber();
+}
+
+const firstCrew = theme.generators[0].baseCost;
+const untouched = idleOre(90);
+const played = idleOre(90, { steer: true });
+const automated = idleOre(90, { unlock: true });
+
+assert.ok(untouched < firstCrew,
+  `90s untouched must not even reach the first crew (${untouched.toFixed(1)} vs ${firstCrew})`);
+assert.ok(played > untouched * 5,
+  `playing must dwarf idling (${played.toFixed(0)} vs ${untouched.toFixed(1)})`);
+assert.ok(automated > untouched * 3 && automated < played,
+  `the auto-seek unlock must be worth buying and still worse than playing (${automated.toFixed(0)})`);
+console.log(`  ok - 90s untouched earns ${untouched.toFixed(1)} ore, under the ${firstCrew} first crew: the opening needs the player`);
+console.log(`  ok - playing earns ${played.toFixed(0)}, auto-seek unlock ${automated.toFixed(0)} — in that order`);
 
 // --- save round-trip ---
 const blob = save.serialize(careful.game);
@@ -135,7 +172,10 @@ console.log('  ok - save round-trips (economy, prestige, premium, depth)');
 // --- offline earnings + clock-tamper safety ---
 const offer = restored.applyOffline(Date.now() - 2 * 3600 * 1000);
 if (!restored.prodPerSec(false).isZero()) {
-  assert.ok(offer && offer.seconds === 2 * 3600, 'offline offer covers 2h');
+  assert.ok(offer && offer.seconds === 2 * 3600,
+    `offline offer covers 2h — got ${offer ? offer.seconds + 's' : 'null'}, ` +
+    `rate ${restored.prodPerSec(false).serialize()}, cap ${restored.state.meta.offlineCapHours}h, ` +
+    `gens ${JSON.stringify(restored.state.gens)}`);
 }
 assert.equal(restored.applyOffline(Date.now() + 60000), null, 'clock rollback awards nothing');
 console.log('  ok - offline earnings capped and rollback-safe');

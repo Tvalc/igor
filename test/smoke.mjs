@@ -106,21 +106,32 @@ check('first-run coach shows an instruction',
 check('health and depth bars render', await page.locator('.bar.health').count() === 1
   && await page.locator('.bar.depth').count() === 1);
 
-// The field must earn with no input at all — it is an idle game first.
-await page.waitForTimeout(2500);
+// The opening must NOT play itself. Crew supply the idle income once hired;
+// until then, standing still has to be unproductive or there is no reason to
+// touch the game. (This check previously asserted the opposite.)
+await page.waitForTimeout(4000);
 const idleOre = parseFloat(await page.locator('.res-value').textContent());
-check('earns with zero input (idle auto-seek)', idleOre > 0, `${idleOre} ore`);
+check('standing still does not bankroll the first crew',
+  idleOre < 10, `${idleOre} ore after 4s idle, first crew costs 10`);
 
 // Drag across the playfield: the miner should follow and the hint should clear.
 const box = await page.locator('.playfield').boundingBox();
-await page.mouse.move(box.x + box.width * 0.3, box.y + box.height * 0.4);
-await page.mouse.down();
-for (let i = 1; i <= 6; i++) {
-  await page.mouse.move(box.x + box.width * (0.3 + i * 0.06), box.y + box.height * (0.4 + i * 0.04));
-  await page.waitForTimeout(60);
+// Steer the miner to each corner in turn, holding long enough for him to
+// actually walk there — veins spawn out of reach, so covering ground is the
+// whole point.
+async function patrol(laps = 1) {
+  const spots = [[0.15, 0.25], [0.85, 0.3], [0.8, 0.8], [0.2, 0.75], [0.5, 0.5]];
+  for (let l = 0; l < laps; l++) {
+    for (const [fx, fy] of spots) {
+      await page.mouse.move(box.x + box.width * fx, box.y + box.height * fy);
+      await page.mouse.down();
+      await page.waitForTimeout(120);
+      await page.mouse.up();
+      await page.waitForTimeout(900);
+    }
+  }
 }
-await page.mouse.up();
-await page.waitForTimeout(600);
+await patrol(1);
 // The coach must advance off step 1 once the player has actually mined.
 const coachStep = await page.locator('.coach').getAttribute('data-step').catch(() => null);
 check('coach advances past the first lesson after mining', coachStep !== 'mine', `step=${coachStep}`);
@@ -128,8 +139,17 @@ check('coach advances past the first lesson after mining', coachStep !== 'mine',
 check('gains print a number on the field',
   await page.evaluate(() => document.querySelector('canvas') != null));
 
-// Spec Part B: the first upgrade must be affordable inside ~10-15s of play.
-await page.waitForSelector('.gen-row .buy-1:not([disabled])', { timeout: 12000 }).catch(() => {});
+// ...and steering the miner must actually pay, or the hook does not exist.
+const oreBeforePlay = parseFloat(await page.locator('.res-value').textContent());
+await patrol(2);
+const oreAfterPlay = parseFloat(await page.locator('.res-value').textContent());
+check('steering the miner earns ore', oreAfterPlay > oreBeforePlay + 5,
+  `${oreBeforePlay} -> ${oreAfterPlay}`);
+
+// Spec Part B: the first upgrade must be affordable inside ~10-15s of PLAY.
+// Idling no longer pays for it, so the test has to actually play.
+await page.waitForSelector('.gen-row .buy-1:not([disabled])', { timeout: 8000 }).catch(() => {});
+if (!(await page.locator('.gen-row .buy-1').first().isEnabled())) await patrol(1);
 const buy = page.locator('.gen-row .buy-1').first();
 const couldBuy = await buy.isEnabled();
 if (couldBuy) await buy.click();

@@ -255,8 +255,11 @@ export class UI {
       f.setTarget(p.x, p.y);
     };
     const up = (e) => {
+      // Deliberately keeps the last target instead of clearing it: lifting your
+      // finger should not freeze the miner mid-stride. Hold to steer him
+      // continuously, or tap a spot and he walks there — both work, and tapping
+      // is far kinder on a phone than holding a finger on the screen.
       this.dragging = false;
-      f.clearTarget();
       this.playfield.releasePointerCapture?.(e.pointerId);
     };
     this.playfield.addEventListener('pointerdown', down);

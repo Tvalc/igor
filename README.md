@@ -66,7 +66,7 @@ npm run test:smoke      # real browser (Playwright): load time, idle earning, dr
                         # input, first purchase, all three tabs, banner slot,
                         # rewarded offer + its non-ad path, save persistence,
                         # right-click suppression, frame rate
-npm run test:smoke:dist # the same 30 checks against the built single-file bundle,
+npm run test:smoke:dist # the same 31 checks against the built single-file bundle,
                         # so a broken build fails here and not after deploy
 npm run test:mobile     # five device profiles, portrait and landscape: layout
                         # overflow, horizontal scroll, touch-target sizes, real
@@ -126,8 +126,10 @@ defaults to backing out. It erases gems, permanent upgrades, premium currency
 and depth records, wipes the stored save, and returns to the title. Sound
 preference deliberately survives.
 
-Movement is drag-anywhere on the field, or WASD / arrow keys. Mining and
-fighting are automatic — position is the only input that matters.
+Movement is drag-anywhere on the field, or WASD / arrow keys. Lifting your
+finger keeps the destination rather than freezing him mid-stride, so tapping a
+spot works as well as holding — which matters a lot on a phone. Swinging is
+automatic; position is the input that matters.
 
 ## Reading the screen
 
@@ -160,8 +162,18 @@ economy (`game.powerScale()`), so hiring crew makes your own swing hit harder �
 without that link the two halves drift apart and every run dies at the same
 depth.
 
-Left alone the miner auto-seeks the nearest vein at half speed: it is an idle
-game first, so an untouched tab still earns. Playing actively earns far more.
+**The opening requires you.** The crew are the idle half — their ore accrues
+every tick wherever the miner stands — but steering the miner is the player's
+job, and veins deliberately spawn outside his swing radius so reaching one
+means walking. Ninety seconds of standing still earns 0–3 ore against a
+10-ore first crew, so the game cannot bootstrap itself; playing earns ~290 over
+the same span. Automating it is a late purchase (*Prospector's Instinct*, 15
+gems), not the starting state.
+
+Ore you swing at is credited straight to you — chasing your own output around
+the floor is fiddly, not engaging. Loot from kills is the opposite: it drops
+where the thing died, flung away from you, and has to be collected before it
+expires after 11 seconds.
 
 ## Creating a new variant
 
