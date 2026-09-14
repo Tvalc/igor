@@ -86,6 +86,11 @@ function order(id, seen = new Set(), out = []) {
 // Conservative size trim: strips full-line comments and blank lines only.
 // Real minification would need a parser; this keeps the build dependency-free
 // while still cutting the comment-heavy engine down meaningfully.
+// Attribute-safe escaping for theme strings dropped into meta tags.
+function esc(str) {
+  return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 function trim(js) {
   return js
     .split('\n')
@@ -117,13 +122,29 @@ const themeLiteral = JSON.stringify(theme)
   .replace(/\u2028/g, '\\u2028')
   .replace(/\u2029/g, '\\u2029');
 
+// A deployed page gets linked and shared, so it needs a name, a description,
+// and an icon of its own. All of it comes from the theme pack, so every
+// variant gets correct metadata without touching this file.
+const desc = theme.fantasy ?? theme.displayName;
+const icon = `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'>`
+  + `<rect width='32' height='32' rx='7' fill='${theme.palette.bg.replace('#', '%23')}'/>`
+  + `<path d='M16 4.5l7.5 9.5L16 28 8.5 14z' fill='${theme.palette.accent.replace('#', '%23')}'/>`
+  + `<path d='M16 4.5L8.5 14H16z' fill='${theme.palette.primary.replace('#', '%23')}'/></svg>`;
+
 const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<link rel="icon" href="data:,">
-<title>${theme.displayName}</title>
+<meta name="description" content="${esc(desc)}">
+<meta name="theme-color" content="${theme.palette.bg}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="${esc(theme.displayName)}">
+<meta property="og:description" content="${esc(desc)}">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="${icon}">
+<link rel="apple-touch-icon" href="${icon}">
+<title>${esc(theme.displayName)}</title>
 <style>
 ${MINIFY ? css.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\n{2,}/g, '\n') : css}
 </style>${WITH_SDK ? '\n<script src="https://sdk.crazygames.com/crazygames-sdk-v3.js"></script>' : ''}

@@ -1,0 +1,69 @@
+# Publishes the playable build to GitHub Pages at https://tvalc.github.io/igor/
+#
+# The site build omits the CrazyGames SDK tag: that script only resolves on the
+# portal's own domain, and the engine is written to run without it. The portal
+# submission build (npm run build) keeps the tag and is produced separately.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [claude/idle-forge-engine-spec-it1gip]
+    paths-ignore: ['**.md']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a running deploy finish rather than cancelling it mid-publish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # The bundler and the unit/sim tests have no dependencies at all, so
+      # there is nothing to install — only the browser tests need Playwright,
+      # and those run locally rather than gating the deploy.
+      - name: Verify the economy and the game loop
+        run: |
+          node test/economy.test.mjs
+          node test/sim.test.mjs
+
+      - name: Build the single-file site
+        run: node tools/build.mjs --no-sdk --minify --out dist/site
+
+      - name: Report build size against the 20MB gate
+        run: |
+          SIZE=$(stat -c%s dist/site/index.html)
+          echo "bundle: $((SIZE / 1024)) KB"
+          test "$SIZE" -lt 20971520
+
+      - uses: actions/configure-pages@v5
+        with:
+          # Turns Pages on for the repo on the first run if it is not already
+          # enabled, so this needs no manual setup step.
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
