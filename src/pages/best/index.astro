@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { publishedLists } from '../../lib/lists';
+import { publishedLists, LIST_ICONS } from '../../lib/lists';
+import Icon, { type IconName } from '../../components/Icon.astro';
 import { SITE } from '../../site';
 
 const lists = await publishedLists();
@@ -22,6 +23,7 @@ const lists = await publishedLists();
     {
       lists.map(({ def, ranked }) => (
         <a class="card" href={`/best/${def.slug}`}>
+          <span class="card-icon"><Icon name={(LIST_ICONS[def.slug] ?? 'gamepad') as IconName} /></span>
           <h3>{def.title}</h3>
           <p>
             {ranked.length} tools · #1 {ranked[0].tool.data.name}

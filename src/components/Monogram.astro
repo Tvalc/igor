@@ -1,0 +1,15 @@
+---
+// Stand-in for vendor logos (we don't hotlink trademarks): initials on a color derived from the name.
+interface Props {
+  name: string;
+  size?: 'sm' | 'md' | 'lg';
+}
+const { name, size = 'md' } = Astro.props;
+const words = name.replace(/\(.*?\)/g, '').split(/[\s.\-&]+/).filter(Boolean);
+const initials = (words.length > 1 ? words[0][0] + words[1][0] : name.slice(0, 2)).toUpperCase();
+let hash = 0;
+for (const ch of name) hash = (hash * 31 + ch.charCodeAt(0)) >>> 0;
+const hue = hash % 360;
+---
+
+<span class={`mono mono-${size}`} style={`--h:${hue}`} aria-hidden="true">{initials}</span>

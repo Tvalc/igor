@@ -50,3 +50,6 @@ export const outboundRel = (t: Tool) =>
 /** Lowercase for mid-sentence use, keeping acronyms such as AI, 2D, 3D and NPCs intact. */
 export const lc = (s: string) =>
   s.split(' ').map((w) => (/^[A-Z0-9]{2,}s?$/.test(w) ? w : w.toLowerCase())).join(' ');
+
+/** Score band used for colors: 85+ top, 70+ good, 55+ ok, below that low. */
+export const tier = (score: number) => (score >= 85 ? 'top' : score >= 70 ? 'good' : score >= 55 ? 'ok' : 'low');
