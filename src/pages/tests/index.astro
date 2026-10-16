@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { isoDate } from '../../lib/format';
+
+const tests = (await getCollection('tests')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const published = tests.filter((t) => t.data.status === 'published');
+---
+
+<Base
+  title="Hands-On Tests: Same Prompt, Every Tool"
+  description="Side-by-side hands-on tests of AI game dev tools: the identical prompt in every tool, with every output published."
+  crumbs={[{ name: 'Tests', href: '/tests' }]}
+  noindex={published.length === 0}
+>
+  <h1>Hands-on tests</h1>
+  <div class="answer">
+    <p>
+      We give every tool in a category the identical prompt and publish everything it produces. A tool gets a
+      hands-on score only after its test is published.
+    </p>
+  </div>
+  <div class="grid">
+    {
+      tests.map((t) => (
+        <a class="card" href={`/tests/${t.id}`}>
+          <h3>{t.data.title}</h3>
+          <p>
+            {t.data.status === 'published' ? `Published ${isoDate(t.data.date)}` : `Status: ${t.data.status}`} ·{' '}
+            {t.data.tools.length} tools
+          </p>
+        </a>
+      ))
+    }
+  </div>
+</Base>

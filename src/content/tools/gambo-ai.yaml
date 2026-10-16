@@ -1,0 +1,30 @@
+name: Gambo AI
+url: https://gambo.ai
+tagline: Prompt-to-game creation.
+description: Gambo AI generates games from prompts. We found little independent coverage of it.
+best_for: Trying another prompt-to-game option.
+categories:
+- game-maker
+tags:
+- no-code
+status: active
+platforms:
+- web
+engines: []
+exports: []
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: unknown
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://gambo.ai
+needs_verification:
+- status
+- pricing
+- license
+- exports
+last_verified: '2026-10-16'

@@ -1,0 +1,42 @@
+---
+import Base from '../../layouts/Base.astro';
+import { comparisonPairs, publishedLists } from '../../lib/lists';
+
+const pairs = [...(await comparisonPairs()).entries()];
+const lists = (await publishedLists()).filter(({ def }) => def.group !== 'mixed');
+---
+
+<Base
+  title="AI Game Dev Tool Comparisons: Head-to-Head"
+  description="Head-to-head comparisons of the leading AI game makers, sprite and 3D generators, coding tools and audio AI, on pricing, rights and exports."
+  crumbs={[{ name: 'Compare', href: '/compare' }]}
+>
+  <h1>Head-to-head comparisons</h1>
+  <div class="answer">
+    <p>
+      {pairs.length} comparisons between the top tools in each category, generated from the same verified data and
+      rubric as our rankings.
+    </p>
+  </div>
+  {
+    lists.map(({ def }) => {
+      const mine = pairs.filter(([, p]) => p.list.slug === def.slug);
+      return (
+        mine.length > 0 && (
+          <section>
+            <h2>{def.title.replace(/^Best /, '')}</h2>
+            <ul>
+              {mine.map(([slug, p]) => (
+                <li>
+                  <a href={`/compare/${slug}`}>
+                    {p.a.data.name} vs {p.b.data.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      );
+    })
+  }
+</Base>

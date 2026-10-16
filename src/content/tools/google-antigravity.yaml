@@ -1,0 +1,30 @@
+name: Google Antigravity
+url: https://antigravity.google
+tagline: Google's agentic IDE.
+description: Antigravity is Google's agent-first development environment.
+best_for: Trying an agent-first IDE for game code.
+categories:
+- code
+tags:
+- general-purpose
+- agent
+status: active
+platforms:
+- desktop
+engines: []
+exports:
+- source-code
+skill_level: intermediate
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://antigravity.google
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

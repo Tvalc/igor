@@ -1,0 +1,31 @@
+name: Plask
+url: https://plask.ai
+tagline: Video-to-motion-capture in the browser.
+description: Plask extracts motion capture from video in the browser and includes an animation editor.
+best_for: Browser-based mocap cleanup.
+categories:
+- animation
+tags:
+- mocap
+- 3d
+status: active
+platforms:
+- web
+engines: []
+exports:
+- fbx
+- bvh
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://plask.ai
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

@@ -1,0 +1,37 @@
+name: Sloyd
+url: https://www.sloyd.ai
+tagline: Parametric 3D props you can tweak with sliders.
+description: Sloyd generates game-ready 3D props from parametric templates that you adjust, rather than from free-form
+  diffusion.
+best_for: Clean, game-ready props with predictable topology.
+categories:
+- art-3d
+tags:
+- 3d
+- props
+status: active
+platforms:
+- web
+- api
+- plugin
+engines: []
+exports:
+- glb
+- obj
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+affiliate:
+  program: Sloyd Affiliate Program
+  commission: 20% for 12 months
+sources:
+- https://sloyd.ai/affiliate
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

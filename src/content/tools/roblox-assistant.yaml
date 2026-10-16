@@ -1,0 +1,34 @@
+name: Roblox Assistant & Cube
+url: https://create.roblox.com
+tagline: Roblox Studio's built-in AI assistant and Cube 3D/4D generation.
+description: Roblox Studio includes an AI Assistant for scripting and building, plus Roblox's Cube foundation model
+  for generating 3D and interactive (4D) objects.
+best_for: Roblox creators working inside Roblox Studio.
+categories:
+- game-maker
+- code
+- art-3d
+tags:
+- roblox
+- 3d
+status: active
+platforms:
+- desktop
+engines:
+- roblox
+exports: []
+skill_level: beginner
+pricing:
+  model: free
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://about.roblox.com/newsroom/2026/02/accelerating-creation-powered-roblox-cube-foundation-model
+needs_verification:
+- pricing
+- license
+- exports
+last_verified: '2026-10-16'

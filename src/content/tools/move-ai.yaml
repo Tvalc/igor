@@ -1,0 +1,31 @@
+name: Move AI
+url: https://www.move.ai
+tagline: Markerless motion capture from phone or camera video.
+description: Move AI captures markerless motion from phone or multi-camera video.
+best_for: Higher-quality markerless mocap.
+categories:
+- animation
+tags:
+- mocap
+- 3d
+status: active
+platforms:
+- web
+- desktop
+engines: []
+exports:
+- fbx
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: limited
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.move.ai
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

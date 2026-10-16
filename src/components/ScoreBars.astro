@@ -1,0 +1,29 @@
+---
+import { FACTOR_LABELS, WEIGHTS, type Factor, type Group, type Scored } from '../lib/score';
+
+interface Props {
+  scored: Scored;
+  group: Group;
+}
+const { scored, group } = Astro.props;
+const keys = Object.keys(scored.factors) as Factor[];
+---
+
+<ul class="bars">
+  {
+    keys.map((k) => {
+      const v = Math.round(scored.factors[k] * 100);
+      return (
+        <li>
+          <span title={FACTOR_LABELS[k].question}>
+            {FACTOR_LABELS[k].label} <span class="meta">({Math.round(WEIGHTS[group][k] * 100)}%)</span>
+          </span>
+          <span class="bar" role="img" aria-label={`${v} out of 100`}>
+            <span style={`width:${v}%`} />
+          </span>
+          <span class="num">{v}</span>
+        </li>
+      );
+    })
+  }
+</ul>

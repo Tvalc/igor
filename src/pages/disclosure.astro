@@ -1,0 +1,50 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site';
+---
+
+<Base
+  title="Ownership & Affiliate Disclosure"
+  description="Who runs AI Game Atlas, how it makes money, and why that never changes a ranking."
+  crumbs={[{ name: 'Disclosure', href: '/disclosure' }]}
+>
+  <article class="prose">
+    <h1>Ownership and affiliate disclosure</h1>
+    <div class="answer">
+      <p>
+        {SITE.name} is run by {SITE.owner}, which makes <a href="/tools/makko-ai">Makko</a>, one of the tools we
+        rank. Makko is scored by the same public rubric and data rules as every other tool, and it is labeled
+        wherever it appears.
+      </p>
+    </div>
+
+    <h2>How the site makes money</h2>
+    <ul>
+      <li>
+        <strong>Affiliate links.</strong> Some "Visit" links pay us a commission if you subscribe. They're marked
+        "Affiliate link" and use <code>rel="sponsored"</code>.
+      </li>
+      <li>
+        <strong>Sponsored placements.</strong> Vendors can pay for a labeled sponsored slot. Sponsorship never changes
+        a tool's score or rank.
+      </li>
+      <li>
+        <strong>Makko signups.</strong> When Makko fits what you're looking for, we say so, with this disclosure
+        attached.
+      </li>
+    </ul>
+
+    <h2>What money can't buy</h2>
+    <ul>
+      <li>A higher score. Scores are computed from facts with <a href="/methodology">published weights</a>.</li>
+      <li>Removal of a competitor, or a hidden fact.</li>
+      <li>An "Editor's pick" badge. We don't have one.</li>
+    </ul>
+
+    <h2>Corrections</h2>
+    <p>
+      If a fact about your tool is wrong or out of date, open an issue or pull request in our public repository with a
+      link to a primary source, and we'll update it.
+    </p>
+  </article>
+</Base>

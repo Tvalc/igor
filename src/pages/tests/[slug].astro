@@ -1,0 +1,38 @@
+---
+import { getCollection, getEntries, render, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { isoDate } from '../../lib/format';
+
+export async function getStaticPaths() {
+  return (await getCollection('tests')).map((test) => ({ params: { slug: test.id }, props: { test } }));
+}
+
+interface Props {
+  test: CollectionEntry<'tests'>;
+}
+const { test } = Astro.props;
+const { Content } = await render(test);
+const tools = await getEntries(test.data.tools.map((id) => ({ collection: 'tools' as const, id })));
+---
+
+<Base
+  title={test.data.title}
+  description={test.data.summary}
+  crumbs={[{ name: 'Tests', href: '/tests' }, { name: test.data.title, href: `/tests/${test.id}` }]}
+  noindex={test.data.status !== 'published'}
+>
+  <article class="prose">
+    <h1>{test.data.title}</h1>
+    <p class="meta">
+      {test.data.status === 'published' ? `Published ${isoDate(test.data.date)}` : `Status: ${test.data.status}. Results not yet published.`}
+    </p>
+    <div class="answer"><p>{test.data.summary}</p></div>
+    <h2>The prompt</h2>
+    <blockquote>{test.data.prompt}</blockquote>
+    <h2>Tools in this test</h2>
+    <ul>
+      {tools.filter(Boolean).map((t) => <li><a href={`/tools/${t.id}`}>{t.data.name}</a></li>)}
+    </ul>
+    <Content />
+  </article>
+</Base>

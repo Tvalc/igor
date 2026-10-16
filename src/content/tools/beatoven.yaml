@@ -1,0 +1,31 @@
+name: Beatoven.ai
+url: https://www.beatoven.ai
+tagline: AI background music generation.
+description: Beatoven.ai generates royalty-free background music tuned to mood and length.
+best_for: Mood-based background music.
+categories:
+- music
+tags:
+- music
+- royalty-free
+status: active
+platforms:
+- web
+engines: []
+exports:
+- mp3
+- wav
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.beatoven.ai
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

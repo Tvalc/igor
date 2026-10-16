@@ -1,0 +1,28 @@
+name: Microsoft Muse (WHAMM)
+url: https://www.microsoft.com/en-us/research/blog/introducing-muse
+tagline: Microsoft Research's gameplay world model; Quake II demo in Copilot Labs.
+description: Muse is a Microsoft Research world model trained on gameplay. A playable Quake II demo (WHAMM) has
+  been available in Copilot Labs. It's a research project, not a production tool.
+best_for: Following research on AI-generated gameplay.
+categories:
+- game-maker
+tags:
+- world-model
+- research
+status: research
+platforms:
+- web
+engines: []
+exports: []
+skill_level: beginner
+pricing:
+  model: free
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: 'no'
+  open_source: false
+sources:
+- https://www.microsoft.com/en-us/research/blog/introducing-muse
+needs_verification: []
+last_verified: '2026-10-16'

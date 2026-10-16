@@ -1,0 +1,37 @@
+name: Makko AI
+url: https://makko.ai
+tagline: 'AI 2D game studio: concept art, characters, animation and a playable game in one place.'
+description: Makko AI is a 2D game creation studio that generates concept art, characters and animations, then assembles
+  them into a playable game without code.
+best_for: Non-coders making 2D games who want art and gameplay in one tool.
+categories:
+- game-maker
+- art-2d
+- animation
+tags:
+- no-code
+- 2d
+- browser
+- sprites
+status: active
+platforms:
+- web
+engines: []
+exports: []
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+makko_owned: true
+sources:
+- https://makko.ai
+- https://blog.makko.ai/best-ai-game-makers-in-2026-7-tools-compared/
+needs_verification:
+- pricing
+- license
+- exports
+last_verified: '2026-10-16'

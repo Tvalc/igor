@@ -1,0 +1,31 @@
+name: BlenderMCP
+url: https://github.com/ahujasid/blender-mcp
+tagline: Connect Claude and other assistants to Blender over MCP.
+description: BlenderMCP is an open-source MCP server that lets AI assistants create and edit Blender scenes.
+best_for: Prompting Blender to build or modify 3D scenes.
+categories:
+- code
+- art-3d
+tags:
+- mcp
+- blender
+- open-source
+status: active
+platforms:
+- plugin
+engines:
+- blender
+exports: []
+skill_level: advanced
+pricing:
+  model: open-source
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: true
+sources:
+- https://github.com/ahujasid/blender-mcp
+needs_verification:
+- license
+last_verified: '2026-10-16'

@@ -1,0 +1,32 @@
+name: OpenAI Codex
+url: https://openai.com/codex
+tagline: OpenAI's coding agent.
+description: Codex is OpenAI's coding agent, available in the cloud, a command-line tool and IDEs, included with
+  ChatGPT plans.
+best_for: ChatGPT subscribers who want a coding agent.
+categories:
+- code
+tags:
+- general-purpose
+- agent
+- cli
+status: active
+platforms:
+- cli
+- web
+engines: []
+exports:
+- source-code
+skill_level: advanced
+pricing:
+  model: bundled
+  free_tier: 'no'
+  starting_price_usd: null
+license:
+  commercial_use: 'yes'
+  open_source: false
+sources:
+- https://openai.com/codex
+needs_verification:
+- pricing
+last_verified: '2026-10-16'

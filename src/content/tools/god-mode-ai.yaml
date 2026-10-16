@@ -1,0 +1,37 @@
+name: God Mode AI
+url: https://www.godmodeai.co
+tagline: Turn one image into animated sprite sheets with about 100 actions.
+description: God Mode AI animates a single character image into sprite sheets for roughly 100 actions, and offers
+  an MCP connector.
+best_for: Animating a 2D character into many actions quickly.
+categories:
+- art-2d
+- animation
+tags:
+- sprites
+- animation
+- mcp
+- 2d
+- pixel-art
+status: active
+platforms:
+- web
+engines: []
+exports:
+- sprite-sheet
+- png
+- gif
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: limited
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://skillsplayground.com/connectors/co-godmodeai-sprites/
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

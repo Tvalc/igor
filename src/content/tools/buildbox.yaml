@@ -1,0 +1,34 @@
+name: Buildbox
+url: https://www.buildbox.com
+tagline: No-code engine for hyper-casual and mobile games, with AI features.
+description: Buildbox 4 is a no-code game engine aimed at hyper-casual and mobile games, with AI-assisted creation.
+best_for: Making mobile hyper-casual games without code.
+categories:
+- game-maker
+tags:
+- no-code
+- mobile
+- 3d
+- 2d
+status: active
+platforms:
+- desktop
+- web
+engines: []
+exports:
+- ios
+- android
+skill_level: beginner
+pricing:
+  model: trial
+  free_tier: trial
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.buildbox.com
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

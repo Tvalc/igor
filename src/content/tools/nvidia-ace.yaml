@@ -1,0 +1,34 @@
+name: NVIDIA ACE
+url: https://developer.nvidia.com/ace
+tagline: 'NVIDIA''s digital human and NPC middleware: Audio2Face, speech, on-device models.'
+description: NVIDIA ACE is a set of SDKs and models for digital humans, including Audio2Face facial animation, speech
+  recognition and on-device language models for NPCs.
+best_for: Studios building high-end, on-device AI characters.
+categories:
+- npc
+- animation
+tags:
+- npc
+- facial-animation
+- sdk
+status: active
+platforms:
+- api
+- plugin
+engines:
+- unity
+- unreal
+exports: []
+skill_level: advanced
+pricing:
+  model: free
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://developer.nvidia.com/ace
+needs_verification:
+- license
+last_verified: '2026-10-16'

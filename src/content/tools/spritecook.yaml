@@ -1,0 +1,30 @@
+name: SpriteCook
+url: https://spritecook.ai
+tagline: Prompt to transparent-background game sprite.
+description: SpriteCook generates game sprites with transparent backgrounds from prompts.
+best_for: Ready-to-use sprites without background removal.
+categories:
+- art-2d
+tags:
+- sprites
+- 2d
+status: active
+platforms:
+- web
+engines: []
+exports:
+- png
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: unknown
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://spritecook.ai
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

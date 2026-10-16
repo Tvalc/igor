@@ -1,0 +1,31 @@
+name: Ropilot
+url: https://ropilot.ai
+tagline: AI builder for Roblox experiences.
+description: Ropilot is an AI assistant that helps build Roblox experiences.
+best_for: Roblox creators who want AI help building experiences.
+categories:
+- game-maker
+- code
+tags:
+- roblox
+status: active
+platforms:
+- plugin
+engines:
+- roblox
+exports: []
+skill_level: intermediate
+pricing:
+  model: freemium
+  free_tier: unknown
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://ropilot.ai
+needs_verification:
+- pricing
+- license
+- exports
+last_verified: '2026-10-16'

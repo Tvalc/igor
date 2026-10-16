@@ -1,0 +1,35 @@
+name: Sorceress
+url: https://sorceress.games
+tagline: 'Browser game and asset suite: sprites, textures and sound effects.'
+description: Sorceress is a browser suite for making games and assets, including quick sprite generation, a material
+  tool and sound effects.
+best_for: Hobbyists who want game assets and a builder in the browser.
+categories:
+- game-maker
+- art-2d
+- texture
+- sfx
+tags:
+- browser
+- sprites
+- 2d
+status: active
+platforms:
+- web
+engines: []
+exports: []
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://sorceress.games
+needs_verification:
+- pricing
+- license
+- exports
+last_verified: '2026-10-16'

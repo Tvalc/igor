@@ -1,0 +1,34 @@
+name: Charisma.ai
+url: https://charisma.ai
+tagline: Branching story and emotion engine for interactive characters.
+description: Charisma.ai is a storytelling platform for interactive characters, combining branching narrative with
+  AI-driven dialogue and emotion.
+best_for: Narrative games with AI-driven dialogue.
+categories:
+- npc
+tags:
+- npc
+- narrative
+status: active
+platforms:
+- web
+- plugin
+engines:
+- unity
+- unreal
+exports: []
+skill_level: intermediate
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://charisma.ai
+needs_verification:
+- pricing
+- license
+- engines
+last_verified: '2026-10-16'

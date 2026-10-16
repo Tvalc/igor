@@ -1,0 +1,30 @@
+name: GitHub Copilot
+url: https://github.com/features/copilot
+tagline: GitHub's AI coding assistant and agent.
+description: GitHub Copilot offers code completion, chat and an agent mode in popular editors, including Visual
+  Studio and Rider used for Unity and Unreal.
+best_for: Developers already in VS Code, Visual Studio or Rider.
+categories:
+- code
+tags:
+- general-purpose
+- agent
+status: active
+platforms:
+- plugin
+engines: []
+exports:
+- source-code
+skill_level: intermediate
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: 'yes'
+  open_source: false
+sources:
+- https://github.com/features/copilot
+needs_verification:
+- pricing
+last_verified: '2026-10-16'

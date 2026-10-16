@@ -1,0 +1,30 @@
+name: Ziva
+url: https://ziva.sh
+tagline: AI assistant for Godot.
+description: Ziva is an AI assistant built for the Godot engine.
+best_for: Godot devs who want a dedicated assistant.
+categories:
+- code
+tags:
+- godot
+- agent
+status: active
+platforms:
+- plugin
+engines:
+- godot
+exports: []
+skill_level: intermediate
+pricing:
+  model: freemium
+  free_tier: unknown
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://ziva.sh
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

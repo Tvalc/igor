@@ -1,0 +1,31 @@
+name: SEELE AI
+url: https://www.seeles.ai
+tagline: Text-to-game creation with a game design document generator.
+description: SEELE AI generates games from text prompts and includes a game design document generator.
+best_for: Prototyping game ideas and design docs from text.
+categories:
+- game-maker
+tags:
+- no-code
+- gdd
+- 3d
+status: active
+platforms:
+- web
+engines: []
+exports: []
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.seeles.ai
+needs_verification:
+- pricing
+- license
+- exports
+last_verified: '2026-10-16'

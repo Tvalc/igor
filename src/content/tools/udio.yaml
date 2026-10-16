@@ -1,0 +1,30 @@
+name: Udio
+url: https://www.udio.com
+tagline: AI music generation.
+description: Udio generates music from text prompts.
+best_for: Alternative AI soundtrack generation.
+categories:
+- music
+tags:
+- music
+status: active
+platforms:
+- web
+engines: []
+exports:
+- mp3
+- wav
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.udio.com
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

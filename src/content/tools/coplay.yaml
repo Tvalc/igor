@@ -1,0 +1,29 @@
+name: Coplay
+url: https://coplay.dev
+tagline: Folded into Aura after Ramen acquired it in March 2026.
+description: Coplay was an AI assistant for Unity. Ramen acquired it in March 2026, and Aura replaces it.
+best_for: Nothing new; see Aura.
+categories:
+- code
+tags:
+- unity
+- agent
+status: discontinued
+successor: aura
+platforms:
+- plugin
+engines:
+- unity
+exports: []
+skill_level: intermediate
+pricing:
+  model: paid
+  free_tier: 'no'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://coplay.dev/blog/ramen-acquires-coplay
+needs_verification: []
+last_verified: '2026-10-16'

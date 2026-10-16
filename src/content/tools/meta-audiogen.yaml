@@ -1,0 +1,31 @@
+name: Meta AudioGen
+url: https://github.com/facebookresearch/audiocraft
+tagline: Open sound-effect generation model (non-commercial weights).
+description: AudioGen is part of Meta's AudioCraft research library and generates sound effects from text. The model
+  weights are licensed for non-commercial use only.
+best_for: Research and prototyping, not shipped games.
+categories:
+- sfx
+tags:
+- sfx
+- open-source
+- local
+status: active
+platforms:
+- self-hosted
+engines: []
+exports:
+- wav
+skill_level: advanced
+pricing:
+  model: open-source
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: 'no'
+  open_source: true
+  notes: Weights are CC-BY-NC 4.0.
+sources:
+- https://github.com/facebookresearch/audiocraft
+needs_verification: []
+last_verified: '2026-10-16'

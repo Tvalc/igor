@@ -1,0 +1,33 @@
+name: Aura
+url: https://www.tryaura.dev
+tagline: AI agent for Unreal Engine, and Unity since May 2026.
+description: Aura, from Ramen, is an AI agent that works inside Unreal Engine and, since May 2026, Unity. It replaced
+  Coplay after Ramen acquired it.
+best_for: Unreal and Unity developers who want an in-editor agent.
+categories:
+- code
+tags:
+- agent
+- unreal
+- unity
+status: active
+platforms:
+- plugin
+engines:
+- unreal
+- unity
+exports: []
+skill_level: intermediate
+pricing:
+  model: freemium
+  free_tier: unknown
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.tryaura.dev/updates/aura-for-unity-launches-may-14
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

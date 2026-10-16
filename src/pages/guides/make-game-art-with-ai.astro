@@ -1,0 +1,104 @@
+---
+import Base from '../../layouts/Base.astro';
+import RankTable from '../../components/RankTable.astro';
+import Faq from '../../components/Faq.astro';
+import { LISTS, rankedList } from '../../lib/lists';
+import { faqPage } from '../../lib/jsonld';
+import { SITE } from '../../site';
+
+const get = async (slug: string) => rankedList(LISTS.find((l) => l.slug === slug)!);
+const art = await get('ai-game-art-generators');
+const threeD = await get('ai-3d-model-generators');
+const textures = await get('ai-texture-generators');
+const names = (xs: typeof art, n = 3) => xs.slice(0, n).map((s) => s.tool.data.name).join(', ');
+const styleTrained = art.filter((s) => s.tool.data.tags.includes('style-training'));
+
+const faqs = [
+  {
+    q: 'What is the best AI for game art?',
+    a: `For 2D game art, ${names(art)} rank highest on our rubric. For 3D models, ${names(threeD)} lead.`,
+  },
+  {
+    q: 'Can I use AI-generated art in a commercial game?',
+    a: 'Usually, yes, on the right plan. Many tools grant commercial rights only on paid plans, some open-weight models have restricted licenses, and copyright protection for purely AI-generated images is limited in many countries. Check each tool page, and disclose AI content where stores require it.',
+  },
+  {
+    q: 'How do I make AI game art look consistent?',
+    a: `Use a fixed style prompt, generate from one reference image, and use tools that support style training${styleTrained.length ? ` (such as ${names(styleTrained, 2)})` : ''}. Expect to finish assets by hand in an editor.`,
+  },
+  {
+    q: 'Can AI make game-ready 3D models?',
+    a: `For props and many characters, yes. Tools such as ${names(threeD, 2)} export standard formats (GLB, FBX, OBJ) and some auto-rig characters. Hero assets usually still need retopology and cleanup in Blender.`,
+  },
+];
+---
+
+<Base
+  title={`How to Make Game Art with AI (${SITE.year} Guide)`}
+  description="How to make game art with AI: concept art, consistent sprites, 3D models, textures and animation, plus the best AI game art tools ranked on rights and exports."
+  crumbs={[{ name: 'Guides', href: '/guides/how-to-make-a-game-with-ai' }, { name: 'Make game art with AI', href: '/guides/make-game-art-with-ai' }]}
+  jsonLd={[faqPage(faqs)]}
+>
+  <article class="prose">
+    <h1>How to make game art with AI</h1>
+    <div class="answer">
+      <p>
+        To make game art with AI, start with concept art and a fixed style prompt, then use game-specific tools for
+        production assets: <strong>{names(art)}</strong> for 2D art and sprites, <strong>{names(threeD, 2)}</strong>
+        for 3D models, and texture generators for materials. Finish assets by hand and confirm commercial rights for
+        each tool.
+      </p>
+    </div>
+    <p class="meta">Updated {SITE.year} · Rankings below update automatically from our tool data.</p>
+
+    <h2>1. Concept art and a style guide</h2>
+    <p>
+      Use a general image generator to explore looks quickly, then pick one direction and write a style guide:
+      palette, line weight, lighting, camera angle and resolution. Every later prompt reuses it.
+    </p>
+
+    <h2>2. 2D production assets</h2>
+    <p>
+      General image models struggle with transparent backgrounds, clean pixel edges and frame-to-frame consistency.
+      Game-specific tools handle sprite sheets, multi-direction characters and tilesets. See the
+      <a href="/best/ai-sprite-generators">best AI sprite generators</a>.
+    </p>
+
+    <h2>3. 3D models</h2>
+    <p>
+      Text- and image-to-3D tools now produce usable props and characters in GLB, FBX or OBJ, and several can
+      auto-rig. Check polygon counts and topology before importing into your engine. See the
+      <a href="/best/ai-3d-model-generators">best AI 3D model generators</a>.
+    </p>
+
+    <h2>4. Textures and materials</h2>
+    <p>
+      AI can generate tileable textures and full PBR map sets (albedo, normal, roughness). See the
+      <a href="/best/ai-texture-generators">best AI texture generators</a>.
+    </p>
+
+    <h2>5. Animation</h2>
+    <p>
+      For 2D, sprite tools can animate one character into many actions. For 3D, video-to-mocap and text-to-motion tools
+      generate animation you can retarget. See <a href="/best/ai-animation-tools">AI animation tools</a>.
+    </p>
+
+    <h2>6. Rights and disclosure</h2>
+    <p>
+      Commercial rights vary by tool and plan, and copyright protection for purely AI-generated art is limited in
+      many places. Keep a record of which tool made which asset, and disclose AI content where stores require it.
+    </p>
+  </article>
+
+  <h2>Best AI game art generators</h2>
+  <RankTable ranked={art} limit={8} />
+  <p><a href="/best/ai-game-art-generators">Full game art ranking →</a></p>
+
+  <h2>Best AI 3D model generators</h2>
+  <RankTable ranked={threeD} limit={6} />
+
+  <h2>Best AI texture generators</h2>
+  <RankTable ranked={textures} limit={5} />
+
+  <Faq faqs={faqs} />
+</Base>

@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import { publishedLists } from '../../lib/lists';
+import { SITE } from '../../site';
+
+const lists = await publishedLists();
+---
+
+<Base
+  title={`Best AI Game Development Tools by Category (${SITE.year})`}
+  description="Ranked lists of the best AI tools for making games: game makers, sprite and 3D generators, Unity, Godot and Unreal AI, voice, music and NPC tools."
+  crumbs={[{ name: 'Best lists', href: '/best' }]}
+>
+  <h1>Best AI game dev tools, by category</h1>
+  <div class="answer">
+    <p>
+      Pick the job you need done. Each list ranks every tool we track for that job on the same public rubric, with
+      free tiers, pricing and commercial rights side by side.
+    </p>
+  </div>
+  <div class="grid">
+    {
+      lists.map(({ def, ranked }) => (
+        <a class="card" href={`/best/${def.slug}`}>
+          <h3>{def.title}</h3>
+          <p>
+            {ranked.length} tools · #1 {ranked[0].tool.data.name}
+          </p>
+        </a>
+      ))
+    }
+  </div>
+</Base>

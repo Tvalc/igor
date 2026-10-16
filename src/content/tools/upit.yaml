@@ -1,0 +1,30 @@
+name: Upit
+url: https://upit.com
+tagline: Prompt-to-playable game creation with built-in hosting.
+description: Upit generates playable games from prompts and hosts them so they can be shared with a link.
+best_for: Making a shareable game from a prompt.
+categories:
+- game-maker
+tags:
+- no-code
+- browser
+status: active
+platforms:
+- web
+engines: []
+exports:
+- web
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://upit.com
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

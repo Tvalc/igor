@@ -1,0 +1,33 @@
+name: Lovable
+url: https://lovable.dev
+tagline: General AI app builder that can produce simple web games.
+description: Lovable builds web apps from chat prompts. It isn't game-specific, but simple web games are within
+  reach.
+best_for: Simple web games alongside other app ideas.
+categories:
+- game-maker
+- code
+tags:
+- browser
+- general-purpose
+- agent
+status: active
+platforms:
+- web
+engines: []
+exports:
+- web
+- source-code
+skill_level: intermediate
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: 'yes'
+  open_source: false
+sources:
+- https://lovable.dev
+needs_verification:
+- pricing
+last_verified: '2026-10-16'

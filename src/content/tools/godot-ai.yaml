@@ -1,0 +1,31 @@
+name: Godot AI
+url: https://godotengine.org/asset-library/asset/5050
+tagline: 80+ MCP tools for Godot from the MCP for Unity team.
+description: Godot AI is a Godot plugin exposing more than 80 MCP tools so AI assistants can work in the Godot editor.
+  It comes from the team behind MCP for Unity.
+best_for: Godot devs using Claude, Cursor or another MCP client.
+categories:
+- code
+tags:
+- mcp
+- godot
+- open-source
+status: active
+platforms:
+- plugin
+engines:
+- godot
+exports: []
+skill_level: advanced
+pricing:
+  model: open-source
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: true
+sources:
+- https://www.godotengine.org/asset-library/asset/5050
+needs_verification:
+- license
+last_verified: '2026-10-16'

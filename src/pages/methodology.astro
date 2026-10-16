@@ -1,0 +1,85 @@
+---
+import Base from '../layouts/Base.astro';
+import { FACTOR_LABELS, GROUP_LABELS, WEIGHTS, type Factor, type Group } from '../lib/score';
+
+const groups = Object.keys(WEIGHTS) as Group[];
+const factors = Object.keys(FACTOR_LABELS) as Factor[];
+---
+
+<Base
+  title="How We Rank AI Game Dev Tools"
+  description="The public scoring rubric behind every AI Game Atlas ranking: factors, weights per category, how unknown facts are handled, and how hands-on tests are added."
+  crumbs={[{ name: 'How we rank', href: '/methodology' }]}
+>
+  <article class="prose">
+    <h1>How we rank</h1>
+    <div class="answer">
+      <p>
+        Every tool gets an <strong>Atlas Score from 0 to 100</strong>, computed by code from verified facts with
+        the published weights below. Hands-on test results are blended in at 50% once a test is published. Affiliate
+        links, sponsorships and ownership never change a score.
+      </p>
+    </div>
+
+    <h2>The factors</h2>
+    <ul>
+      {factors.map((k) => (<li><strong>{FACTOR_LABELS[k].label}:</strong> {FACTOR_LABELS[k].question}</li>))}
+    </ul>
+  </article>
+
+  <h2>Weights by category</h2>
+  <p>Different jobs need different things. Commercial rights matter most for audio, and integrations matter most for coding tools.</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Factor</th>{groups.map((g) => <th>{GROUP_LABELS[g]}</th>)}</tr>
+      </thead>
+      <tbody>
+        {
+          factors.map((k) => (
+            <tr>
+              <td>{FACTOR_LABELS[k].label}</td>
+              {groups.map((g) => <td class="num">{Math.round(WEIGHTS[g][k] * 100)}%</td>)}
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <article class="prose">
+    <h2>Rules we follow</h2>
+    <ul>
+      <li>
+        <strong>Facts come from primary sources.</strong> Each tool page lists its sources and a last-verified date.
+        Fields we haven't confirmed are marked "Unverified".
+      </li>
+      <li>
+        <strong>Unknown never helps a tool.</strong> An unverified fact scores below the midpoint, so verifying a tool
+        can only move it in the direction the facts point.
+      </li>
+      <li>
+        <strong>Scores are computed, not chosen.</strong> The scoring code is open in our repository, and nobody
+        adjusts a number by hand.
+      </li>
+      <li>
+        <strong>Hands-on tests are real.</strong> A hands-on score exists only after we publish the test, with the
+        prompt and outputs. Until then, pages say the score is facts-based.
+      </li>
+      <li>
+        <strong>Discontinued tools stay listed, but unranked</strong>, so people searching for them find the
+        replacement.
+      </li>
+      <li>
+        <strong>Freshness is automated.</strong> Agents re-check pricing, status and changelogs every week and propose
+        changes with sources. Schema checks reject malformed data before it ships.
+      </li>
+    </ul>
+
+    <h2>Ownership and money</h2>
+    <p>
+      This site is run by the Makko AI team, and Makko is scored by exactly the same rules. Some links are affiliate
+      links, and sponsored placements are labeled. See the <a href="/disclosure">full disclosure</a>.
+    </p>
+  </article>
+</Base>

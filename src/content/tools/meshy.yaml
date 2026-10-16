@@ -1,0 +1,45 @@
+name: Meshy
+url: https://www.meshy.ai
+tagline: Text or image to 3D, with texturing and auto-rigging.
+description: Meshy generates 3D models from text or images, textures them, and can rig and animate characters. It
+  offers plugins for common engines and DCC tools.
+best_for: Indie devs who need game-ready 3D props and characters fast.
+categories:
+- art-3d
+- texture
+- animation
+tags:
+- 3d
+- rigging
+status: active
+platforms:
+- web
+- api
+- plugin
+engines:
+- blender
+- unity
+- unreal
+exports:
+- glb
+- fbx
+- obj
+- usdz
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+affiliate:
+  program: Meshy Affiliate Program
+  commission: 20% for 12 months
+sources:
+- https://meshy.ai/affiliates
+needs_verification:
+- pricing
+- license
+- engines
+last_verified: '2026-10-16'

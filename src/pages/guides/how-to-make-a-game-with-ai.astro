@@ -1,0 +1,111 @@
+---
+import Base from '../../layouts/Base.astro';
+import RankTable from '../../components/RankTable.astro';
+import Faq from '../../components/Faq.astro';
+import { LISTS, rankedList } from '../../lib/lists';
+import { faqPage } from '../../lib/jsonld';
+import { SITE } from '../../site';
+
+const get = async (slug: string) => rankedList(LISTS.find((l) => l.slug === slug)!);
+const makers = await get('ai-game-makers');
+const noCode = await get('no-code-ai-game-makers');
+const coding = await get('ai-coding-tools-for-game-dev');
+const freeMakers = makers.filter((s) => s.tool.data.pricing.free_tier === 'yes');
+const names = (xs: typeof makers, n = 3) => xs.slice(0, n).map((s) => s.tool.data.name).join(', ');
+
+const faqs = [
+  {
+    q: 'Can you make a game with AI for free?',
+    a: `Yes. ${freeMakers.length} of the AI game makers we track have a free tier, including ${names(freeMakers)}. Free tiers usually limit exports, generations or commercial use.`,
+  },
+  {
+    q: 'Do I need to know how to code to make a game with AI?',
+    a: `No. Prompt-to-game platforms such as ${names(noCode)} build a playable game from plain-language descriptions. Coding knowledge helps once you want more control, but it isn't required to start.`,
+  },
+  {
+    q: 'Can I sell a game I made with AI?',
+    a: 'Often, yes, but it depends on each tool\'s license and plan. Many tools allow commercial use only on paid plans, and some open-weight models restrict commercial use. Check the commercial-use row on each tool page before you publish. Steam also asks you to disclose AI-generated content.',
+  },
+  {
+    q: 'What kind of games can AI make today?',
+    a: 'Small, focused games work best: arcade games, platformers, puzzle games, visual novels and simple multiplayer experiments. Large games still need a human to design the structure, while AI speeds up code, art and audio.',
+  },
+];
+---
+
+<Base
+  title={`How to Make a Game with AI (${SITE.year} Guide)`}
+  description="How to make a game with AI, step by step: choose between prompt-to-game platforms, AI inside a real engine, or a coding agent, then add AI art and audio and publish."
+  crumbs={[{ name: 'Guides', href: '/guides/how-to-make-a-game-with-ai' }, { name: 'Make a game with AI', href: '/guides/how-to-make-a-game-with-ai' }]}
+  jsonLd={[faqPage(faqs)]}
+>
+  <article class="prose">
+    <h1>How to make a game with AI</h1>
+    <div class="answer">
+      <p>
+        There are three ways to make a game with AI. A <strong>prompt-to-game platform</strong> such as
+        {names(noCode)} builds a playable game from a description, with no code. An <strong>AI assistant inside a
+        real engine</strong> (Unity, Godot, GDevelop) gives you more control and store exports. A <strong>coding
+        agent</strong> such as {names(coding, 2)} writes the code for you in any engine. Beginners should start
+        with the first option.
+      </p>
+    </div>
+    <p class="meta">Updated {SITE.year} · Rankings below update automatically from our tool data.</p>
+
+    <h2>Step 1: Keep the first game small</h2>
+    <p>
+      AI tools are best at small, focused games: one core mechanic, one or two levels, a clear win or lose condition.
+      Write a one-paragraph description, for example "a 2D platformer where a fox collects acorns and avoids
+      hedgehogs, with three levels." You'll reuse it as your first prompt.
+    </p>
+
+    <h2>Step 2: Choose your route</h2>
+    <h3>Route A: Prompt-to-game platforms (no code)</h3>
+    <p>
+      You describe the game and the platform generates it, including code, basic art and hosting. It's the fastest
+      route to something playable and usually runs in the browser. The trade-off is less control and fewer export
+      options. Best for beginners, game jams and prototypes.
+    </p>
+    <h3>Route B: AI inside a game engine</h3>
+    <p>
+      Engines such as Unity, Godot and GDevelop now have AI assistants or agents built in, or available as plugins
+      and MCP servers. You get a real project that can ship to PC, mobile and consoles, and AI does much of the
+      setup and scripting. See <a href="/best/ai-for-unity">AI for Unity</a>, <a href="/best/ai-for-godot">AI for
+      Godot</a> and <a href="/best/ai-for-unreal">AI for Unreal</a>.
+    </p>
+    <h3>Route C: A coding agent plus any engine</h3>
+    <p>
+      General coding agents can build a game from scratch, for example in Godot, Phaser or plain JavaScript. They
+      also connect to engines through MCP servers. This route gives the most control and needs the most comfort with
+      code. See <a href="/best/ai-coding-tools-for-game-dev">AI coding tools for game development</a>.
+    </p>
+
+    <h2>Step 3: Generate the core loop, then iterate</h2>
+    <p>
+      Start with your one-paragraph description, play the result, and fix one thing per prompt ("make the jump
+      higher", "add a score counter"). Small, specific requests work much better than rewriting the whole game.
+    </p>
+
+    <h2>Step 4: Add art and audio</h2>
+    <p>
+      Replace placeholder art with consistent assets. See <a href="/guides/make-game-art-with-ai">how to make game
+      art with AI</a>, the <a href="/best/ai-sprite-generators">best sprite generators</a> and
+      <a href="/best/ai-3d-model-generators">3D model generators</a>. For sound, see <a
+      href="/best/ai-music-generators-for-games">music</a>, <a href="/best/ai-sound-effect-generators">sound
+      effects</a> and <a href="/best/ai-voice-generators-for-games">voice</a>.
+    </p>
+
+    <h2>Step 5: Check rights, then publish</h2>
+    <p>
+      Before you publish, confirm each tool you used allows commercial use on your plan. Our tool pages show this.
+      Browser games can go on itch.io or your own site. For Steam you'll need a desktop build, and you'll have to
+      disclose AI-generated content.
+    </p>
+  </article>
+
+  <h2>The best AI game makers right now</h2>
+  <RankTable ranked={makers} limit={8} />
+  <p><a href="/best/ai-game-makers">See the full ranking of {makers.length} AI game makers →</a></p>
+
+  <Faq faqs={faqs} />
+</Base>

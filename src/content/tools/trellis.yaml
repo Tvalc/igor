@@ -1,0 +1,30 @@
+name: TRELLIS
+url: https://github.com/microsoft/TRELLIS
+tagline: Microsoft's open-source image-to-3D model.
+description: TRELLIS is an open-source image-to-3D generation model from Microsoft that you can run locally.
+best_for: Developers who want a free, local image-to-3D pipeline.
+categories:
+- art-3d
+tags:
+- 3d
+- open-source
+- local
+status: active
+platforms:
+- self-hosted
+engines: []
+exports:
+- glb
+skill_level: advanced
+pricing:
+  model: open-source
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: 'yes'
+  open_source: true
+  notes: MIT license.
+sources:
+- https://github.com/microsoft/TRELLIS
+needs_verification: []
+last_verified: '2026-10-16'

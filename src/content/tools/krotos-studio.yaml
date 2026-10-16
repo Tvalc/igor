@@ -1,0 +1,30 @@
+name: Krotos Studio
+url: https://www.krotos.studio
+tagline: Performable sound design tool.
+description: Krotos Studio lets you perform and shape sound effects in real time from a library of presets.
+best_for: Sound designers who want quick, controllable effects.
+categories:
+- sfx
+tags:
+- sfx
+status: active
+platforms:
+- desktop
+- web
+engines: []
+exports:
+- wav
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.krotos.studio
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

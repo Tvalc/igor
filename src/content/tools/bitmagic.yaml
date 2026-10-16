@@ -1,0 +1,32 @@
+name: Bitmagic
+url: https://www.bitmagic.ai
+tagline: Text-to-3D game creation; Bitmagic Mini in Steam Playtest.
+description: Bitmagic generates 3D game worlds from text prompts. Its Bitmagic Mini client has been available through
+  Steam Playtest; we found no 2026 product news.
+best_for: Experimenting with prompt-generated 3D worlds.
+categories:
+- game-maker
+tags:
+- 3d
+- no-code
+status: beta
+platforms:
+- desktop
+engines: []
+exports: []
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://getcoai.com/news/bitmagic-secures-4m-for-text-to-3d-game-platform
+needs_verification:
+- status
+- pricing
+- license
+- exports
+last_verified: '2026-10-16'

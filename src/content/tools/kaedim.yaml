@@ -1,0 +1,30 @@
+name: Kaedim
+url: https://www.kaedim3d.com
+tagline: Human-checked 3D assets for studios.
+description: Kaedim produces production-quality 3D assets with human artists checking the AI output. Plans run roughly
+  $50 to $1,200 per month.
+best_for: Studios that need reliable, production-ready 3D.
+categories:
+- art-3d
+tags:
+- 3d
+- studio
+status: active
+platforms:
+- web
+engines: []
+exports: []
+skill_level: intermediate
+pricing:
+  model: paid
+  free_tier: 'no'
+  starting_price_usd: 50
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://costbench.com/compare/kaedim-vs-luma-genie/
+needs_verification:
+- license
+- exports
+last_verified: '2026-10-16'

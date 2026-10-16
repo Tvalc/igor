@@ -1,0 +1,27 @@
+name: Replica Studios
+url: https://replicastudios.com
+tagline: Shut down on 30 June 2025.
+description: Replica Studios offered AI voice actors for games and shut down on 30 June 2025.
+best_for: Nothing new; see ElevenLabs.
+categories:
+- voice
+tags:
+- tts
+status: discontinued
+successor: elevenlabs
+platforms:
+- web
+engines: []
+exports: []
+skill_level: beginner
+pricing:
+  model: paid
+  free_tier: 'no'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://multilingual.com/replica-studios-shutdown-2025/
+needs_verification: []
+last_verified: '2026-10-16'
