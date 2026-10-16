@@ -1,27 +1,57 @@
 ---
 import Base from '../layouts/Base.astro';
+import Icon, { type IconName } from '../components/Icon.astro';
+import Monogram from '../components/Monogram.astro';
+import ScoreRing from '../components/ScoreRing.astro';
 import RankTable from '../components/RankTable.astro';
-import { activeTools, publishedLists } from '../lib/lists';
+import { activeTools, comparisonPairs, publishedLists, LIST_ICONS } from '../lib/lists';
 import { SITE } from '../site';
 
 const tools = await activeTools();
 const live = tools.filter((t) => t.data.status !== 'discontinued').length;
 const lists = await publishedLists();
+const pairs = (await comparisonPairs()).size;
 const byslug = Object.fromEntries(lists.map((l) => [l.def.slug, l]));
-const featured = ['ai-game-makers', 'ai-sprite-generators', 'ai-3d-model-generators', 'ai-coding-tools-for-game-dev']
-  .map((s) => byslug[s])
-  .filter(Boolean);
 
-const top = (slug: string) => byslug[slug]?.ranked[0]?.tool;
 const picks = [
-  { label: 'game maker', slug: 'ai-game-makers' },
-  { label: 'sprite generator', slug: 'ai-sprite-generators' },
-  { label: '3D model generator', slug: 'ai-3d-model-generators' },
-  { label: 'coding tool', slug: 'ai-coding-tools-for-game-dev' },
-  { label: 'music generator', slug: 'ai-music-generators-for-games' },
+  { label: 'Game maker', slug: 'ai-game-makers' },
+  { label: 'Sprites & pixel art', slug: 'ai-sprite-generators' },
+  { label: '3D models', slug: 'ai-3d-model-generators' },
+  { label: 'Coding & engines', slug: 'ai-coding-tools-for-game-dev' },
+  { label: 'Music', slug: 'ai-music-generators-for-games' },
+  { label: 'NPCs & dialogue', slug: 'ai-npc-tools' },
 ]
-  .map((p) => ({ ...p, tool: top(p.slug) }))
-  .filter((p) => p.tool);
+  .map((p) => ({ ...p, top: byslug[p.slug]?.ranked[0] }))
+  .filter((p) => p.top);
+
+const routes = [
+  {
+    step: 'Route 1',
+    title: 'No code: prompt to game',
+    body: 'Describe the game and a platform builds it, art and hosting included. Fastest way to something playable.',
+    points: ['Best for beginners and game jams', 'Runs in the browser', 'Fewer export options'],
+    href: '/best/no-code-ai-game-makers',
+    cta: 'No-code game makers',
+  },
+  {
+    step: 'Route 2',
+    title: 'AI inside a real engine',
+    body: 'Unity, Godot and GDevelop now ship AI assistants and MCP plugins. You keep a real project that exports anywhere.',
+    points: ['PC, mobile and console exports', 'AI does setup and scripting', 'Some learning curve'],
+    href: '/best/ai-for-godot',
+    cta: 'AI for game engines',
+  },
+  {
+    step: 'Route 3',
+    title: 'A coding agent writes it',
+    body: 'Coding agents build the game in any engine or plain JavaScript, and connect to engines through MCP.',
+    points: ['Maximum control', 'Works with any engine', 'Comfort with code helps'],
+    href: '/best/ai-coding-tools-for-game-dev',
+    cta: 'AI coding tools',
+  },
+];
+
+const pixelMap = [1, 0, 0, 0, 1, 1, 2, 0, 2, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1];
 
 const website = {
   '@context': 'https://schema.org',
@@ -30,61 +60,128 @@ const website = {
   url: Astro.site!.toString(),
   description: SITE.description,
 };
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE.name,
+  url: Astro.site!.toString(),
+  logo: new URL('/favicon.svg', Astro.site).toString(),
+};
 ---
 
 <Base
   title={`${SITE.name}: Every Tool to Make Games with AI, Ranked (${SITE.year})`}
   description={`Want to make games with AI? We rank and compare ${live} AI game makers, sprite and 3D generators, coding assistants and audio tools on free tiers, pricing and commercial rights.`}
-  jsonLd={[website]}
+  jsonLd={[website, organization]}
 >
-  <h1>Make games with AI: every tool, ranked and compared</h1>
-  <div class="answer">
-    <p>
-      There are three ways to make a game with AI: a <strong>prompt-to-game platform</strong> that builds it from a
-      description, an <strong>AI assistant inside a game engine</strong>, or a <strong>coding agent</strong> that writes
-      the code (<a href="/guides/how-to-make-a-game-with-ai">step-by-step guide</a>). We rank {live} tools on one
-      <a href="/methodology">public rubric</a>. Current #1 picks:{picks.map((p, i) => (
-        <>{i > 0 ? ', ' : ' '}{p.label}{' '}<a href={`/tools/${p.tool!.id}`}>{p.tool!.data.name}</a></>
-      ))}.
-    </p>
+  <section class="hero" slot="hero">
+    <div class="wrap">
+      <span class="eyebrow"><Icon name="gamepad" size={16} /> Updated weekly · {SITE.year}</span>
+      <h1>Make games with AI. <em>Pick the right tool.</em></h1>
+      <p class="lede">
+        There are three ways to make a game with AI: a prompt-to-game platform, an AI assistant inside a game engine,
+        or a coding agent. We rank all {live} tools on one <a href="/methodology">public rubric</a>, using verified free
+        tiers, pricing, commercial rights and exports.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-lime" href="/guides/how-to-make-a-game-with-ai">Start the guide <Icon name="arrow" size={18} /></a>
+        <a class="btn btn-ghost" href="/best/">See the rankings</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong>{live}</strong><span>tools tracked</span></div>
+        <div class="stat"><strong>{lists.length}</strong><span>ranked categories</span></div>
+        <div class="stat"><strong>{pairs}</strong><span>head-to-heads</span></div>
+        <div class="stat"><strong>Weekly</strong><span>fact re-checks</span></div>
+      </div>
+    </div>
+    <div class="pixels" aria-hidden="true">
+      {pixelMap.map((v) => <i class={v === 1 ? 'on' : v === 2 ? 'on2' : ''} />)}
+    </div>
+  </section>
+
+  <div class="section-head">
+    <h2>Current #1 in each category</h2>
+    <a href="/best/">All {lists.length} rankings →</a>
+  </div>
+  <div class="grid-picks">
+    {
+      picks.map((p) => (
+        <a class="card" href={`/best/${p.slug}`}>
+          <span class="eyebrow">{p.label}</span>
+          <div class="podium-head" style="margin-top:10px">
+            <span style="display:flex;align-items:center;gap:10px">
+              <Monogram name={p.top!.tool.data.name} />
+              <strong>{p.top!.tool.data.name}</strong>
+            </span>
+            <ScoreRing score={p.top!.score} size={44} />
+          </div>
+          <p>{p.top!.tool.data.best_for}</p>
+        </a>
+      ))
+    }
   </div>
 
-  <h2>Start here</h2>
-  <div class="grid">
-    <a class="card" href="/guides/how-to-make-a-game-with-ai">
-      <h3>Make a game with AI</h3>
-      <p>The three routes, step by step, for complete beginners.</p>
-    </a>
-    <a class="card" href="/guides/make-2d-games-with-ai">
-      <h3>Make 2D games with AI</h3>
-      <p>2D game makers, consistent sprites, tilesets and animation.</p>
-    </a>
-    <a class="card" href="/guides/make-game-art-with-ai">
-      <h3>Make game art with AI</h3>
-      <p>Concept art, sprites, 3D models, textures and rights.</p>
-    </a>
+  <div class="section-head">
+    <h2>Three ways to make a game with AI</h2>
+    <a href="/guides/how-to-make-a-game-with-ai">Full step-by-step guide →</a>
+  </div>
+  <div class="grid-3">
+    {
+      routes.map((r) => (
+        <div class="card route">
+          <span class="step">{r.step}</span>
+          <h3>{r.title}</h3>
+          <p>{r.body}</p>
+          <ul>{r.points.map((pt) => <li>{pt}</li>)}</ul>
+          <p class="card-foot"><a href={r.href}>{r.cta} →</a></p>
+        </div>
+      ))
+    }
   </div>
 
   {
-    featured.map(({ def, ranked }) => (
-      <section>
-        <h2>
-          <a href={`/best/${def.slug}`}>{def.title}</a>
-        </h2>
-        <RankTable ranked={ranked} limit={5} />
-      </section>
-    ))
+    byslug['ai-game-makers'] && (
+      <>
+        <div class="section-head">
+          <h2>Best AI game makers</h2>
+          <a href="/best/ai-game-makers">Full ranking →</a>
+        </div>
+        <RankTable ranked={byslug['ai-game-makers'].ranked} limit={6} />
+      </>
+    )
   }
 
-  <h2>All rankings</h2>
+  <div class="section-head">
+    <h2>Browse by what you need</h2>
+    <a href="/tools/">All {live} tools →</a>
+  </div>
   <div class="grid">
     {
       lists.map(({ def, ranked }) => (
         <a class="card" href={`/best/${def.slug}`}>
+          <span class="card-icon"><Icon name={(LIST_ICONS[def.slug] ?? 'gamepad') as IconName} /></span>
           <h3>{def.title.replace(/^Best /, '')}</h3>
-          <p>{ranked.length} tools ranked</p>
+          <p>{ranked.length} tools ranked · #1 {ranked[0].tool.data.name}</p>
         </a>
       ))
     }
+  </div>
+
+  <div class="grid-3" style="margin-top:40px">
+    <a class="card" href="/guides/make-2d-games-with-ai">
+      <span class="card-icon"><Icon name="pixel" /></span>
+      <h3>Make 2D games with AI</h3>
+      <p>2D game makers, consistent sprites, tilesets and animation.</p>
+    </a>
+    <a class="card" href="/guides/make-game-art-with-ai">
+      <span class="card-icon"><Icon name="image" /></span>
+      <h3>Make game art with AI</h3>
+      <p>Concept art, sprites, 3D models, textures, and who owns the rights.</p>
+    </a>
+    <a class="card" href="/methodology">
+      <span class="card-icon"><Icon name="check" /></span>
+      <h3>How we rank</h3>
+      <p>Six factors, published weights, no hand-picked scores. Run by the Makko team, disclosed everywhere.</p>
+    </a>
   </div>
 </Base>

@@ -2,6 +2,8 @@
 import { getCollection, getEntry } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import ScoreBars from '../../components/ScoreBars.astro';
+import Monogram from '../../components/Monogram.astro';
+import ScoreRing from '../../components/ScoreRing.astro';
 import RankTable from '../../components/RankTable.astro';
 import { alternativesFor, listsContaining, comparisonPairs } from '../../lib/lists';
 import { scoreTool, groupOf, GROUP_LABELS, type Tool } from '../../lib/score';
@@ -28,6 +30,18 @@ const alternatives = await alternativesFor(tool, 5);
 const inLists = await listsContaining(tool);
 const comparisons = [...(await comparisonPairs()).entries()].filter(([, p]) => p.a.id === tool.id || p.b.id === tool.id);
 const successor = d.successor ? await getEntry('tools', d.successor) : undefined;
+const facts: [string, string, string | undefined][] = [
+  ['Website', d.url.replace(/^https?:\/\//, ''), undefined],
+  ['Status', STATUS_LABELS[d.status], undefined],
+  ['Free tier', FREE_TIER_LABELS[d.pricing.free_tier], undefined],
+  ['Price', price(tool), d.pricing.notes],
+  ['Commercial use', COMMERCIAL_LABELS[d.license.commercial_use] + (d.license.open_source ? ' · Open source' : ''), d.license.notes],
+  ['Engines', list(d.engines, ENGINE_LABELS), undefined],
+  ['Exports', list(d.exports), undefined],
+  ['Runs on', list(d.platforms, { web: 'Web', desktop: 'Desktop', plugin: 'Plugin', api: 'API', cli: 'CLI', 'self-hosted': 'Self-hosted' }), undefined],
+  ['Skill level', d.skill_level[0].toUpperCase() + d.skill_level.slice(1), undefined],
+  ['Last verified', isoDate(d.last_verified), undefined],
+];
 const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what to use instead` : `${d.name} Review (${SITE.year}): Pricing, Features & Alternatives`;
 ---
 
@@ -38,12 +52,19 @@ const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what t
   markdownPath={`/tools/${tool.id}.md`}
   jsonLd={d.status === 'discontinued' ? [] : [softwareApp(scored, base)]}
 >
-  <h1>{d.name}</h1>
-  <p>
-    {d.categories.map((c) => <span class="pill">{CATEGORY_LABELS[c]}</span>)}
-    {d.status !== 'active' && <span class={`pill ${d.status === 'discontinued' ? 'dead' : ''}`}>{STATUS_LABELS[d.status]}</span>}
-    {d.makko_owned && <span class="pill owned">Built by our team</span>}
-  </p>
+  <div class="tool-hero">
+    <Monogram name={d.name} size="lg" />
+    <div>
+      <h1>{d.name}</h1>
+      <p class="tagline">{d.tagline}</p>
+      <p style="margin:8px 0 0">
+        {d.categories.map((c) => <span class="pill">{CATEGORY_LABELS[c]}</span>)}
+        {d.status !== 'active' && <span class={`pill ${d.status === 'discontinued' ? 'dead' : ''}`}>{STATUS_LABELS[d.status]}</span>}
+        {d.makko_owned && <span class="pill owned">Built by our team</span>}
+      </p>
+    </div>
+    {d.status !== 'discontinued' && <ScoreRing score={scored.score} size={84} label />}
+  </div>
 
   <div class="answer">
     <p>
@@ -91,21 +112,16 @@ const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what t
   <p>{d.description}</p>
 
   <h2>Key facts</h2>
-  <dl class="facts">
-    <dt>Website</dt><dd><a href={d.url} rel="noopener">{d.url.replace(/^https?:\/\//, '')}</a></dd>
-    <dt>Status</dt><dd>{STATUS_LABELS[d.status]}</dd>
-    <dt>Free tier</dt><dd>{FREE_TIER_LABELS[d.pricing.free_tier]}</dd>
-    <dt>Price</dt><dd>{price(tool)}{d.pricing.notes && <span class="meta"> ({d.pricing.notes})</span>}</dd>
-    <dt>Commercial use</dt>
-    <dd>
-      {COMMERCIAL_LABELS[d.license.commercial_use]}{d.license.open_source && ' · Open source'}
-      {d.license.notes && <span class="meta"> ({d.license.notes})</span>}
-    </dd>
-    <dt>Engines</dt><dd>{list(d.engines, ENGINE_LABELS)}</dd>
-    <dt>Exports</dt><dd>{list(d.exports)}</dd>
-    <dt>Runs on</dt><dd>{list(d.platforms, { web: 'Web', desktop: 'Desktop', plugin: 'Plugin', api: 'API', cli: 'CLI', 'self-hosted': 'Self-hosted' })}</dd>
-    <dt>Skill level</dt><dd>{d.skill_level[0].toUpperCase() + d.skill_level.slice(1)}</dd>
-    <dt>Last verified</dt><dd>{isoDate(d.last_verified)}</dd>
+  <dl class="facts-grid">
+    {facts.map(([label, value, note]) => (
+      <div class="fact">
+        <dt>{label}</dt>
+        <dd class={value === 'Unverified' ? 'unverified' : undefined}>
+          {label === 'Website' ? <a href={d.url} rel="noopener">{value}</a> : value}
+          {note && <span class="meta"> ({note})</span>}
+        </dd>
+      </div>
+    ))}
   </dl>
   {
     d.needs_verification.length > 0 && (

@@ -122,6 +122,16 @@ export const LISTS: ListDef[] = [
 
 export const MIN_LIST_SIZE = 3;
 
+// Icon names from src/components/Icon.astro.
+export const LIST_ICONS: Record<string, string> = {
+  'ai-game-makers': 'gamepad', '2d-game-makers': 'pixel', 'no-code-ai-game-makers': 'wand',
+  'ai-game-art-generators': 'image', 'ai-sprite-generators': 'pixel', 'ai-3d-model-generators': 'cube',
+  'ai-texture-generators': 'grid', 'ai-animation-tools': 'motion', 'ai-coding-tools-for-game-dev': 'code',
+  'ai-for-unity': 'engine', 'ai-for-godot': 'engine', 'ai-for-unreal': 'engine',
+  'ai-voice-generators-for-games': 'mic', 'ai-music-generators-for-games': 'music',
+  'ai-sound-effect-generators': 'wave', 'ai-npc-tools': 'chat', 'free-ai-game-dev-tools': 'gift',
+};
+
 export async function activeTools() {
   return (await getCollection('tools')).sort((a, b) => a.data.name.localeCompare(b.data.name));
 }

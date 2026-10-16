@@ -2,10 +2,13 @@
 import Base from '../../layouts/Base.astro';
 import RankTable from '../../components/RankTable.astro';
 import Faq from '../../components/Faq.astro';
-import { publishedLists, toolsWithAlternatives, type ListDef } from '../../lib/lists';
+import Podium from '../../components/Podium.astro';
+import Icon, { type IconName } from '../../components/Icon.astro';
+import Monogram from '../../components/Monogram.astro';
+import { publishedLists, toolsWithAlternatives, LIST_ICONS, type ListDef } from '../../lib/lists';
 import { FACTOR_LABELS, strengths, type Scored } from '../../lib/score';
 import { itemList, faqPage } from '../../lib/jsonld';
-import { CATEGORY_LABELS } from '../../lib/format';
+import { CATEGORY_LABELS, tier } from '../../lib/format';
 import { SITE } from '../../site';
 
 export async function getStaticPaths() {
@@ -67,6 +70,7 @@ const description = `${def.title}, ranked: ${names(ranked)} and more, compared o
     faqPage(faqs),
   ]}
 >
+  <span class="eyebrow" style="margin-top:18px"><Icon name={(LIST_ICONS[def.slug] ?? 'gamepad') as IconName} size={16} /> Ranking · updated {SITE.year}</span>
   <h1>{title}</h1>
   <div class="answer">
     <p>
@@ -89,14 +93,20 @@ const description = `${def.title}, ranked: ${names(ranked)} and more, compared o
     )
   }
 
+  <h2>Top 3 picks</h2>
+  <Podium ranked={ranked} />
+
+  <h2>Full ranking</h2>
   <RankTable ranked={ranked} />
 
   <h2>The top picks, briefly</h2>
   {
     ranked.slice(0, 5).map((s, i) => (
       <section>
-        <h3>
-          {i + 1}. <a href={`/tools/${s.tool.id}`}>{s.tool.data.name}</a> <span class="score">{s.score}</span>
+        <h3 style="display:flex;align-items:center;gap:10px">
+          <Monogram name={s.tool.data.name} size="sm" />
+          <span>{i + 1}. <a href={`/tools/${s.tool.id}`}>{s.tool.data.name}</a></span>
+          <span class={`score tier-${tier(s.score)}`}>{s.score}</span>
         </h3>
         <p>{s.tool.data.description}</p>
         <p class="meta">

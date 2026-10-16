@@ -1,0 +1,29 @@
+---
+interface Props {
+  score: number;
+  size?: number;
+  label?: boolean;
+}
+const { score, size = 56, label = false } = Astro.props;
+const tier = score >= 85 ? 'top' : score >= 70 ? 'good' : score >= 55 ? 'ok' : 'low';
+const r = 15.9155; // circumference = 100, so the dash length is the score
+---
+
+<span class={`ring ring-${tier}`} style={`--size:${size}px`} role="img" aria-label={`Score ${score} out of 100`}>
+  <svg viewBox="0 0 36 36" width={size} height={size} aria-hidden="true">
+    <circle class="ring-track" cx="18" cy="18" r={r} fill="none" stroke-width="3.2" />
+    <circle
+      class="ring-value"
+      cx="18"
+      cy="18"
+      r={r}
+      fill="none"
+      stroke-width="3.2"
+      stroke-linecap="round"
+      stroke-dasharray={`${score} ${100 - score}`}
+      transform="rotate(-90 18 18)"
+    />
+  </svg>
+  <span class="ring-num">{score}</span>
+  {label && <span class="ring-label">/100</span>}
+</span>

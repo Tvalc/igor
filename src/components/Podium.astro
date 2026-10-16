@@ -1,0 +1,32 @@
+---
+import Monogram from './Monogram.astro';
+import ScoreRing from './ScoreRing.astro';
+import type { Scored } from '../lib/score';
+import { FREE_TIER_LABELS } from '../lib/format';
+
+interface Props {
+  ranked: Scored[];
+}
+const top = Astro.props.ranked.slice(0, 3);
+const medals = ['1st', '2nd', '3rd'];
+---
+
+<ol class="podium">
+  {
+    top.map((s, i) => (
+      <li class={`podium-card podium-${i + 1}`}>
+        <span class="podium-rank">{medals[i]}</span>
+        <div class="podium-head">
+          <Monogram name={s.tool.data.name} size="lg" />
+          <ScoreRing score={s.score} size={52} />
+        </div>
+        <h3>
+          <a href={`/tools/${s.tool.id}`}>{s.tool.data.name}</a>
+          {s.tool.data.makko_owned && <span class="pill owned">Our team</span>}
+        </h3>
+        <p>{s.tool.data.best_for}</p>
+        <p class="podium-meta">{FREE_TIER_LABELS[s.tool.data.pricing.free_tier]}</p>
+      </li>
+    ))
+  }
+</ol>

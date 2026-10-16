@@ -1,10 +1,13 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Faq from '../../components/Faq.astro';
+import Monogram from '../../components/Monogram.astro';
+import ScoreRing from '../../components/ScoreRing.astro';
 import { comparisonPairs, toolsWithAlternatives, type ListDef } from '../../lib/lists';
 import { scoreTool, FACTOR_LABELS, type Factor, type Group, type Tool } from '../../lib/score';
 import { faqPage } from '../../lib/jsonld';
 import {
-  COMMERCIAL_LABELS, ENGINE_LABELS, FREE_TIER_LABELS, STATUS_LABELS, isoDate, list, price,
+  COMMERCIAL_LABELS, ENGINE_LABELS, FREE_TIER_LABELS, STATUS_LABELS, isoDate, list, price, tier,
 } from '../../lib/format';
 import { SITE } from '../../site';
 
@@ -65,12 +68,26 @@ const faqs = [
   jsonLd={[faqPage(faqs)]}
 >
   <h1>{a.data.name} vs {b.data.name}</h1>
+  <div class="versus">
+    {[sa, sb].map((s, i) => (
+      <>
+        {i === 1 && <span class="vs-badge" aria-hidden="true">VS</span>}
+        <a class={`card vs-card${winner?.tool.id === s.tool.id ? ' vs-win' : ''}`} href={`/tools/${s.tool.id}`}>
+          <Monogram name={s.tool.data.name} size="lg" />
+          <span class="vs-name">{s.tool.data.name}</span>
+          <ScoreRing score={s.score} size={60} />
+          {winner?.tool.id === s.tool.id && <span class="pill">Higher score</span>}
+        </a>
+      </>
+    ))}
+  </div>
   <div class="answer">
     <p>
       {
         winner ? (
           <>
-            <strong>{winner.tool.data.name}</strong> comes out ahead, {sa.score} to {sb.score}, on our{' '}
+            <strong>{winner.tool.data.name}</strong> comes out ahead, {Math.max(sa.score, sb.score)} to{' '}
+            {Math.min(sa.score, sb.score)}, on our{' '}
             {listDef.title.replace(/^Best /, '')} rubric.
           </>
         ) : (
@@ -103,8 +120,8 @@ const faqs = [
       <tbody>
         <tr>
           <td><strong>Score</strong></td>
-          <td class="num"><span class="score">{sa.score}</span></td>
-          <td class="num"><span class="score">{sb.score}</span></td>
+          <td class="num"><span class={`score tier-${tier(sa.score)}`}>{sa.score}</span></td>
+          <td class="num"><span class={`score tier-${tier(sb.score)}`}>{sb.score}</span></td>
         </tr>
         {
           rows.map(([label, fn]) => (
@@ -151,8 +168,5 @@ const faqs = [
     ))}
   </p>
 
-  <section>
-    <h2>Frequently asked questions</h2>
-    {faqs.map((f) => (<><h3>{f.q}</h3><p>{f.a}</p></>))}
-  </section>
+  <Faq faqs={faqs} />
 </Base>
