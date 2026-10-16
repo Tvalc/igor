@@ -18,7 +18,7 @@ const tools = await getEntries(test.data.tools.map((id) => ({ collection: 'tools
 <Base
   title={test.data.title}
   description={test.data.summary}
-  crumbs={[{ name: 'Tests', href: '/tests' }, { name: test.data.title, href: `/tests/${test.id}` }]}
+  crumbs={[{ name: 'Tests', href: '/tests/' }, { name: test.data.title, href: `/tests/${test.id}` }]}
   noindex={test.data.status !== 'published'}
 >
   <article class="prose">

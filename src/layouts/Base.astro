@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { NAV, SITE } from '../site';
+import { NAV, SECTION_INDEXES, SITE } from '../site';
 import { breadcrumbs as breadcrumbsLd } from '../lib/jsonld';
 
 interface Props {
@@ -14,7 +14,9 @@ interface Props {
 
 const { title, description, crumbs = [], jsonLd = [], markdownPath, noindex = false } = Astro.props;
 const base = Astro.site!.toString().replace(/\/$/, '');
-const canonical = new URL(Astro.url.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/', Astro.site).toString();
+// Section indexes keep their trailing slash (/tools/); leaf pages are extensionless (/tools/x).
+const path = Astro.url.pathname.replace(/\.html$/, '').replace(/(\/index)?\/?$/, '');
+const canonical = new URL(SECTION_INDEXES.includes(`${path}/`) ? `${path}/` : path || '/', Astro.site).toString();
 const fullTitle = title.includes(SITE.name) ? title : `${title} | ${SITE.name}`;
 const ld = [...jsonLd];
 if (crumbs.length) {

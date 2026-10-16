@@ -10,7 +10,7 @@ export const GET: APIRoute = async ({ site }) => {
   const urls: { loc: string; lastmod: string }[] = [];
   const add = (path: string, lastmod = newest) => urls.push({ loc: base + path, lastmod });
 
-  for (const p of ['/', '/best', '/tools', '/compare', '/methodology', '/disclosure', '/about']) add(p);
+  for (const p of ['/', '/best/', '/tools/', '/compare/', '/methodology', '/disclosure', '/about']) add(p);
   for (const g of ['how-to-make-a-game-with-ai', 'make-2d-games-with-ai', 'make-game-art-with-ai']) add(`/guides/${g}`);
   for (const { def } of await publishedLists()) add(`/best/${def.slug}`);
   const withAlts = await toolsWithAlternatives();
@@ -20,7 +20,7 @@ export const GET: APIRoute = async ({ site }) => {
   }
   for (const slug of (await comparisonPairs()).keys()) add(`/compare/${slug}`);
   const tests = (await getCollection('tests')).filter((t) => t.data.status === 'published');
-  if (tests.length) add('/tests');
+  if (tests.length) add('/tests/');
   for (const t of tests) add(`/tests/${t.id}`, isoDate(t.data.date));
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

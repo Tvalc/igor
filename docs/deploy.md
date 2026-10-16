@@ -1,87 +1,74 @@
 # Deploying makeaigames.com
 
-The site is fully static: `npm run build` writes `dist/`. Production runs on Cloudflare Pages, and all five
-domains (registered at GoDaddy) use Cloudflare DNS so redirects happen at the edge.
+The site is fully static and hosted free on **GitHub Pages**. `.github/workflows/deploy.yml` builds and
+publishes it on every push to `main`, and `public/CNAME` sets the custom domain. Domains stay at GoDaddy,
+so there's no Cloudflare and no nameserver change.
 
 ## Domains
 
-| Domain | Role | Destination |
+| Domain | Role | Set up where |
 |---|---|---|
-| makeaigames.com | Production site | Cloudflare Pages |
-| www.makeaigames.com | Redirect (301) | `https://makeaigames.com` + same path |
-| aigameranks.com | Redirect (301) | `https://makeaigames.com/best` |
-| gamedevranks.com | Redirect (301) | `https://makeaigames.com/best` |
-| aigamesatlas.com | Redirect (301) | `https://makeaigames.com/tools` |
-| topgamedevs.com | Redirect (301) | `https://makeaigames.com/` (parked for a future studios directory) |
+| makeaigames.com | Production site | GoDaddy DNS → GitHub Pages |
+| www.makeaigames.com | Redirects to makeaigames.com | GoDaddy DNS (CNAME); GitHub redirects it automatically |
+| aigameranks.com | 301 → `https://makeaigames.com/best/` | GoDaddy Forwarding |
+| gamedevranks.com | 301 → `https://makeaigames.com/best/` | GoDaddy Forwarding |
+| aigamesatlas.com | 301 → `https://makeaigames.com/tools/` | GoDaddy Forwarding |
+| topgamedevs.com | 301 → `https://makeaigames.com/` | GoDaddy Forwarding |
 
-Redirects must be 301 (permanent), so search engines treat makeaigames.com as the only canonical site.
+## Phone checklist (GoDaddy app or godaddy.com)
 
-## 1. Create the Pages project
+### 1. Point makeaigames.com at GitHub Pages
 
-1. In the Cloudflare dashboard, go to **Workers & Pages → Create → Pages → Connect to Git** and pick
-   `tvalc/igor`.
-2. Settings:
-   - Production branch: `main`
-   - Framework preset: Astro, or None
-   - Build command: `npm run build`
-   - Build output directory: `dist`
-   - Environment variables: `NODE_VERSION` = `22` and `SITE_URL` = `https://makeaigames.com`
-3. Deploy. You'll get a `*.pages.dev` URL to check the build.
+Go to **My Products → makeaigames.com → DNS**.
 
-## 2. Move DNS to Cloudflare (each of the 5 domains)
+1. Delete the existing **A** record named `@`. It usually points to "Parked" or "WebsiteBuilder".
+2. Add four **A** records, each with Name `@`, TTL default:
+   - `185.199.108.153`
+   - `185.199.109.153`
+   - `185.199.110.153`
+   - `185.199.111.153`
+3. Edit or add the **CNAME** record with Name `www` and Value `tvalc.github.io`.
+4. If **Forwarding** is turned on for makeaigames.com, turn it off.
 
-1. Cloudflare dashboard → **Add a domain** → enter the domain → **Free** plan.
-2. Cloudflare shows two nameservers. In GoDaddy, go to **My Products → Domain → DNS → Nameservers →
-   Change → "I'll use my own nameservers"** and paste both.
-3. In GoDaddy, make sure **Forwarding** is off for the domain. GoDaddy forwarding conflicts with
-   Cloudflare.
-4. Wait for Cloudflare to show the domain as **Active**. This usually takes minutes, sometimes a few hours.
+### 2. Forward the other four domains
 
-## 3. Attach the main domain
+For each domain, go to **My Products → domain → DNS → Forwarding → Add forwarding (Domain)**:
 
-In the Pages project, go to **Custom domains → Set up a custom domain**. Add `makeaigames.com`, then add
-`www.makeaigames.com`. Cloudflare creates the DNS records and SSL certificates automatically.
+- Forward to `https` and the destination URL from the table above.
+- Type: **Permanent (301)**.
+- Settings: **Forward only**, not "masking".
 
-Then add a redirect from www to the bare domain: in the **makeaigames.com** zone, go to
-**Rules → Redirect Rules → Create rule**.
-- When: Hostname equals `www.makeaigames.com`
-- Then: Dynamic, expression `concat("https://makeaigames.com", http.request.uri.path)`, status 301,
-  preserve query string.
+### 3. Turn on HTTPS (GitHub, once DNS is live)
 
-## 4. Set up the redirect domains
+On github.com (the mobile browser works; the app doesn't), go to **Tvalc/igor → Settings → Pages**:
 
-For each of aigameranks.com, gamedevranks.com, aigamesatlas.com and topgamedevs.com:
+- **Source** should say *GitHub Actions*. The deploy workflow tries to set this itself. If it shows
+  "Deploy from a branch", switch it to *GitHub Actions*.
+- **Custom domain** should say `makeaigames.com`. If it's empty, type it and Save.
+- Tick **Enforce HTTPS** once GitHub has issued the certificate. That takes a few minutes to an hour after
+  DNS updates.
 
-1. **DNS → Add record:**
-   - Type `AAAA`, name `@`, IPv6 `100::`, proxy **on** (orange cloud).
-   - The same again with name `www`.
-   - `100::` is a placeholder address. It works because Cloudflare handles the request before it goes
-     anywhere.
-2. **Rules → Redirect Rules → Create rule:**
-   - When: All incoming requests
-   - Then: Static URL, the destination from the table above, status **301**
-
-## 5. Check it
+## Check it
 
 ```bash
-curl -sI https://makeaigames.com | head -1                      # HTTP/2 200
-curl -sI https://www.makeaigames.com/best | grep -i location    # https://makeaigames.com/best
+curl -sI https://makeaigames.com | head -1                    # HTTP/2 200
+curl -sI https://www.makeaigames.com | grep -i location       # https://makeaigames.com/
+curl -sI https://makeaigames.com/tools/makko-ai | head -1     # 200 (extensionless URLs work on Pages)
 for d in aigameranks.com gamedevranks.com aigamesatlas.com topgamedevs.com; do
-  echo "$d -> $(curl -sI https://$d | grep -i '^location')"
+  echo "$d -> $(curl -sI http://$d | grep -i '^location')"
 done
-curl -s https://makeaigames.com/llms.txt | head -3
-curl -sI https://makeaigames.com/tools/makko-ai | head -1       # 200, extensionless URL
 ```
 
-## 6. Tell the search engines
+## Tell the search engines
 
-- **Google Search Console:** add a *Domain* property for `makeaigames.com`, verify with the DNS TXT
-  record (add it in Cloudflare DNS), then submit `https://makeaigames.com/sitemap.xml`.
-- **Bing Webmaster Tools:** import from Search Console, or verify the same way, then submit the sitemap.
-  ChatGPT search and Copilot draw on Bing's index.
-- Optional: add the four redirect domains as properties too, so you can watch for redirect errors.
+- **Google Search Console:** add a *Domain* property for `makeaigames.com`, verify it with the TXT record
+  Google gives you (add it in GoDaddy DNS), then submit `https://makeaigames.com/sitemap.xml`.
+- **Bing Webmaster Tools:** import from Search Console, then submit the sitemap. ChatGPT search and
+  Copilot draw on Bing's index.
 
 ## Ongoing
 
-- Every push to `main` deploys automatically. Pull requests get preview URLs.
-- The weekly data refresh workflow opens PRs. Merging one deploys the updated rankings.
+- Every merge to `main` redeploys within about a minute.
+- The weekly data refresh workflow opens PRs, and merging one publishes the new rankings.
+- If you later want edge redirects or analytics, move DNS to Cloudflare. The site needs no code changes
+  for that.

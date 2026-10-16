@@ -61,7 +61,7 @@ const faqs = [
 <Base
   title={`${a.data.name} vs ${b.data.name} (${SITE.year}): Which Is Better?`}
   description={`${a.data.name} vs ${b.data.name} compared on free tiers, pricing, commercial rights, engines and exports. Scores: ${sa.score} vs ${sb.score}.`}
-  crumbs={[{ name: 'Compare', href: '/compare' }, { name: `${a.data.name} vs ${b.data.name}`, href: Astro.url.pathname }]}
+  crumbs={[{ name: 'Compare', href: '/compare/' }, { name: `${a.data.name} vs ${b.data.name}`, href: `/compare/${a.id}-vs-${b.id}` }]}
   jsonLd={[faqPage(faqs)]}
 >
   <h1>{a.data.name} vs {b.data.name}</h1>

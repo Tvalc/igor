@@ -51,5 +51,5 @@ npm run stale      # verification queue (tools with old or pending facts)
 
 ## Deploying
 
-The output in `dist/` is fully static and deploys to Cloudflare Pages. Step-by-step setup, including the
+The output in `dist/` is fully static and deploys to GitHub Pages via `.github/workflows/deploy.yml`. Step-by-step setup, including the
 redirect domains, is in [docs/deploy.md](docs/deploy.md).

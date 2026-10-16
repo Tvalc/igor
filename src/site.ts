@@ -11,9 +11,12 @@ export const SITE = {
 };
 
 export const NAV = [
-  { href: '/best', label: 'Best lists' },
-  { href: '/tools', label: 'All tools' },
-  { href: '/compare', label: 'Compare' },
+  { href: '/best/', label: 'Best lists' },
+  { href: '/tools/', label: 'All tools' },
+  { href: '/compare/', label: 'Compare' },
   { href: '/guides/how-to-make-a-game-with-ai', label: 'Guides' },
   { href: '/methodology', label: 'How we rank' },
 ];
+
+// Directory-style pages, served as /x/index.html. Their canonical URLs end with a slash.
+export const SECTION_INDEXES = ['/', '/best/', '/tools/', '/compare/', '/tests/'];

@@ -60,7 +60,7 @@ const description = `${def.title}, ranked: ${names(ranked)} and more, compared o
 <Base
   title={title}
   description={description}
-  crumbs={[{ name: 'Best lists', href: '/best' }, { name: def.title, href: `/best/${def.slug}` }]}
+  crumbs={[{ name: 'Best lists', href: '/best/' }, { name: def.title, href: `/best/${def.slug}` }]}
   markdownPath={`/best/${def.slug}.md`}
   jsonLd={[
     itemList(def.title, ranked.map((s) => ({ name: s.tool.data.name, url: `${base}/tools/${s.tool.id}` }))),
