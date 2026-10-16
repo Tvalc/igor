@@ -19,13 +19,15 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 14
+  notes: Starter $14/mo (4k credits), Plus $34 (12k), Pro $56 (24k), Wonder $240 (106k); discounts on annual billing.
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: Commercial use only on Plus tier and above (not Starter); free outputs may carry a watermark.
 sources:
 - https://openart.ai
-needs_verification:
-- pricing
-- license
+- https://openart.ai/suite/terms
+- https://openart.ai/pricing
+needs_verification: []
 last_verified: '2026-10-16'

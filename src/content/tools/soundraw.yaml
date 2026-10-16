@@ -18,15 +18,21 @@ exports:
 skill_level: beginner
 pricing:
   model: freemium
-  free_tier: 'yes'
-  starting_price_usd: null
+  free_tier: limited
+  starting_price_usd: 16.99
+  notes: Free to try (no downloads). Creator $16.99/mo ($11.04/mo annual); Artist Starter $29.99, Artist Pro $35.99,
+    Artist Unlimited $50/mo.
 license:
   commercial_use: paid-plans
   open_source: false
+  notes: Paid plans allow commercial use incl. video games; tracks used as downloaded stay licensed only while subscribed;
+    Creator not for standalone music releases.
 affiliate:
   program: Soundraw Affiliate Program
 sources:
 - https://docs.channel.io/soundraw-faq/en/articles/soundraw-affiliate-program-d26000fb
-needs_verification:
-- pricing
+- https://soundraw.io/blog/post/soundraw-licensing-explained
+- https://soundraw.io/
+- https://soundraw.io/license
+needs_verification: []
 last_verified: '2026-10-16'

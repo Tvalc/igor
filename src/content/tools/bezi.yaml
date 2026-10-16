@@ -17,15 +17,21 @@ engines:
 exports: []
 skill_level: intermediate
 pricing:
-  model: freemium
-  free_tier: limited
-  starting_price_usd: null
+  model: trial
+  free_tier: trial
+  starting_price_usd: 20
+  notes: Trial 100 one-time credits; Pro $20/mo (800 credits); Advanced $60/mo; Team $200/mo (3 seats); yearly billing
+    20% off
 license:
   commercial_use: unknown
   open_source: false
+  notes: ToS assigns Output to the user, subject to compliance with the Terms
 sources:
 - https://www.bezi.com
+- https://www.bezi.com/pricing
+- https://docs.bezi.com/account/plans
+- https://www.bezi.com/terms-of-service
 needs_verification:
-- pricing
-- license
+- commercial use
+- exports
 last_verified: '2026-10-16'

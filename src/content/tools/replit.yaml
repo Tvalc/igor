@@ -22,12 +22,15 @@ skill_level: intermediate
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 20
+  notes: Starter free (daily Agent credits, 1 published app); Core $20/mo ($18/mo billed annually); Pro $100/mo
+    ($90/mo annually).
 license:
   commercial_use: 'yes'
   open_source: false
 sources:
 - https://replit.com
-needs_verification:
-- pricing
+- https://replit.com/blog/pro-plan
+- https://replit.com/pricing
+needs_verification: []
 last_verified: '2026-10-16'

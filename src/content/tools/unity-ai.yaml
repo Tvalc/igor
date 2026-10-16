@@ -12,7 +12,7 @@ tags:
 - unity
 - mcp
 - agent
-status: active
+status: beta
 platforms:
 - plugin
 engines:
@@ -23,12 +23,17 @@ pricing:
   model: paid
   free_tier: trial
   starting_price_usd: 10
-  notes: $10/month on Unity Personal; included in Unity Pro.
+  notes: 'Personal: 14-day trial (1,000 credits) then $10/mo for 1,000 credits/mo; Pro includes 2,000 credits/mo;
+    MCP server and AI Gateway don''t use credits'
 license:
-  commercial_use: unknown
+  commercial_use: 'no'
   open_source: false
+  notes: 'Open beta under Evaluation Version terms: non-commercial/testing only until GA. Users own inputs/outputs.'
 sources:
 - https://www.buildfastwithai.com/blogs/unity-ai-open-beta-guide-2026
+- https://unity.com/features/ai
+- https://learn.unity.com/course/prototype-a-scene-with-unity-ai/tutorial/using-ai-generated-assets-responsibly?version=6.2
+- https://unity.com/legal/unityai-guiding-principles
 needs_verification:
-- license
+- exports
 last_verified: '2026-10-16'

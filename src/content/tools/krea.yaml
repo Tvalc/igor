@@ -1,7 +1,8 @@
 name: Krea
 url: https://www.krea.ai
 tagline: Real-time image and texture generation.
-description: Krea generates and edits images in real time, including textures.
+description: Krea is a web creative suite that generates and edits images, video and 3D, including real-time image
+  generation and textures.
 best_for: Fast iteration on concept art and textures.
 categories:
 - art-2d
@@ -19,13 +20,15 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 9
+  notes: Basic $9/mo (5,000 units), Pro $35/mo, Max $105/mo; Free 100 units/day, no card
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: Commercial license only on paid plans (Basic and up); free-plan images not licensed for commercial use
 sources:
 - https://www.krea.ai
-needs_verification:
-- pricing
-- license
+- https://www.krea.ai/pricing
+- https://www.krea.ai/
+needs_verification: []
 last_verified: '2026-10-16'

@@ -20,6 +20,7 @@ engines:
 - blender
 - unity
 - unreal
+- godot
 exports:
 - glb
 - fbx
@@ -29,17 +30,22 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 20
+  notes: Free 100 credits/mo; Pro $20/mo (1,000 credits); Premium $40 (3,000); Ultra $100 (8,000); Studio team $70
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: Free plan outputs CC BY 4.0 (commercial use with credit to Meshy); paid plans get a private licence, no
+    attribution
 affiliate:
   program: Meshy Affiliate Program
   commission: 20% for 12 months
 sources:
 - https://meshy.ai/affiliates
-needs_verification:
-- pricing
-- license
-- engines
+- https://help.meshy.ai/en/articles/9992001-can-i-use-my-generated-assets-for-commercial-projects
+- https://help.meshy.ai/en/articles/16102098-can-i-use-meshy-assets-commercially
+- https://www.meshy.ai/pricing
+- https://docs.meshy.ai/en/webapp/pricing
+- https://www.meshy.ai/features/text-to-3d
+needs_verification: []
 last_verified: '2026-10-16'

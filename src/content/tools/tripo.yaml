@@ -17,6 +17,9 @@ platforms:
 - plugin
 engines:
 - blender
+- unity
+- unreal
+- godot
 exports:
 - glb
 - fbx
@@ -26,7 +29,9 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 19.9
+  notes: Free 200 credits/mo (up to 13 models, public); Professional 3,000 credits/mo (~$19.90/mo); DCC Bridge on
+    Pro/Max/Team only
 license:
   commercial_use: unknown
   open_source: false
@@ -35,8 +40,9 @@ affiliate:
   commission: up to 30% for 12 months
 sources:
 - https://www.tripo3d.ai/affiliate
+- https://www.tripo3d.ai/blog/tripo-dcc-bridge-guide-hub
+- https://www.tripo3d.ai/compare/tripo-vs-meshy
+- https://www.tripo3d.ai/help/billing/which-tripo-ai-plan-is-right-for-me
 needs_verification:
-- pricing
-- license
-- engines
+- commercial use
 last_verified: '2026-10-16'

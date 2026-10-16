@@ -17,14 +17,18 @@ exports:
 skill_level: beginner
 pricing:
   model: freemium
-  free_tier: 'yes'
-  starting_price_usd: null
+  free_tier: limited
+  starting_price_usd: 19.99
+  notes: Studio $19.99/mo ($9.99/mo annual); Pro $49.99/mo ($23.33/mo annual); 5-day free trial; free account with
+    limited features
 license:
-  commercial_use: unknown
+  commercial_use: restricted
   open_source: false
+  notes: Royalty-free; base Studio tier covers ads/client work only; Pro/Max needed for video games, TV, film.
 sources:
 - https://www.krotos.studio
-needs_verification:
-- pricing
-- license
+- https://krotos.studio/premiere-pro-plugin
+- https://krotos.studio/pricing
+- https://krotos.studio/faq
+needs_verification: []
 last_verified: '2026-10-16'

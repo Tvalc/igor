@@ -26,6 +26,6 @@ license:
 sources:
 - https://www.move.ai
 needs_verification:
-- pricing
-- license
+- price
+- commercial use
 last_verified: '2026-10-16'

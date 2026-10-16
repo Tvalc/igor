@@ -22,12 +22,16 @@ skill_level: intermediate
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 25
+  notes: Pro $25/mo (100 credits/mo + 5 daily); Business $50/mo; Free 5 daily credits (up to 30/mo)
 license:
   commercial_use: 'yes'
   open_source: false
+  notes: Users own apps, code and content and can use them commercially, subject to third-party/open-source rights
 sources:
 - https://lovable.dev
-needs_verification:
-- pricing
+- https://lovable.dev/students
+- https://lovable.dev/faq/billing/plans
+- https://docs.lovable.dev/introduction/faq
+needs_verification: []
 last_verified: '2026-10-16'

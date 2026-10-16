@@ -22,10 +22,14 @@ pricing:
   free_tier: 'yes'
   starting_price_usd: null
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: true
+  notes: 'MIT licence. Separate TERMS_AND_CONDITIONS.md: with telemetry on, user grants the author a royalty-free
+    licence to prompts, viewport images, code and scene metadata'
 sources:
 - https://github.com/ahujasid/blender-mcp
+- https://github.com/ahujasid/mcp-for-blender/blob/main/LICENSE
+- https://github.com/ahujasid/blender-mcp/blob/main/TERMS_AND_CONDITIONS.md
 needs_verification:
-- license
+- exports
 last_verified: '2026-10-16'

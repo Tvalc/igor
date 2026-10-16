@@ -22,12 +22,14 @@ pricing:
   model: freemium
   free_tier: 'yes'
   starting_price_usd: null
+  notes: Free to create and play; creators earn $100 when a game is selected for the feed
 license:
   commercial_use: unknown
   open_source: false
 sources:
 - https://www.pocketgamer.biz/astrocade-raises-56m-to-expand-ai-powered-games-creation-platform/
+- https://www.astrocade.com/blog/how-game-creators-are-turning-creativity-into-cash-on-astrocade
 needs_verification:
-- pricing
-- license
+- price
+- commercial use
 last_verified: '2026-10-16'

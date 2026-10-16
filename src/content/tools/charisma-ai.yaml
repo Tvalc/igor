@@ -19,16 +19,22 @@ engines:
 exports: []
 skill_level: intermediate
 pricing:
-  model: freemium
-  free_tier: 'yes'
+  model: paid
+  free_tier: trial
   starting_price_usd: null
+  notes: Pro is pay-as-you-go credit bundles ($5/50k, $20/200k, $100/1M, $500/5M; expire after 12 months); 1-month
+    trial with 50k credits; Enterprise custom.
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: Pro licences are for business customers only; Pro Stories may be published into external platforms such
+    as Unity or Unreal games.
 sources:
 - https://charisma.ai
+- https://docs.charisma.ai/licencing
+- https://charisma.ai/pricing
+- https://charisma.ai/terms
 needs_verification:
-- pricing
-- license
-- engines
+- price
+- exports
 last_verified: '2026-10-16'

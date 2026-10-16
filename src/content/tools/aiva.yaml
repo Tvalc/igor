@@ -22,11 +22,17 @@ pricing:
   model: freemium
   free_tier: 'yes'
   starting_price_usd: null
+  notes: Free (3 downloads/mo, MP3/MIDI, non-commercial, credit AIVA); Standard ~EUR 11/mo annual; Pro ~EUR 33/mo
+    annual (WAV, full copyright)
 license:
   commercial_use: paid-plans
   open_source: false
+  notes: 'Free: AIVA owns works, no monetization. Standard: limited monetization (YouTube, Twitch, TikTok, Instagram).
+    Pro: you own full copyright.'
 sources:
 - https://www.aiva.ai
+- https://www.aiva.ai/
+- https://www.aiva.ai/legal/1
 needs_verification:
-- pricing
+- price
 last_verified: '2026-10-16'

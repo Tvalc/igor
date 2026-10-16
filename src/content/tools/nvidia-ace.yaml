@@ -16,7 +16,6 @@ platforms:
 - api
 - plugin
 engines:
-- unity
 - unreal
 exports: []
 skill_level: advanced
@@ -27,8 +26,12 @@ pricing:
 license:
   commercial_use: unknown
   open_source: false
+  notes: 'Mixed licences: Audio2Face-3D SDK and Unreal plugins MIT; model weights under NVIDIA Open Model License;
+    NIM containers under NVIDIA Software License Agreement.'
 sources:
 - https://developer.nvidia.com/ace
+- https://developer.nvidia.com/ace-for-games
 needs_verification:
-- license
+- commercial use
+- exports
 last_verified: '2026-10-16'

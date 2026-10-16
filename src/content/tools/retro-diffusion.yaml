@@ -1,8 +1,8 @@
 name: Retro Diffusion
 url: https://www.retrodiffusion.ai
 tagline: Pixel-art models and an Aseprite plugin, sold for a one-time price.
-description: Retro Diffusion makes pixel-art image models and an Aseprite extension, sold as one-time purchases
-  ($20 and $65 tiers) rather than a subscription.
+description: Retro Diffusion makes pixel-art models, sold as a pay-per-generation web app and a one-time Aseprite
+  extension ($20/$65) that is being replaced by its Pixelit editor.
 best_for: Pixel artists working in Aseprite who dislike subscriptions.
 categories:
 - art-2d
@@ -21,13 +21,17 @@ exports:
 skill_level: intermediate
 pricing:
   model: one-time
-  free_tier: 'no'
+  free_tier: trial
   starting_price_usd: 20
+  notes: 'Aseprite extension one-time: Lite $20, full $65. Web app is pay-per-generation from a prepaid balance
+    (from $0.03/image, packs from $5).'
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
 sources:
 - https://www.retrodiffusion.ai
-needs_verification:
-- license
+- https://retrodiffusion.ai/
+- https://astropulse.itch.io/retrodiffusion
+- https://astropulse.itch.io/retrodiffusion/devlog/1639304/amd-gpu-support-big-announcement
+needs_verification: []
 last_verified: '2026-10-16'

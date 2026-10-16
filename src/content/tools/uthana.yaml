@@ -14,17 +14,24 @@ platforms:
 engines: []
 exports:
 - fbx
+- glb
+- bvh
 skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
   starting_price_usd: null
+  notes: 'Pay-as-you-go, no subscription: text-to-motion $0.02-$0.10/s, video-to-motion $0.05/input s, auto-rig
+    $0.15, character $0.75.'
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: Paid usage includes commercial rights. On the Free Plan, Uthana owns outputs and licenses them under Creative
+    Commons.
 sources:
 - https://uthana.com
+- https://uthana.com/pricing
+- https://uthana.com/terms
 needs_verification:
-- pricing
-- license
+- price
 last_verified: '2026-10-16'

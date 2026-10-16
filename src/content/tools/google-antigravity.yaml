@@ -18,13 +18,15 @@ skill_level: intermediate
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 19.99
+  notes: Free $0 with weekly rate limits; higher limits via Google AI Pro $19.99/mo, Ultra $99.99 and $199.99/mo
 license:
   commercial_use: unknown
   open_source: false
 sources:
 - https://antigravity.google
+- https://gemini.google/subscriptions/
+- https://antigravity.google/pricing
 needs_verification:
-- pricing
-- license
+- commercial use
 last_verified: '2026-10-16'

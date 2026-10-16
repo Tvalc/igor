@@ -25,6 +25,6 @@ license:
 sources:
 - https://www.udio.com
 needs_verification:
-- pricing
-- license
+- price
+- commercial use
 last_verified: '2026-10-16'

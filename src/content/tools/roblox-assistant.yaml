@@ -22,13 +22,14 @@ pricing:
   model: free
   free_tier: 'yes'
   starting_price_usd: null
+  notes: Roblox Studio is free; no charge for Cube 3D mesh generation (soft rate limit, future paid overage possible)
 license:
   commercial_use: unknown
   open_source: false
 sources:
 - https://about.roblox.com/newsroom/2026/02/accelerating-creation-powered-roblox-cube-foundation-model
+- https://devforum.roblox.com/t/beta-cube-3d-generation-tools-and-apis-for-creators/3558947
 needs_verification:
-- pricing
-- license
+- commercial use
 - exports
 last_verified: '2026-10-16'

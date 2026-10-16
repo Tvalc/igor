@@ -20,12 +20,14 @@ skill_level: intermediate
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 8
+  notes: 'Sold within xAI''s ''The X Subscription'' since Oct 2026: Free; Plus $8/mo (Grok models only); Premium
+    $30/mo; Super $100/mo; Ultra $200/mo. Legacy Hobby/Pro $20/Pro+ $60 continue for existing users.'
 license:
   commercial_use: 'yes'
   open_source: false
 sources:
 - https://cursor.com
-needs_verification:
-- pricing
+- https://cursor.com/help/account-and-billing/pricing
+needs_verification: []
 last_verified: '2026-10-16'

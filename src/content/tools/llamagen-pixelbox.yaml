@@ -14,17 +14,23 @@ platforms:
 engines: []
 exports:
 - png
+- sprite-sheet
 skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 18
+  notes: 'LlamaGen plans: Standard $18/mo, Pro $30, Unlimited $96, Production $200; PixelBox pages advertise free
+    pixel-art generation.'
 license:
-  commercial_use: unknown
+  commercial_use: restricted
   open_source: false
+  notes: Outputs usable for any purpose incl. commercial; companies over $500K/yr revenue must be on Pro or Unlimited.
 sources:
 - https://llamagen.ai
-needs_verification:
-- pricing
-- license
+- https://llamagen.ai/pricing
+- https://help.llamagen.ai/en/account/pricing-faq
+- https://llamagen.ai/ai-pixel-art-generator
+- https://llamagen.ai/en-au/ai-pixel-art-generator
+needs_verification: []
 last_verified: '2026-10-16'

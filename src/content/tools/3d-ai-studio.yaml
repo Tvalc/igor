@@ -14,19 +14,26 @@ status: active
 platforms:
 - web
 engines: []
-exports: []
+exports:
+- glb
+- fbx
+- obj
+- usdz
 skill_level: beginner
 pricing:
-  model: bundled
+  model: freemium
   free_tier: limited
-  starting_price_usd: null
+  starting_price_usd: 19
+  notes: Basic $19/mo (1,000 credits), Studio $29/mo, Pro $149/mo; ~$12/$23/$139 per mo billed annually; $34 one-time
+    2,000-credit pack; free starter credits
 license:
   commercial_use: unknown
   open_source: false
 sources:
 - https://www.3daistudio.com/blog/best-ai-texture-and-pbr-generators-2026
+- https://www.3daistudio.com/Pricing
+- https://docs.3daistudio.com/faq
+- https://docs.3daistudio.com/getting-started
 needs_verification:
-- pricing
-- license
-- exports
+- commercial use
 last_verified: '2026-10-16'

@@ -23,12 +23,15 @@ skill_level: advanced
 pricing:
   model: paid
   free_tier: 'no'
-  starting_price_usd: null
+  starting_price_usd: 20
+  notes: Included in Claude Pro ($20/mo, or $17/mo billed annually), Max, Team and Enterprise; or pay-as-you-go
+    API billing. Not on the Free plan
 license:
   commercial_use: 'yes'
   open_source: false
 sources:
 - https://claude.com/claude-code
-needs_verification:
-- pricing
+- https://claude.com/pricing
+- https://code.claude.com/docs/en/setup
+needs_verification: []
 last_verified: '2026-10-16'

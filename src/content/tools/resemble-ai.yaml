@@ -1,8 +1,8 @@
 name: Resemble AI
 url: https://www.resemble.ai
 tagline: Custom voice cloning, speech-to-speech and self-hostable text to speech.
-description: Resemble AI creates custom and cloned voices and offers speech-to-speech conversion, with an option to
-  self-host for teams that can't send audio to a cloud API.
+description: Resemble AI creates custom and cloned voices and offers speech-to-speech conversion, with an option
+  to self-host for teams that can't send audio to a cloud API.
 best_for: Teams that need custom character voices or self-hosted voice generation.
 categories:
 - voice
@@ -24,13 +24,16 @@ pricing:
   model: freemium
   free_tier: unknown
   starting_price_usd: null
+  notes: Flex $0/mo pay-as-you-go credits (never expire); Team $350/mo ($280 billed yearly); Business $1,000/mo;
+    Enterprise custom
 license:
   commercial_use: unknown
   open_source: false
 sources:
 - https://dasha.ai/blog/elevenlabs-alternatives
+- https://www.resemble.ai/pricing
 needs_verification:
-- pricing
-- license
-- exports
+- free tier
+- price
+- commercial use
 last_verified: '2026-10-16'

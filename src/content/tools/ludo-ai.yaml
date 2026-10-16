@@ -17,20 +17,31 @@ status: active
 platforms:
 - web
 - api
-engines: []
-exports: []
+engines:
+- unity
+exports:
+- png
+- sprite-sheet
+- gif
+- glb
+- obj
 skill_level: intermediate
 pricing:
-  model: freemium
-  free_tier: limited
-  starting_price_usd: null
+  model: trial
+  free_tier: trial
+  starting_price_usd: 20
+  notes: Indie $20/mo ($15 yearly, 250 credits/mo); Pro $50/mo ($35 yearly, 1,000 credits/mo); free trial 30 credits
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: 'ToS license: nonexclusive, worldwide, personal and commercial use on every plan; trial sprite sheets are
+    watermarked'
 sources:
 - https://ludo.ai/compare/best-ai-game-makers
-needs_verification:
-- pricing
-- license
-- exports
+- https://ludo.ai/pricing
+- https://ludo.ai/docs/account
+- https://ludo.ai/docs/game-asset-generation
+- https://ludo.ai/docs/3d-generator
+- https://ludo.ai/developers/unity
+needs_verification: []
 last_verified: '2026-10-16'

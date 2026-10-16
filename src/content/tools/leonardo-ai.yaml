@@ -21,13 +21,19 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 12
+  notes: Free 150 fast tokens daily; Essential $12/mo ($10/mo billed yearly); Premium $30/mo; Ultimate $60/mo; Teams
+    from $72 for 3 seats
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: Commercial use on all plans, but free-plan outputs are public and owned by Leonardo; paid subscribers own
+    their outputs
 sources:
 - https://leonardo.ai
-needs_verification:
-- pricing
-- license
+- https://leonardo.ai/news/can-you-use-ai-generated-images-commercially
+- https://leonardo.ai/terms-of-service
+- https://leonardo.ai/pricing
+- https://leonardo.ai/news/midjourney-vs-leonardo-ai
+needs_verification: []
 last_verified: '2026-10-16'

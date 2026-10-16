@@ -1,7 +1,8 @@
 name: SpriteCook
 url: https://spritecook.ai
 tagline: Prompt to transparent-background game sprite.
-description: SpriteCook generates game sprites with transparent backgrounds from prompts.
+description: SpriteCook generates pixel-art sprites, animations and sprite sheets with transparent backgrounds,
+  with Unity and Godot packages and an MCP server for coding agents.
 best_for: Ready-to-use sprites without background removal.
 categories:
 - art-2d
@@ -14,17 +15,24 @@ platforms:
 engines: []
 exports:
 - png
+- sprite-sheet
 skill_level: beginner
 pricing:
   model: freemium
-  free_tier: unknown
-  starting_price_usd: null
+  free_tier: 'yes'
+  starting_price_usd: 8
+  notes: Free 40 credits/30 days (~8 credits per sprite); Starter $8/mo (800 credits); Adventurer $30/mo; Archmage
+    $70/mo; 20% off yearly
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: Output usable commercially on all plans incl. free; underlying model usage policies also apply
 sources:
 - https://spritecook.ai
-needs_verification:
-- pricing
-- license
+- https://www.spritecook.ai/pricing
+- https://www.spritecook.ai/compare/autosprite
+- https://www.spritecook.ai/game-sprite-generator
+- https://www.spritecook.ai/ai-sprite-sheet-generator
+- https://www.spritecook.ai/
+needs_verification: []
 last_verified: '2026-10-16'

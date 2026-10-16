@@ -30,5 +30,6 @@ license:
 sources:
 - https://app.cinevva.com/guides/ai-npcs-dialogue
 needs_verification:
-- license
+- commercial use
+- exports
 last_verified: '2026-10-16'

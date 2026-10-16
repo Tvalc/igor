@@ -1,13 +1,13 @@
 name: Gambo AI
 url: https://gambo.ai
-tagline: Prompt-to-game creation.
-description: Gambo AI generates games from prompts. We found little independent coverage of it.
-best_for: Trying another prompt-to-game option.
+tagline: Shut down on 1 May 2026.
+description: Gambo AI was a prompt-to-game builder. Its site announced it would shut down on May 1, 2026.
+best_for: Nothing new; see Rosebud AI.
 categories:
 - game-maker
 tags:
 - no-code
-status: active
+status: discontinued
 platforms:
 - web
 engines: []
@@ -22,9 +22,7 @@ license:
   open_source: false
 sources:
 - https://gambo.ai
-needs_verification:
-- status
-- pricing
-- license
-- exports
+- https://gambo.ai/
+needs_verification: []
 last_verified: '2026-10-16'
+successor: rosebud-ai

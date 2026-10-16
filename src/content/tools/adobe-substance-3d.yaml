@@ -18,7 +18,8 @@ skill_level: advanced
 pricing:
   model: paid
   free_tier: trial
-  starting_price_usd: null
+  starting_price_usd: 24.99
+  notes: Texturing plan US$24.99/mo (Painter, Designer, Sampler); Collection US$59.99/mo; 30-day free trial
 license:
   commercial_use: unknown
   open_source: false
@@ -26,6 +27,7 @@ affiliate:
   program: Adobe affiliate program
 sources:
 - https://www.adobe.com/products/substance3d.html
+- https://helpx.adobe.com/substance-3d/pricing-change.html
 needs_verification:
-- pricing
+- commercial use
 last_verified: '2026-10-16'

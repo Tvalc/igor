@@ -19,13 +19,16 @@ skill_level: intermediate
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 19
+  notes: Free (non-commercial, .casc export only); Indie $19/mo or $96/yr; Pro $49/mo or $396/yr.
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: 'Free: no commercial use. Indie: commercial use only if revenue or funding is under $100k/yr. Pro and Teams:
+    full commercial use.'
 sources:
 - https://cascadeur.com
-needs_verification:
-- pricing
-- license
+- https://cascadeur.com/plans
+- https://cascadeur.com/help/cascadeur_end_user_agreement
+needs_verification: []
 last_verified: '2026-10-16'

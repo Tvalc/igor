@@ -17,19 +17,23 @@ status: active
 platforms:
 - web
 engines: []
-exports: []
+exports:
+- png
+- sprite-sheet
 skill_level: beginner
 pricing:
-  model: freemium
-  free_tier: 'yes'
-  starting_price_usd: null
+  model: one-time
+  free_tier: limited
+  starting_price_usd: 49
+  notes: $49 one-time lifetime (non-AI tools); AI via non-expiring credit packs from $10/1,000 credits; 100 starter
+    credits via Google sign-in; no subscription
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
 sources:
 - https://sorceress.games
-needs_verification:
-- pricing
-- license
-- exports
+- https://sorceress.games/plans
+- https://sorceress.games/pages/ai-image-gen
+- https://sorceress.games/blog/how-to-make-a-sprite-sheet-in-2-minutes-with-ai-in-2026
+needs_verification: []
 last_verified: '2026-10-16'

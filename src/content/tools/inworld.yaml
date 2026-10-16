@@ -22,14 +22,19 @@ skill_level: advanced
 pricing:
   model: freemium
   free_tier: limited
-  starting_price_usd: null
+  starting_price_usd: 25
+  notes: On-Demand free pay-as-you-go (up to 70 min TTS included); Creator $25/mo; Builder $100; Developer $300;
+    Growth $1,500; Enterprise custom
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: Commercial licence on every plan incl. free On-Demand; must have rights to any voice you clone
 sources:
 - https://inworld.ai
+- https://inworld.ai/pricing
+- https://docs.inworld.ai/portal/billing
+- https://inworld.ai/voice-generator
+- https://inworld.ai/voice-cloning
 needs_verification:
-- pricing
-- license
-- engines
+- exports
 last_verified: '2026-10-16'

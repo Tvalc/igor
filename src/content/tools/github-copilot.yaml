@@ -19,12 +19,14 @@ skill_level: intermediate
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 10
+  notes: Free (2,000 completions/mo plus limited AI credits); Pro $10/mo; Pro+ $39/mo; Max $100/mo
 license:
   commercial_use: 'yes'
   open_source: false
 sources:
 - https://github.com/features/copilot
-needs_verification:
-- pricing
+- https://github.com/features/copilot/plans
+- https://docs.github.com/en/copilot/get-started/plans
+needs_verification: []
 last_verified: '2026-10-16'

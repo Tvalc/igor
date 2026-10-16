@@ -23,7 +23,7 @@ pricing:
 license:
   commercial_use: 'yes'
   open_source: true
-  notes: MIT license.
+  notes: Models and most code MIT; some submodules (e.g. nvdiffrast) carry their own licenses.
 sources:
 - https://github.com/microsoft/TRELLIS
 needs_verification: []

@@ -15,20 +15,31 @@ status: active
 platforms:
 - web
 - api
-engines: []
-exports: []
+engines:
+- blender
+exports:
+- png
+- glb
+- obj
+- fbx
+- pbr-maps
 skill_level: intermediate
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 15
+  notes: Free plan 50 daily credits; Starter $15/mo (1,500 credits), Pro $45/mo (5,000), Max $75/mo (10,000); annual
+    33% cheaper.
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: 'Paid plans: full commercial license, and you own generated assets. Free plan: personal/evaluation use
+    only.'
 sources:
 - https://www.scenario.com
-needs_verification:
-- pricing
-- license
-- exports
+- https://www.scenario.com/pricing
+- https://help.scenario.com/articles/4276871610-pricing-plans
+- https://www.scenario.com/terms-and-conditions
+- https://www.scenario.com/
+needs_verification: []
 last_verified: '2026-10-16'

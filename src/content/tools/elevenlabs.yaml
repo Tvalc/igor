@@ -18,7 +18,6 @@ platforms:
 - plugin
 engines:
 - unity
-- unreal
 exports:
 - mp3
 - wav
@@ -26,15 +25,18 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 6
+  notes: Starter $6/mo (30k credits; $5/mo billed annually); Free 10k credits/mo
 license:
   commercial_use: paid-plans
   open_source: false
+  notes: All paid plans include a commercial licence (except Beta Services); the free plan cannot be used commercially
 affiliate:
   program: ElevenLabs Affiliate Program (PartnerStack)
   commission: 22% for 12 months
 sources:
 - https://elevenlabs.io/affiliate
-needs_verification:
-- pricing
+- https://elevenlabs.io/pricing
+- https://help.elevenlabs.io/hc/en-us/articles/13313564601361-Can-I-publish-the-content-I-generate-on-the-platform
+needs_verification: []
 last_verified: '2026-10-16'

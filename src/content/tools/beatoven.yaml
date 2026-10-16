@@ -18,14 +18,16 @@ exports:
 skill_level: beginner
 pricing:
   model: freemium
-  free_tier: 'yes'
+  free_tier: limited
   starting_price_usd: null
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: Licence is granted when you download a track (paid); non-exclusive and perpetual. Beatoven keeps ownership;
+    resale and distribution to streaming platforms are not allowed.
 sources:
 - https://www.beatoven.ai
+- https://www.beatoven.ai/ai-music-generator
 needs_verification:
-- pricing
-- license
+- price
 last_verified: '2026-10-16'

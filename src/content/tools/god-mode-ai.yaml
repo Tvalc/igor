@@ -24,14 +24,19 @@ exports:
 skill_level: beginner
 pricing:
   model: freemium
-  free_tier: limited
+  free_tier: trial
   starting_price_usd: null
+  notes: Credit packs ($12/20, $32/60, $100/250 per plans page) plus a monthly subscription; 3 free credits on signup;
+    public generations don't use credits.
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: Outputs usable commercially, no royalty or credit required.
 sources:
 - https://skillsplayground.com/connectors/co-godmodeai-sprites/
+- https://www.godmodeai.co/term-of-use
+- https://www.godmodeai.co/
+- https://www.godmodeai.co/plans
 needs_verification:
-- pricing
-- license
+- price
 last_verified: '2026-10-16'

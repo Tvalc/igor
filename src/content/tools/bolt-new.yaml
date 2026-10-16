@@ -22,12 +22,14 @@ skill_level: intermediate
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 9
+  notes: Lite $9/mo (open-source models); Pro $25/mo; Teams $30/member/mo; Free 1M tokens/mo (300K/day)
 license:
   commercial_use: 'yes'
   open_source: false
 sources:
 - https://bolt.new
-needs_verification:
-- pricing
+- https://bolt.new/bolt-lite
+- https://bolt.new/pricing
+needs_verification: []
 last_verified: '2026-10-16'

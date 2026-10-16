@@ -18,17 +18,25 @@ exports:
 - pbr-maps
 - glb
 - obj
+- fbx
+- usdz
 skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 12.5
+  notes: Free (limited captures, GLTF export); Basic $150/yr; Business $400/yr per user; Pro plan discontinued (Legacy
+    Pro only)
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: 'AI textures: unrestricted royalty-free commercial license; ToS asks attribution for public display of
+    generated models.'
 sources:
 - https://poly.cam
-needs_verification:
-- pricing
-- license
+- https://poly.cam/pricing
+- https://poly.cam/tools/ai-texture-generator
+- https://poly.cam/legal/terms-of-service
+- https://learn.poly.cam/hc/en-us/articles/27756102599572-What-File-Types-Can-Polycam-Export
+needs_verification: []
 last_verified: '2026-10-16'

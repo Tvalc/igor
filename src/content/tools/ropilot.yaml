@@ -13,19 +13,24 @@ platforms:
 - plugin
 engines:
 - roblox
+- blender
 exports: []
 skill_level: intermediate
 pricing:
   model: freemium
-  free_tier: unknown
-  starting_price_usd: null
+  free_tier: limited
+  starting_price_usd: 20
+  notes: Free starter credits / 500 Actions/mo with your own AI. Ropilot Plus $20/mo (credits incl. AI); BYO-AI
+    Starter $20/mo, Pro $50/mo, Max $250/mo; one-time credit packs $8-$400.
 license:
   commercial_use: unknown
   open_source: false
 sources:
 - https://ropilot.ai
+- https://ropilot.ai/roblox-mcp-server
+- https://ropilot.ai/pricing
+- https://ropilot.ai/
 needs_verification:
-- pricing
-- license
+- commercial use
 - exports
 last_verified: '2026-10-16'

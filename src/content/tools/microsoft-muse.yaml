@@ -22,7 +22,10 @@ pricing:
 license:
   commercial_use: 'no'
   open_source: false
+  notes: WHAM weights (200M and 1.6B) released on Hugging Face under the Microsoft Research License
 sources:
 - https://www.microsoft.com/en-us/research/blog/introducing-muse
-needs_verification: []
+- https://huggingface.co/microsoft/wham
+needs_verification:
+- exports
 last_verified: '2026-10-16'

@@ -32,6 +32,6 @@ affiliate:
 sources:
 - https://sloyd.ai/affiliate
 needs_verification:
-- pricing
-- license
+- price
+- commercial use
 last_verified: '2026-10-16'

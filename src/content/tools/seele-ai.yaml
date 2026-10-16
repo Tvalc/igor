@@ -18,14 +18,18 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 20
+  notes: Free 200 Koins/mo; Standard $20/mo ($17 annual, 2,000 Koins); Pro $50/mo ($39 annual, 6,000); Ultra $200/mo
+    ($167 annual, 25,000)
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: Commercial-use rights require Pro ($50/mo) or above, not Standard
 sources:
 - https://www.seeles.ai
+- https://www.seeles.ai/upgrade
+- https://www.seeles.ai/compare/seele-vs-roblox-ai
+- https://www.seeles.ai/features/create/ai-game-maker
 needs_verification:
-- pricing
-- license
 - exports
 last_verified: '2026-10-16'

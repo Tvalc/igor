@@ -13,19 +13,24 @@ status: active
 platforms:
 - web
 engines: []
-exports: []
+exports:
+- web
+- source-code
 skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 9.99
+  notes: Premium $9.99/mo, Ultra $24.99/mo, Pro $99.99/mo (cheaper annually); plans include monthly Sparks credits;
+    free during early access.
 license:
   commercial_use: unknown
   open_source: false
 sources:
 - https://jabali.ai
+- https://www.jabali.ai/pricing/
+- https://www.jabali.ai/faqs/
+- https://www.jabali.ai/jabalistudio/
 needs_verification:
-- pricing
-- license
-- exports
+- commercial use
 last_verified: '2026-10-16'

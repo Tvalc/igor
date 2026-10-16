@@ -26,12 +26,16 @@ pricing:
   model: freemium
   free_tier: trial
   starting_price_usd: null
+  notes: Monthly subscription tiers; free trial with a limited number of generations; Enterprise custom; API priced
+    per generation
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: Users own outputs and may use them for any purpose except training other models without permission
 sources:
 - https://www.pixellab.ai
+- https://www.pixellab.ai/termsofservice
+- https://www.pixellab.ai/docs/faq
 needs_verification:
-- pricing
-- license
+- price
 last_verified: '2026-10-16'

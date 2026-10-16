@@ -17,6 +17,7 @@ platforms:
 engines: []
 exports:
 - glb
+- obj
 skill_level: advanced
 pricing:
   model: open-source
@@ -25,9 +26,11 @@ pricing:
 license:
   commercial_use: restricted
   open_source: true
-  notes: 'Tencent Hunyuan community license: excludes some regions and large-scale use.'
+  notes: 'Tencent Hunyuan 3D community license: not valid in the EU, UK or South Korea; products over 1M monthly
+    active users need a separate licence from Tencent.'
 sources:
 - https://3d.hunyuan.tencent.com
-needs_verification:
-- license
+- https://huggingface.co/tencent/Hunyuan3D-2.1/blob/main/LICENSE
+- https://github.com/Tencent-Hunyuan/Hunyuan3D-2
+needs_verification: []
 last_verified: '2026-10-16'

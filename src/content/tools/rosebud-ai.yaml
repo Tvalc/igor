@@ -23,13 +23,17 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 15
+  notes: Free plan; Indie Dev $15/mo (100k credits); 10x Dev $30/mo (300k, commercial rights); Pro $50/mo (1M credits,
+    code download, Windows export)
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: Commercial rights only on 10x Dev ($30/mo) and Pro; not on Free or Indie Dev; Rosebud takes no revenue
+    share
 sources:
 - https://rosebud.ai
-needs_verification:
-- pricing
-- license
+- https://rosebud.ai/pricing
+- https://rosebud.ai/blog/pricing-subscription-faqs
+needs_verification: []
 last_verified: '2026-10-16'

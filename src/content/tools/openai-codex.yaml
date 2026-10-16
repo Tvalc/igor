@@ -20,13 +20,17 @@ exports:
 skill_level: advanced
 pricing:
   model: bundled
-  free_tier: 'no'
-  starting_price_usd: null
+  free_tier: limited
+  starting_price_usd: 8
+  notes: Limited Codex on Free and Go ($8/mo); expanded on Plus $20/mo; Pro tiers $100-$500/mo; Codex Cloud needs
+    Plus or higher
 license:
   commercial_use: 'yes'
   open_source: false
 sources:
 - https://openai.com/codex
-needs_verification:
-- pricing
+- https://chatgpt.com/codex/pricing/
+- https://openai.com/index/introducing-chatgpt-go/
+- https://help.openai.com/en/articles/11369540-using-codex-with-your-chatgpt-plan
+needs_verification: []
 last_verified: '2026-10-16'

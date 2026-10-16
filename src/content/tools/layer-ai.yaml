@@ -14,19 +14,29 @@ status: active
 platforms:
 - web
 engines: []
-exports: []
+exports:
+- png
+- sprite-sheet
+- gif
+- obj
+- glb
+- fbx
 skill_level: intermediate
 pricing:
   model: freemium
   free_tier: limited
-  starting_price_usd: null
+  starting_price_usd: 10
+  notes: 'Usage-based Creative Units (CUs), no seat fees: from $10/mo for 300 CUs, +$60 per 1,000 CUs; up to 10%
+    rollover; CU packs and enterprise plans.'
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: You own generated assets subject to the Terms of Service and Acceptable Use Policy. The pricing page lists
+    'Commercial license for all users'.
 sources:
 - https://www.layer.ai
-needs_verification:
-- pricing
-- license
-- exports
+- https://layer.ai/pricing
+- https://help.layer.ai/en/articles/11057280-commercial-use
+- https://layer.ai/use-cases/sprite-generation
+needs_verification: []
 last_verified: '2026-10-16'

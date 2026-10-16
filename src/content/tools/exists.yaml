@@ -25,8 +25,8 @@ license:
 sources:
 - https://www.exists.ai
 needs_verification:
-- status
-- pricing
-- license
+- free tier
+- price
+- commercial use
 - exports
 last_verified: '2026-10-16'

@@ -19,12 +19,16 @@ pricing:
   model: freemium
   free_tier: 'yes'
   starting_price_usd: null
+  notes: 'Free: 100 daily credits per image type; premium plans add unlimited daily credits, private mode and commercial
+    rights'
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: Free-tier outputs personal use only; paid-tier outputs personal and commercial
 sources:
 - https://cgdream.ai
+- https://cgdream.ai/features/ai-drawing-generator
+- https://cgdream.ai/terms-of-service
 needs_verification:
-- pricing
-- license
+- price
 last_verified: '2026-10-16'

@@ -25,6 +25,8 @@ license:
 sources:
 - https://ziva.sh
 needs_verification:
-- pricing
-- license
+- free tier
+- price
+- commercial use
+- exports
 last_verified: '2026-10-16'

@@ -21,16 +21,21 @@ exports:
 skill_level: beginner
 pricing:
   model: freemium
-  free_tier: 'yes'
-  starting_price_usd: null
+  free_tier: limited
+  starting_price_usd: 9.99
+  notes: Firefly Standard US$9.99/mo (2,000 premium credits/mo, unlimited standard generations); Pro, Pro Plus,
+    Premium tiers above. Free tier has limited daily generations.
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: Commercial use allowed for non-beta Firefly features; outputs from third-party partner models fall under
+    those models' own terms.
 affiliate:
   program: Adobe affiliate program
 sources:
 - https://firefly.adobe.com
-needs_verification:
-- pricing
-- license
+- https://helpx.adobe.com/creative-cloud/apps/generative-ai/generative-credits-faq.html
+- https://blog.adobe.com/en/publish/2025/10/28/explore-new-adobe-firefly-your-all-in-one-home-ai-powered-creativity
+- https://helpx.adobe.com/firefly/web/get-started/learn-the-basics/adobe-firefly-faq.html
+needs_verification: []
 last_verified: '2026-10-16'

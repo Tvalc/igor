@@ -29,11 +29,16 @@ pricing:
   model: freemium
   free_tier: 'yes'
   starting_price_usd: null
+  notes: Free, Silver, Gold and Pro subscriptions for online services/AI requests; engine and editor free and MIT.
+    Companies over $50k annual revenue must use Pro. Prices rose 20% in Jan 2026.
 license:
   commercial_use: 'yes'
   open_source: true
+  notes: Engine/editor MIT-licensed; exported games can be sold without being open-sourced.
 sources:
 - https://gdevelop.io
+- https://gdevelop.io/pricing
+- https://github.com/4ian/GDevelop
 needs_verification:
-- pricing
+- price
 last_verified: '2026-10-16'

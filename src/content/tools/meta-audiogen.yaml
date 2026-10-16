@@ -10,7 +10,7 @@ tags:
 - sfx
 - open-source
 - local
-status: active
+status: research
 platforms:
 - self-hosted
 engines: []
@@ -24,8 +24,9 @@ pricing:
 license:
   commercial_use: 'no'
   open_source: true
-  notes: Weights are CC-BY-NC 4.0.
+  notes: Code MIT; model weights CC-BY-NC 4.0 (non-commercial).
 sources:
 - https://github.com/facebookresearch/audiocraft
+- https://github.com/facebookresearch/audiocraft/blob/main/model_cards/AUDIOGEN_MODEL_CARD.md
 needs_verification: []
 last_verified: '2026-10-16'

@@ -21,15 +21,20 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 14
+  notes: Free Ambassador (25 tracks, personal, attribution); Creator $14/mo (non-commercial); Pro $39/mo (commercial);
+    Business $199/mo; API plans separate
 license:
   commercial_use: paid-plans
   open_source: false
+  notes: 'Commercial/monetized use needs Pro or higher; Creator is non-commercial; games: indie on Pro, larger studios
+    on Business.'
 affiliate:
   program: Mubert Affiliate Program
   commission: 30% recurring, 60-day cookie
 sources:
 - https://mubert.com/affiliate-program
-needs_verification:
-- pricing
+- https://mubert.com/render/pricing
+- https://mubert.com/render/faq
+needs_verification: []
 last_verified: '2026-10-16'

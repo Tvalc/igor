@@ -27,5 +27,6 @@ license:
   notes: MIT license.
 sources:
 - https://mcpservers.org/hi/servers/github-com-coplaydev-unity-mcp
-needs_verification: []
+needs_verification:
+- exports
 last_verified: '2026-10-16'

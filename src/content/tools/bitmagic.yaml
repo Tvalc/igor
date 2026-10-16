@@ -1,8 +1,8 @@
 name: Bitmagic
 url: https://www.bitmagic.ai
-tagline: Text-to-3D game creation; Bitmagic Mini in Steam Playtest.
-description: Bitmagic generates 3D game worlds from text prompts. Its Bitmagic Mini client has been available through
-  Steam Playtest; we found no 2026 product news.
+tagline: Prompt-to-browser 3D game creator with a free web Creator and a Pro GDK.
+description: Bitmagic turns text prompts into browser-playable 3D games via a free web Creator; Pro adds a GDK your
+  coding agent drives. Games are hosted on bitmagic.ai.
 best_for: Experimenting with prompt-generated 3D worlds.
 categories:
 - game-maker
@@ -13,20 +13,25 @@ status: beta
 platforms:
 - desktop
 engines: []
-exports: []
+exports:
+- web
+- source-code
 skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
   starting_price_usd: null
+  notes: Web Creator free to start (queued when busy); Pro subscription unlocks the GDK and a spark allowance.
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: Creators own their games; engine is licensed (may ship games on it, not redistribute as an engine/SDK).
 sources:
 - https://getcoai.com/news/bitmagic-secures-4m-for-text-to-3d-game-platform
+- https://www.bitmagic.ai/about/
+- https://bitmagic.ai/pro/
+- https://bitmagic.ai/
+- https://bitmagic.ai/gdk/
 needs_verification:
-- status
-- pricing
-- license
-- exports
+- price
 last_verified: '2026-10-16'

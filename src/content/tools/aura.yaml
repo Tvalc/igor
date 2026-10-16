@@ -19,15 +19,18 @@ engines:
 exports: []
 skill_level: intermediate
 pricing:
-  model: freemium
-  free_tier: unknown
-  starting_price_usd: null
+  model: trial
+  free_tier: trial
+  starting_price_usd: 20
+  notes: Indie $20/mo ($10/mo billed annually); Pro $40/mo; Ultimate $200/mo ($1800/yr); 2-week free trial with
+    $10 premium credit
 license:
   commercial_use: unknown
   open_source: false
 sources:
 - https://www.tryaura.dev/updates/aura-for-unity-launches-may-14
+- https://www.tryaura.dev/pricing
 needs_verification:
-- pricing
-- license
+- commercial use
+- exports
 last_verified: '2026-10-16'

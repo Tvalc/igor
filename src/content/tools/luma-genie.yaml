@@ -14,16 +14,17 @@ engines: []
 exports: []
 skill_level: beginner
 pricing:
-  model: paid
+  model: freemium
   free_tier: unknown
-  starting_price_usd: 30
+  starting_price_usd: null
 license:
   commercial_use: unknown
   open_source: false
 sources:
-- https://costbench.com/compare/kaedim-vs-luma-genie/
+- https://lumalabs.ai/genie
 needs_verification:
-- pricing
-- license
+- free tier
+- commercial use
 - exports
+- price
 last_verified: '2026-10-16'

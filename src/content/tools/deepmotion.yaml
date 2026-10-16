@@ -21,12 +21,16 @@ pricing:
   model: freemium
   free_tier: 'yes'
   starting_price_usd: null
+  notes: Freemium 25 credits/mo (no commercial license); paid Starter, Professional, Studio, Enterprise; annual
+    plans available
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: Freemium is personal/non-commercial; commercial license on Starter, Professional, Studio and Enterprise
 sources:
 - https://www.deepmotion.com
+- https://deepmotion.com/faq
+- https://www.deepmotion.com/pricing-animate3d
 needs_verification:
-- pricing
-- license
+- price
 last_verified: '2026-10-16'
