@@ -303,3 +303,4 @@ blockquote { margin: 0; padding: 14px 18px; border: var(--border); border-left-w
   * { transition: none !important; }
 }
 th a { color: var(--text); }
+.facts-count { display: block; margin-top: 4px; font-size: 0.72rem; color: var(--muted); white-space: nowrap; }

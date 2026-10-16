@@ -1,7 +1,7 @@
 ---
 import Monogram from './Monogram.astro';
 import type { Scored } from '../lib/score';
-import { COMMERCIAL_LABELS, FREE_TIER_LABELS, price, tier } from '../lib/format';
+import { COMMERCIAL_LABELS, FREE_TIER_LABELS, price, tier, verifiedFacts } from '../lib/format';
 
 interface Props {
   ranked: Scored[];
@@ -43,7 +43,12 @@ const cls = (v: string) => (v === 'Unverified' ? 'unverified' : undefined);
                   </span>
                 </div>
               </td>
-              <td class="num"><span class={`score tier-${tier(s.score)}`}>{s.score}</span></td>
+              <td class="num">
+                <span class={`score tier-${tier(s.score)}`}>{s.score}</span>
+                <span class="facts-count" title={verifiedFacts(s.tool).missing.length ? `Not yet verified: ${verifiedFacts(s.tool).missing.join(', ')}` : 'All key facts verified'}>
+                  {verifiedFacts(s.tool).n}/{verifiedFacts(s.tool).total} facts
+                </span>
+              </td>
               <td class={cls(FREE_TIER_LABELS[d.pricing.free_tier])}>{FREE_TIER_LABELS[d.pricing.free_tier]}</td>
               <td class:list={['num', cls(price(s.tool))]}>{price(s.tool)}</td>
               <td class={cls(COMMERCIAL_LABELS[d.license.commercial_use])}>{COMMERCIAL_LABELS[d.license.commercial_use]}</td>

@@ -53,3 +53,15 @@ export const lc = (s: string) =>
 
 /** Score band used for colors: 85+ top, 70+ good, 55+ ok, below that low. */
 export const tier = (score: number) => (score >= 85 ? 'top' : score >= 70 ? 'good' : score >= 55 ? 'ok' : 'low');
+
+/** The four facts every ranking leans on. A low score with few of these verified is a data gap, not a verdict. */
+export const verifiedFacts = (t: Tool) => {
+  const p = t.data.pricing;
+  const checks: [string, boolean][] = [
+    ['free tier', p.free_tier !== 'unknown'],
+    ['price', p.starting_price_usd !== null || p.model === 'free' || p.model === 'open-source'],
+    ['commercial use', t.data.license.commercial_use !== 'unknown'],
+    ['exports', t.data.exports.length > 0],
+  ];
+  return { n: checks.filter(([, ok]) => ok).length, total: checks.length, missing: checks.filter(([, ok]) => !ok).map(([k]) => k) };
+};

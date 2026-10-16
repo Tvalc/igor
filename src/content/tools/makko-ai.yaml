@@ -23,15 +23,19 @@ pricing:
   model: freemium
   free_tier: 'yes'
   starting_price_usd: null
+  notes: 'Free tier: 150 Art Budget per month and 70 AI requests per week; paid subscriptions and one-time credit
+    top-ups available.'
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: 'Makko FAQ: creators keep full ownership of games and assets, may release them commercially, and Makko
+    takes no revenue share or royalties.'
 makko_owned: true
 sources:
+- https://www.makko.ai/pricing
 - https://makko.ai
 - https://blog.makko.ai/best-ai-game-makers-in-2026-7-tools-compared/
 needs_verification:
-- pricing
-- license
+- pricing.starting_price_usd
 - exports
 last_verified: '2026-10-16'
