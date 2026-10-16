@@ -1,0 +1,114 @@
+/* Direction B: Editorial. Wirecutter-style calm, serif headlines, one deep-green accent. */
+@import '@fontsource-variable/fraunces/wght.css';
+
+:root[data-design='editorial'] {
+  --font-display: 'Fraunces Variable', Georgia, serif;
+  --bg: #fbfaf7;
+  --surface: #ffffff;
+  --surface-2: #f3f1ea;
+  --text: #121212;
+  --muted: #55524a;
+  --line: #e4e0d5;
+  --accent: #0f5c43;
+  --accent-ink: #ffffff;
+  --accent-soft: #e5f0ea;
+  --lime: #ffe066;
+  --hero-bg: #fbfaf7;
+  --hero-text: #121212;
+  --hero-muted: #55524a;
+  --top: #0f5c43;
+  --good: #1f4f8f;
+  --ok: #8a4b00;
+  --low: #5e5b54;
+  --radius: 6px;
+  --radius-sm: 4px;
+  --shadow: none;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-design='editorial']:not([data-theme='light']) {
+    --bg: #131312;
+    --surface: #1b1b19;
+    --surface-2: #232320;
+    --text: #efede6;
+    --muted: #b0aca0;
+    --line: #34332f;
+    --accent: #7bd3a8;
+    --accent-ink: #0d1f17;
+    --accent-soft: #1d2e26;
+    --hero-bg: #131312;
+    --hero-text: #efede6;
+    --hero-muted: #b0aca0;
+    --top: #7bd3a8;
+    --good: #8fb4ff;
+    --ok: #ffb35c;
+    --low: #a09d94;
+    color-scheme: dark;
+  }
+}
+
+[data-design='editorial'] h1,
+[data-design='editorial'] h2,
+[data-design='editorial'] h3 { font-weight: 600; letter-spacing: -0.015em; }
+[data-design='editorial'] h1 { font-size: clamp(2.1rem, 5vw, 3.4rem); }
+[data-design='editorial'] .eyebrow { color: var(--muted); letter-spacing: 0.12em; }
+
+/* Header: thin rule, serif wordmark, monochrome mark */
+[data-design='editorial'] .site-header { background: var(--surface); backdrop-filter: none; }
+[data-design='editorial'] .brand { font-weight: 650; letter-spacing: -0.01em; }
+[data-design='editorial'] .brand b { color: var(--accent); }
+[data-design='editorial'] .brand-mark rect { fill: var(--text); }
+[data-design='editorial'] .brand-mark path { fill: var(--bg); }
+[data-design='editorial'] .brand-mark path:last-child { fill: var(--lime); }
+
+/* Hero: light, typographic, ruled */
+[data-design='editorial'] .hero { border-radius: 0; border-bottom: 1px solid var(--line); }
+[data-design='editorial'] .hero::before,
+[data-design='editorial'] .hero::after,
+[data-design='editorial'] .pixels { display: none; }
+[data-design='editorial'] .hero h1 { max-width: 18ch; font-weight: 600; }
+[data-design='editorial'] .hero h1 em {
+  color: inherit; font-style: italic;
+  background: linear-gradient(transparent 62%, var(--lime) 62%);
+}
+[data-design='editorial'] .hero .eyebrow { color: var(--accent); }
+[data-design='editorial'] .hero .lede a { color: var(--accent); }
+[data-design='editorial'] .stat { border-top-color: var(--text); }
+[data-design='editorial'] .stat strong { font-weight: 600; }
+
+/* Buttons */
+[data-design='editorial'] .btn { border-radius: 4px; }
+[data-design='editorial'] .btn:hover { box-shadow: none; transform: none; filter: brightness(1.1); }
+[data-design='editorial'] .btn-lime { background: var(--text); color: var(--bg); }
+[data-design='editorial'] .btn-ghost { border-color: var(--line); color: var(--text); }
+[data-design='editorial'] .btn-ghost:hover { background: var(--surface-2); }
+
+/* Cards, answer box, tables: hairlines, no shadows */
+[data-design='editorial'] .card,
+[data-design='editorial'] .podium-card,
+[data-design='editorial'] .answer,
+[data-design='editorial'] .table-wrap { box-shadow: none; }
+[data-design='editorial'] a.card:hover { transform: none; border-color: var(--text); }
+[data-design='editorial'] .answer { border-left: 3px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; }
+[data-design='editorial'] .answer::before { color: var(--accent); }
+[data-design='editorial'] .card-icon { background: transparent; border: 1px solid var(--line); color: var(--text); }
+[data-design='editorial'] th { background: transparent; border-bottom: 2px solid var(--text); }
+[data-design='editorial'] tbody tr:hover { background: var(--surface-2); }
+[data-design='editorial'] .podium-1 { box-shadow: none; border: 2px solid var(--text); }
+[data-design='editorial'] .podium-rank { background: var(--surface); color: var(--text); border: 1px solid var(--text); }
+[data-design='editorial'] .podium-1 .podium-rank { background: var(--text); color: var(--bg); }
+[data-design='editorial'] .vs-win { box-shadow: none; border: 2px solid var(--text); }
+
+/* Monograms: muted inks */
+[data-design='editorial'] .mono { background: oklch(0.42 0.07 var(--h)); border-radius: 4px; font-family: var(--font-display); font-weight: 600; }
+[data-design='editorial'] .score { border-radius: 4px; }
+[data-design='editorial'] .bar > span { background: var(--text); }
+
+/* Footer: quiet, light */
+[data-design='editorial'] .site-footer { background: var(--surface-2); color: var(--muted); border-top: 1px solid var(--line); }
+[data-design='editorial'] .site-footer a { color: var(--muted); }
+[data-design='editorial'] .site-footer a:hover { color: var(--text); }
+[data-design='editorial'] .footer-grid h2,
+[data-design='editorial'] .site-footer .brand { color: var(--text); }
+[data-design='editorial'] .site-footer .brand b { color: var(--accent); }
+[data-design='editorial'] .footer-note { border-top-color: var(--line); }

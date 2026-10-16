@@ -1,5 +1,8 @@
 ---
 import '../styles/global.css';
+// Design directions under review; PUBLIC_DESIGN picks one at build time (arcade is the default).
+import '../styles/themes/editorial.css';
+import '../styles/themes/pixel.css';
 import { NAV, SECTION_INDEXES, SITE } from '../site';
 import { breadcrumbs as breadcrumbsLd } from '../lib/jsonld';
 import { publishedLists } from '../lib/lists';
@@ -15,6 +18,7 @@ interface Props {
 }
 
 const { title, description, crumbs = [], jsonLd = [], markdownPath, noindex = false } = Astro.props;
+const design = import.meta.env.PUBLIC_DESIGN ?? 'arcade';
 const base = Astro.site!.toString().replace(/\/$/, '');
 // Section indexes keep their trailing slash (/tools/); leaf pages are extensionless (/tools/x).
 const path = Astro.url.pathname.replace(/\.html$/, '').replace(/(\/index)?\/?$/, '');
@@ -29,7 +33,7 @@ if (crumbs.length) {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-design={design}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
