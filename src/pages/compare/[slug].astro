@@ -1,0 +1,158 @@
+---
+import Base from '../../layouts/Base.astro';
+import { comparisonPairs, toolsWithAlternatives, type ListDef } from '../../lib/lists';
+import { scoreTool, FACTOR_LABELS, type Factor, type Group, type Tool } from '../../lib/score';
+import { faqPage } from '../../lib/jsonld';
+import {
+  COMMERCIAL_LABELS, ENGINE_LABELS, FREE_TIER_LABELS, STATUS_LABELS, isoDate, list, price,
+} from '../../lib/format';
+import { SITE } from '../../site';
+
+export async function getStaticPaths() {
+  return [...(await comparisonPairs()).entries()].map(([slug, p]) => ({ params: { slug }, props: p }));
+}
+
+interface Props {
+  a: Tool;
+  b: Tool;
+  group: Group;
+  list: ListDef;
+}
+const { a, b, group, list: listDef } = Astro.props;
+const sa = scoreTool(a, group);
+const sb = scoreTool(b, group);
+const winner = sa.score === sb.score ? null : sa.score > sb.score ? sa : sb;
+const factorKeys = Object.keys(sa.factors) as Factor[];
+const edge = (k: Factor) =>
+  Math.abs(sa.factors[k] - sb.factors[k]) < 0.05 ? 'Even' : sa.factors[k] > sb.factors[k] ? a.data.name : b.data.name;
+const wins = (s: typeof sa, o: typeof sb) =>
+  factorKeys.filter((k) => s.factors[k] - o.factors[k] >= 0.05).map((k) => FACTOR_LABELS[k].label.toLowerCase());
+const aWins = wins(sa, sb);
+const bWins = wins(sb, sa);
+const hasMakko = a.data.makko_owned || b.data.makko_owned;
+const withAlts = await toolsWithAlternatives();
+
+const rows: [string, (t: Tool) => string][] = [
+  ['Best for', (t) => t.data.best_for],
+  ['Free tier', (t) => FREE_TIER_LABELS[t.data.pricing.free_tier]],
+  ['Price', (t) => price(t)],
+  ['Commercial use', (t) => COMMERCIAL_LABELS[t.data.license.commercial_use] + (t.data.license.open_source ? ' (open source)' : '')],
+  ['Engines', (t) => list(t.data.engines, ENGINE_LABELS)],
+  ['Exports', (t) => list(t.data.exports)],
+  ['Skill level', (t) => t.data.skill_level],
+  ['Status', (t) => STATUS_LABELS[t.data.status]],
+  ['Last verified', (t) => isoDate(t.data.last_verified)],
+];
+
+const faqs = [
+  {
+    q: `Is ${a.data.name} or ${b.data.name} better?`,
+    a: winner
+      ? `${winner.tool.data.name} scores higher on our ${listDef.title.replace(/^Best /, '')} rubric (${sa.score} vs ${sb.score}). The right pick depends on the job. ${a.data.name} is best for: ${a.data.best_for} ${b.data.name} is best for: ${b.data.best_for}`
+      : `They tie at ${sa.score}/100 on our rubric. ${a.data.name} is best for: ${a.data.best_for} ${b.data.name} is best for: ${b.data.best_for}`,
+  },
+  {
+    q: `Which is cheaper, ${a.data.name} or ${b.data.name}?`,
+    a: `${a.data.name}: ${FREE_TIER_LABELS[a.data.pricing.free_tier].toLowerCase()}, ${price(a).toLowerCase()}. ${b.data.name}: ${FREE_TIER_LABELS[b.data.pricing.free_tier].toLowerCase()}, ${price(b).toLowerCase()}.`,
+  },
+];
+---
+
+<Base
+  title={`${a.data.name} vs ${b.data.name} (${SITE.year}): Which Is Better?`}
+  description={`${a.data.name} vs ${b.data.name} compared on free tiers, pricing, commercial rights, engines and exports. Scores: ${sa.score} vs ${sb.score}.`}
+  crumbs={[{ name: 'Compare', href: '/compare/' }, { name: `${a.data.name} vs ${b.data.name}`, href: `/compare/${a.id}-vs-${b.id}` }]}
+  jsonLd={[faqPage(faqs)]}
+>
+  <h1>{a.data.name} vs {b.data.name}</h1>
+  <div class="answer">
+    <p>
+      {
+        winner ? (
+          <>
+            <strong>{winner.tool.data.name}</strong> comes out ahead, {sa.score} to {sb.score}, on our{' '}
+            {listDef.title.replace(/^Best /, '')} rubric.
+          </>
+        ) : (
+          <>They tie at {sa.score}/100 on our rubric.</>
+        )
+      }
+      {aWins.length > 0 && <> {a.data.name} leads on {aWins.join(', ')}.</>}
+      {bWins.length > 0 && <> {b.data.name} leads on {bWins.join(', ')}.</>}
+      {a.data.name} is best for: {a.data.best_for} {b.data.name} is best for: {b.data.best_for}
+    </p>
+  </div>
+  {
+    hasMakko && (
+      <p class="notice">
+        Disclosure: this site is run by {SITE.owner}. Both tools are scored by the same public rubric.
+      </p>
+    )
+  }
+
+  <h2>Side by side</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th><a href={`/tools/${a.id}`}>{a.data.name}</a></th>
+          <th><a href={`/tools/${b.id}`}>{b.data.name}</a></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Score</strong></td>
+          <td class="num"><span class="score">{sa.score}</span></td>
+          <td class="num"><span class="score">{sb.score}</span></td>
+        </tr>
+        {
+          rows.map(([label, fn]) => (
+            <tr>
+              <td><strong>{label}</strong></td>
+              <td>{fn(a)}</td>
+              <td>{fn(b)}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Factor by factor</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Factor</th><th>{a.data.name}</th><th>{b.data.name}</th><th>Edge</th></tr></thead>
+      <tbody>
+        {
+          factorKeys.map((k) => (
+            <tr>
+              <td>{FACTOR_LABELS[k].label}</td>
+              <td class="num">{Math.round(sa.factors[k] * 100)}</td>
+              <td class="num">{Math.round(sb.factors[k] * 100)}</td>
+              <td>{edge(k)}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <h2>What each one is</h2>
+  <h3><a href={`/tools/${a.id}`}>{a.data.name}</a></h3>
+  <p>{a.data.description}</p>
+  <h3><a href={`/tools/${b.id}`}>{b.data.name}</a></h3>
+  <p>{b.data.description}</p>
+
+  <p>
+    See the full ranking: <a href={`/best/${listDef.slug}`}>{listDef.title}</a>.
+    {[a, b].filter((t) => withAlts.has(t.id)).map((t) => (
+      <> · <a href={`/alternatives/${t.id}`}>{t.data.name} alternatives</a></>
+    ))}
+  </p>
+
+  <section>
+    <h2>Frequently asked questions</h2>
+    {faqs.map((f) => (<><h3>{f.q}</h3><p>{f.a}</p></>))}
+  </section>
+</Base>

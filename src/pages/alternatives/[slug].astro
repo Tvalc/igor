@@ -1,0 +1,55 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import RankTable from '../../components/RankTable.astro';
+import { alternativesFor, toolsWithAlternatives } from '../../lib/lists';
+import { type Tool } from '../../lib/score';
+import { itemList } from '../../lib/jsonld';
+import { CATEGORY_LABELS, lc } from '../../lib/format';
+import { SITE } from '../../site';
+
+export async function getStaticPaths() {
+  // Skip thin pages: only publish when there are at least 3 real alternatives.
+  const published = await toolsWithAlternatives();
+  return (await getCollection('tools')).filter((t) => published.has(t.id)).map((tool) => ({ params: { slug: tool.id }, props: { tool } }));
+}
+
+interface Props {
+  tool: Tool;
+}
+const { tool } = Astro.props;
+const d = tool.data;
+const base = Astro.site!.toString().replace(/\/$/, '');
+const alts = await alternativesFor(tool, 8);
+const successor = d.successor ? await getEntry('tools', d.successor) : undefined;
+const free = alts.find((s) => s.tool.data.pricing.free_tier === 'yes');
+---
+
+<Base
+  title={`Best ${d.name} Alternatives (${SITE.year})`}
+  description={`The best ${d.name} alternatives for ${lc(CATEGORY_LABELS[d.categories[0]])}: ${alts.slice(0, 3).map((s) => s.tool.data.name).join(', ')} and more, compared on price and rights.`}
+  crumbs={[{ name: d.name, href: `/tools/${tool.id}` }, { name: 'Alternatives', href: `/alternatives/${tool.id}` }]}
+  jsonLd={[itemList(`${d.name} alternatives`, alts.map((s) => ({ name: s.tool.data.name, url: `${base}/tools/${s.tool.id}` })))]}
+>
+  <h1>Best {d.name} alternatives</h1>
+  <div class="answer">
+    <p>
+      {
+        d.status === 'discontinued' && successor ? (
+          <>
+            {d.name} is discontinued. The direct replacement is <a href={`/tools/${successor.id}`}>{successor.data.name}</a>.
+            Other strong options:{' '}
+          </>
+        ) : (
+          <>The top alternatives to {d.name} are </>
+        )
+      }
+      <strong>{alts.slice(0, 3).map((s) => s.tool.data.name).join(', ')}</strong>.
+      {free && <> If you want a free option, start with {free.tool.data.name}.</>}
+    </p>
+  </div>
+  <RankTable ranked={alts} />
+  <p class="meta">
+    Ranked on our {lc(CATEGORY_LABELS[d.categories[0]])} rubric. <a href={`/tools/${tool.id}`}>Back to the {d.name} review</a>
+  </p>
+</Base>

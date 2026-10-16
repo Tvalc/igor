@@ -1,0 +1,34 @@
+name: StraySpark AI Everywhere
+url: https://www.strayspark.studio
+tagline: Paid bundle of 768 MCP tools for Unreal, Blender and Godot.
+description: StraySpark AI Everywhere is a paid bundle of MCP tools covering Unreal Engine, Blender and Godot.
+best_for: Devs who want broad MCP coverage across several tools.
+categories:
+- code
+tags:
+- mcp
+- unreal
+- blender
+- godot
+status: active
+platforms:
+- plugin
+engines:
+- unreal
+- blender
+- godot
+exports: []
+skill_level: advanced
+pricing:
+  model: paid
+  free_tier: 'no'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.strayspark.studio/blog/unreal-vs-blender-vs-godot-mcp-comparison-2026
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

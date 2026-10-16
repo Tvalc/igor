@@ -1,0 +1,42 @@
+name: Tripo
+url: https://www.tripo3d.ai
+tagline: Text or image to 3D with auto-rigging.
+description: Tripo generates 3D models from text or images and can auto-rig them. Its H3.1 model is the current
+  version.
+best_for: 3D characters and props that need rigging.
+categories:
+- art-3d
+- animation
+tags:
+- 3d
+- rigging
+status: active
+platforms:
+- web
+- api
+- plugin
+engines:
+- blender
+exports:
+- glb
+- fbx
+- obj
+- usdz
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+affiliate:
+  program: Tripo Affiliate Program
+  commission: up to 30% for 12 months
+sources:
+- https://www.tripo3d.ai/affiliate
+needs_verification:
+- pricing
+- license
+- engines
+last_verified: '2026-10-16'

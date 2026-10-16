@@ -1,0 +1,29 @@
+name: Google Project Genie
+url: https://labs.google
+tagline: Genie 3 world-model prototype that generates explorable worlds.
+description: Project Genie is a Google Labs prototype built on the Genie 3 world model that generates interactive,
+  explorable worlds. It's limited to US AI Ultra subscribers and doesn't produce a game you can ship.
+best_for: Exploring what world models can do today.
+categories:
+- game-maker
+tags:
+- world-model
+- 3d
+status: research
+platforms:
+- web
+engines: []
+exports: []
+skill_level: beginner
+pricing:
+  model: paid
+  free_tier: 'no'
+  starting_price_usd: null
+license:
+  commercial_use: 'no'
+  open_source: false
+sources:
+- https://blog.google/innovation-and-ai/models-and-research/google-deepmind/project-genie/
+needs_verification:
+- pricing
+last_verified: '2026-10-16'

@@ -1,0 +1,30 @@
+name: LlamaGen PixelBox
+url: https://llamagen.ai
+tagline: Pixel-art image generator.
+description: LlamaGen's PixelBox generates pixel-art images from prompts.
+best_for: Free pixel-art experiments.
+categories:
+- art-2d
+tags:
+- pixel-art
+- 2d
+status: active
+platforms:
+- web
+engines: []
+exports:
+- png
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://llamagen.ai
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

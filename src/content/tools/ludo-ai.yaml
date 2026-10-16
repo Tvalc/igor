@@ -1,0 +1,36 @@
+name: Ludo.ai
+url: https://ludo.ai
+tagline: Game ideation, market research and asset generation, with API and MCP access.
+description: Ludo.ai helps designers research game ideas and trends, then generate concepts, sprites, 3D assets
+  and other content. It offers API and MCP access for use in other tools.
+best_for: Designers validating game concepts and generating early assets.
+categories:
+- game-maker
+- art-2d
+- art-3d
+tags:
+- ideation
+- market-research
+- mcp
+- sprites
+status: active
+platforms:
+- web
+- api
+engines: []
+exports: []
+skill_level: intermediate
+pricing:
+  model: freemium
+  free_tier: limited
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://ludo.ai/compare/best-ai-game-makers
+needs_verification:
+- pricing
+- license
+- exports
+last_verified: '2026-10-16'

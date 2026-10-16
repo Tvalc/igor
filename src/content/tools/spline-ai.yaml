@@ -1,0 +1,32 @@
+name: Spline AI
+url: https://spline.design
+tagline: 3D web design tool with AI generation.
+description: Spline is a browser 3D design tool with AI features for generating objects and scenes, aimed mostly
+  at web experiences.
+best_for: Lightweight 3D for web games and interactive pages.
+categories:
+- art-3d
+tags:
+- 3d
+- browser
+status: active
+platforms:
+- web
+engines: []
+exports:
+- web
+- glb
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://spline.design
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

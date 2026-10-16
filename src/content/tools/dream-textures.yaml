@@ -1,0 +1,32 @@
+name: Dream Textures
+url: https://github.com/carson-katri/dream-textures
+tagline: Free Blender add-on for AI texture generation.
+description: Dream Textures is a free, open-source Blender add-on that runs Stable Diffusion to generate textures.
+best_for: Blender users who want free local texture generation.
+categories:
+- texture
+tags:
+- pbr
+- open-source
+- local
+status: active
+platforms:
+- plugin
+engines:
+- blender
+exports:
+- png
+skill_level: advanced
+pricing:
+  model: open-source
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: true
+sources:
+- https://github.com/carson-katri/dream-textures
+needs_verification:
+- license
+- status
+last_verified: '2026-10-16'

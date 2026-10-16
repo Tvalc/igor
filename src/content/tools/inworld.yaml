@@ -1,0 +1,35 @@
+name: Inworld
+url: https://inworld.ai
+tagline: AI infrastructure and text to speech; formerly an NPC character studio.
+description: Inworld started as an AI NPC character platform and has moved toward B2B AI infrastructure and text-to-speech
+  models.
+best_for: Studios building voiced, conversational characters.
+categories:
+- npc
+- voice
+tags:
+- npc
+- tts
+status: active
+platforms:
+- api
+- plugin
+engines:
+- unity
+- unreal
+exports: []
+skill_level: advanced
+pricing:
+  model: freemium
+  free_tier: limited
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://inworld.ai
+needs_verification:
+- pricing
+- license
+- engines
+last_verified: '2026-10-16'

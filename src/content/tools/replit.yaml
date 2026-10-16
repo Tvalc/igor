@@ -1,0 +1,33 @@
+name: Replit
+url: https://replit.com
+tagline: General AI app builder often used to make web games.
+description: Replit's AI agent builds and deploys web apps from prompts. It isn't game-specific, but it's often
+  used for browser games.
+best_for: Building a web game from a prompt with code you can inspect.
+categories:
+- game-maker
+- code
+tags:
+- browser
+- general-purpose
+- agent
+status: active
+platforms:
+- web
+engines: []
+exports:
+- web
+- source-code
+skill_level: intermediate
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: 'yes'
+  open_source: false
+sources:
+- https://replit.com
+needs_verification:
+- pricing
+last_verified: '2026-10-16'

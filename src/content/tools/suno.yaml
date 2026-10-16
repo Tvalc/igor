@@ -1,0 +1,30 @@
+name: Suno
+url: https://suno.com
+tagline: AI music generation from text prompts.
+description: Suno generates full songs and instrumentals from text prompts. Downloads are moving behind paid accounts
+  in 2026, and commercial use requires a paid plan.
+best_for: Soundtracks and menu music.
+categories:
+- music
+tags:
+- music
+status: active
+platforms:
+- web
+engines: []
+exports:
+- mp3
+- wav
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: paid-plans
+  open_source: false
+sources:
+- https://suno.com
+needs_verification:
+- pricing
+last_verified: '2026-10-16'

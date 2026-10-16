@@ -1,0 +1,40 @@
+name: ElevenLabs
+url: https://elevenlabs.io
+tagline: Text to speech, voice design, sound effects and music, with Unity and Unreal plugins.
+description: ElevenLabs generates character voices, designs new voices, and creates sound effects and music. It
+  offers Unity and Unreal plugins and an API.
+best_for: Character voices and dialogue for games.
+categories:
+- voice
+- sfx
+- music
+tags:
+- tts
+- voice-design
+status: active
+platforms:
+- web
+- api
+- plugin
+engines:
+- unity
+- unreal
+exports:
+- mp3
+- wav
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: paid-plans
+  open_source: false
+affiliate:
+  program: ElevenLabs Affiliate Program (PartnerStack)
+  commission: 22% for 12 months
+sources:
+- https://elevenlabs.io/affiliate
+needs_verification:
+- pricing
+last_verified: '2026-10-16'

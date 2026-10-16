@@ -1,0 +1,31 @@
+name: Cascadeur
+url: https://cascadeur.com
+tagline: AI-assisted keyframe animation with physics.
+description: Cascadeur is a 3D character animation tool with AI-assisted posing and physics tools that make keyframe
+  animation faster.
+best_for: Animators making game character animations.
+categories:
+- animation
+tags:
+- 3d
+- keyframe
+status: active
+platforms:
+- desktop
+engines: []
+exports:
+- fbx
+skill_level: intermediate
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://cascadeur.com
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

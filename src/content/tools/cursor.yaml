@@ -1,0 +1,31 @@
+name: Cursor
+url: https://cursor.com
+tagline: AI code editor widely used for Godot, Unity and web game code.
+description: Cursor is an AI-first code editor. It isn't game-specific, but it's widely used with Godot, Unity and
+  web game projects, and it can connect to engine MCP servers.
+best_for: Indie devs writing game code in any engine.
+categories:
+- code
+tags:
+- general-purpose
+- agent
+- mcp
+status: active
+platforms:
+- desktop
+engines: []
+exports:
+- source-code
+skill_level: intermediate
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: 'yes'
+  open_source: false
+sources:
+- https://cursor.com
+needs_verification:
+- pricing
+last_verified: '2026-10-16'

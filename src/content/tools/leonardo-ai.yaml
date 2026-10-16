@@ -1,0 +1,33 @@
+name: Leonardo.Ai
+url: https://leonardo.ai
+tagline: General image generation with game-asset models.
+description: Leonardo.Ai is a general image generator with models and presets suited to game assets and concept
+  art. Its affiliate program closed in April 2026.
+best_for: Concept art and general-purpose game imagery.
+categories:
+- art-2d
+tags:
+- concept-art
+- 2d
+- general-purpose
+status: active
+platforms:
+- web
+- api
+engines: []
+exports:
+- png
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://leonardo.ai
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

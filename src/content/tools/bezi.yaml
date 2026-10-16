@@ -1,0 +1,31 @@
+name: Bezi
+url: https://www.bezi.com
+tagline: AI agent inside Unity with change review and restore.
+description: Bezi is an AI agent that works inside the Unity Editor, with change review and restore points so you
+  can undo its edits.
+best_for: Unity devs who want an agent with safety rails.
+categories:
+- code
+tags:
+- agent
+- unity
+status: active
+platforms:
+- plugin
+engines:
+- unity
+exports: []
+skill_level: intermediate
+pricing:
+  model: freemium
+  free_tier: limited
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.bezi.com
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

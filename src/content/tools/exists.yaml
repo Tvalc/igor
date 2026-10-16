@@ -1,0 +1,32 @@
+name: Exists
+url: https://www.exists.ai
+tagline: Prompt-to-game creation focused on multiplayer games.
+description: Exists is a Tel Aviv startup building AI creation of multiplayer 3D games from text. We found no recent
+  product news.
+best_for: Trying AI-generated multiplayer game prototypes.
+categories:
+- game-maker
+tags:
+- 3d
+- multiplayer
+status: beta
+platforms:
+- desktop
+engines: []
+exports: []
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: unknown
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.exists.ai
+needs_verification:
+- status
+- pricing
+- license
+- exports
+last_verified: '2026-10-16'

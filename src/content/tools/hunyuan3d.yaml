@@ -1,0 +1,33 @@
+name: Hunyuan3D
+url: https://3d.hunyuan.tencent.com
+tagline: Tencent's open-weight 3D generation model.
+description: Hunyuan3D is Tencent's open-weight image and text to 3D model. You can run it locally or use Tencent's
+  hosted version. Its license has regional and scale restrictions, so read it before shipping.
+best_for: Local, free 3D generation if you have a capable GPU.
+categories:
+- art-3d
+tags:
+- 3d
+- open-source
+- local
+status: active
+platforms:
+- web
+- self-hosted
+engines: []
+exports:
+- glb
+skill_level: advanced
+pricing:
+  model: open-source
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: restricted
+  open_source: true
+  notes: 'Tencent Hunyuan community license: excludes some regions and large-scale use.'
+sources:
+- https://3d.hunyuan.tencent.com
+needs_verification:
+- license
+last_verified: '2026-10-16'

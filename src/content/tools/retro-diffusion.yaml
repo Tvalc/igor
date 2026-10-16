@@ -1,0 +1,33 @@
+name: Retro Diffusion
+url: https://www.retrodiffusion.ai
+tagline: Pixel-art models and an Aseprite plugin, sold for a one-time price.
+description: Retro Diffusion makes pixel-art image models and an Aseprite extension, sold as one-time purchases
+  ($20 and $65 tiers) rather than a subscription.
+best_for: Pixel artists working in Aseprite who dislike subscriptions.
+categories:
+- art-2d
+tags:
+- pixel-art
+- sprites
+- 2d
+status: active
+platforms:
+- plugin
+- web
+engines:
+- aseprite
+exports:
+- png
+skill_level: intermediate
+pricing:
+  model: one-time
+  free_tier: 'no'
+  starting_price_usd: 20
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.retrodiffusion.ai
+needs_verification:
+- license
+last_verified: '2026-10-16'

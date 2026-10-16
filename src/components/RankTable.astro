@@ -1,0 +1,47 @@
+---
+import type { Scored } from '../lib/score';
+import { COMMERCIAL_LABELS, FREE_TIER_LABELS, price } from '../lib/format';
+
+interface Props {
+  ranked: Scored[];
+  limit?: number;
+}
+const { ranked, limit } = Astro.props;
+const rows = limit ? ranked.slice(0, limit) : ranked;
+---
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Tool</th>
+        <th>Score</th>
+        <th>Free tier</th>
+        <th>Price</th>
+        <th>Commercial use</th>
+        <th>Best for</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        rows.map((s, i) => (
+          <tr>
+            <td class="num">{i + 1}</td>
+            <td>
+              <a href={`/tools/${s.tool.id}`}><strong>{s.tool.data.name}</strong></a>
+              {s.tool.data.makko_owned && <span class="pill owned" title="Run by the same team as this site">Our team</span>}
+              {s.tool.data.sponsored && <span class="pill">Sponsored</span>}
+              {s.tool.data.status !== 'active' && <span class="pill">{s.tool.data.status}</span>}
+            </td>
+            <td class="num"><span class="score">{s.score}</span></td>
+            <td>{FREE_TIER_LABELS[s.tool.data.pricing.free_tier]}</td>
+            <td class="num">{price(s.tool)}</td>
+            <td>{COMMERCIAL_LABELS[s.tool.data.license.commercial_use]}</td>
+            <td>{s.tool.data.best_for}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>

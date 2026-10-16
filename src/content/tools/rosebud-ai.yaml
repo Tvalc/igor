@@ -1,0 +1,35 @@
+name: Rosebud AI
+url: https://rosebud.ai
+tagline: Describe a game in plain language and play it in the browser.
+description: Rosebud AI turns text prompts into playable browser games and lets you keep editing them by chatting.
+  Paid plans added Windows builds and Steam publishing in May 2026.
+best_for: Non-coders who want a playable browser game from a prompt.
+categories:
+- game-maker
+tags:
+- no-code
+- browser
+- 2d
+- 3d
+status: active
+platforms:
+- web
+engines: []
+exports:
+- web
+- windows
+- steam
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://rosebud.ai
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

@@ -1,0 +1,30 @@
+name: Uthana
+url: https://uthana.com
+tagline: Text-to-motion animation for 3D characters.
+description: Uthana generates 3D character animation from text descriptions.
+best_for: Generating character motions from descriptions.
+categories:
+- animation
+tags:
+- 3d
+- text-to-motion
+status: active
+platforms:
+- web
+engines: []
+exports:
+- fbx
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://uthana.com
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

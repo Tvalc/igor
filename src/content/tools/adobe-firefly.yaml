@@ -1,0 +1,36 @@
+name: Adobe Firefly
+url: https://firefly.adobe.com
+tagline: Adobe's image, audio and video generation models.
+description: Adobe Firefly generates images, audio and video. Adobe positions its models as trained on licensed
+  content, which matters to studios worried about IP.
+best_for: Teams that need commercially cautious image generation.
+categories:
+- art-2d
+- sfx
+tags:
+- concept-art
+- 2d
+- general-purpose
+status: active
+platforms:
+- web
+- desktop
+engines: []
+exports:
+- png
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+affiliate:
+  program: Adobe affiliate program
+sources:
+- https://firefly.adobe.com
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

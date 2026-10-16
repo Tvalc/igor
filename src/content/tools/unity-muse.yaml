@@ -1,0 +1,29 @@
+name: Unity Muse
+url: https://unity.com/ai
+tagline: 'Retired: Unity''s earlier AI suite, replaced by Unity AI.'
+description: Unity Muse was Unity's first AI suite. It has been retired and replaced by Unity AI.
+best_for: Nothing new; see Unity AI.
+categories:
+- code
+- art-2d
+tags:
+- unity
+status: discontinued
+successor: unity-ai
+platforms:
+- plugin
+engines:
+- unity
+exports: []
+skill_level: intermediate
+pricing:
+  model: paid
+  free_tier: 'no'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.buildfastwithai.com/blogs/unity-ai-open-beta-guide-2026
+needs_verification: []
+last_verified: '2026-10-16'

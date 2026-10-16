@@ -1,0 +1,32 @@
+name: Sprite-AI
+url: https://www.sprite-ai.art
+tagline: Text-to-pixel-sprite generation with a built-in editor.
+description: Sprite-AI generates pixel-art sprites from text and includes an editor to clean them up. It uses tokens
+  rather than a free tier.
+best_for: Quick pixel sprites from text.
+categories:
+- art-2d
+tags:
+- pixel-art
+- sprites
+- 2d
+status: active
+platforms:
+- web
+engines: []
+exports:
+- png
+skill_level: beginner
+pricing:
+  model: paid
+  free_tier: 'no'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.sprite-ai.art
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

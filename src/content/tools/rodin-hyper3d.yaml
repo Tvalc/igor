@@ -1,0 +1,34 @@
+name: Rodin (Hyper3D)
+url: https://hyper3d.ai
+tagline: High-detail 3D assets and characters.
+description: Rodin by Hyper3D generates high-detail 3D assets and characters from images or text.
+best_for: Higher-fidelity 3D assets.
+categories:
+- art-3d
+tags:
+- 3d
+status: active
+platforms:
+- web
+- api
+engines: []
+exports:
+- glb
+- fbx
+- obj
+- usdz
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: limited
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://hyper3d.ai
+needs_verification:
+- pricing
+- license
+- exports
+last_verified: '2026-10-16'

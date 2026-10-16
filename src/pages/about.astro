@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site';
+---
+
+<Base
+  title="About Make AI Games"
+  description="Why Make AI Games exists: a transparent, data-driven map of AI game development tools for beginners and indie developers."
+  crumbs={[{ name: 'About', href: '/about' }]}
+>
+  <article class="prose">
+    <h1>About {SITE.name}</h1>
+    <div class="answer">
+      <p>
+        {SITE.name} is a data-driven map of every AI tool for making games, built for beginners and indie developers
+        who want straight answers: what each tool does, what it costs, whether you can sell what it makes, and how it
+        compares.
+      </p>
+    </div>
+    <h2>Why it exists</h2>
+    <p>
+      Most "best AI game maker" articles are written by vendors ranking themselves first. We wanted one place with a
+      published rubric, verified facts and side-by-side comparisons. We're vendors too (see our
+      <a href="/disclosure">disclosure</a>), which is why the rules are public and the scores are computed rather than
+      hand-picked.
+    </p>
+    <h2>How it stays current</h2>
+    <p>
+      Tool data lives in structured files. Automated agents re-check every tool weekly against its own pricing,
+      changelog and status pages and propose changes with sources. Tests and schema checks run before anything goes
+      live.
+    </p>
+  </article>
+</Base>

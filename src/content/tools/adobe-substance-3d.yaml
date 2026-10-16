@@ -1,0 +1,31 @@
+name: Adobe Substance 3D
+url: https://www.adobe.com/products/substance3d.html
+tagline: Professional texturing suite with AI features.
+description: Adobe Substance 3D is the industry-standard texturing suite and now includes AI-assisted material generation.
+best_for: Professional texturing pipelines.
+categories:
+- texture
+tags:
+- pbr
+- studio
+status: active
+platforms:
+- desktop
+engines: []
+exports:
+- pbr-maps
+skill_level: advanced
+pricing:
+  model: paid
+  free_tier: trial
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+affiliate:
+  program: Adobe affiliate program
+sources:
+- https://www.adobe.com/products/substance3d.html
+needs_verification:
+- pricing
+last_verified: '2026-10-16'

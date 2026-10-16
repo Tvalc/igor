@@ -1,0 +1,31 @@
+name: Krea
+url: https://www.krea.ai
+tagline: Real-time image and texture generation.
+description: Krea generates and edits images in real time, including textures.
+best_for: Fast iteration on concept art and textures.
+categories:
+- art-2d
+- texture
+tags:
+- concept-art
+- 2d
+status: active
+platforms:
+- web
+engines: []
+exports:
+- png
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.krea.ai
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

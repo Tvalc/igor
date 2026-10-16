@@ -1,0 +1,39 @@
+name: GDevelop
+url: https://gdevelop.io
+tagline: Open-source no-code engine with an AI agent and store exports.
+description: GDevelop is an open-source, event-based game engine with an AI agent that can build and edit games.
+  It exports to web, desktop and mobile stores.
+best_for: Beginners who want an AI helper and real export targets.
+categories:
+- game-maker
+tags:
+- no-code
+- 2d
+- open-source
+- agent
+status: active
+platforms:
+- web
+- desktop
+engines: []
+exports:
+- web
+- windows
+- mac
+- linux
+- ios
+- android
+- steam
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: 'yes'
+  open_source: true
+sources:
+- https://gdevelop.io
+needs_verification:
+- pricing
+last_verified: '2026-10-16'

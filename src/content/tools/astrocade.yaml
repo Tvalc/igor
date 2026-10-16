@@ -1,0 +1,33 @@
+name: Astrocade
+url: https://www.astrocade.com
+tagline: An AI agent that builds and remixes games from prompts.
+description: Astrocade lets players create, remix and share small games by prompting an AI agent. The company raised
+  $56M in May 2026.
+best_for: Casual creators who want to make and share small games socially.
+categories:
+- game-maker
+tags:
+- no-code
+- browser
+- social
+- remix
+status: active
+platforms:
+- web
+engines: []
+exports:
+- web
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.pocketgamer.biz/astrocade-raises-56m-to-expand-ai-powered-games-creation-platform/
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

@@ -1,0 +1,30 @@
+name: CSM
+url: https://www.csm.ai
+tagline: 3D asset generation and agents.
+description: CSM (Common Sense Machines) generates 3D assets from images and text and offers agent workflows.
+best_for: Turning concept images into 3D.
+categories:
+- art-3d
+tags:
+- 3d
+status: active
+platforms:
+- web
+- api
+engines: []
+exports: []
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.csm.ai
+needs_verification:
+- pricing
+- license
+- exports
+last_verified: '2026-10-16'

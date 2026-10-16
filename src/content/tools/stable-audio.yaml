@@ -1,0 +1,32 @@
+name: Stable Audio
+url: https://stableaudio.com
+tagline: Music, ambience and sound effects from Stability AI.
+description: Stable Audio generates music, ambience and sound effects and is good at loops. Commercial use starts
+  at $12/month.
+best_for: Loops, ambience and sound effects.
+categories:
+- music
+- sfx
+tags:
+- music
+- sfx
+- loops
+status: active
+platforms:
+- web
+engines: []
+exports:
+- mp3
+- wav
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: 12
+license:
+  commercial_use: paid-plans
+  open_source: false
+sources:
+- https://app.cinevva.com/guides/ai-sound-effect-generators
+needs_verification: []
+last_verified: '2026-10-16'

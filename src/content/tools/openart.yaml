@@ -1,0 +1,31 @@
+name: OpenArt
+url: https://openart.ai
+tagline: Low-cost general image generation with many models.
+description: OpenArt is a general image generation platform with many models and a free tier.
+best_for: Cheap concept art and asset drafts.
+categories:
+- art-2d
+tags:
+- general-purpose
+- concept-art
+- 2d
+status: active
+platforms:
+- web
+engines: []
+exports:
+- png
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://openart.ai
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

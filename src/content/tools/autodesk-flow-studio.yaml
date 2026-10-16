@@ -1,0 +1,32 @@
+name: Autodesk Flow Studio
+url: https://www.autodesk.com
+tagline: AI that turns live-action video into CG character animation (formerly Wonder Dynamics).
+description: Autodesk Flow Studio, formerly Wonder Dynamics, uses AI to replace actors in video with CG characters
+  and extract animation.
+best_for: Cinematics and character animation from live action.
+categories:
+- animation
+tags:
+- mocap
+- 3d
+- cinematics
+status: active
+platforms:
+- web
+engines: []
+exports: []
+skill_level: intermediate
+pricing:
+  model: freemium
+  free_tier: limited
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.autodesk.com
+needs_verification:
+- pricing
+- license
+- exports
+last_verified: '2026-10-16'

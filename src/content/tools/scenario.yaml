@@ -1,0 +1,34 @@
+name: Scenario
+url: https://www.scenario.com
+tagline: Train models on your game's art style and generate on-style assets.
+description: Scenario lets teams train custom models on their own art style and generate consistent game assets.
+  It's aimed at studios.
+best_for: Teams that need many assets in one consistent style.
+categories:
+- art-2d
+- art-3d
+tags:
+- style-training
+- sprites
+- 2d
+status: active
+platforms:
+- web
+- api
+engines: []
+exports: []
+skill_level: intermediate
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.scenario.com
+needs_verification:
+- pricing
+- license
+- exports
+last_verified: '2026-10-16'

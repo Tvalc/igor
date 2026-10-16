@@ -1,0 +1,31 @@
+name: MCP for Unity
+url: https://github.com/CoplayDev/unity-mcp
+tagline: Open-source MCP server that lets AI assistants control the Unity Editor.
+description: MCP for Unity is an MIT-licensed MCP server that connects assistants like Claude or Cursor to the Unity
+  Editor so they can create and modify scenes, assets and scripts.
+best_for: Unity devs using Claude, Cursor or another MCP client.
+categories:
+- code
+tags:
+- mcp
+- unity
+- open-source
+status: active
+platforms:
+- plugin
+engines:
+- unity
+exports: []
+skill_level: advanced
+pricing:
+  model: open-source
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: 'yes'
+  open_source: true
+  notes: MIT license.
+sources:
+- https://mcpservers.org/hi/servers/github-com-coplaydev-unity-mcp
+needs_verification: []
+last_verified: '2026-10-16'

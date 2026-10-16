@@ -1,0 +1,31 @@
+name: Rokoko Vision
+url: https://www.rokoko.com
+tagline: Free video-based motion capture.
+description: Rokoko Vision is a free tool from Rokoko that captures motion from a webcam or video.
+best_for: Free, quick mocap for prototypes.
+categories:
+- animation
+tags:
+- mocap
+- 3d
+status: active
+platforms:
+- web
+engines: []
+exports:
+- fbx
+- bvh
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.rokoko.com
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

@@ -1,0 +1,31 @@
+name: Jabali
+url: https://jabali.ai
+tagline: AI game engine covering brainstorming, assets, playtesting and publishing.
+description: Jabali is an AI game engine that takes a game from brainstorm through asset generation and playtesting
+  to publishing.
+best_for: Hobbyists who want one tool from idea to published game.
+categories:
+- game-maker
+tags:
+- no-code
+- 2d
+status: active
+platforms:
+- web
+engines: []
+exports: []
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://jabali.ai
+needs_verification:
+- pricing
+- license
+- exports
+last_verified: '2026-10-16'

@@ -1,0 +1,35 @@
+name: Mubert
+url: https://mubert.com
+tagline: AI music generation and API.
+description: Mubert generates royalty-free music tracks and offers an API for generating music inside apps and games.
+best_for: Generative or adaptive background music via API.
+categories:
+- music
+tags:
+- music
+- royalty-free
+- api
+status: active
+platforms:
+- web
+- api
+engines: []
+exports:
+- mp3
+- wav
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: paid-plans
+  open_source: false
+affiliate:
+  program: Mubert Affiliate Program
+  commission: 30% recurring, 60-day cookie
+sources:
+- https://mubert.com/affiliate-program
+needs_verification:
+- pricing
+last_verified: '2026-10-16'

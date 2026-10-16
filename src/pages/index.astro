@@ -1,0 +1,90 @@
+---
+import Base from '../layouts/Base.astro';
+import RankTable from '../components/RankTable.astro';
+import { activeTools, publishedLists } from '../lib/lists';
+import { SITE } from '../site';
+
+const tools = await activeTools();
+const live = tools.filter((t) => t.data.status !== 'discontinued').length;
+const lists = await publishedLists();
+const byslug = Object.fromEntries(lists.map((l) => [l.def.slug, l]));
+const featured = ['ai-game-makers', 'ai-sprite-generators', 'ai-3d-model-generators', 'ai-coding-tools-for-game-dev']
+  .map((s) => byslug[s])
+  .filter(Boolean);
+
+const top = (slug: string) => byslug[slug]?.ranked[0]?.tool;
+const picks = [
+  { label: 'game maker', slug: 'ai-game-makers' },
+  { label: 'sprite generator', slug: 'ai-sprite-generators' },
+  { label: '3D model generator', slug: 'ai-3d-model-generators' },
+  { label: 'coding tool', slug: 'ai-coding-tools-for-game-dev' },
+  { label: 'music generator', slug: 'ai-music-generators-for-games' },
+]
+  .map((p) => ({ ...p, tool: top(p.slug) }))
+  .filter((p) => p.tool);
+
+const website = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: SITE.name,
+  url: Astro.site!.toString(),
+  description: SITE.description,
+};
+---
+
+<Base
+  title={`${SITE.name}: Every Tool to Make Games with AI, Ranked (${SITE.year})`}
+  description={`Want to make games with AI? We rank and compare ${live} AI game makers, sprite and 3D generators, coding assistants and audio tools on free tiers, pricing and commercial rights.`}
+  jsonLd={[website]}
+>
+  <h1>Make games with AI: every tool, ranked and compared</h1>
+  <div class="answer">
+    <p>
+      There are three ways to make a game with AI: a <strong>prompt-to-game platform</strong> that builds it from a
+      description, an <strong>AI assistant inside a game engine</strong>, or a <strong>coding agent</strong> that writes
+      the code (<a href="/guides/how-to-make-a-game-with-ai">step-by-step guide</a>). We rank {live} tools on one
+      <a href="/methodology">public rubric</a>. Current #1 picks:{picks.map((p, i) => (
+        <>{i > 0 ? ', ' : ' '}{p.label}{' '}<a href={`/tools/${p.tool!.id}`}>{p.tool!.data.name}</a></>
+      ))}.
+    </p>
+  </div>
+
+  <h2>Start here</h2>
+  <div class="grid">
+    <a class="card" href="/guides/how-to-make-a-game-with-ai">
+      <h3>Make a game with AI</h3>
+      <p>The three routes, step by step, for complete beginners.</p>
+    </a>
+    <a class="card" href="/guides/make-2d-games-with-ai">
+      <h3>Make 2D games with AI</h3>
+      <p>2D game makers, consistent sprites, tilesets and animation.</p>
+    </a>
+    <a class="card" href="/guides/make-game-art-with-ai">
+      <h3>Make game art with AI</h3>
+      <p>Concept art, sprites, 3D models, textures and rights.</p>
+    </a>
+  </div>
+
+  {
+    featured.map(({ def, ranked }) => (
+      <section>
+        <h2>
+          <a href={`/best/${def.slug}`}>{def.title}</a>
+        </h2>
+        <RankTable ranked={ranked} limit={5} />
+      </section>
+    ))
+  }
+
+  <h2>All rankings</h2>
+  <div class="grid">
+    {
+      lists.map(({ def, ranked }) => (
+        <a class="card" href={`/best/${def.slug}`}>
+          <h3>{def.title.replace(/^Best /, '')}</h3>
+          <p>{ranked.length} tools ranked</p>
+        </a>
+      ))
+    }
+  </div>
+</Base>

@@ -1,0 +1,32 @@
+name: 3D AI Studio
+url: https://www.3daistudio.com
+tagline: One subscription for several 3D generators, including Meshy, Rodin and Tripo.
+description: 3D AI Studio bundles several 3D generation models (including Meshy, Rodin and Tripo) and texture tools
+  under one subscription.
+best_for: Comparing several 3D generators without separate subscriptions.
+categories:
+- art-3d
+- texture
+tags:
+- 3d
+- aggregator
+status: active
+platforms:
+- web
+engines: []
+exports: []
+skill_level: beginner
+pricing:
+  model: bundled
+  free_tier: limited
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.3daistudio.com/blog/best-ai-texture-and-pbr-generators-2026
+needs_verification:
+- pricing
+- license
+- exports
+last_verified: '2026-10-16'

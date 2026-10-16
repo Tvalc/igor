@@ -1,0 +1,86 @@
+---
+import '../styles/global.css';
+import { NAV, SECTION_INDEXES, SITE } from '../site';
+import { breadcrumbs as breadcrumbsLd } from '../lib/jsonld';
+
+interface Props {
+  title: string;
+  description: string;
+  crumbs?: { name: string; href: string }[];
+  jsonLd?: object[];
+  markdownPath?: string; // the .md mirror of this page, if any
+  noindex?: boolean;
+}
+
+const { title, description, crumbs = [], jsonLd = [], markdownPath, noindex = false } = Astro.props;
+const base = Astro.site!.toString().replace(/\/$/, '');
+// Section indexes keep their trailing slash (/tools/); leaf pages are extensionless (/tools/x).
+const path = Astro.url.pathname.replace(/\.html$/, '').replace(/(\/index)?\/?$/, '');
+const canonical = new URL(SECTION_INDEXES.includes(`${path}/`) ? `${path}/` : path || '/', Astro.site).toString();
+const fullTitle = title.includes(SITE.name) ? title : `${title} | ${SITE.name}`;
+const ld = [...jsonLd];
+if (crumbs.length) {
+  ld.push(breadcrumbsLd([{ name: 'Home', url: base }, ...crumbs.map((c) => ({ name: c.name, url: base + c.href }))]));
+}
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    {markdownPath && <link rel="alternate" type="text/markdown" href={markdownPath} />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    {ld.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/">{SITE.brand.lead} <span>{SITE.brand.accent}</span></a>
+        <nav aria-label="Main">
+          {NAV.map((n) => <a href={n.href}>{n.label}</a>)}
+        </nav>
+      </div>
+    </header>
+    <main class="wrap">
+      {
+        crumbs.length > 0 && (
+          <nav class="crumbs" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            {crumbs.map((c, i) => (
+              <>
+                {' › '}
+                {i === crumbs.length - 1 ? <span>{c.name}</span> : <a href={c.href}>{c.name}</a>}
+              </>
+            ))}
+          </nav>
+        )
+      }
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>
+          <strong>Ownership disclosure:</strong> {SITE.name} is run by {SITE.owner}. Makko is ranked with the same
+          public rubric as every other tool. Some outbound links are affiliate links, and sponsored placements are
+          labeled. Neither changes a score. <a href="/disclosure">Full disclosure</a> · <a href="/methodology">How we rank</a>
+          · <a href="/about">About</a>
+        </p>
+        <p>
+          For AI agents: <a href="/llms.txt">llms.txt</a> · <a href="/llms-full.txt">llms-full.txt</a> ·
+          <a href="/sitemap.xml">sitemap</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

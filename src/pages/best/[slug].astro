@@ -1,0 +1,111 @@
+---
+import Base from '../../layouts/Base.astro';
+import RankTable from '../../components/RankTable.astro';
+import Faq from '../../components/Faq.astro';
+import { publishedLists, toolsWithAlternatives, type ListDef } from '../../lib/lists';
+import { FACTOR_LABELS, strengths, type Scored } from '../../lib/score';
+import { itemList, faqPage } from '../../lib/jsonld';
+import { CATEGORY_LABELS } from '../../lib/format';
+import { SITE } from '../../site';
+
+export async function getStaticPaths() {
+  return (await publishedLists()).map(({ def, ranked }) => ({ params: { slug: def.slug }, props: { def, ranked } }));
+}
+
+interface Props {
+  def: ListDef;
+  ranked: Scored[];
+}
+const { def, ranked } = Astro.props;
+const base = Astro.site!.toString().replace(/\/$/, '');
+const [first, second, third] = ranked;
+const why = strengths(first).map((f) => FACTOR_LABELS[f].label.toLowerCase());
+const freeOnes = ranked.filter((s) => s.tool.data.pricing.free_tier === 'yes');
+const commercialOnes = ranked.filter((s) => s.tool.data.license.commercial_use === 'yes');
+const beginnerOnes = ranked.filter((s) => s.tool.data.skill_level === 'beginner');
+const hasMakko = ranked.some((s) => s.tool.data.makko_owned);
+const withAlts = await toolsWithAlternatives();
+const names = (xs: Scored[], n = 3) => xs.slice(0, n).map((s) => s.tool.data.name).join(', ');
+
+const faqs = [
+  {
+    q: def.question,
+    a: `On our facts-based score, ${first.tool.data.name} ranks first (${first.score}/100), followed by ${second.tool.data.name}${third ? ` and ${third.tool.data.name}` : ''}. ${first.tool.data.name} is best for: ${first.tool.data.best_for}`,
+  },
+  freeOnes.length > 0 && {
+    q: `Which of these tools are free?`,
+    a: `${freeOnes.length} of the ${ranked.length} tools on this list have a free tier, including ${names(freeOnes)}. Free tiers often limit exports or commercial use, so check the license row on each tool page.`,
+  },
+  {
+    q: `Can I sell games made with these tools?`,
+    a:
+      commercialOnes.length > 0
+        ? `We've verified that ${names(commercialOnes)} allow commercial use outright. Others allow it only on paid plans, or we haven't verified it yet. Each tool page shows the current status.`
+        : `We haven't yet verified unrestricted commercial use for any tool on this list. Several allow it on paid plans. Check each tool page before shipping.`,
+  },
+  beginnerOnes.length > 0 && {
+    q: `Which tools work for complete beginners?`,
+    a: `${names(beginnerOnes)} need no coding or technical setup.`,
+  },
+  {
+    q: 'How are these tools ranked?',
+    a: `Every tool is scored on the same public rubric: accessibility, output and integrations, commercial rights, value and maturity. Hands-on test results are added as tests are published. Affiliate links and sponsorships never change a score.`,
+  },
+].filter(Boolean) as { q: string; a: string }[];
+
+const title = `${def.title} (${SITE.year})`;
+const description = `${def.title}, ranked: ${names(ranked)} and more, compared on free tiers, pricing, commercial rights and exports. Updated ${SITE.year}.`;
+---
+
+<Base
+  title={title}
+  description={description}
+  crumbs={[{ name: 'Best lists', href: '/best/' }, { name: def.title, href: `/best/${def.slug}` }]}
+  markdownPath={`/best/${def.slug}.md`}
+  jsonLd={[
+    itemList(def.title, ranked.map((s) => ({ name: s.tool.data.name, url: `${base}/tools/${s.tool.id}` }))),
+    faqPage(faqs),
+  ]}
+>
+  <h1>{title}</h1>
+  <div class="answer">
+    <p>
+      The best options are <strong>{first.tool.data.name}</strong>, <strong>{second.tool.data.name}</strong>
+      {third && <>and <strong>{third.tool.data.name}</strong></>}.
+      {first.tool.data.name} ranks first with a score of {first.score}/100{why.length > 0 && <>, led by {why.join(' and ')}</>}.
+      {def.blurb}
+    </p>
+  </div>
+  <p class="meta">
+    {ranked.length} tools ranked · Scores are facts-based, and hands-on tests are being added ·
+    <a href="/methodology">How we rank</a>
+  </p>
+  {
+    hasMakko && (
+      <p class="notice">
+        Disclosure: this site is run by {SITE.owner}. Makko appears on this list, ranked by the same rubric as
+        everything else.
+      </p>
+    )
+  }
+
+  <RankTable ranked={ranked} />
+
+  <h2>The top picks, briefly</h2>
+  {
+    ranked.slice(0, 5).map((s, i) => (
+      <section>
+        <h3>
+          {i + 1}. <a href={`/tools/${s.tool.id}`}>{s.tool.data.name}</a> <span class="score">{s.score}</span>
+        </h3>
+        <p>{s.tool.data.description}</p>
+        <p class="meta">
+          {s.tool.data.categories.map((c) => CATEGORY_LABELS[c]).join(' · ')}
+          {withAlts.has(s.tool.id) && <> · <a href={`/alternatives/${s.tool.id}`}>{s.tool.data.name} alternatives</a></>}
+        </p>
+      </section>
+    ))
+  }
+
+  <Faq faqs={faqs} />
+</Base>

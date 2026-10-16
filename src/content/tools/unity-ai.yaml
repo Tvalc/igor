@@ -1,0 +1,34 @@
+name: Unity AI
+url: https://unity.com/ai
+tagline: Unity's built-in Assistant, Generators, AI Gateway and official MCP server.
+description: Unity AI replaced Unity Muse. It bundles an in-editor Assistant, asset Generators, an AI Gateway and
+  an official MCP server. It entered open beta in May 2026 at $10/month on Unity Personal and is included with Pro.
+best_for: Unity developers who want first-party AI inside the editor.
+categories:
+- code
+- art-2d
+- game-maker
+tags:
+- unity
+- mcp
+- agent
+status: active
+platforms:
+- plugin
+engines:
+- unity
+exports: []
+skill_level: intermediate
+pricing:
+  model: paid
+  free_tier: trial
+  starting_price_usd: 10
+  notes: $10/month on Unity Personal; included in Unity Pro.
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.buildfastwithai.com/blogs/unity-ai-open-beta-guide-2026
+needs_verification:
+- license
+last_verified: '2026-10-16'

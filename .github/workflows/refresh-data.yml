@@ -1,0 +1,39 @@
+name: Weekly data refresh
+
+# A Claude agent re-verifies tool facts against primary sources and opens a PR (see automation/refresh-prompt.md).
+# Requires the ANTHROPIC_API_KEY repository secret; the job skips itself until that is set.
+
+on:
+  schedule:
+    - cron: '17 6 * * 1' # Mondays 06:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Check for API key
+        id: key
+        run: echo "present=${{ secrets.ANTHROPIC_API_KEY != '' }}" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v4
+        if: steps.key.outputs.present == 'true'
+      - uses: actions/setup-node@v4
+        if: steps.key.outputs.present == 'true'
+        with:
+          node-version: 22
+          cache: npm
+      - uses: anthropics/claude-code-action@v1
+        if: steps.key.outputs.present == 'true'
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Follow the instructions in automation/refresh-prompt.md exactly. Today is the date shown by `date -u +%F`.
+          claude_args: >-
+            --max-turns 200
+            --allowedTools "Read,Edit,Write,Glob,Grep,WebSearch,WebFetch,Bash(npm ci),Bash(npm run build),Bash(node scripts/*),Bash(date *),Bash(git *),Bash(gh pr create *)"

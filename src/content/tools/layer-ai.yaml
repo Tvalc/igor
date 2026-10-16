@@ -1,0 +1,32 @@
+name: Layer
+url: https://www.layer.ai
+tagline: Studio art platform for producing on-style game assets.
+description: Layer is an AI art platform used by studios such as Zynga and Tripledot to produce game art that stays
+  in a consistent style.
+best_for: Mobile and live-ops studios producing art at volume.
+categories:
+- art-2d
+tags:
+- style-training
+- studio
+- 2d
+status: active
+platforms:
+- web
+engines: []
+exports: []
+skill_level: intermediate
+pricing:
+  model: freemium
+  free_tier: limited
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.layer.ai
+needs_verification:
+- pricing
+- license
+- exports
+last_verified: '2026-10-16'

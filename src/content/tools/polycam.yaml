@@ -1,0 +1,34 @@
+name: Polycam
+url: https://poly.cam
+tagline: 3D scanning plus text-to-PBR material generation.
+description: Polycam is known for 3D scanning and also generates tileable PBR materials from text.
+best_for: Quick tileable materials and real-world scans.
+categories:
+- texture
+- art-3d
+tags:
+- pbr
+- scanning
+status: active
+platforms:
+- web
+- desktop
+engines: []
+exports:
+- pbr-maps
+- glb
+- obj
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://poly.cam
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

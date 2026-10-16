@@ -1,0 +1,37 @@
+name: PixelLab
+url: https://www.pixellab.ai
+tagline: Pixel-art sprites, skeleton animation, 4/8-direction rotations and tilesets.
+description: PixelLab generates pixel-art characters and objects, animates them with skeletons, rotates them into
+  4 or 8 directions, and builds tilesets.
+best_for: Pixel-art games that need consistent multi-direction sprites.
+categories:
+- art-2d
+- animation
+tags:
+- pixel-art
+- sprites
+- tilesets
+- 2d
+status: active
+platforms:
+- web
+- plugin
+engines:
+- aseprite
+exports:
+- png
+- sprite-sheet
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: trial
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.pixellab.ai
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'

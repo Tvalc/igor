@@ -1,0 +1,34 @@
+name: Claude Code
+url: https://claude.com/claude-code
+tagline: Anthropic's agentic coding tool for the terminal, IDE and web.
+description: Claude Code is Anthropic's agentic coding tool. It reads and edits whole projects and connects to engine
+  MCP servers for Unity, Godot and Blender.
+best_for: Developers who want an agent to build and refactor game code.
+categories:
+- code
+tags:
+- general-purpose
+- agent
+- mcp
+- cli
+status: active
+platforms:
+- cli
+- desktop
+- web
+engines: []
+exports:
+- source-code
+skill_level: advanced
+pricing:
+  model: paid
+  free_tier: 'no'
+  starting_price_usd: null
+license:
+  commercial_use: 'yes'
+  open_source: false
+sources:
+- https://claude.com/claude-code
+needs_verification:
+- pricing
+last_verified: '2026-10-16'

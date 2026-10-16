@@ -1,0 +1,94 @@
+---
+import Base from '../../layouts/Base.astro';
+import RankTable from '../../components/RankTable.astro';
+import Faq from '../../components/Faq.astro';
+import { LISTS, rankedList } from '../../lib/lists';
+import { faqPage } from '../../lib/jsonld';
+import { SITE } from '../../site';
+
+const get = async (slug: string) => rankedList(LISTS.find((l) => l.slug === slug)!);
+const makers2d = await get('2d-game-makers');
+const sprites = await get('ai-sprite-generators');
+const names = (xs: typeof makers2d, n = 3) => xs.slice(0, n).map((s) => s.tool.data.name).join(', ');
+const pixel = sprites.filter((s) => s.tool.data.tags.includes('pixel-art'));
+const animators = sprites.filter((s) => s.tool.data.categories.includes('animation'));
+
+const faqs = [
+  {
+    q: 'What is the easiest way to make a 2D game with AI?',
+    a: `Use a 2D-capable AI game maker such as ${names(makers2d)}. Describe the game, play it, and refine it with follow-up prompts. No code is needed.`,
+  },
+  {
+    q: 'How do I keep my 2D characters consistent across sprites?',
+    a: `Generate one reference character first, then use tools built for consistency, such as style-trained models or sprite tools that rotate and animate a single character. ${names(animators, 2)} can animate one character into sprite sheets.`,
+  },
+  {
+    q: 'What is the best AI for pixel art games?',
+    a: `Among pixel-art tools we track, ${names(pixel)} rank highest. Expect to clean up edges and palettes by hand in an editor such as Aseprite.`,
+  },
+  {
+    q: 'Which engine should I use for a 2D AI game?',
+    a: 'If you want no code, stay inside an AI game maker. If you want a real engine, Godot and GDevelop are both strong at 2D, and both have AI assistants and MCP integrations.',
+  },
+];
+---
+
+<Base
+  title={`How to Make 2D Games with AI (${SITE.year} Guide)`}
+  description="Make a 2D game with AI: pick a 2D AI game maker, generate consistent sprites and animations, build levels, and publish. Includes rankings of the best 2D AI tools."
+  crumbs={[{ name: 'Guides', href: '/guides/how-to-make-a-game-with-ai' }, { name: 'Make 2D games with AI', href: '/guides/make-2d-games-with-ai' }]}
+  jsonLd={[faqPage(faqs)]}
+>
+  <article class="prose">
+    <h1>How to make 2D games with AI</h1>
+    <div class="answer">
+      <p>
+        To make a 2D game with AI, use a 2D-capable AI game maker such as <strong>{names(makers2d)}</strong> for the
+        game itself, and a sprite tool such as <strong>{names(sprites, 2)}</strong> for characters, animations and
+        tilesets. Lock your art style first. Then build one level, playtest it, and expand.
+      </p>
+    </div>
+    <p class="meta">Updated {SITE.year} · Rankings below update automatically from our tool data.</p>
+
+    <h2>1. Decide your art style before anything else</h2>
+    <p>
+      2D games live or die on visual consistency. Choose pixel art (and a resolution, such as 32×32 characters) or a
+      hand-drawn style, and write it down as a short style prompt you'll reuse in every tool.
+    </p>
+
+    <h2>2. Pick how you'll build the game</h2>
+    <p>
+      An all-in-one 2D AI game maker generates gameplay and assets together, the fastest route for beginners. A 2D
+      engine such as Godot or GDevelop with an AI assistant gives more control and store exports.
+    </p>
+
+    <h2>3. Generate a hero character, then animate it</h2>
+    <p>
+      Create one reference character and reuse it everywhere. Sprite-focused tools can rotate a character into 4 or 8
+      directions and animate it into sprite sheets (idle, walk, jump, attack), which is far more consistent than
+      prompting each frame separately.
+    </p>
+
+    <h2>4. Build tilesets and one complete level</h2>
+    <p>
+      Generate a tileset in the same style, build one full level, and play it start to finish before adding more.
+      Most problems (jump height, enemy speed, camera) show up in the first level.
+    </p>
+
+    <h2>5. Add sound, check rights, publish</h2>
+    <p>
+      Add <a href="/best/ai-music-generators-for-games">music</a> and <a href="/best/ai-sound-effect-generators">sound
+      effects</a>, confirm commercial rights for every tool you used, then publish to the web, itch.io or Steam.
+    </p>
+  </article>
+
+  <h2>Best AI tools to make 2D games</h2>
+  <RankTable ranked={makers2d} limit={8} />
+  <p><a href="/best/2d-game-makers">Full 2D game maker ranking →</a></p>
+
+  <h2>Best AI sprite and pixel art generators</h2>
+  <RankTable ranked={sprites} limit={6} />
+  <p><a href="/best/ai-sprite-generators">Full sprite generator ranking →</a></p>
+
+  <Faq faqs={faqs} />
+</Base>

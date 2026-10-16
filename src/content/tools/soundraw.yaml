@@ -1,0 +1,32 @@
+name: Soundraw
+url: https://soundraw.io
+tagline: Royalty-free AI music you can edit.
+description: Soundraw generates royalty-free music that you can edit by section, length and intensity.
+best_for: Royalty-free background music with editable structure.
+categories:
+- music
+tags:
+- music
+- royalty-free
+status: active
+platforms:
+- web
+engines: []
+exports:
+- mp3
+- wav
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: paid-plans
+  open_source: false
+affiliate:
+  program: Soundraw Affiliate Program
+sources:
+- https://docs.channel.io/soundraw-faq/en/articles/soundraw-affiliate-program-d26000fb
+needs_verification:
+- pricing
+last_verified: '2026-10-16'

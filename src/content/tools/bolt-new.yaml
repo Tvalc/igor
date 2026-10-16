@@ -1,0 +1,33 @@
+name: Bolt.new
+url: https://bolt.new
+tagline: StackBlitz's AI app builder, usable for browser games.
+description: Bolt.new generates and runs full-stack web apps in the browser from prompts, which works for small
+  browser games.
+best_for: Quick browser game prototypes with editable code.
+categories:
+- game-maker
+- code
+tags:
+- browser
+- general-purpose
+- agent
+status: active
+platforms:
+- web
+engines: []
+exports:
+- web
+- source-code
+skill_level: intermediate
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: 'yes'
+  open_source: false
+sources:
+- https://bolt.new
+needs_verification:
+- pricing
+last_verified: '2026-10-16'

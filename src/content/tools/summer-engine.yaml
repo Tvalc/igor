@@ -1,0 +1,35 @@
+name: Summer Engine
+url: https://www.summerengine.com
+tagline: AI-native desktop game engine compatible with Godot 4.
+description: Summer Engine is a free desktop game engine built around an AI agent, with compatibility with Godot
+  4 projects.
+best_for: Indie devs who want an AI agent inside a full engine.
+categories:
+- game-maker
+- code
+tags:
+- godot
+- agent
+- 2d
+- 3d
+status: active
+platforms:
+- desktop
+engines:
+- godot
+exports: []
+skill_level: intermediate
+pricing:
+  model: free
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.summerengine.com/blog/how-to-make-a-game-with-ai
+needs_verification:
+- pricing
+- license
+- exports
+last_verified: '2026-10-16'

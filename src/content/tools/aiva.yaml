@@ -1,0 +1,32 @@
+name: AIVA
+url: https://www.aiva.ai
+tagline: AI composition assistant for soundtracks.
+description: AIVA composes music in many styles, including orchestral and game-style soundtracks. On the free plan
+  AIVA keeps the copyright, while paid plans grant more rights.
+best_for: Orchestral and cinematic game scores.
+categories:
+- music
+tags:
+- music
+- orchestral
+status: active
+platforms:
+- web
+- desktop
+engines: []
+exports:
+- mp3
+- wav
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: paid-plans
+  open_source: false
+sources:
+- https://www.aiva.ai
+needs_verification:
+- pricing
+last_verified: '2026-10-16'

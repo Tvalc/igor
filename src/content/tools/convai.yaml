@@ -1,0 +1,34 @@
+name: Convai
+url: https://convai.com
+tagline: Hosted conversational NPCs for Unity, Unreal and the web.
+description: Convai hosts conversational AI characters with voice, knowledge and actions, with integrations for
+  Unity, Unreal and web. Its Indie plan is $29/month.
+best_for: Indie devs adding talking NPCs to Unity or Unreal.
+categories:
+- npc
+tags:
+- npc
+- voice
+status: active
+platforms:
+- web
+- api
+- plugin
+engines:
+- unity
+- unreal
+- web
+exports: []
+skill_level: intermediate
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: 29
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://app.cinevva.com/guides/ai-npcs-dialogue
+needs_verification:
+- license
+last_verified: '2026-10-16'

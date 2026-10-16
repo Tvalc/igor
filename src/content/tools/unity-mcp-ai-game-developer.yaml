@@ -1,0 +1,31 @@
+name: AI Game Developer (Unity-MCP)
+url: https://ai-game.dev
+tagline: Apache-2.0 open-source Unity MCP server.
+description: AI Game Developer (Unity-MCP) is an Apache-2.0 open-source MCP server for Unity with about 3,000 GitHub
+  stars.
+best_for: Unity devs who want an alternative open-source MCP bridge.
+categories:
+- code
+tags:
+- mcp
+- unity
+- open-source
+status: active
+platforms:
+- plugin
+engines:
+- unity
+exports: []
+skill_level: advanced
+pricing:
+  model: open-source
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: 'yes'
+  open_source: true
+  notes: Apache-2.0 license.
+sources:
+- https://ai-game.dev
+needs_verification: []
+last_verified: '2026-10-16'

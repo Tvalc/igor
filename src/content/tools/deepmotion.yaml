@@ -1,0 +1,32 @@
+name: DeepMotion
+url: https://www.deepmotion.com
+tagline: Turn a video into motion capture data.
+description: DeepMotion's Animate 3D converts ordinary video into 3D motion capture you can retarget onto game characters.
+best_for: Mocap without a mocap suit.
+categories:
+- animation
+tags:
+- mocap
+- 3d
+status: active
+platforms:
+- web
+engines: []
+exports:
+- fbx
+- bvh
+- glb
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: null
+license:
+  commercial_use: unknown
+  open_source: false
+sources:
+- https://www.deepmotion.com
+needs_verification:
+- pricing
+- license
+last_verified: '2026-10-16'
