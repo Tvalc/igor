@@ -1,9 +1,10 @@
-// Brand lives here so the name can change once the domain is bought.
+// Brand and domain identity. The logo, titles, llms.txt and disclosures all read from here.
 export const SITE = {
-  name: 'AI Game Atlas',
-  tagline: 'Independent rankings of every AI game development tool',
+  name: 'Make AI Games',
+  brand: { lead: 'Make AI', accent: 'Games' },
+  tagline: 'Every AI game dev tool, ranked on a public rubric',
   description:
-    'Independent, fact-checked rankings and comparisons of AI game makers, AI sprite and 3D generators, AI coding tools for Unity and Godot, and AI voice, music and NPC tools.',
+    'How to make games with AI: transparent, fact-checked rankings and comparisons of AI game makers, AI sprite and 3D generators, AI coding tools for Unity and Godot, and AI voice, music and NPC tools.',
   owner: 'the Makko AI team',
   ownerProduct: 'makko-ai',
   year: 2026,

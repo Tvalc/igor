@@ -33,7 +33,7 @@ const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what t
 
 <Base
   title={title}
-  description={`${d.name}: ${d.tagline} Pricing, commercial rights, exports and our ${scored.score}/100 Atlas Score, plus the best alternatives.`}
+  description={`${d.name}: ${d.tagline} Pricing, commercial rights, exports and our ${scored.score}/100 score, plus the best alternatives.`}
   crumbs={[{ name: 'Tools', href: '/tools' }, { name: d.name, href: `/tools/${tool.id}` }]}
   markdownPath={`/tools/${tool.id}.md`}
   jsonLd={d.status === 'discontinued' ? [] : [softwareApp(scored, base)]}

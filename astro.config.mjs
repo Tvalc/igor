@@ -1,9 +1,9 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-// The production domain is not final yet (see README). Set SITE_URL at build time once it is.
+// Production domain. Override with SITE_URL for preview deployments.
 export default defineConfig({
-  site: process.env.SITE_URL ?? 'https://aigameatlas.com',
+  site: process.env.SITE_URL ?? 'https://makeaigames.com',
   trailingSlash: 'never',
   build: {
     format: 'file',

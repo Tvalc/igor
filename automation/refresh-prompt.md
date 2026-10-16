@@ -1,6 +1,6 @@
 # Weekly tool data refresh
 
-You maintain the tool database for AI Game Atlas, an independent ranking site for AI game development tools.
+You maintain the tool database for Make AI Games (makeaigames.com), a transparent ranking site for AI game development tools.
 The data lives in `src/content/tools/*.yaml`; the schema is in `src/content.config.ts`. Scores are computed
 from this data by `src/lib/score.ts`. Never edit scores, weights or page templates in this job.
 

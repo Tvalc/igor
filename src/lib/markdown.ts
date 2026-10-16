@@ -20,7 +20,7 @@ export function toolMarkdown(s: Scored, base: string): string {
     '',
     `**Best for:** ${d.best_for}`,
     '',
-    `**Atlas Score:** ${s.score}/100 (${s.handsOn ? 'facts + hands-on test' : 'facts-based; hands-on test pending'})`,
+    `**${SITE.name} score:** ${s.score}/100 (${s.handsOn ? 'facts + hands-on test' : 'facts-based; hands-on test pending'})`,
     '',
     '| Fact | Value |',
     '|---|---|',
@@ -54,7 +54,7 @@ export function listMarkdown(def: ListDef, ranked: Scored[], base: string): stri
   const lines = [
     `# ${def.title} (${SITE.year})`,
     '',
-    `${def.question} On our facts-based Atlas Score, the top picks are ${top.join(', ')}. ${def.blurb}`,
+    `${def.question} On the facts-based ${SITE.name} score, the top picks are ${top.join(', ')}. ${def.blurb}`,
     '',
     '| Rank | Tool | Score | Free tier | Commercial use | Best for |',
     '|---|---|---|---|---|---|',

@@ -1,5 +1,8 @@
 # Research: market gap and domain shortlist (2026-10-16)
 
+> **Outcome:** Tony bought **makeaigames.com** (primary) plus aigameranks.com, gamedevranks.com,
+> aigamesatlas.com and topgamedevs.com (redirects). The shortlist below is kept for the record.
+
 ## Does this site already exist?
 
 Mostly no. We found no neutral, game-specific site with full coverage, hands-on testing and published

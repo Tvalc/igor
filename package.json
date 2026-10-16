@@ -1,9 +1,9 @@
 {
-  "name": "ai-game-atlas",
+  "name": "make-ai-games",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Independent rankings and reviews of every AI game development tool.",
+  "description": "Transparent rankings and comparisons of every tool for making games with AI.",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",

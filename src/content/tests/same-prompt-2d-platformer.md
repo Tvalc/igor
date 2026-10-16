@@ -32,7 +32,7 @@ Each tool gets a hands-on score out of 10:
 - Speed and effort (2 points): time and number of follow-ups needed.
 - Export (1 point): whether a usable build can leave the platform.
 
-The hands-on score is blended 50/50 with the facts-based Atlas Score on each tool's page once results are published.
+The hands-on score is blended 50/50 with the facts-based score on each tool's page once results are published.
 
 ## Results
 

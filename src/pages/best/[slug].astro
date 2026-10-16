@@ -30,7 +30,7 @@ const names = (xs: Scored[], n = 3) => xs.slice(0, n).map((s) => s.tool.data.nam
 const faqs = [
   {
     q: def.question,
-    a: `On our facts-based Atlas Score, ${first.tool.data.name} ranks first (${first.score}/100), followed by ${second.tool.data.name}${third ? ` and ${third.tool.data.name}` : ''}. ${first.tool.data.name} is best for: ${first.tool.data.best_for}`,
+    a: `On our facts-based score, ${first.tool.data.name} ranks first (${first.score}/100), followed by ${second.tool.data.name}${third ? ` and ${third.tool.data.name}` : ''}. ${first.tool.data.name} is best for: ${first.tool.data.best_for}`,
   },
   freeOnes.length > 0 && {
     q: `Which of these tools are free?`,

@@ -12,6 +12,17 @@ const featured = ['ai-game-makers', 'ai-sprite-generators', 'ai-3d-model-generat
   .map((s) => byslug[s])
   .filter(Boolean);
 
+const top = (slug: string) => byslug[slug]?.ranked[0]?.tool;
+const picks = [
+  { label: 'game maker', slug: 'ai-game-makers' },
+  { label: 'sprite generator', slug: 'ai-sprite-generators' },
+  { label: '3D model generator', slug: 'ai-3d-model-generators' },
+  { label: 'coding tool', slug: 'ai-coding-tools-for-game-dev' },
+  { label: 'music generator', slug: 'ai-music-generators-for-games' },
+]
+  .map((p) => ({ ...p, tool: top(p.slug) }))
+  .filter((p) => p.tool);
+
 const website = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
@@ -21,14 +32,20 @@ const website = {
 };
 ---
 
-<Base title={SITE.name} description={SITE.description} jsonLd={[website]}>
-  <h1>Every AI game development tool, ranked</h1>
+<Base
+  title={`${SITE.name}: Every Tool to Make Games with AI, Ranked (${SITE.year})`}
+  description={`Want to make games with AI? We rank and compare ${live} AI game makers, sprite and 3D generators, coding assistants and audio tools on free tiers, pricing and commercial rights.`}
+  jsonLd={[website]}
+>
+  <h1>Make games with AI: every tool, ranked and compared</h1>
   <div class="answer">
     <p>
-      {SITE.name} tracks <strong>{live} AI tools for making games</strong>: AI game makers, sprite and 3D generators,
-      coding assistants for Unity, Godot and Unreal, and voice, music and NPC AI. Every tool is scored on one
-      <a href="/methodology">public rubric</a> using verified facts: free tier, price, commercial rights, exports and
-      engine support.
+      There are three ways to make a game with AI: a <strong>prompt-to-game platform</strong> that builds it from a
+      description, an <strong>AI assistant inside a game engine</strong>, or a <strong>coding agent</strong> that writes
+      the code (<a href="/guides/how-to-make-a-game-with-ai">step-by-step guide</a>). We rank {live} tools on one
+      <a href="/methodology">public rubric</a>. Current #1 picks:{picks.map((p, i) => (
+        <>{i > 0 ? ', ' : ' '}{p.label}{' '}<a href={`/tools/${p.tool!.id}`}>{p.tool!.data.name}</a></>
+      ))}.
     </p>
   </div>
 

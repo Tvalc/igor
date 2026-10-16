@@ -15,7 +15,7 @@ interface Props {
 const { title, description, crumbs = [], jsonLd = [], markdownPath, noindex = false } = Astro.props;
 const base = Astro.site!.toString().replace(/\/$/, '');
 const canonical = new URL(Astro.url.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/', Astro.site).toString();
-const fullTitle = title === SITE.name ? title : `${title} | ${SITE.name}`;
+const fullTitle = title.includes(SITE.name) ? title : `${title} | ${SITE.name}`;
 const ld = [...jsonLd];
 if (crumbs.length) {
   ld.push(breadcrumbsLd([{ name: 'Home', url: base }, ...crumbs.map((c) => ({ name: c.name, url: base + c.href }))]));
@@ -44,7 +44,7 @@ if (crumbs.length) {
   <body>
     <header class="site-header">
       <div class="wrap">
-        <a class="brand" href="/">AI Game <span>Atlas</span></a>
+        <a class="brand" href="/">{SITE.brand.lead} <span>{SITE.brand.accent}</span></a>
         <nav aria-label="Main">
           {NAV.map((n) => <a href={n.href}>{n.label}</a>)}
         </nav>
