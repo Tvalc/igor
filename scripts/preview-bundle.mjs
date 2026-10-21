@@ -111,7 +111,7 @@ if (existsSync(join(out, '_astro'))) {
 // monogram underneath shows instead.
 for (const page of pages) {
   const f = join(out, page);
-  writeFileSync(f, readFileSync(f, 'utf8').replace(/<img src="https:\/\/www\.google\.com\/s2\/favicons[^>]*>/g, ''));
+  writeFileSync(f, readFileSync(f, 'utf8').replace(/<img\b[^>]*src="https:\/\/www\.google\.com\/s2\/favicons[^>]*>/g, ''));
 }
 
 // Fonts are CORS fetches too, so embed them in the stylesheet.
