@@ -1,14 +1,18 @@
 ---
 import { getCollection, getEntry } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import ScoreBars from '../../components/ScoreBars.astro';
-import ToolLogo from '../../components/ToolLogo.astro';
-import Stars from '../../components/Stars.astro';
-import ToolCard from '../../components/ToolCard.astro';
-import ProsCons from '../../components/ProsCons.astro';
-import FeatureMark from '../../components/FeatureMark.astro';
-import Plans from '../../components/Plans.astro';
-import Icon from '../../components/Icon.astro';
+import { ScoreBars } from '../../components/site/ScoreBars';
+import { ToolLogo } from '../../components/site/ToolLogo';
+import { Stars } from '../../components/site/Stars';
+import { ToolCard } from '../../components/site/ToolCard';
+import { ProsCons } from '../../components/site/ProsCons';
+import { FeatureMark } from '../../components/site/FeatureMark';
+import { Plans } from '../../components/site/Plans';
+import { Badge } from '../../components/ui/badge';
+import { buttonVariants } from '../../components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
+import { cn } from '../../lib/utils';
+import { ArrowRight, ArrowUpRight, Layers } from 'lucide-react';
 import { featuresFor } from '../../lib/features';
 import { alternativesFor, listsContaining, comparisonPairs } from '../../lib/lists';
 import { scoreTool, groupOf, GROUP_LABELS, type Tool } from '../../lib/score';
@@ -62,28 +66,31 @@ const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what t
   markdownPath={`/tools/${tool.id}.md`}
   jsonLd={dead ? [] : [softwareApp(scored, base)]}
 >
-  <section class="product-head">
+  <section class="bg-card mt-6 grid gap-6 rounded-2xl border p-6 shadow-sm sm:p-8 md:grid-cols-[auto_1fr_auto] md:items-center">
     <ToolLogo name={d.name} url={d.url} size="lg" />
-    <div>
-      <h1>{d.name}</h1>
-      <p class="tagline">{d.tagline}</p>
-      <div class="product-meta">
-        {!dead && <Stars score={scored.score} />}
-        {d.categories.map((c) => <span class="pill">{CATEGORY_LABELS[c]}</span>)}
-        {d.status !== 'active' && <span class={`pill ${dead ? 'dead' : ''}`}>{STATUS_LABELS[d.status]}</span>}
-        {d.makko_owned && <span class="pill owned">Built by our team</span>}
+    <div class="min-w-0">
+      <div class="flex flex-wrap items-center gap-2">
+        <h1 class="text-3xl font-bold sm:text-4xl">{d.name}</h1>
+        {d.makko_owned && <Badge variant="outline" className="border-amber-400/60 text-amber-700 dark:text-amber-300">Built by our team</Badge>}
+        {d.status !== 'active' && <Badge variant={dead ? 'destructive' : 'secondary'}>{STATUS_LABELS[d.status]}</Badge>}
+      </div>
+      <p class="text-muted-foreground mt-2 text-lg">{d.tagline}</p>
+      <div class="mt-4 flex flex-wrap items-center gap-2">
+        {!dead && <Stars score={scored.score} className="mr-2" />}
+        {d.categories.map((c) => <Badge variant="secondary">{CATEGORY_LABELS[c]}</Badge>)}
       </div>
     </div>
     {
       !dead && (
-        <div class="product-cta">
-          <div class="price-big">
-            {priceLabel(tool) === 'Unverified' ? <span class="unverified">{shown('Unverified', 'price')}</span> : priceLabel(tool)}
-            <small>{priceLabel(tool) === 'Free plan' ? '' : d.pricing.free_tier === 'yes' ? 'Free plan available' : startPrice ? 'starting price' : ''}</small>
+        <div class="flex flex-col gap-3 md:min-w-52 md:items-stretch md:text-center">
+          <div>
+            <div class="font-display text-2xl font-semibold">{priceLabel(tool) === 'Unverified' ? <span class="text-muted-foreground text-base font-normal">See site for pricing</span> : priceLabel(tool)}</div>
+            <div class="text-muted-foreground text-xs">{priceLabel(tool) === 'Free plan' ? '' : d.pricing.free_tier === 'yes' ? 'Free plan available' : startPrice ? 'starting price' : ''}</div>
           </div>
-          <a class="btn" href={outboundUrl(tool)} rel={outboundRel(tool)} target="_blank">Visit {d.name} <Icon name="external" size={16} /></a>
-          <label class="tcard-cmp" style="justify-content:center"><input type="checkbox" data-compare={tool.id} /> Add to compare</label>
-          {d.affiliate?.url && <span class="meta">Affiliate link</span>}
+          <a class={buttonVariants({ size: 'lg' })} href={outboundUrl(tool)} rel={outboundRel(tool)} target="_blank">Visit {d.name} <ArrowUpRight /></a>
+          <label class="text-muted-foreground flex cursor-pointer items-center justify-center gap-2 text-sm">
+            <input type="checkbox" data-compare={tool.id} class="accent-brand size-4" /> Add to compare
+          </label>
         </div>
       )
     }
@@ -91,106 +98,104 @@ const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what t
 
   {
     d.makko_owned && (
-      <p class="notice">
-        Disclosure: {SITE.name} is run by {SITE.owner}. {d.name} is scored exactly the same way as
-        every other tool. <a href="/disclosure">Read our disclosure</a>.
+      <p class="notice mt-4">
+        Disclosure: {SITE.name} is run by {SITE.owner}. {d.name} is scored exactly the same way as every other tool. <a class="underline" href="/disclosure">Read our disclosure</a>.
       </p>
     )
   }
 
-  <nav class="tabs" aria-label="On this page">
-    <a href="#overview">Overview</a>
-    {(d.plans.length > 0 || d.pricing.notes) && <a href="#pricing">Pricing</a>}
-    {featureDefs.length > 0 && !dead && <a href="#features">Features</a>}
-    {!dead && <a href="#score">Score</a>}
-    {alternatives.length > 0 && <a href="#alternatives">Alternatives</a>}
-    {comparisons.length > 0 && <a href="#compare">Compare</a>}
-    {d.sources.length > 0 && <a href="#sources">Sources</a>}
+  <nav class="bg-background/90 sticky top-16 z-30 -mx-4 mt-6 overflow-x-auto border-b px-4 backdrop-blur sm:-mx-6 sm:px-6" aria-label="On this page">
+    <div class="flex gap-1 py-2">
+      {[
+        ['overview', 'Overview', true],
+        ['pricing', 'Pricing', d.plans.length > 0 || !!d.pricing.notes],
+        ['features', 'Features', featureDefs.length > 0 && !dead],
+        ['score', 'Score', !dead],
+        ['alternatives', 'Alternatives', alternatives.length > 0],
+        ['compare', 'Compare', !dead && (comparisons.length > 0 || alternatives.length > 0)],
+        ['sources', 'Sources', d.sources.length > 0],
+      ].filter((x) => x[2]).map(([id, label]) => (
+        <a href={`#${id}`} class="text-muted-foreground hover:text-foreground hover:bg-accent rounded-md px-3 py-1.5 text-sm font-medium whitespace-nowrap">{label}</a>
+      ))}
+    </div>
   </nav>
 
-  <div class="product-body">
-    <div>
-      <section id="overview">
-        <h2>Overview</h2>
+  <div class="mt-8 grid gap-10 lg:grid-cols-[1fr_320px]">
+    <div class="min-w-0 space-y-14">
+      <section id="overview" class="scroll-mt-32">
+        <h2 class="mb-4 text-2xl font-semibold">Overview</h2>
         <div class="answer">
           <p>
             {
               dead ? (
                 <>
-                  {d.description}{' '}
-                  {successor && (
-                    <>
-                      Its replacement is <a href={`/tools/${successor.id}`}>{successor.data.name}</a>.
-                    </>
-                  )}
+                  {d.description} {successor && <>Its replacement is <a class="underline" href={`/tools/${successor.id}`}>{successor.data.name}</a>.</>}
                 </>
               ) : (
                 <>
-                  <strong>{d.name}</strong>: {d.tagline} It scores <strong>{scored.score}/100</strong> on our{' '}
-                  {lc(GROUP_LABELS[group])} ranking. Best for: {d.best_for}
+                  <strong>{d.name}</strong>: {d.tagline} It scores <strong>{scored.score}/100</strong> in our {lc(GROUP_LABELS[group])} ranking. Best for: {d.best_for}
                 </>
               )
             }
           </p>
         </div>
-        {!dead && <p>{d.description}</p>}
-        {!dead && <ProsCons tool={tool} max={6} />}
+        {!dead && <p class="leading-7">{d.description}</p>}
+        {!dead && (
+          <Card className="mt-6 py-5">
+            <CardContent className="px-5"><ProsCons tool={tool} max={6} /></CardContent>
+          </Card>
+        )}
       </section>
 
       {
         (d.plans.length > 0 || d.pricing.notes) && (
-          <section id="pricing">
-            <h2>{d.name} pricing</h2>
-            {d.plans.length > 0 ? <Plans tool={tool} /> : <p>{d.pricing.notes}</p>}
-            <p class="meta">
-              Monthly prices in USD as listed by {d.name}. Last checked {isoDate(d.last_verified)}.
-              {d.license.notes && <> Rights: {d.license.notes}</>}
-            </p>
+          <section id="pricing" class="scroll-mt-32">
+            <h2 class="mb-4 text-2xl font-semibold">{d.name} pricing</h2>
+            {d.plans.length > 0 ? <Plans tool={tool} /> : <p class="text-muted-foreground">{d.pricing.notes}</p>}
+            <p class="text-muted-foreground mt-3 text-sm">Monthly prices in USD as listed by {d.name}. Last checked {isoDate(d.last_verified)}.{d.license.notes && <> Rights: {d.license.notes}</>}</p>
           </section>
         )
       }
 
       {
         featureDefs.length > 0 && !dead && (
-          <section id="features">
-            <h2>Features</h2>
-            <ul class="feature-list">
-              {featureDefs.map((f) => (
-                <li>
-                  <span>
-                    {f.label}
-                    {d.feature_notes[f.key] && <span class="note"> ({d.feature_notes[f.key]})</span>}
-                  </span>
-                  <FeatureMark value={d.features[f.key]} />
-                </li>
-              ))}
-            </ul>
-            <p class="meta">Checked against {d.name}'s own site, docs and pricing page. <a href="/methodology">How we check</a></p>
+          <section id="features" class="scroll-mt-32">
+            <h2 class="mb-4 text-2xl font-semibold">Features</h2>
+            <Card className="py-2">
+              <ul class="divide-y px-5">
+                {featureDefs.map((f) => (
+                  <li class="flex items-start justify-between gap-4 py-3 text-sm">
+                    <span>
+                      {f.label}
+                      {d.feature_notes[f.key] && <span class="text-muted-foreground block text-xs">{d.feature_notes[f.key]}</span>}
+                    </span>
+                    <FeatureMark value={d.features[f.key]} />
+                  </li>
+                ))}
+              </ul>
+            </Card>
+            <p class="text-muted-foreground mt-3 text-sm">Checked against {d.name}'s own site, docs and pricing page. <a class="underline" href="/methodology">How we check</a></p>
           </section>
         )
       }
 
       {
         !dead && (
-          <section id="score">
-            <h2>Score breakdown: {scored.score}/100</h2>
-            <ScoreBars scored={scored} group={group} />
-            <p class="meta">
+          <section id="score" class="scroll-mt-32">
+            <h2 class="mb-4 text-2xl font-semibold">Score breakdown: {scored.score}/100</h2>
+            <Card className="py-6"><CardContent className="px-6"><ScoreBars scored={scored} group={group} /></CardContent></Card>
+            <p class="text-muted-foreground mt-3 text-sm">
               {scored.handsOn ? <>Includes our hands-on test ({d.hands_on!.score}/10).</> : <>Based on price, free plan, commercial rights, exports and features.</>}{' '}
-              <a href="/methodology">How we score</a>
+              <a class="underline" href="/methodology">How we score</a>
             </p>
             {inLists.length > 0 && (
-              <>
-                <h3>Where {d.name} ranks</h3>
-                <ul>
-                  {inLists.map(({ def, ranked }) => (
-                    <li>
-                      #{ranked.findIndex((s) => s.tool.id === tool.id) + 1} of {ranked.length} in{' '}
-                      <a href={`/best/${def.slug}`}>{def.title}</a>
-                    </li>
-                  ))}
-                </ul>
-              </>
+              <div class="mt-6 flex flex-wrap gap-2">
+                {inLists.map(({ def, ranked }) => (
+                  <a href={`/best/${def.slug}`} class={buttonVariants({ variant: 'outline', size: 'sm' })}>
+                    <span class="font-semibold">#{ranked.findIndex((s) => s.tool.id === tool.id) + 1}</span> {def.title.replace(/^Best /, '')}
+                  </a>
+                ))}
+              </div>
             )}
           </section>
         )
@@ -198,31 +203,33 @@ const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what t
 
       {
         alternatives.length > 0 && (
-          <section id="alternatives">
-            <h2>{d.name} alternatives</h2>
-            <ul class="tool-grid">{alternatives.map((s) => <ToolCard scored={s} />)}</ul>
-            {alternatives.length >= 3 && <p><a href={`/alternatives/${tool.id}`}>All {d.name} alternatives →</a></p>}
+          <section id="alternatives" class="scroll-mt-32">
+            <div class="mb-4 flex flex-wrap items-end justify-between gap-2">
+              <h2 class="text-2xl font-semibold">{d.name} alternatives</h2>
+              {alternatives.length >= 3 && <a class="text-brand inline-flex items-center gap-1 text-sm font-medium hover:underline" href={`/alternatives/${tool.id}`}>All alternatives <ArrowRight className="size-4" /></a>}
+            </div>
+            <ul class="grid gap-5 sm:grid-cols-2">{alternatives.map((s) => <ToolCard scored={s} />)}</ul>
           </section>
         )
       }
 
       {
-        (comparisons.length > 0 || alternatives.length > 0) && !dead && (
-          <section id="compare">
-            <h2>Compare {d.name}</h2>
+        !dead && (comparisons.length > 0 || alternatives.length > 0) && (
+          <section id="compare" class="scroll-mt-32">
+            <h2 class="mb-4 text-2xl font-semibold">Compare {d.name}</h2>
             {alternatives.length > 0 && (
-              <p>
-                <a class="btn btn-ghost" href={`/compare/?tools=${compareIds.join(',')}`}>
-                  Compare with {alternatives.slice(0, 2).map((s) => s.tool.data.name).join(' and ')}
-                </a>
-              </p>
+              <a class={buttonVariants({ variant: 'default' })} href={`/compare/?tools=${compareIds.join(',')}`}>
+                <Layers /> Compare with {alternatives.slice(0, 2).map((s) => s.tool.data.name).join(' and ')}
+              </a>
             )}
             {comparisons.length > 0 && (
-              <ul>
+              <div class="mt-4 grid gap-2 sm:grid-cols-2">
                 {comparisons.map(([slug, p]) => (
-                  <li><a href={`/compare/${slug}`}>{p.a.data.name} vs {p.b.data.name}</a></li>
+                  <a href={`/compare/${slug}`} class="bg-card hover:bg-accent flex items-center justify-between rounded-lg border px-4 py-3 text-sm font-medium">
+                    {p.a.data.name} vs {p.b.data.name} <ArrowRight className="text-muted-foreground size-4" />
+                  </a>
                 ))}
-              </ul>
+              </div>
             )}
           </section>
         )
@@ -230,31 +237,33 @@ const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what t
 
       {
         d.sources.length > 0 && (
-          <section id="sources">
-            <h2>Sources</h2>
-            <ul class="meta">
-              {d.sources.map((u) => (
-                <li><a href={u} rel="nofollow noopener">{u}</a></li>
-              ))}
+          <section id="sources" class="scroll-mt-32">
+            <h2 class="mb-4 text-2xl font-semibold">Sources</h2>
+            <ul class="text-muted-foreground space-y-1.5 text-sm break-all">
+              {d.sources.map((u) => <li><a class="hover:text-foreground underline" href={u} rel="nofollow noopener">{u}</a></li>)}
             </ul>
           </section>
         )
       }
     </div>
 
-    <aside class="card glance" aria-labelledby="glance-h">
-      <h2 id="glance-h">At a glance</h2>
-      <dl>
-        {facts.map(([label, value, note]) => (
-          <div>
-            <dt>{label}</dt>
-            <dd class={value === 'Unverified' ? 'unverified' : undefined}>
-              {label === 'Website' ? <a href={d.url} rel="noopener">{value}</a> : shown(value, label === 'Price' ? 'price' : 'fact')}
-              {note && <span class="note">{note}</span>}
-            </dd>
-          </div>
-        ))}
-      </dl>
+    <aside class="lg:sticky lg:top-32 lg:self-start">
+      <Card className="gap-4 py-5">
+        <CardHeader className="px-5"><CardTitle>At a glance</CardTitle></CardHeader>
+        <CardContent className="px-5">
+          <dl class="divide-y text-sm">
+            {facts.map(([label, value, note]) => (
+              <div class="grid grid-cols-[7rem_1fr] gap-3 py-2.5">
+                <dt class="text-muted-foreground">{label}</dt>
+                <dd class={cn('min-w-0 font-medium break-words', value === 'Unverified' && 'text-muted-foreground font-normal')}>
+                  {label === 'Website' ? <a class="text-brand hover:underline" href={d.url} rel="noopener">{value}</a> : shown(value, label === 'Price' ? 'price' : 'fact')}
+                  {note && <span class="text-muted-foreground mt-1 block text-xs font-normal">{note}</span>}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </CardContent>
+      </Card>
     </aside>
   </div>
 </Base>

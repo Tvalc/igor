@@ -1,8 +1,17 @@
 ---
 import Base from '../layouts/Base.astro';
+import { buttonVariants } from '../components/ui/button';
 ---
 
 <Base title="Page not found" description="This page doesn't exist." noindex>
-  <h1>Page not found</h1>
-  <p>Try <a href="/best/">the rankings</a>, <a href="/tools/">all tools</a> or <a href="/">the home page</a>.</p>
+  <div class="mx-auto max-w-xl py-24 text-center">
+    <p class="font-pixel text-brand text-6xl font-bold">404</p>
+    <h1 class="mt-4 text-3xl font-bold">Page not found</h1>
+    <p class="text-muted-foreground mt-3">That page moved or never existed. Try one of these instead.</p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <a href="/best/" class={buttonVariants()}>See the rankings</a>
+      <a href="/tools/" class={buttonVariants({ variant: 'outline' })}>All tools</a>
+      <a href="/" class={buttonVariants({ variant: 'ghost' })}>Home</a>
+    </div>
+  </div>
 </Base>

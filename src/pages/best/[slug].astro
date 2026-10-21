@@ -1,15 +1,16 @@
 ---
 import Base from '../../layouts/Base.astro';
-import RankTable from '../../components/RankTable.astro';
-import Faq from '../../components/Faq.astro';
-import PicksBox from '../../components/PicksBox.astro';
-import ToolCard from '../../components/ToolCard.astro';
-import FilterSidebar from '../../components/FilterSidebar.astro';
+import { RankTable } from '../../components/site/RankTable';
+import { Faq } from '../../components/site/Faq';
+import { PicksBox } from '../../components/site/PicksBox';
+import { FeatureMatrix } from '../../components/site/FeatureMatrix';
+import { LIST_ICON } from '../../components/site/icons';
+import Listing from '../../components/site/Listing.astro';
+import { buttonVariants } from '../../components/ui/button';
 import { computePicks } from '../../lib/picks';
-import Icon, { type IconName } from '../../components/Icon.astro';
-import FeatureMatrix from '../../components/FeatureMatrix.astro';
+import { ArrowRight, BadgeCheck, CalendarDays, ListOrdered, Trophy } from 'lucide-react';
 import { FEATURES } from '../../lib/features';
-import { publishedLists, toolsWithAlternatives, LIST_ICONS, type ListDef } from '../../lib/lists';
+import { publishedLists, toolsWithAlternatives, type ListDef } from '../../lib/lists';
 import { FACTOR_LABELS, strengths, type Scored } from '../../lib/score';
 import { itemList, faqPage } from '../../lib/jsonld';
 import { SITE } from '../../site';
@@ -64,6 +65,7 @@ const faqs = [
 
 const title = `${def.title} (${SITE.year})`;
 const description = `${def.title}, ranked: ${names(ranked)} and more, compared on free tiers, pricing, commercial rights and exports. Updated ${SITE.year}.`;
+const ListIcon = LIST_ICON[def.slug] ?? Trophy;
 ---
 
 <Base
@@ -76,13 +78,16 @@ const description = `${def.title}, ranked: ${names(ranked)} and more, compared o
     faqPage(faqs),
   ]}
 >
-  <span class="eyebrow" style="margin-top:18px"><Icon name={(LIST_ICONS[def.slug] ?? 'gamepad') as IconName} size={16} /> Ranking</span>
-  <h1>{title}</h1>
-  <p class="updated">
-    <span>Updated {SITE.year}</span><span>{ranked.length} tools compared</span><span>Scores from verified facts</span>
-    <a href="/methodology">How we rank</a>
-  </p>
-  <div class="answer">
+  <header class="mt-6 max-w-3xl">
+    <span class="eyebrow"><ListIcon className="size-3.5" /> Ranking</span>
+    <h1 class="mt-3 text-3xl font-bold sm:text-5xl">{title}</h1>
+    <div class="text-muted-foreground mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+      <span class="inline-flex items-center gap-1.5"><CalendarDays className="size-4" /> Updated {SITE.year}</span>
+      <span class="inline-flex items-center gap-1.5"><ListOrdered className="size-4" /> {ranked.length} tools compared</span>
+      <a href="/methodology" class="hover:text-foreground inline-flex items-center gap-1.5 underline"><BadgeCheck className="size-4" /> How we rank</a>
+    </div>
+  </header>
+  <div class="answer max-w-3xl">
     <p>
       The best options are <strong>{first.tool.data.name}</strong>, <strong>{second.tool.data.name}</strong>
       {third && <>and <strong>{third.tool.data.name}</strong></>}.
@@ -92,73 +97,45 @@ const description = `${def.title}, ranked: ${names(ranked)} and more, compared o
   </div>
   {
     hasMakko && (
-      <p class="notice">
-        Disclosure: this site is run by {SITE.owner}. Makko appears on this list, scored the same way as
-        everything else.
+      <p class="notice max-w-3xl">
+        Disclosure: this site is run by {SITE.owner}. Makko appears on this list, scored the same way as everything else.
       </p>
     )
   }
 
-  <h2>Our picks</h2>
+  <h2 class="mt-12 mb-5 text-2xl font-semibold">Our picks</h2>
   <PicksBox ranked={ranked} />
 
-  <h2>All {ranked.length} ranked</h2>
-  <div class="listing" data-listing data-noun="tools">
-    <FilterSidebar items={ranked} showCategory={false} showSearch={false} />
-    <div>
-      <div class="sortbar">
-        <p class="result-count" data-count aria-live="polite">{ranked.length} tools</p>
-        <div class="sortbar-right">
-          <button type="button" class="btn btn-ghost btn-sm filters-toggle" data-open-filters><Icon name="filter" size={16} /> Filters</button>
-          <label>Sort
-            <select name="sort">
-              <option value="rank">Our ranking</option>
-              <option value="price">Lowest price</option>
-              <option value="name">Name A–Z</option>
-            </select>
-          </label>
-        </div>
-      </div>
-      <div class="active-chips" data-chips></div>
-      <ol class="tool-list" data-items>
-        {ranked.map((s, i) => <ToolCard scored={s} rank={i + 1} pick={pickLabel.get(s.tool.id)} details />)}
-      </ol>
-      <p class="no-results" data-empty hidden>No tools on this list match these filters.</p>
-    </div>
-    <div class="scrim" data-scrim hidden></div>
-  </div>
+  <h2 class="mt-14 mb-5 text-2xl font-semibold">All {ranked.length} ranked</h2>
+  <Listing items={ranked} ranked picks={pickLabel} categories={false} search={false} />
 
-  <h2>Comparison table</h2>
+  <h2 class="mt-14 mb-5 text-2xl font-semibold">Comparison table</h2>
   <RankTable ranked={ranked} />
 
   {
     matrixDefs.length > 0 && matrixTools.some((t) => Object.keys(t.data.features).length > 0) && (
       <>
-        <h2>Feature comparison: top {matrixTools.length}</h2>
-        <FeatureMatrix tools={matrixTools} defs={matrixDefs} />
-        <p>
-          <a class="btn btn-ghost" href={`/compare/?tools=${matrixTools.slice(0, 4).map((t) => t.id).join(',')}`}>
-            Compare the top 4 side by side
+        <div class="mt-14 mb-5 flex flex-wrap items-end justify-between gap-3">
+          <h2 class="text-2xl font-semibold">Feature comparison: top {matrixTools.length}</h2>
+          <a class={buttonVariants({ variant: 'outline', size: 'sm' })} href={`/compare/?tools=${matrixTools.slice(0, 4).map((t) => t.id).join(',')}`}>
+            Compare the top 4 side by side <ArrowRight />
           </a>
-        </p>
+        </div>
+        <FeatureMatrix tools={matrixTools} defs={matrixDefs} />
       </>
     )
   }
 
   {
     withAlts.size > 0 && (
-      <p class="meta">
-        Looking for alternatives? {ranked.slice(0, 5).filter((s) => withAlts.has(s.tool.id)).map((s, i) => (
-          <>{i > 0 && ' · '}<a href={`/alternatives/${s.tool.id}`}>{s.tool.data.name} alternatives</a></>
+      <div class="mt-8 flex flex-wrap items-center gap-2 text-sm">
+        <span class="text-muted-foreground">Looking for alternatives?</span>
+        {ranked.slice(0, 5).filter((s) => withAlts.has(s.tool.id)).map((s) => (
+          <a href={`/alternatives/${s.tool.id}`} class={buttonVariants({ variant: 'secondary', size: 'sm' })}>{s.tool.data.name} alternatives</a>
         ))}
-      </p>
+      </div>
     )
   }
-
-  <script>
-    import { initListing } from '../../lib/listing';
-    initListing(document.querySelector<HTMLElement>('[data-listing]')!);
-  </script>
 
   <Faq faqs={faqs} />
 </Base>

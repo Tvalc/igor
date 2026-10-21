@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
-import RankTable from '../../components/RankTable.astro';
-import Faq from '../../components/Faq.astro';
+import { RankTable } from '../../components/site/RankTable';
+import { Faq } from '../../components/site/Faq';
 import { LISTS, rankedList } from '../../lib/lists';
 import { faqPage } from '../../lib/jsonld';
 import { SITE } from '../../site';
@@ -82,13 +82,13 @@ const faqs = [
     </p>
   </article>
 
-  <h2>Best AI tools to make 2D games</h2>
+  <h2 class="mt-14 mb-4 text-2xl font-semibold">Best AI tools to make 2D games</h2>
   <RankTable ranked={makers2d} limit={8} />
-  <p><a href="/best/2d-game-makers">Full 2D game maker ranking →</a></p>
+  <p class="mt-3"><a class="text-brand text-sm font-medium hover:underline" href="/best/2d-game-makers">Full 2D game maker ranking →</a></p>
 
-  <h2>Best AI sprite and pixel art generators</h2>
+  <h2 class="mt-14 mb-4 text-2xl font-semibold">Best AI sprite and pixel art generators</h2>
   <RankTable ranked={sprites} limit={6} />
-  <p><a href="/best/ai-sprite-generators">Full sprite generator ranking →</a></p>
+  <p class="mt-3"><a class="text-brand text-sm font-medium hover:underline" href="/best/ai-sprite-generators">Full sprite generator ranking →</a></p>
 
   <Faq faqs={faqs} />
 </Base>

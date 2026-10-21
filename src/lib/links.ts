@@ -11,6 +11,7 @@ export function siteLinks() {
     tool: (id: string) => `${root}tools/${id}${ext}`,
     pair: (slug: string) => `${root}compare/${slug}${ext}`,
     builder: (ids: string[]) => `${root}compare/${index}${ids.length ? `?tools=${ids.join(',')}` : ''}`,
+    list: (slug: string) => `${root}best/${slug}${ext}`,
     directory: (q = '') => `${root}tools/${index}${q ? `?q=${encodeURIComponent(q)}` : ''}`,
   };
 }

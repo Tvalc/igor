@@ -2,6 +2,8 @@
 import Base from '../../layouts/Base.astro';
 import { comparisonPairs, publishedLists } from '../../lib/lists';
 import { compareData } from '../../lib/compare';
+import { ToolLogo } from '../../components/site/ToolLogo';
+import { ArrowRight } from 'lucide-react';
 
 const pairs = [...(await comparisonPairs()).entries()];
 const lists = (await publishedLists()).filter(({ def }) => def.group !== 'mixed');
@@ -17,219 +19,53 @@ const presets = lists.map(({ def, ranked }) => ({
   description="Compare any AI game development tools side by side: free tiers, pricing plans, commercial rights, engines, exports and verified features."
   crumbs={[{ name: 'Compare', href: '/compare/' }]}
 >
-  <h1>Compare AI game dev tools</h1>
-  <div class="answer">
-    <p>
+  <header class="mt-6 mb-8 max-w-3xl">
+    <h1 class="text-3xl font-bold sm:text-5xl">Compare AI game dev tools</h1>
+    <p class="text-muted-foreground mt-4 text-lg">
       Pick up to four tools and see them side by side: free tier, starting price, commercial rights, engines, exports,
-      pricing plans and a feature-by-feature checklist. ★ marks the best value in each row. Every fact comes from the
-      same verified data as our rankings.
+      plans and a feature-by-feature checklist. ★ marks the best value in each row.
     </p>
-  </div>
+  </header>
 
-  <section aria-labelledby="builder-h">
-    <h2 id="builder-h">Build a comparison</h2>
-    <div class="picker" id="picker"></div>
-    <datalist id="tool-names">{data.tools.map((t) => <option value={t.name} />)}</datalist>
-    <p class="meta">Or start from a category's top three:</p>
-    <div class="presets">
-      {presets.map((p) => <a href={`/compare/?tools=${p.ids.join(',')}`} data-ids={p.ids.join(',')}>{p.label}</a>)}
-    </div>
-    <div id="compare-table" aria-live="polite">
-      <p class="compare-empty">Choose at least two tools above, or tap a category to start.</p>
+  <section aria-label="Comparison builder" class="bg-card rounded-xl border p-4 shadow-sm sm:p-6">
+    <div data-island="builder" data-props={JSON.stringify({ presets })}>
+      <p class="text-muted-foreground py-10 text-center text-sm">Loading the comparison builder…</p>
     </div>
     <noscript><p class="notice">The comparison builder needs JavaScript. The head-to-head pages below work without it.</p></noscript>
   </section>
 
-  <h2>Popular head-to-heads</h2>
-  <p>{pairs.length} in-depth comparisons between the top tools in each category, each with a verdict.</p>
-  {
-    lists.map(({ def }) => {
-      const mine = pairs.filter(([, p]) => p.list.slug === def.slug);
-      return (
-        mine.length > 0 && (
-          <section>
-            <h3>{def.title.replace(/^Best /, '')}</h3>
-            <ul>
-              {mine.map(([slug, p]) => (
-                <li>
-                  <a href={`/compare/${slug}`}>
-                    {p.a.data.name} vs {p.b.data.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )
-      );
-    })
-  }
+  <section class="mt-16" aria-labelledby="h2h">
+    <h2 id="h2h" class="text-2xl font-semibold sm:text-3xl">Popular head-to-heads</h2>
+    <p class="text-muted-foreground mt-2">{pairs.length} in-depth comparisons between the top tools in each category, each with a verdict.</p>
+    <div class="mt-8 space-y-10">
+      {
+        lists.map(({ def }) => {
+          const mine = pairs.filter(([, p]) => p.list.slug === def.slug);
+          return (
+            mine.length > 0 && (
+              <div>
+                <h3 class="mb-3 text-lg font-semibold">{def.title.replace(/^Best /, '')}</h3>
+                <ul class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  {mine.map(([slug, p]) => (
+                    <li>
+                      <a href={`/compare/${slug}`} class="group bg-card hover:border-foreground/20 flex items-center gap-3 rounded-lg border p-3 text-sm font-medium shadow-xs transition-all hover:shadow-sm">
+                        <span class="flex -space-x-2">
+                          <ToolLogo name={p.a.data.name} url={p.a.data.url} size="sm" className="ring-background ring-2" />
+                          <ToolLogo name={p.b.data.name} url={p.b.data.url} size="sm" className="ring-background ring-2" />
+                        </span>
+                        <span class="min-w-0 flex-1 truncate">{p.a.data.name} <span class="text-muted-foreground font-normal">vs</span> {p.b.data.name}</span>
+                        <ArrowRight className="text-muted-foreground size-4 shrink-0 transition-transform group-hover:translate-x-0.5" />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          );
+        })
+      }
+    </div>
+  </section>
 
   <script type="application/json" id="compare-data" set:html={JSON.stringify(data)} />
-  <script>
-    import { siteLinks, logoSrc } from '../../lib/links';
-    import { getCompare, setCompare } from '../../lib/compare-store';
-
-    type Plan = { name: string; price_usd: number | null; period: string; includes?: string };
-    type T = {
-      id: string; name: string; host: string; best: string; catLabel: string; cats: string[]; score: number; tier: string;
-      free: string; freeLabel: string; price: number | null; priceLabel: string; commercial: string; commercialLabel: string;
-      engines: string; exports: string; platforms: string; skill: string; status: string; owned: boolean;
-      features: Record<string, string>; plans: Plan[];
-    };
-    type Data = { tools: T[]; features: Record<string, { key: string; label: string }[]>; categories: Record<string, string>; pairs: string[] };
-
-    const MAX = 4;
-    const data: Data = JSON.parse(document.getElementById('compare-data')!.textContent!);
-    const byId = new Map(data.tools.map((t) => [t.id, t]));
-    const byName = new Map(data.tools.map((t) => [t.name.toLowerCase(), t]));
-    const links = siteLinks();
-    const FREE: Record<string, number> = { yes: 4, limited: 3, trial: 2, no: 1, unknown: 0 };
-    const COMM: Record<string, number> = { yes: 4, 'paid-plans': 3, restricted: 2, no: 1, unknown: 0 };
-    // Unconfirmed features score nothing, so a star means another tool is known to lack or limit it.
-    const FEAT: Record<string, number> = { yes: 2, partial: 1, no: 0 };
-    const ICON: Record<string, [string, string]> = { yes: ['✓', 'Yes'], partial: ['◐', 'Partly'], no: ['✕', 'No'], unknown: ['?', 'Not confirmed'] };
-
-    const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
-    const fromUrl = (new URLSearchParams(location.search).get('tools') ?? '').split(',').filter((id) => byId.has(id));
-    let ids = (fromUrl.length ? fromUrl : getCompare().filter((id) => byId.has(id))).slice(0, MAX);
-    let onlyDiff = false;
-    const logo = (t: T) => {
-      let h = 0;
-      for (const ch of t.name) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
-      const w = t.name.replace(/\(.*?\)/g, '').split(/[\s.\-&]+/).filter(Boolean);
-      const ini = (w.length > 1 ? w[0][0] + w[1][0] : t.name.slice(0, 2)).toUpperCase();
-      return `<span class="logo logo-sm"><span class="mono mono-sm" style="--h:${h % 360}">${ini}</span><img src="${logoSrc(t.host)}" alt="" width="32" height="32" referrerpolicy="no-referrer" onload="this.naturalWidth > 16 ? this.parentNode.classList.add('has-img') : this.remove()" onerror="this.remove()"></span>`;
-    };
-
-    function setIds(next: string[]) {
-      ids = [...new Set(next)].filter((id) => byId.has(id)).slice(0, MAX);
-      const url = new URL(location.href);
-      if (ids.length) url.searchParams.set('tools', ids.join(','));
-      else url.searchParams.delete('tools');
-      history.replaceState(null, '', url);
-      setCompare(ids);
-      render();
-    }
-
-    function renderPicker() {
-      const picker = document.getElementById('picker')!;
-      picker.innerHTML = Array.from({ length: MAX }, (_, i) => {
-        const t = byId.get(ids[i]);
-        return t
-          ? `<div class="slot"><label>Tool ${i + 1}</label><div class="slot-chosen"><a href="${links.tool(t.id)}">${logo(t)}${esc(t.name)}</a><button type="button" data-remove="${t.id}" aria-label="Remove ${esc(t.name)}">Remove</button></div></div>`
-          : `<div class="slot"><label for="slot-${i}">Tool ${i + 1}</label><input id="slot-${i}" list="tool-names" placeholder="Add a tool" autocomplete="off" ${i > ids.length ? 'disabled' : ''}></div>`;
-      }).join('');
-      picker.querySelectorAll<HTMLButtonElement>('[data-remove]').forEach((b) =>
-        b.addEventListener('click', () => setIds(ids.filter((id) => id !== b.dataset.remove))),
-      );
-      picker.querySelectorAll<HTMLInputElement>('input').forEach((input) => {
-        const pick = (final: boolean) => {
-          const v = input.value.trim().toLowerCase();
-          const t = byName.get(v);
-          // While typing, only auto-pick when no longer name still matches ("Unity" vs "Unity Muse").
-          const ambiguous = [...byName.keys()].some((n) => n !== v && n.startsWith(v));
-          if (t && (final || !ambiguous)) setIds([...ids, t.id]);
-        };
-        input.addEventListener('change', () => pick(true));
-        input.addEventListener('input', () => pick(false));
-      });
-    }
-
-    const best = (vals: (number | null)[], mode: 'max' | 'min') => {
-      const nums = vals.filter((v): v is number => v !== null);
-      if (nums.length < 2) return null;
-      const target = mode === 'max' ? Math.max(...nums) : Math.min(...nums);
-      return nums.filter((v) => v === target).length === nums.length ? null : target;
-    };
-
-    function row(label: string, tools: T[], cell: (t: T) => string, score?: (t: T) => number | null, mode: 'max' | 'min' = 'max') {
-      const vals = score ? tools.map(score) : [];
-      const top = score ? best(vals, mode) : null;
-      const cells = tools.map(cell);
-      const same = cells.every((c) => c === cells[0]);
-      return `<tr${same ? ' class="same"' : ''}><td><strong>${label}</strong></td>${tools
-        .map((t, i) => `<td${top !== null && vals[i] === top ? ' class="best"' : ''}>${cells[i]}</td>`)
-        .join('')}</tr>`;
-    }
-
-    const mark = (v: string | undefined) => {
-      const [ico, text] = ICON[v ?? 'unknown'];
-      return `<span class="fm fm-${v ?? 'unknown'}"><span class="fm-ico" aria-hidden="true">${ico}</span>${text}</span>`;
-    };
-    const plans = (t: T) =>
-      t.plans.length
-        ? t.plans
-            .map((p) => {
-              const cost = p.price_usd === null ? 'custom' : p.price_usd === 0 ? 'free' : `$${p.price_usd}${p.period === 'one-time' ? ' once' : '/mo'}`;
-              return p.name.toLowerCase() === cost ? esc(p.name) : `${esc(p.name)}: ${cost}`;
-            })
-            .join('<br>')
-        : '<span class="unverified">See site for pricing</span>';
-    const text = (s: string, kind: 'price' | 'fact' = 'fact') =>
-      s === 'Unverified' ? `<span class="unverified">${kind === 'price' ? 'See site for pricing' : 'Not listed'}</span>` : esc(s);
-
-    function renderTable() {
-      const box = document.getElementById('compare-table')!;
-      const tools = ids.map((id) => byId.get(id)!);
-      if (tools.length < 2) {
-        box.innerHTML = `<p class="compare-empty">${tools.length ? 'Add one more tool to compare.' : 'Choose at least two tools above, or tap a category to start.'}</p>`;
-        return;
-      }
-      const cats = [...new Set(tools.flatMap((t) => t.cats))];
-      const seen = new Set<string>();
-      const featureRows = cats
-        .map((c) => {
-          const defs = (data.features[c] ?? []).filter((f) => !seen.has(f.key) && seen.add(f.key));
-          const known = defs.filter((f) => tools.some((t) => t.features[f.key] !== undefined));
-          if (!known.length) return '';
-          return `<tr class="group-row"><td colspan="${tools.length + 1}">${esc(data.categories[c])} features</td></tr>${known
-            .map((f) => row(esc(f.label), tools, (t) => mark(t.features[f.key]), (t) => FEAT[t.features[f.key]] ?? null))
-            .join('')}`;
-        })
-        .join('');
-      const pair = tools.length === 2 ? [tools[0].id, tools[1].id].sort().join('-vs-') : '';
-      box.innerHTML = `
-        <label class="diff-toggle"><input type="checkbox" id="diff-only" ${onlyDiff ? 'checked' : ''}> Only show differences</label>
-        <div class="table-wrap${onlyDiff ? ' only-diff' : ''}" id="diff-table"><table>
-          <thead><tr><th>Fact</th>${tools.map((t) => `<th><span class="th-tool">${logo(t)}<a href="${links.tool(t.id)}">${esc(t.name)}</a></span></th>`).join('')}</tr></thead>
-          <tbody>
-            ${row('Score', tools, (t) => `<span class="score tier-${t.tier}">${t.score}</span>`, (t) => t.score)}
-            ${row('Best for', tools, (t) => esc(t.best))}
-            ${row('Category', tools, (t) => esc(t.catLabel))}
-            ${row('Free tier', tools, (t) => text(t.freeLabel), (t) => FREE[t.free] || null)}
-            ${row('Starting price', tools, (t) => text(t.priceLabel, 'price'), (t) => t.price, 'min')}
-            ${row('Commercial use', tools, (t) => text(t.commercialLabel), (t) => COMM[t.commercial] || null)}
-            ${row('Plans', tools, plans)}
-            ${row('Engines', tools, (t) => text(t.engines))}
-            ${row('Exports', tools, (t) => text(t.exports))}
-            ${row('Runs on', tools, (t) => text(t.platforms))}
-            ${row('Skill level', tools, (t) => esc(t.skill))}
-            ${row('Status', tools, (t) => esc(t.status))}
-            ${featureRows}
-          </tbody>
-        </table></div>
-        <p class="meta">★ marks the best option in each row.${
-          tools.some((t) => t.owned) ? ' Disclosure: Makko is built by the team that runs this site and is scored by the same rules.' : ''
-        }</p>
-        ${data.pairs.includes(pair) ? `<p><a class="btn" href="${links.pair(pair)}">Read the full ${esc(tools[0].name)} vs ${esc(tools[1].name)} verdict</a></p>` : ''}`;
-    }
-
-    function render() {
-      renderPicker();
-      renderTable();
-      document.getElementById('diff-only')?.addEventListener('change', (e) => {
-        onlyDiff = (e.target as HTMLInputElement).checked;
-        document.getElementById('diff-table')?.classList.toggle('only-diff', onlyDiff);
-      });
-    }
-
-    document.querySelectorAll<HTMLAnchorElement>('.presets a').forEach((a) =>
-      a.addEventListener('click', (e) => {
-        e.preventDefault();
-        setIds(a.dataset.ids!.split(','));
-        document.getElementById('compare-table')!.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }),
-    );
-    render();
-  </script>
 </Base>

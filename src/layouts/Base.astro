@@ -2,13 +2,14 @@
 import '../styles/global.css';
 import { NAV, SECTION_INDEXES, SITE } from '../site';
 import { breadcrumbs as breadcrumbsLd } from '../lib/jsonld';
-import { publishedLists } from '../lib/lists';
-import BrandMark from '../components/BrandMark.astro';
-import SearchBox from '../components/SearchBox.astro';
-import CompareTray from '../components/CompareTray.astro';
-import { activeTools } from '../lib/lists';
+import { activeTools, publishedLists } from '../lib/lists';
 import { priceLabel } from '../lib/compare';
 import { CATEGORY_LABELS } from '../lib/format';
+import BrandMark from '../components/BrandMark.astro';
+import {
+  Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator,
+} from '../components/ui/breadcrumb';
+import { Search, Moon, Menu } from 'lucide-react';
 
 interface Props {
   title: string;
@@ -17,6 +18,7 @@ interface Props {
   jsonLd?: object[];
   markdownPath?: string; // the .md mirror of this page, if any
   noindex?: boolean;
+  wide?: boolean; // no max-width container (pages that bring their own sections)
 }
 
 const { title, description, crumbs = [], jsonLd = [], markdownPath, noindex = false } = Astro.props;
@@ -26,8 +28,9 @@ const path = Astro.url.pathname.replace(/\.html$/, '').replace(/(\/index)?\/?$/,
 const canonical = new URL(SECTION_INDEXES.includes(`${path}/`) ? `${path}/` : path || '/', Astro.site).toString();
 const fullTitle = title.includes(SITE.name) ? title : `${title} | ${SITE.name}`;
 const ogImage = new URL('/og.png', Astro.site).toString();
-const footerLists = (await publishedLists()).slice(0, 8);
-// Compact tool index for the header search and the compare tray, embedded once per page.
+const lists = await publishedLists();
+const footerLists = lists.slice(0, 8);
+// Compact indexes for the ⌘K search and the compare tray, embedded once per page.
 const searchData = (await activeTools())
   .filter((t) => t.data.status !== 'discontinued')
   .map((t) => ({
@@ -36,8 +39,13 @@ const searchData = (await activeTools())
     cat: t.data.categories.map((c) => CATEGORY_LABELS[c]).join(', '),
     price: priceLabel(t) === 'Unverified' ? '' : priceLabel(t),
     host: new URL(t.data.url).hostname.replace(/^www\./, ''),
-    text: `${t.data.name} ${t.data.tagline} ${t.data.tags.join(' ')} ${t.data.categories.map((c) => CATEGORY_LABELS[c]).join(' ')}`.toLowerCase(),
+    text: `${t.data.tagline} ${t.data.tags.join(' ')} ${t.data.categories.map((c) => CATEGORY_LABELS[c]).join(' ')}`.toLowerCase(),
   }));
+const listsData = lists.map(({ def, ranked }) => ({ slug: def.slug, title: def.title, count: ranked.length }));
+const navProps = JSON.stringify({
+  nav: NAV,
+  lists: lists.slice(0, 8).map(({ def }) => ({ href: `/best/${def.slug}`, label: def.title.replace(/^Best /, '') })),
+});
 const ld = [...jsonLd];
 if (crumbs.length) {
   ld.push(breadcrumbsLd([{ name: 'Home', url: base }, ...crumbs.map((c) => ({ name: c.name, url: base + c.href }))]));
@@ -65,80 +73,132 @@ if (crumbs.length) {
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+    <script is:inline>
+      // Theme before first paint, and vendor logos: show on load, drop on error (monogram stays underneath).
+      (function () {
+        var t = null;
+        try { t = localStorage.getItem('theme'); } catch (e) {}
+        var dark = t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.classList.toggle('dark', dark);
+        document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+        document.addEventListener('load', function (e) {
+          var i = e.target;
+          if (i && i.matches && i.matches('img[data-logo]')) i.naturalWidth > 16 ? i.classList.remove('hidden') : i.remove();
+        }, true);
+        document.addEventListener('error', function (e) {
+          var i = e.target;
+          if (i && i.matches && i.matches('img[data-logo]')) i.remove();
+        }, true);
+      })();
+    </script>
     {ld.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
   </head>
-  <body>
-    <header class="site-header">
-      <div class="wrap">
-        <a class="brand" href="/" aria-label={`${SITE.name} home`}><BrandMark /><span>{SITE.brand.lead} <b>{SITE.brand.accent}</b></span></a>
-        <nav aria-label="Main">
-          {NAV.map((n) => <a href={n.href}>{n.label}</a>)}
+  <body class="min-h-dvh">
+    <a href="#main" class="bg-primary text-primary-foreground sr-only z-50 rounded-md px-3 py-2 focus:not-sr-only focus:fixed focus:top-3 focus:left-3">Skip to content</a>
+    <header class="bg-background/80 supports-[backdrop-filter]:bg-background/70 sticky top-0 z-40 border-b backdrop-blur">
+      <div class="mx-auto flex h-16 max-w-7xl items-center gap-2 px-4 sm:px-6">
+        <div data-island="nav" data-props={navProps} class="md:hidden">
+          <button class="inline-flex size-9 items-center justify-center rounded-md" aria-label="Open menu"><Menu className="size-4" /></button>
+        </div>
+        <a href="/" class="font-pixel mr-4 flex items-center gap-2.5 text-lg font-bold whitespace-nowrap" aria-label={`${SITE.name} home`}>
+          <BrandMark /><span>{SITE.brand.lead} <span class="text-brand">{SITE.brand.accent}</span></span>
+        </a>
+        <nav class="hidden items-center gap-1 md:flex" aria-label="Main">
+          {NAV.map((n) => <a href={n.href} class="text-muted-foreground hover:text-foreground hover:bg-accent rounded-md px-3 py-2 text-sm font-medium transition-colors">{n.label}</a>)}
         </nav>
-        <div class="header-tools">
-          <SearchBox variant="header" />
-          <a class="compare-pill" id="compare-pill" href="/compare/" hidden>Compare</a>
+        <div class="ml-auto flex items-center gap-1.5">
+          <button
+            type="button"
+            data-open-search
+            class="bg-muted/50 text-muted-foreground hover:bg-muted hidden h-9 w-64 items-center gap-2 rounded-md border px-3 text-sm transition-colors lg:inline-flex"
+          >
+            <Search className="size-4" /> Search tools…
+            <kbd class="bg-background ml-auto rounded border px-1.5 font-mono text-[10px]">⌘K</kbd>
+          </button>
+          <button type="button" data-open-search class="hover:bg-accent inline-flex size-9 items-center justify-center rounded-md lg:hidden" aria-label="Search tools">
+            <Search className="size-4" />
+          </button>
+          <span id="compare-pill-slot"></span>
+          <div data-island="theme">
+            <button class="inline-flex size-9 items-center justify-center rounded-md" aria-label="Toggle theme"><Moon className="size-4" /></button>
+          </div>
         </div>
       </div>
     </header>
+
     <slot name="hero" />
-    <main class="wrap">
+
+    <main id="main" class="mx-auto max-w-7xl px-4 pb-20 sm:px-6">
       {
         crumbs.length > 0 && (
-          <nav class="crumbs" aria-label="Breadcrumb">
-            <a href="/">Home</a>
-            {crumbs.map((c, i) => (
-              <>
-                {' › '}
-                {i === crumbs.length - 1 ? <span>{c.name}</span> : <a href={c.href}>{c.name}</a>}
-              </>
-            ))}
-          </nav>
+          <Breadcrumb className="pt-6">
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/">Home</BreadcrumbLink>
+              </BreadcrumbItem>
+              {crumbs.map((c, i) => (
+                <>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    {i === crumbs.length - 1 ? <BreadcrumbPage>{c.name}</BreadcrumbPage> : <BreadcrumbLink href={c.href}>{c.name}</BreadcrumbLink>}
+                  </BreadcrumbItem>
+                </>
+              ))}
+            </BreadcrumbList>
+          </Breadcrumb>
         )
       }
       <slot />
     </main>
-    <footer class="site-footer">
-      <div class="wrap">
-        <div class="footer-grid">
-          <div>
-            <a class="brand" href="/"><BrandMark /><span>{SITE.brand.lead} <b>{SITE.brand.accent}</b></span></a>
-            <p>
-              Every tool for making games with AI, ranked by a public scoring method using verified facts. Run by {SITE.owner};
-              Makko is scored like every other tool, and affiliate links or sponsorships never change a score.
-            </p>
-          </div>
-          <div>
-            <h2>Rankings</h2>
-            <ul>{footerLists.map(({ def }) => <li><a href={`/best/${def.slug}`}>{def.title.replace(/^Best /, '')}</a></li>)}</ul>
-          </div>
-          <div>
-            <h2>Guides</h2>
-            <ul>
-              <li><a href="/guides/how-to-make-a-game-with-ai">Make a game with AI</a></li>
-              <li><a href="/guides/make-2d-games-with-ai">Make 2D games with AI</a></li>
-              <li><a href="/guides/make-game-art-with-ai">Make game art with AI</a></li>
-              <li><a href="/compare/">Head-to-head comparisons</a></li>
-              <li><a href="/tools/">All tools</a></li>
-            </ul>
-          </div>
-          <div>
-            <h2>About</h2>
-            <ul>
-              <li><a href="/methodology">How we rank</a></li>
-              <li><a href="/disclosure">Ownership &amp; disclosure</a></li>
-              <li><a href="/about">About</a></li>
-              <li><a href="/sitemap.xml">Sitemap</a></li>
-            </ul>
-          </div>
+
+    <footer class="bg-muted/30 border-t">
+      <div class="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
+        <div class="space-y-3">
+          <a href="/" class="font-pixel flex items-center gap-2.5 text-lg font-bold"><BrandMark /><span>{SITE.brand.lead} <span class="text-brand">{SITE.brand.accent}</span></span></a>
+          <p class="text-muted-foreground max-w-sm text-sm leading-relaxed">
+            Every tool for making games with AI, compared on verified facts with a public scoring method. Run by {SITE.owner};
+            Makko is scored like every other tool, and affiliate links never change a score.
+          </p>
         </div>
-        <p class="footer-note">
-          © {SITE.year} {SITE.name}. Tool names and trademarks belong to their owners. Facts are verified against
-          primary sources; corrections welcome.
+        <div>
+          <h2 class="mb-3 text-sm font-semibold">Rankings</h2>
+          <ul class="space-y-2 text-sm">{footerLists.map(({ def }) => <li><a class="text-muted-foreground hover:text-foreground" href={`/best/${def.slug}`}>{def.title.replace(/^Best /, '')}</a></li>)}</ul>
+        </div>
+        <div>
+          <h2 class="mb-3 text-sm font-semibold">Guides</h2>
+          <ul class="space-y-2 text-sm">
+            <li><a class="text-muted-foreground hover:text-foreground" href="/guides/how-to-make-a-game-with-ai">Make a game with AI</a></li>
+            <li><a class="text-muted-foreground hover:text-foreground" href="/guides/make-2d-games-with-ai">Make 2D games with AI</a></li>
+            <li><a class="text-muted-foreground hover:text-foreground" href="/guides/make-game-art-with-ai">Make game art with AI</a></li>
+            <li><a class="text-muted-foreground hover:text-foreground" href="/compare/">Compare tools</a></li>
+            <li><a class="text-muted-foreground hover:text-foreground" href="/tools/">All tools</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="mb-3 text-sm font-semibold">Company</h2>
+          <ul class="space-y-2 text-sm">
+            <li><a class="text-muted-foreground hover:text-foreground" href="/methodology">How we rank</a></li>
+            <li><a class="text-muted-foreground hover:text-foreground" href="/disclosure">Ownership &amp; disclosure</a></li>
+            <li><a class="text-muted-foreground hover:text-foreground" href="/about">About</a></li>
+            <li><a class="text-muted-foreground hover:text-foreground" href="/sitemap.xml">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t">
+        <p class="text-muted-foreground mx-auto max-w-7xl px-4 py-6 text-xs sm:px-6">
+          © {SITE.year} {SITE.name}. Tool names and trademarks belong to their owners. Facts are checked against each vendor's own site; corrections welcome.
         </p>
       </div>
     </footer>
-    <CompareTray />
+
+    <div data-island="search"></div>
+    <div data-island="tray"></div>
     <script type="application/json" id="search-data" set:html={JSON.stringify(searchData)} />
+    <script type="application/json" id="lists-data" set:html={JSON.stringify(listsData)} />
+    <script>
+      import '../client/main.tsx';
+    </script>
   </body>
 </html>

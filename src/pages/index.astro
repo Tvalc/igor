@@ -1,12 +1,17 @@
 ---
 import Base from '../layouts/Base.astro';
-import Icon, { type IconName } from '../components/Icon.astro';
-import ToolCard from '../components/ToolCard.astro';
-import ToolLogo from '../components/ToolLogo.astro';
-import SearchBox from '../components/SearchBox.astro';
+import { ToolCard } from '../components/site/ToolCard';
+import { ToolLogo } from '../components/site/ToolLogo';
+import { SectionHeader } from '../components/site/SectionHeader';
+import { CATEGORY_ICONS, LIST_ICON } from '../components/site/icons';
+import { Badge } from '../components/ui/badge';
+import { buttonVariants } from '../components/ui/button';
+import { cn } from '../lib/utils';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
+import { ArrowRight, BadgeCheck, Clock, Scale, Search, ShieldCheck } from 'lucide-react';
 import { CATEGORY_LABELS } from '../lib/format';
 import { CATEGORIES } from '../content.config';
-import { activeTools, comparisonPairs, publishedLists, LIST_ICONS } from '../lib/lists';
+import { activeTools, comparisonPairs, publishedLists } from '../lib/lists';
 import { SITE } from '../site';
 
 const tools = await activeTools();
@@ -53,10 +58,6 @@ const routes = [
   },
 ];
 
-const CAT_ICONS: Record<string, IconName> = {
-  'game-maker': 'gamepad', 'art-2d': 'pixel', 'art-3d': 'cube', texture: 'grid', animation: 'motion',
-  code: 'code', voice: 'mic', music: 'music', sfx: 'wave', npc: 'chat',
-};
 const catTiles = CATEGORIES.map((c) => ({ c, n: tools.filter((t) => t.data.status !== 'discontinued' && (t.data.categories as string[]).includes(c)).length }));
 const topPicks = picks.slice(0, 6);
 const pairEntries = [...(await comparisonPairs()).entries()];
@@ -87,126 +88,140 @@ const organization = {
   description={`Want to make games with AI? We rank and compare ${live} AI game makers, sprite and 3D generators, coding assistants and audio tools on free tiers, pricing and commercial rights.`}
   jsonLd={[website, organization]}
 >
-  <section class="hero" slot="hero">
-    <div class="wrap">
-      <span class="eyebrow"><Icon name="gamepad" size={16} /> {live} AI game dev tools compared</span>
-      <h1>Find the right AI tool to <em>make your game</em></h1>
-      <p class="lede">
-        Compare AI game makers, sprite and 3D generators, coding assistants and audio AI side by side: prices, free
-        plans, commercial rights and features, checked against each vendor's own site.
+  <section slot="hero" class="relative overflow-hidden border-b">
+    <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,#000_60%,transparent_100%)] bg-[size:48px_48px] opacity-60"></div>
+    <div class="from-brand/15 pointer-events-none absolute -top-40 left-1/2 h-[480px] w-[900px] -translate-x-1/2 rounded-full bg-radial to-transparent blur-3xl"></div>
+    <div class="relative mx-auto flex max-w-4xl flex-col items-center px-4 py-20 text-center sm:px-6 sm:py-28">
+      <Badge variant="outline" className="bg-background/80 mb-6 gap-1.5 rounded-full px-3 py-1 text-xs backdrop-blur">
+        <span class="bg-success size-1.5 rounded-full"></span> {live} AI game dev tools, re-checked weekly
+      </Badge>
+      <h1 class="text-4xl font-bold sm:text-6xl sm:leading-[1.05]">
+        Find the right AI tool to <span class="from-brand bg-gradient-to-r to-fuchsia-500 bg-clip-text text-transparent">make your game</span>
+      </h1>
+      <p class="text-muted-foreground mt-6 max-w-2xl text-lg leading-relaxed">
+        Compare AI game makers, sprite and 3D generators, coding assistants and audio AI side by side. Prices, free plans,
+        commercial rights and features, checked against each vendor's own site.
       </p>
-      <SearchBox variant="hero" placeholder="Search tools, e.g. sprite generator, Unity, Meshy" />
-      <div class="chips">
-        <a class="chip" href="/best/no-code-ai-game-makers"><Icon name="wand" size={15} /> Make a game, no code</a>
-        <a class="chip" href="/best/2d-game-makers"><Icon name="pixel" size={15} /> 2D games</a>
-        <a class="chip" href="/best/ai-sprite-generators"><Icon name="image" size={15} /> Sprites &amp; pixel art</a>
-        <a class="chip" href="/best/ai-3d-model-generators"><Icon name="cube" size={15} /> 3D models</a>
-        <a class="chip" href="/best/free-ai-game-dev-tools"><Icon name="gift" size={15} /> Free tools</a>
-        <a class="chip" href="/compare/"><Icon name="layers" size={15} /> Compare tools</a>
+      <div class="mt-9 w-full max-w-xl">
+        <label class="relative block">
+          <span class="sr-only">Search tools</span>
+          <Search className="text-muted-foreground absolute top-1/2 left-4 size-5 -translate-y-1/2" />
+          <input
+            data-open-search
+            readonly
+            placeholder="Search tools, e.g. sprite generator, Unity, Meshy"
+            class="bg-background h-14 w-full cursor-pointer rounded-xl border pr-20 pl-12 text-base shadow-lg outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+          />
+          <kbd class="bg-muted text-muted-foreground absolute top-1/2 right-4 -translate-y-1/2 rounded border px-2 py-0.5 font-mono text-xs">⌘K</kbd>
+        </label>
       </div>
-      <div class="trust">
-        <span><Icon name="shield" size={16} /> Facts checked on vendor sites</span>
-        <span><Icon name="clock" size={16} /> Re-checked weekly</span>
-        <span><Icon name="check" size={16} /> {pairs} head-to-head comparisons</span>
-        <span><Icon name="check" size={16} /> <a href="/methodology">How we score</a></span>
+      <div class="mt-5 flex flex-wrap justify-center gap-2">
+        {[
+          ['Make a game, no code', '/best/no-code-ai-game-makers'],
+          ['2D games', '/best/2d-game-makers'],
+          ['Sprites & pixel art', '/best/ai-sprite-generators'],
+          ['3D models', '/best/ai-3d-model-generators'],
+          ['Free tools', '/best/free-ai-game-dev-tools'],
+        ].map(([label, href]) => (
+          <a class={cn(buttonVariants({variant: 'outline', size: 'sm'}), 'bg-background/80 rounded-full backdrop-blur')} href={href}>{label}</a>
+        ))}
+      </div>
+      <div class="text-muted-foreground mt-10 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
+        <span class="inline-flex items-center gap-1.5"><ShieldCheck className="text-success size-4" /> Facts from vendor sites</span>
+        <span class="inline-flex items-center gap-1.5"><Clock className="text-success size-4" /> Re-checked weekly</span>
+        <span class="inline-flex items-center gap-1.5"><Scale className="text-success size-4" /> {pairs} head-to-heads</span>
+        <a href="/methodology" class="hover:text-foreground inline-flex items-center gap-1.5 underline"><BadgeCheck className="text-success size-4" /> Public scoring method</a>
       </div>
     </div>
   </section>
 
-  <div class="section-head">
-    <h2>Browse by category</h2>
-    <a href="/tools/">All {live} tools →</a>
-  </div>
-  <div class="grid">
+  <SectionHeader title="Browse by category" href="/tools/" cta={`All ${live} tools`} />
+  <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
     {
-      catTiles.map(({ c, n }) => (
-        <a class="card cat-tile" href={`/tools/?category=${c}`}>
-          <span class="card-icon"><Icon name={CAT_ICONS[c]} /></span>
-          <span>
-            <strong>{CATEGORY_LABELS[c]}</strong>
-            <span class="sub">{n} tools</span>
-          </span>
-        </a>
-      ))
+      catTiles.map(({ c, n }) => {
+        const I = CATEGORY_ICONS[c];
+        return (
+          <a href={`/tools/?category=${c}`} class="group bg-card hover:border-foreground/20 flex items-center gap-3 rounded-xl border p-4 shadow-sm transition-all hover:shadow-md">
+            <span class="bg-brand/10 text-brand grid size-10 shrink-0 place-items-center rounded-lg"><I className="size-5" /></span>
+            <span class="min-w-0">
+              <span class="block truncate text-sm font-medium">{CATEGORY_LABELS[c]}</span>
+              <span class="text-muted-foreground text-xs">{n} tools</span>
+            </span>
+          </a>
+        );
+      })
     }
   </div>
 
-  <div class="section-head">
-    <h2>Top pick in each category</h2>
-    <a href="/best/">All {lists.length} rankings →</a>
-  </div>
-  <ul class="tool-grid">
+  <SectionHeader title="Top pick in each category" description="The highest-scoring tool in six of our rankings." href="/best/" cta={`All ${lists.length} rankings`} />
+  <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
     {topPicks.map((p) => <ToolCard scored={p.top!} pick={`#1 ${p.label}`} />)}
   </ul>
 
-  <div class="section-head">
-    <h2>Popular comparisons</h2>
-    <a href="/compare/">Build your own →</a>
-  </div>
-  <div class="grid">
+  <SectionHeader title="Popular comparisons" href="/compare/" cta="Build your own" />
+  <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
     {
       popularPairs.map(([slug, p]) => (
-        <a class="card pair-card" href={`/compare/${slug}`}>
-          <ToolLogo name={p.a.data.name} url={p.a.data.url} size="sm" />
-          <span class="vs">VS</span>
-          <ToolLogo name={p.b.data.name} url={p.b.data.url} size="sm" />
-          <strong>{p.a.data.name} vs {p.b.data.name}</strong>
-        </a>
-      ))
-    }
-  </div>
-
-  <div class="section-head">
-    <h2>Three ways to make a game with AI</h2>
-    <a href="/guides/how-to-make-a-game-with-ai">Step-by-step guide →</a>
-  </div>
-  <div class="grid-3">
-    {
-      routes.map((r) => (
-        <div class="card route">
-          <span class="step">{r.step}</span>
-          <h3>{r.title}</h3>
-          <p>{r.body}</p>
-          <ul>{r.points.map((pt) => <li>{pt}</li>)}</ul>
-          <p class="card-foot"><a href={r.href}>{r.cta} →</a></p>
-        </div>
-      ))
-    }
-  </div>
-
-  <div class="section-head">
-    <h2>Every ranking</h2>
-    <a href="/best/">See all →</a>
-  </div>
-  <div class="grid">
-    {
-      lists.map(({ def, ranked }) => (
-        <a class="card cat-tile" href={`/best/${def.slug}`}>
-          <span class="card-icon"><Icon name={(LIST_ICONS[def.slug] ?? 'gamepad') as IconName} /></span>
-          <span>
-            <strong>{def.title.replace(/^Best /, '')}</strong>
-            <span class="sub">{ranked.length} ranked · #1 {ranked[0].tool.data.name}</span>
+        <a href={`/compare/${slug}`} class="bg-card hover:border-foreground/20 flex items-center gap-3 rounded-xl border p-4 shadow-sm transition-all hover:shadow-md">
+          <span class="flex -space-x-2">
+            <ToolLogo name={p.a.data.name} url={p.a.data.url} size="sm" className="ring-background ring-2" />
+            <ToolLogo name={p.b.data.name} url={p.b.data.url} size="sm" className="ring-background ring-2" />
           </span>
+          <span class="min-w-0 text-sm font-medium leading-snug">{p.a.data.name} <span class="text-muted-foreground">vs</span> {p.b.data.name}</span>
         </a>
       ))
     }
   </div>
 
-  <div class="grid-3" style="margin-top:40px">
-    <a class="card" href="/guides/make-2d-games-with-ai">
-      <span class="card-icon"><Icon name="pixel" /></span>
-      <h3>Make 2D games with AI</h3>
-      <p>2D game makers, consistent sprites, tilesets and animation.</p>
-    </a>
-    <a class="card" href="/guides/make-game-art-with-ai">
-      <span class="card-icon"><Icon name="image" /></span>
-      <h3>Make game art with AI</h3>
-      <p>Concept art, sprites, 3D models, textures, and who owns the rights.</p>
-    </a>
-    <a class="card" href="/methodology">
-      <span class="card-icon"><Icon name="shield" /></span>
-      <h3>How we rank</h3>
-      <p>Six factors, published weights, no hand-picked scores. Run by the Makko team, disclosed everywhere.</p>
-    </a>
+  <SectionHeader title="Three ways to make a game with AI" href="/guides/how-to-make-a-game-with-ai" cta="Step-by-step guide" />
+  <div class="grid gap-5 md:grid-cols-3">
+    {
+      routes.map((r, i) => (
+        <Card className="gap-4">
+          <CardHeader>
+            <span class="bg-primary text-primary-foreground font-display grid size-8 place-items-center rounded-full text-sm font-bold">{i + 1}</span>
+            <CardTitle className="mt-2 text-lg">{r.title}</CardTitle>
+            <CardDescription className="leading-relaxed">{r.body}</CardDescription>
+          </CardHeader>
+          <CardContent className="mt-auto space-y-4">
+            <ul class="text-muted-foreground space-y-1.5 text-sm">{r.points.map((pt) => <li class="flex gap-2"><span class="text-brand">•</span>{pt}</li>)}</ul>
+            <a class={buttonVariants({variant: 'outline', size: 'sm'})} href={r.href}>{r.cta} <ArrowRight /></a>
+          </CardContent>
+        </Card>
+      ))
+    }
   </div>
+
+  <SectionHeader title="Every ranking" href="/best/" cta="See all" />
+  <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    {
+      lists.map(({ def, ranked }) => {
+        const I = LIST_ICON[def.slug] ?? Search;
+        return (
+          <a href={`/best/${def.slug}`} class="group bg-card hover:border-foreground/20 flex items-center gap-3 rounded-xl border p-4 shadow-sm transition-all hover:shadow-md">
+            <span class="bg-muted grid size-10 shrink-0 place-items-center rounded-lg"><I className="size-5" /></span>
+            <span class="min-w-0 flex-1">
+              <span class="block truncate text-sm font-medium">{def.title.replace(/^Best /, '')}</span>
+              <span class="text-muted-foreground text-xs">{ranked.length} ranked · #1 {ranked[0].tool.data.name}</span>
+            </span>
+            <ArrowRight className="text-muted-foreground size-4 transition-transform group-hover:translate-x-0.5" />
+          </a>
+        );
+      })
+    }
+  </div>
+
+  <section class="bg-primary text-primary-foreground relative mt-20 overflow-hidden rounded-2xl px-6 py-12 sm:px-12">
+    <div class="from-brand/40 pointer-events-none absolute -right-20 -bottom-24 size-80 rounded-full bg-radial to-transparent blur-2xl"></div>
+    <div class="relative max-w-2xl">
+      <h2 class="text-2xl font-semibold sm:text-3xl">Not sure where to start?</h2>
+      <p class="text-primary-foreground/70 mt-3 leading-relaxed">
+        Our step-by-step guide walks through picking a route, generating art and shipping your first game, with the tools that fit each step.
+      </p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a class={buttonVariants({variant: 'secondary'})} href="/guides/how-to-make-a-game-with-ai">Read the guide <ArrowRight /></a>
+        <a class={cn(buttonVariants({variant: 'ghost'}), 'text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground')} href="/methodology">How we rank</a>
+      </div>
+    </div>
+  </section>
 </Base>

@@ -1,8 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import ToolCard from '../../components/ToolCard.astro';
-import FilterSidebar from '../../components/FilterSidebar.astro';
-import Icon from '../../components/Icon.astro';
+import Listing from '../../components/site/Listing.astro';
 import { activeTools } from '../../lib/lists';
 import { scoreTool } from '../../lib/score';
 import { SITE } from '../../site';
@@ -16,56 +14,12 @@ const live = tools.filter((s) => s.tool.data.status !== 'discontinued').length;
   description={`Filter and compare ${live} AI game development tools by category, price, free plan, commercial rights, engine and export format.`}
   crumbs={[{ name: 'Tools', href: '/tools/' }]}
 >
-  <h1>All AI game dev tools</h1>
-  <p class="updated">
-    <span>{live} active tools</span><span>Prices and rights checked against vendor sites</span><a href="/methodology">How we score</a>
-  </p>
-
-  <div class="listing" data-listing data-noun="tools">
-    <FilterSidebar items={tools} />
-    <div>
-      <div class="sortbar">
-        <p class="result-count" data-count aria-live="polite">{tools.length} tools</p>
-        <div class="sortbar-right">
-          <button type="button" class="btn btn-ghost btn-sm filters-toggle" data-open-filters><Icon name="filter" size={16} /> Filters</button>
-          <div class="view-toggle" role="group" aria-label="Layout">
-            <button type="button" data-view="grid" aria-pressed="true">Grid</button>
-            <button type="button" data-view="list" aria-pressed="false">List</button>
-          </div>
-          <label>Sort
-            <select name="sort">
-              <option value="score">Highest score</option>
-              <option value="price">Lowest price</option>
-              <option value="name">Name A–Z</option>
-            </select>
-          </label>
-        </div>
-      </div>
-      <div class="active-chips" data-chips></div>
-      <ul class="tool-grid" data-items>
-        {tools.map((s) => <ToolCard scored={s} />)}
-      </ul>
-      <p class="no-results" data-empty hidden>No tools match these filters. Try removing one.</p>
-    </div>
-    <div class="scrim" data-scrim hidden></div>
-  </div>
-
-  <script>
-    import { initListing } from '../../lib/listing';
-
-    const root = document.querySelector<HTMLElement>('[data-listing]')!;
-    const list = root.querySelector<HTMLElement>('[data-items]')!;
-    root.querySelectorAll<HTMLButtonElement>('[data-view]').forEach((b) =>
-      b.addEventListener('click', () => {
-        root.querySelectorAll('[data-view]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-        list.className = b.dataset.view === 'list' ? 'tool-list' : 'tool-grid';
-      }),
-    );
-    const cat = new URLSearchParams(location.search).get('category');
-    if (cat) {
-      const radio = root.querySelector<HTMLInputElement>(`input[name="cat"][value="${CSS.escape(cat)}"]`);
-      if (radio) radio.checked = true;
-    }
-    initListing(root);
-  </script>
+  <header class="mt-6 mb-10 max-w-3xl">
+    <h1 class="text-3xl font-bold sm:text-5xl">All AI game dev tools</h1>
+    <p class="text-muted-foreground mt-4 text-lg">
+      {live} active tools with prices, free plans and commercial rights checked against each vendor's site. Filter to what
+      you need, tick up to four and compare them side by side.
+    </p>
+  </header>
+  <Listing items={tools} views />
 </Base>

@@ -13,14 +13,14 @@ const published = tests.filter((t) => t.data.status === 'published');
   crumbs={[{ name: 'Tests', href: '/tests/' }]}
   noindex={published.length === 0}
 >
-  <h1>Hands-on tests</h1>
+  <h1 class="mt-6 text-3xl font-bold sm:text-5xl">Hands-on tests</h1>
   <div class="answer">
     <p>
       We give every tool in a category the identical prompt and publish everything it produces. A tool gets a
       hands-on score only after its test is published.
     </p>
   </div>
-  <div class="grid">
+  <div class="grid-cards">
     {
       tests.map((t) => (
         <a class="card" href={`/tests/${t.id}`}>
