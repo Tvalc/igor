@@ -43,6 +43,43 @@ sources:
 - https://www.tripo3d.ai/blog/tripo-dcc-bridge-guide-hub
 - https://www.tripo3d.ai/compare/tripo-vs-meshy
 - https://www.tripo3d.ai/help/billing/which-tripo-ai-plan-is-right-for-me
+- https://www.tripo3d.ai/pricing
+- https://www.tripo3d.ai/getting-started/zero-to-3d-getting-started-credits-pricing-guide
+- https://developers.tripo3d.ai/en
+- https://developers.tripo3d.ai/en/pricing
+- https://developers.tripo3d.ai/en/docs/animations-retarget
+- https://www.tripo3d.ai/features/ai-3d-character-animation
+- https://www.tripo3d.ai/blog/how-to-animate-an-ai-generated-3d-model
 needs_verification:
 - commercial use
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  text_to_3d: 'yes'
+  image_to_3d: 'yes'
+  pbr_textures: 'yes'
+  auto_rigging: 'yes'
+  low_poly: 'yes'
+  api: 'yes'
+  text_to_motion: 'yes'
+  retarget: 'yes'
+feature_notes:
+  low_poly: Smart Mesh low-poly model plus retopology (quad/triangle)
+  retarget: Applies 100+ preset animations to rigged models
+  text_to_motion: 1-10 s clips from text, up to 5 chained segments
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 200 credits/mo (~13 models); no commercial use
+- name: Professional
+  price_usd: 19.9
+  period: month
+  includes: 3,000 credits/mo (~200 models); $11.94/mo yearly
+- name: Max
+  price_usd: 90
+  period: month
+  includes: 25,000 credits/mo; billed annually $1,080
+- name: Team
+  price_usd: 165
+  period: month
+  includes: 3 seats, 90,000 credits/mo; $1,980/yr

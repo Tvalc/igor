@@ -38,5 +38,32 @@ sources:
 - https://elevenlabs.io/affiliate
 - https://elevenlabs.io/pricing
 - https://help.elevenlabs.io/hc/en-us/articles/13313564601361-Can-I-publish-the-content-I-generate-on-the-platform
+- https://elevenlabs.io/api?trk=test
+- https://elevenlabs.io/ja/text-to-speech-api-2
+- https://docs.cdntest.elevenlabs.io/product-guides/playground/sound-effects?error=true
+- https://pkg.go.dev/github.com/plexusone/elevenlabs-go
+- https://www.usagepricing.com/blueprint/activity/elevenlabs-2026-10-05-v4-launch-tts-price-cut
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  cloning: 'yes'
+  voice_design: 'yes'
+  multilingual: 'yes'
+  speech_to_speech: 'yes'
+  api: 'yes'
+  text_to_sfx: 'yes'
+  loopable: 'yes'
+  stems: 'yes'
+  vocals: 'yes'
+feature_notes:
+  loopable: sound effects max 30 seconds with looping toggle
+  vocals: music generation includes lyrics
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 10k credits/mo
+- name: Starter
+  price_usd: 6
+  period: month
+  includes: 30k credits/mo

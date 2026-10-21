@@ -29,7 +29,17 @@ license:
   open_source: false
 sources:
 - https://app.cinevva.com/guides/ai-npcs-dialogue
+- https://docs.convai.com/api-docs/plugins-and-integrations/unity-plugin
+- https://docs.convai.com/api-docs/plugins-and-integrations/convai-unreal-engine-plugin/overview/what-is-the-convai-unreal-engine-plugin
+- https://docs.convai.com/api-docs/plugins-and-integrations/convai-unreal-engine-plugin/features/long-term-memory
+- https://docs.convai.com/api-docs/plugins-and-integrations/unreal-engine/guides/long-term-memory
 needs_verification:
 - commercial use
 - exports
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  unity_sdk: 'yes'
+  unreal_sdk: 'yes'
+  voice: 'yes'
+  memory: 'yes'
+  actions: 'yes'

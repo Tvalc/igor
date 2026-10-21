@@ -26,5 +26,20 @@ license:
   notes: Models and most code MIT; some submodules (e.g. nvdiffrast) carry their own licenses.
 sources:
 - https://github.com/microsoft/TRELLIS
+- https://microsoft.github.io/TRELLIS/
+- https://github.com/microsoft/TRELLIS.2
+- https://huggingface.co/microsoft/TRELLIS.2-4B
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  image_to_3d: 'yes'
+  text_to_3d: 'yes'
+  pbr_textures: partial
+feature_notes:
+  text_to_3d: TRELLIS-text models released 03/2025; README recommends text-to-image then image-to-3D for quality
+  pbr_textures: Full PBR materials come with the successor TRELLIS.2 (separate repo)
+plans:
+- name: Open source
+  price_usd: 0
+  period: free
+  includes: Open source, self-hosted

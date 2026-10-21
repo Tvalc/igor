@@ -34,5 +34,29 @@ sources:
 - https://soundraw.io/blog/post/soundraw-licensing-explained
 - https://soundraw.io/
 - https://soundraw.io/license
+- https://docs.channel.io/soundraw-faq/en/categories/SOUNDRAW-Features-and-Functions-ced55f63
+- https://explore.soundraw.io/soundraw-vs-suno
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  vocals: 'no'
+  stems: partial
+  custom_length: 'yes'
+  api: partial
+feature_notes:
+  stems: Artist Pro tier and above
+  custom_length: Up to 5 minutes per song
+  api: Business/enterprise API, not self-serve
+plans:
+- name: Artist Starter
+  price_usd: 29.99
+  period: month
+  includes: Artist license for releasing music
+- name: Artist Pro
+  price_usd: 35.99
+  period: month
+  includes: Adds WAV and stem downloads
+- name: Artist Unlimited
+  price_usd: 49.99
+  period: month
+  includes: Unlimited downloads, stems

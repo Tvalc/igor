@@ -29,7 +29,22 @@ license:
 sources:
 - https://about.roblox.com/newsroom/2026/02/accelerating-creation-powered-roblox-cube-foundation-model
 - https://devforum.roblox.com/t/beta-cube-3d-generation-tools-and-apis-for-creators/3558947
+- https://create.roblox.com/docs/en-us/assistant/guide
+- https://corp.roblox.com/newsroom/2025/03/introducing-roblox-cube
 needs_verification:
 - commercial use
 - exports
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  engine_integration: 'yes'
+  scene_editing: 'yes'
+  text_to_3d: partial
+  api: 'yes'
+feature_notes:
+  text_to_3d: Cube 3D /generate in Assistant; beta, static meshes without textures at launch
+  api: in-experience Lua Mesh Generation API (beta)
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: Included in Roblox Studio

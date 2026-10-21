@@ -31,6 +31,38 @@ sources:
 - https://csm.ai/
 - https://www.csm.ai/faq
 - https://docs.csm.ai/quick-start
+- https://www.csm.ai/pricing
+- https://docs.csm.ai/sessions/retopology
 needs_verification:
 - commercial use
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  text_to_3d: 'yes'
+  image_to_3d: 'yes'
+  pbr_textures: 'yes'
+  low_poly: partial
+  api: 'yes'
+feature_notes:
+  low_poly: AI Retopology (Swift low-poly model) is enterprise only
+  pbr_textures: PBR texturing listed from Maker plan
+plans:
+- name: Tinkerer
+  price_usd: 0
+  period: free
+  includes: 10 credits (~10 generations)
+- name: Maker
+  price_usd: 20
+  period: month
+  includes: 100 credits/mo, multi-view upload, PBR texturing
+- name: Creative Pro
+  price_usd: 60
+  period: month
+  includes: 400 credits/mo, priority support
+- name: Prime
+  price_usd: 111
+  period: month
+  includes: 1,000 credits/mo, 3D Video Studio
+- name: Enterprise
+  price_usd: null
+  period: custom
+  includes: Custom contract

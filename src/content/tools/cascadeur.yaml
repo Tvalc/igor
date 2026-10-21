@@ -30,5 +30,24 @@ sources:
 - https://cascadeur.com
 - https://cascadeur.com/plans
 - https://cascadeur.com/help/cascadeur_end_user_agreement
+- https://cascadeur.com/jp/plans
+- https://cascadeur.com/ru/blog/general/cascadeur-20231-introduces-finger-autoposing-video-mocap-and-macos-version
+- https://cascadeur.com/tutor/move-ai-video-mocap
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  video_mocap: 'yes'
+  retarget: 'yes'
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: Non-commercial use, export to .casc format only
+- name: Indie
+  price_usd: 19
+  period: month
+  includes: $8/mo yearly; FBX/DAE/USD/glTF export; revenue under $100k/yr
+- name: Pro
+  price_usd: 49
+  period: month
+  includes: $33/mo yearly; unlimited commercial use; 14-day trial

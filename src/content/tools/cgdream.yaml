@@ -29,6 +29,18 @@ sources:
 - https://cgdream.ai
 - https://cgdream.ai/features/ai-drawing-generator
 - https://cgdream.ai/terms-of-service
+- https://cgdream.ai/features/ai-game-character-generator
+- https://cgdream.ai/features/ai-image-to-image-ai-generator
+- https://cgdream.ai/pricing
 needs_verification:
 - price
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  consistent_characters: 'yes'
+feature_notes:
+  consistent_characters: '''Consistent Character'' visual input alongside 3D, Structure and Image-to-Image guides'
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 100 daily credits; no commercial rights

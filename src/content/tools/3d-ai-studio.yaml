@@ -34,6 +34,34 @@ sources:
 - https://www.3daistudio.com/Pricing
 - https://docs.3daistudio.com/faq
 - https://docs.3daistudio.com/getting-started
+- https://3daistudio.com/pricing
+- https://www.3daistudio.com/Tools
+- https://docs.3daistudio.com/
+- https://www.3daistudio.com/Platform/API/Documentation
+- https://www.3daistudio.com/Platform/API/Documentation/texturing
 needs_verification:
 - commercial use
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  text_to_3d: 'yes'
+  image_to_3d: 'yes'
+  pbr_textures: 'yes'
+  auto_rigging: 'yes'
+  low_poly: 'yes'
+  api: 'yes'
+  pbr_maps: 'yes'
+feature_notes:
+  low_poly: Quad Remesh retopology to a target polygon count
+plans:
+- name: Pro
+  price_usd: 149
+  period: month
+  includes: 18,000 credits/mo, team workspace, 3 seats
+- name: 5,000 credit pack
+  price_usd: 69
+  period: one-time
+  includes: 5,000 non-expiring credits
+- name: 35,000 credit pack
+  price_usd: 399
+  period: one-time
+  includes: 35,000 non-expiring credits

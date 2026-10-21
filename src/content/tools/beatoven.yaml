@@ -28,6 +28,12 @@ license:
 sources:
 - https://www.beatoven.ai
 - https://www.beatoven.ai/ai-music-generator
+- https://aiindigo.com/blog/beatoven-ai-review-is-ai-music-finally-practical-for-creators-in-2026
+- https://providers.apievangelist.com/providers/beatoven/
 needs_verification:
 - price
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  stems: partial
+  custom_length: 'yes'
+  api: 'yes'

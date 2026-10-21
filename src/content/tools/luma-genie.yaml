@@ -1,7 +1,8 @@
 name: Luma Genie
 url: https://lumalabs.ai/genie
-tagline: Text to 3D from Luma AI.
-description: Luma Genie generates 3D models from text. As of an August 2026 listing it's paid, from about $30/month.
+tagline: Text to 3D from Luma AI, now folded into the main Luma app.
+description: 'Luma Genie generates 3D models from text. It''s no longer sold as a standalone product: Genie assets
+  now live in the Luma app, and Luma doesn''t publish separate Genie pricing.'
 best_for: Quick text-to-3D concepts.
 categories:
 - art-3d
@@ -22,9 +23,17 @@ license:
   open_source: false
 sources:
 - https://lumalabs.ai/genie
+- https://lumalabs.ai/series-b
+- https://lumalabs.ai/learning-hub/genie-capture
+- https://lumalabs.ai/pricing
 needs_verification:
 - free tier
+- price
 - commercial use
 - exports
-- price
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  text_to_3d: 'yes'
+  low_poly: 'yes'
+feature_notes:
+  low_poly: Genie 1.0 outputs quad meshes with materials at any polygon count

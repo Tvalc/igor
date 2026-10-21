@@ -22,7 +22,7 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 15
 license:
   commercial_use: unknown
   open_source: false
@@ -31,7 +31,30 @@ affiliate:
   commission: 20% for 12 months
 sources:
 - https://sloyd.ai/affiliate
+- https://www.sloyd.ai/blog/ai-3d-model-generator-pricing
+- https://sloyd.ai/text-to-3d
+- https://www.sloyd.ai/blog/using-sloyd-for-low-poly-game-assets
+- https://assetstore.unity.com/packages/tools/generative-ai/sloyd-sdk-258591
 needs_verification:
-- price
 - commercial use
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  text_to_3d: 'yes'
+  image_to_3d: 'yes'
+  low_poly: 'yes'
+  api: partial
+feature_notes:
+  api: API key/SDK (Unity plugin) requires a paid subscription
+plans:
+- name: Guest
+  price_usd: 0
+  period: free
+  includes: 1 AI 3D generation/day, GLB/OBJ export, personal use
+- name: Plus
+  price_usd: 15
+  period: month
+  includes: Fair-use unlimited text/image to 3D, commercial license
+- name: Pro
+  price_usd: 50
+  period: month
+  includes: Plus + 4K textures, multi-image to 3D, 60 credits/mo

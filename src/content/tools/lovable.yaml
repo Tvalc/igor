@@ -33,5 +33,34 @@ sources:
 - https://lovable.dev/students
 - https://lovable.dev/faq/billing/plans
 - https://docs.lovable.dev/introduction/faq
+- https://lovable.dev/pricing
+- https://lovable.dev/faq/billing/plans/lovable-pricing
+- https://docs.lovable.dev/integrations/github
+- https://lovable.dev/solutions/use-case/front-end-app-interactive-games
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  no_code: 'yes'
+  edit_code: 'yes'
+  hosting: 'yes'
+  export_project: partial
+feature_notes:
+  export_project: Download codebase on paid plans only; two-way GitHub sync available
+  hosting: Publishes to a Lovable-hosted URL; custom domains on paid plans
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 5 daily credits, max 30/mo
+- name: Pro
+  price_usd: 25
+  period: month
+  includes: 100 monthly + 5 daily credits, custom domains, unlimited users
+- name: Business
+  price_usd: 50
+  period: month
+  includes: Pro plus SSO, team workspace, security center
+- name: Enterprise
+  price_usd: null
+  period: custom
+  includes: Audit logs, dedicated support; priced by company size

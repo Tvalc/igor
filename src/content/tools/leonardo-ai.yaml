@@ -35,5 +35,34 @@ sources:
 - https://leonardo.ai/terms-of-service
 - https://leonardo.ai/pricing
 - https://leonardo.ai/news/midjourney-vs-leonardo-ai
+- https://intercom.help/leonardo-ai/en/articles/9075772-transparency
+- https://eesel.ai/blog/leonardo-ai-pricing
+- https://leonardo.ai/learn/core-feature/how-to-create-consistent-characters-with-character-reference
+- https://docs.leonardo.ai/docs/getting-started
+- https://leonardo.ai/api
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  transparent_bg: 'yes'
+  custom_training: 'yes'
+  consistent_characters: 'yes'
+  api: 'yes'
+feature_notes:
+  consistent_characters: Character Reference with Low/Mid/High strength; supported on some models only
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 150 fast tokens daily
+- name: Essential
+  price_usd: 12
+  period: month
+  includes: 8,500 fast tokens/mo; up to 10 personal models
+- name: Premium
+  price_usd: 30
+  period: month
+  includes: 25,000 fast tokens/mo; unlimited relaxed images
+- name: Ultimate
+  price_usd: 60
+  period: month
+  includes: 60,000 fast tokens/mo; unlimited relaxed images and video

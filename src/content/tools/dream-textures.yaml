@@ -29,6 +29,17 @@ license:
 sources:
 - https://github.com/carson-katri/dream-textures
 - https://github.com/carson-katri/dream-textures/blob/main/__init__.py
+- https://github.com/carson-katri/dream-textures/blob/main/docs/TEXTURE_PROJECTION.md
+- https://github.com/kurethedead/dream-textures
+- https://blendermarket.com/products/dream-textures
 needs_verification:
 - commercial use
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  seamless: 'yes'
+  upscale: 'yes'
+plans:
+- name: Open source
+  price_usd: 0
+  period: free
+  includes: Open source, self-hosted (runs Stable Diffusion locally in Blender)

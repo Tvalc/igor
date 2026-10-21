@@ -31,5 +31,33 @@ license:
 sources:
 - https://www.kaedim3d.com/plans
 - https://docs.kaedim3d.com/resources/faq
+- https://docs.kaedim3d.com/kaedim-co-creation/pricing
+- https://aiindigo.com/blog/kaedim-review-2026-bridging-the-gap-between-2d-and-3d
+- https://docs.kaedim3d.com/web-app/add-ons/automatic-texturing
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  image_to_3d: 'yes'
+  low_poly: 'yes'
+  api: partial
+  pbr_textures: partial
+feature_notes:
+  pbr_textures: Automatic Texturing add-on (Color/Roughness/Normal maps); plans with add-on access, activated via
+    call; best for realistic wood/metal/fabric
+plans:
+- name: Trial
+  price_usd: 50
+  period: one-time
+  includes: 7 days, 5 credits; auto-renews into Indie
+- name: Indie
+  price_usd: 400
+  period: month
+  includes: 20 credits (up to 20 geometries or 1 complete asset)
+- name: Pro
+  price_usd: 1200
+  period: month
+  includes: 60 credits (up to 3 complete assets), priority processing
+- name: Enterprise
+  price_usd: null
+  period: custom
+  includes: Custom volume via sales

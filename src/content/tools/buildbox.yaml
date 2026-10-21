@@ -28,7 +28,21 @@ license:
   open_source: false
 sources:
 - https://www.buildbox.com
+- https://gamedesignskills.com/game-development/buildbox/
+- https://www.nocode.tech/tools/buildbox
+- https://neura.market/ai-tools-directory/games/buildbox-4
+- https://www.buildbox.com/buildbox-4-is-now-available-make-games-with-ai/
+- https://www.buildbox.com/how-to-create-game-assets-using-the-buildbox-ai-tool/
+- https://www.buildbox.com/portfolio/exporting/
+- https://signup.buildbox.com/plans
 needs_verification:
 - price
 - commercial use
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  no_code: 'yes'
+  ai_art: 'yes'
+  mobile: partial
+feature_notes:
+  mobile: Exports iOS/Android builds that must be compiled in Xcode/Android tools; quick testing via Buildbox World
+    app

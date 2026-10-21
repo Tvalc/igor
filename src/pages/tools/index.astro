@@ -3,71 +3,200 @@ import Base from '../../layouts/Base.astro';
 import Monogram from '../../components/Monogram.astro';
 import { activeTools } from '../../lib/lists';
 import { scoreTool } from '../../lib/score';
-import { CATEGORY_LABELS, FREE_TIER_LABELS, STATUS_LABELS, tier } from '../../lib/format';
-import { CATEGORIES } from '../../content.config';
+import { fromPrice, priceLabel } from '../../lib/compare';
+import { CATEGORY_LABELS, COMMERCIAL_LABELS, ENGINE_LABELS, EXPORT_LABELS, FREE_TIER_LABELS, STATUS_LABELS, tier } from '../../lib/format';
+import { CATEGORIES, ENGINES, EXPORTS } from '../../content.config';
 import { SITE } from '../../site';
 
 const tools = (await activeTools()).map((t) => scoreTool(t));
 const live = tools.filter((s) => s.tool.data.status !== 'discontinued').length;
+const cls = (v: string) => (v === 'Unverified' ? 'unverified' : undefined);
 ---
 
 <Base
   title={`All AI Game Development Tools (${live} tracked, ${SITE.year})`}
-  description={`Directory of ${live} AI game development tools: game makers, sprite and 3D generators, coding assistants, voice, music and NPC AI, with pricing and commercial rights.`}
+  description={`Filter and compare ${live} AI game development tools by category, price, free tier, commercial rights, engine and export format.`}
   crumbs={[{ name: 'Tools', href: '/tools/' }]}
 >
   <h1>Every AI game dev tool we track</h1>
   <div class="answer">
     <p>
       {live} active AI game development tools, each with verified pricing, commercial rights, engine support and a
-      score. Filter by category, or open a <a href="/best/">best list</a> for rankings.
+      score. Filter to what you need, tick up to four, and compare them side by side. Or open a
+      <a href="/best/">best list</a> for rankings.
     </p>
   </div>
 
-  <div class="filters" role="group" aria-label="Filter by category">
-    <button type="button" data-filter="all" aria-pressed="true">All</button>
-    {CATEGORIES.map((c) => <button type="button" data-filter={c} aria-pressed="false">{CATEGORY_LABELS[c]}</button>)}
-  </div>
+  <form class="filter-bar" id="filters" aria-label="Filter tools" onsubmit="return false">
+    <label>Search<input type="search" name="q" placeholder="Name or keyword" /></label>
+    <label>Category
+      <select name="cat"><option value="">All categories</option>{CATEGORIES.map((c) => <option value={c}>{CATEGORY_LABELS[c]}</option>)}</select>
+    </label>
+    <label>Price
+      <select name="price">
+        <option value="">Any price</option>
+        <option value="free">Has a free tier</option>
+        <option value="10">Paid plans from $10/mo or less</option>
+        <option value="25">From $25/mo or less</option>
+        <option value="50">From $50/mo or less</option>
+      </select>
+    </label>
+    <label>Engine
+      <select name="engine"><option value="">Any engine</option>{ENGINES.map((e) => <option value={e}>{ENGINE_LABELS[e]}</option>)}</select>
+    </label>
+    <label>Exports
+      <select name="export"><option value="">Any format</option>{EXPORTS.map((e) => <option value={e}>{EXPORT_LABELS[e] ?? e.toUpperCase()}</option>)}</select>
+    </label>
+    <label>Sort by
+      <select name="sort">
+        <option value="score">Highest score</option>
+        <option value="price">Lowest price</option>
+        <option value="name">Name A–Z</option>
+      </select>
+    </label>
+    <label class="check"><input type="checkbox" name="commercial" /> Commercial use allowed</label>
+    <label class="check"><input type="checkbox" name="beginner" /> Beginner friendly</label>
+  </form>
+  <p class="result-count" id="count" aria-live="polite">{live} tools</p>
 
   <div class="table-wrap">
     <table id="tools">
       <thead>
-        <tr><th>Tool</th><th>Category</th><th>Free tier</th><th>Score</th></tr>
+        <tr><th>Tool</th><th>Category</th><th>Free tier</th><th>From</th><th>Commercial use</th><th>Score</th><th>Compare</th></tr>
       </thead>
       <tbody>
         {
-          tools.map((s) => (
-            <tr data-cats={s.tool.data.categories.join(' ')}>
-              <td>
-                <div class="tool-cell">
-                  <Monogram name={s.tool.data.name} size="sm" />
-                  <span>
-                    <a href={`/tools/${s.tool.id}`}>{s.tool.data.name}</a>
-                    {s.tool.data.status !== 'active' && <span class="pill">{STATUS_LABELS[s.tool.data.status]}</span>}
-                    <br />
-                    <span class="meta">{s.tool.data.tagline}</span>
-                  </span>
-                </div>
-              </td>
-              <td>{s.tool.data.categories.map((c) => CATEGORY_LABELS[c]).join(', ')}</td>
-              <td>{FREE_TIER_LABELS[s.tool.data.pricing.free_tier]}</td>
-              <td class="num">{s.tool.data.status === 'discontinued' ? '—' : <span class={`score tier-${tier(s.score)}`}>{s.score}</span>}</td>
-            </tr>
-          ))
+          tools.map((s) => {
+            const d = s.tool.data;
+            const p = fromPrice(s.tool);
+            return (
+              <tr
+                data-id={s.tool.id}
+                data-name={d.name}
+                data-text={`${d.name} ${d.tagline} ${d.tags.join(' ')}`.toLowerCase()}
+                data-cats={d.categories.join(' ')}
+                data-engines={d.engines.join(' ')}
+                data-exports={d.exports.join(' ')}
+                data-free={d.pricing.free_tier}
+                data-price={p ?? ''}
+                data-commercial={d.license.commercial_use}
+                data-skill={d.skill_level}
+                data-score={d.status === 'discontinued' ? -1 : s.score}
+              >
+                <td>
+                  <div class="tool-cell">
+                    <Monogram name={d.name} size="sm" />
+                    <span>
+                      <a href={`/tools/${s.tool.id}`}>{d.name}</a>
+                      {d.status !== 'active' && <span class="pill">{STATUS_LABELS[d.status]}</span>}
+                      {d.makko_owned && <span class="pill owned">Our team</span>}
+                      <br />
+                      <span class="meta">{d.tagline}</span>
+                    </span>
+                  </div>
+                </td>
+                <td>{d.categories.map((c) => CATEGORY_LABELS[c]).join(', ')}</td>
+                <td class={cls(FREE_TIER_LABELS[d.pricing.free_tier])}>{FREE_TIER_LABELS[d.pricing.free_tier]}</td>
+                <td class:list={['num', cls(priceLabel(s.tool))]}>{priceLabel(s.tool)}</td>
+                <td class={cls(COMMERCIAL_LABELS[d.license.commercial_use])}>{COMMERCIAL_LABELS[d.license.commercial_use]}</td>
+                <td class="num">{d.status === 'discontinued' ? '—' : <span class={`score tier-${tier(s.score)}`}>{s.score}</span>}</td>
+                <td class="cmp">
+                  {d.status !== 'discontinued' && <input type="checkbox" aria-label={`Compare ${d.name}`} value={s.tool.id} />}
+                </td>
+              </tr>
+            );
+          })
         }
       </tbody>
     </table>
   </div>
 
+  <div class="tray" id="tray" hidden>
+    <span class="tray-names" id="tray-names"></span>
+    <button type="button" id="tray-clear">Clear</button>
+    <a class="btn" id="tray-go" href="/compare/">Compare</a>
+  </div>
+
   <script>
-    const buttons = document.querySelectorAll<HTMLButtonElement>('.filters button');
-    const rows = document.querySelectorAll<HTMLTableRowElement>('#tools tbody tr');
-    buttons.forEach((btn) =>
-      btn.addEventListener('click', () => {
-        const f = btn.dataset.filter!;
-        buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
-        rows.forEach((r) => (r.hidden = f !== 'all' && !r.dataset.cats!.split(' ').includes(f)));
-      }),
-    );
+    import { siteLinks } from '../../lib/links';
+
+    const MAX = 4;
+    const links = siteLinks();
+    const form = document.getElementById('filters') as HTMLFormElement;
+    const tbody = document.querySelector<HTMLTableSectionElement>('#tools tbody')!;
+    const rows = [...tbody.querySelectorAll<HTMLTableRowElement>('tr')];
+    const count = document.getElementById('count')!;
+    const COMM = new Set(['yes', 'paid-plans']);
+    const FREE = new Set(['yes', 'limited']);
+
+    function apply() {
+      const f = new FormData(form);
+      const q = String(f.get('q') ?? '').trim().toLowerCase();
+      const cat = String(f.get('cat') ?? '');
+      const price = String(f.get('price') ?? '');
+      const engine = String(f.get('engine') ?? '');
+      const exp = String(f.get('export') ?? '');
+      const sort = String(f.get('sort') ?? 'score');
+      const commercial = f.has('commercial');
+      const beginner = f.has('beginner');
+      let shown = 0;
+      for (const r of rows) {
+        const d = r.dataset;
+        const p = d.price === '' ? null : Number(d.price);
+        const ok =
+          (!q || d.text!.includes(q)) &&
+          (!cat || d.cats!.split(' ').includes(cat)) &&
+          (!engine || d.engines!.split(' ').includes(engine)) &&
+          (!exp || d.exports!.split(' ').includes(exp)) &&
+          (!price || (price === 'free' ? FREE.has(d.free!) : p !== null && p <= Number(price))) &&
+          (!commercial || COMM.has(d.commercial!)) &&
+          (!beginner || d.skill === 'beginner');
+        r.hidden = !ok;
+        if (ok) shown++;
+      }
+      const key = (r: HTMLTableRowElement) => {
+        const d = r.dataset;
+        if (sort === 'name') return d.name!.toLowerCase();
+        if (sort === 'price') return d.price === '' ? Infinity : Number(d.price);
+        return -Number(d.score);
+      };
+      rows.sort((a, b) => {
+        const x = key(a);
+        const y = key(b);
+        return x < y ? -1 : x > y ? 1 : a.dataset.name!.localeCompare(b.dataset.name!);
+      });
+      tbody.append(...rows);
+      count.textContent = `${shown} ${shown === 1 ? 'tool' : 'tools'}`;
+    }
+
+    // Compare tray: tick up to four tools, then jump to the builder.
+    const tray = document.getElementById('tray')!;
+    const names = document.getElementById('tray-names')!;
+    const go = document.getElementById('tray-go') as HTMLAnchorElement;
+    const boxes = [...tbody.querySelectorAll<HTMLInputElement>('td.cmp input')];
+    function updateTray() {
+      const picked = boxes.filter((b) => b.checked);
+      boxes.forEach((b) => (b.disabled = !b.checked && picked.length >= MAX));
+      tray.hidden = picked.length === 0;
+      names.textContent = picked.map((b) => b.closest('tr')!.dataset.name).join(' · ') + (picked.length < 2 ? ' (pick one more)' : '');
+      go.href = links.builder(picked.map((b) => b.value));
+      go.toggleAttribute('aria-disabled', picked.length < 2);
+    }
+    boxes.forEach((b) => b.addEventListener('change', updateTray));
+    document.getElementById('tray-clear')!.addEventListener('click', () => {
+      boxes.forEach((b) => (b.checked = false));
+      updateTray();
+    });
+    go.addEventListener('click', (e) => {
+      if (boxes.filter((b) => b.checked).length < 2) e.preventDefault();
+    });
+
+    const params = new URLSearchParams(location.search);
+    const cat = params.get('category');
+    if (cat) (form.elements.namedItem('cat') as HTMLSelectElement).value = cat;
+    form.addEventListener('input', apply);
+    form.addEventListener('change', apply);
+    apply();
+    updateTray();
   </script>
 </Base>

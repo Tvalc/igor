@@ -3,8 +3,9 @@
 import { SITE } from '../site';
 import type { ListDef } from './lists';
 import { FACTOR_LABELS, type Factor, type Scored } from './score';
+import { featuresFor } from './features';
 import {
-  CATEGORY_LABELS, COMMERCIAL_LABELS, ENGINE_LABELS, FREE_TIER_LABELS, STATUS_LABELS, isoDate, list, price,
+  CATEGORY_LABELS, COMMERCIAL_LABELS, ENGINE_LABELS, EXPORT_LABELS, FREE_TIER_LABELS, STATUS_LABELS, isoDate, list, price,
 } from './format';
 
 const cell = (s: string) => s.replace(/\|/g, '\\|');
@@ -30,7 +31,7 @@ export function toolMarkdown(s: Scored, base: string): string {
     `| Pricing | ${FREE_TIER_LABELS[d.pricing.free_tier]}; ${price(s.tool)} |`,
     `| Commercial use | ${COMMERCIAL_LABELS[d.license.commercial_use]}${d.license.open_source ? ' (open source)' : ''} |`,
     `| Engines | ${list(d.engines, ENGINE_LABELS)} |`,
-    `| Exports | ${list(d.exports)} |`,
+    `| Exports | ${list(d.exports, EXPORT_LABELS)} |`,
     `| Skill level | ${d.skill_level} |`,
     `| Last verified | ${isoDate(d.last_verified)} |`,
     '',
@@ -40,6 +41,14 @@ export function toolMarkdown(s: Scored, base: string): string {
       (k) => `- ${FACTOR_LABELS[k].label}: ${Math.round(s.factors[k] * 100)}/100`,
     ),
   ];
+  const known = featuresFor(d.categories).filter((f) => d.features[f.key]);
+  if (known.length) {
+    const word = { yes: 'Yes', partial: 'Partly', no: 'No' } as Record<string, string>;
+    lines.push('', '## Features', '', ...known.map((f) => `- ${f.label}: ${word[d.features[f.key]]}${d.feature_notes[f.key] ? ` (${d.feature_notes[f.key]})` : ''}`));
+  }
+  if (d.plans.length) {
+    lines.push('', '## Pricing plans', '', ...d.plans.map((p) => `- ${p.name}: ${p.price_usd === null ? 'custom' : p.price_usd === 0 ? 'free' : `$${p.price_usd}/mo`}${p.includes ? ` (${p.includes})` : ''}`));
+  }
   if (d.license.notes) lines.push('', `License note: ${d.license.notes}`);
   if (d.pricing.notes) lines.push('', `Pricing note: ${d.pricing.notes}`);
   if (d.needs_verification.length) lines.push('', `Pending verification: ${d.needs_verification.join(', ')}.`);

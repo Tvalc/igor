@@ -37,7 +37,7 @@ function rewrite(text, fromFile, isHtml) {
   const fromDir = posix.dirname(fromFile);
   const fix = (url) => {
     if (!url.startsWith('/') || url.startsWith('//')) return url;
-    const hash = url.includes('#') ? url.slice(url.indexOf('#')) : '';
+    const hash = url.match(/[?#].*$/)?.[0] ?? '';
     const target = resolve(url);
     if (!target) {
       misses.add(`${fromFile} -> ${url}`);

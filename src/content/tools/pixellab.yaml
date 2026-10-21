@@ -36,6 +36,36 @@ sources:
 - https://www.pixellab.ai
 - https://www.pixellab.ai/termsofservice
 - https://www.pixellab.ai/docs/faq
+- https://ai.g2.com/marketplace/tools/pixellab
+- https://knowara.com/ai-tools/image/pixellab-review/
+- https://www.pixellab.ai/
+- https://www.pixellab.ai/pixellab-api
+- https://www.pixellab.ai/enterprise
+- https://www.pixellab.ai/docs/tools/consistent-style
+- https://www.pixellab.ai/docs/tools/create-8-rotations-pro
+- https://www.pixellab.ai/docs/tools/animation
+- https://www.pixellab.ai/mcp
+- https://api.pixellab.ai/v2/docs
 needs_verification:
 - price
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  pixel_art: 'yes'
+  multi_direction: 'yes'
+  tilesets: 'yes'
+  api: 'yes'
+  transparent_bg: 'yes'
+  consistent_characters: 'yes'
+  text_to_motion: partial
+feature_notes:
+  consistent_characters: Style/character reference images; Pro tools need Tier 1 subscription
+  text_to_motion: Text-to-animation produces 2D pixel-art frames, not 3D motion data
+plans:
+- name: Free Trial
+  price_usd: 0
+  period: free
+  includes: Limited number of generations
+- name: Enterprise
+  price_usd: null
+  period: custom
+  includes: SSO, custom generation pools, invoice billing

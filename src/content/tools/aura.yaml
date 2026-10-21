@@ -30,7 +30,45 @@ license:
 sources:
 - https://www.tryaura.dev/updates/aura-for-unity-launches-may-14
 - https://www.tryaura.dev/pricing
+- https://www.tryaura.dev/about
+- https://www.tryaura.dev/updates/introducing-aura-15
+- https://www.tryaura.dev/
+- https://www.tryaura.dev/documentation/
+- https://www.tryaura.dev/documentation/pricing-explained/
+- https://www.tryaura.dev/documentation/prompting-tips/
+- https://www.tryaura.dev/updates/unreal-ai-agent-blueprints
+- https://www.tryaura.dev/updates/aura-1-0-launches-today
 needs_verification:
 - commercial use
 - exports
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  engine_integration: 'yes'
+  mcp: 'yes'
+  scene_editing: 'yes'
+  runs_game: 'yes'
+  model_choice: 'yes'
+feature_notes:
+  runs_game: Verification Agent playtests builds
+  model_choice: Model selector with Anthropic, Google, OpenAI models; also Auto Mode
+plans:
+- name: Free Trial
+  price_usd: 0
+  period: free
+  includes: 2-week trial, $40 Aura credit, Unreal + Unity
+- name: Indie
+  price_usd: 20
+  period: month
+  includes: $10/mo billed annually; $15 premium credit; unlimited Auto Mode
+- name: Pro
+  price_usd: 40
+  period: month
+  includes: $40 Aura credit, 3D model + audio gen, Super Mode
+- name: Ultimate
+  price_usd: 200
+  period: month
+  includes: $280 Aura credit, everything in Pro
+- name: Enterprise
+  price_usd: null
+  period: custom
+  includes: Source access, onboarding, roadmap priority

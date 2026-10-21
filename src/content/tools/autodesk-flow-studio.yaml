@@ -33,5 +33,40 @@ sources:
 - https://blogs.autodesk.com/media-and-entertainment/2026/09/28/autodesk-flow-studio-pricing-and-subscription-guide/
 - https://www.autodesk.com/company/terms-of-use/en/offering-types-and-benefits
 - https://www.autodesk.com/products/flow-studio/product-details
+- https://www.autodesk.com/products/flow-studio/compare
+- https://adsknews.autodesk.com/en/?p=53687
+- https://www.autodesk.com/au/products/flow-studio/features
+- https://help.wonderdynamics.com/?p=3738
+- https://www.autodesk.com/products/flow-studio/features
+- https://www.autodesk.com/solutions/media-entertainment/ai-motion-capture-with-flow-studio
+- https://autodesk.com/products/flow-studio/overview
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  video_mocap: 'yes'
+  multi_person: partial
+  retarget: 'yes'
+  hands_face: 'yes'
+feature_notes:
+  multi_person: 'Performer limit by plan: Free 1, Standard 3, Pro 4, Enterprise 7'
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 300 credits/mo, 720p, watermarked
+- name: Lite
+  price_usd: 10
+  period: month
+  includes: 2,100 credits/mo, 1080p, 5 GB storage
+- name: Standard
+  price_usd: 45
+  period: month
+  includes: 6,000 credits/mo, 4K export, 3-person mocap, 20 GB storage
+- name: Pro
+  price_usd: 95
+  period: month
+  includes: 12,000 credits/mo, 4K export, 80 GB storage
+- name: Enterprise
+  price_usd: null
+  period: custom
+  includes: 48,000 credits/mo, 7-person mocap, 1 TB storage

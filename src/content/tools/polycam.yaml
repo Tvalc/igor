@@ -38,5 +38,32 @@ sources:
 - https://poly.cam/tools/ai-texture-generator
 - https://poly.cam/legal/terms-of-service
 - https://learn.poly.cam/hc/en-us/articles/27756102599572-What-File-Types-Can-Polycam-Export
+- https://poly.cam/pricing/basic-plan
+- https://poly.cam/blog/best-matterport-alternatives-for-small-teams-creators-in-2026
+- https://app.cinevva.com/guides/ai-texture-generators
+- https://www.lovart.ai/it/blog/5-best-ai-texture-material-generators-2026
+- https://poly.cam/tools/3d-model-generator
+- https://learn.poly.cam/hc/en-us/articles/35116894902292
+- https://learn.poly.cam/ai-texture-generator
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  seamless: 'yes'
+  pbr_maps: 'yes'
+  image_to_3d: partial
+feature_notes:
+  image_to_3d: AI 3D Model Generator in evaluation/research phase; single JPEG/PNG input; 3 free generations, unlimited
+    on paid
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: Limited captures
+- name: Basic
+  price_usd: 30
+  period: month
+  includes: Individual creators; $12.50/mo billed yearly
+- name: Business
+  price_usd: 33.33
+  period: year
+  includes: $400/yr per user, floor plans, shared team library

@@ -32,5 +32,23 @@ sources:
 - https://3d.hunyuan.tencent.com
 - https://huggingface.co/tencent/Hunyuan3D-2.1/blob/main/LICENSE
 - https://github.com/Tencent-Hunyuan/Hunyuan3D-2
+- https://huggingface.co/tencent/Hunyuan3D-2.1/blob/main/README.md
+- https://huggingface.co/spaces/tencent/Hunyuan3D-2.1/blob/main/hy3dpaint/README.md
+- https://fal.ai/hunyuan-3d
+- https://www.atlascloud.ai/models/tencent/hunyuan3d-pro/text-to-3d
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  text_to_3d: 'yes'
+  image_to_3d: 'yes'
+  pbr_textures: 'yes'
+  low_poly: 'yes'
+  api: 'yes'
+feature_notes:
+  low_poly: Low-poly mode and smart retopology in Hunyuan3D Pro (hosted)
+  api: REST API in open release; hosted via Tencent Cloud and third parties
+plans:
+- name: Open source
+  price_usd: 0
+  period: free
+  includes: Open source, self-hosted (Tencent community license)

@@ -24,9 +24,18 @@ license:
   open_source: false
 sources:
 - https://www.exists.ai
+- https://exists.ai/
+- https://app.exists.ai/dashboard/create
+- https://gamesbeat.com/exists-launches-genai-platform-to-create-3d-games-from-text-prompts/
 needs_verification:
 - free tier
 - price
 - commercial use
 - exports
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  no_code: 'yes'
+  multiplayer: 'yes'
+  ai_art: 'yes'
+feature_notes:
+  ai_art: Generates populated 3D worlds and assets from prompts

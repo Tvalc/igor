@@ -5,11 +5,14 @@ import ScoreBars from '../../components/ScoreBars.astro';
 import Monogram from '../../components/Monogram.astro';
 import ScoreRing from '../../components/ScoreRing.astro';
 import RankTable from '../../components/RankTable.astro';
+import FeatureMark from '../../components/FeatureMark.astro';
+import Plans from '../../components/Plans.astro';
+import { featuresFor } from '../../lib/features';
 import { alternativesFor, listsContaining, comparisonPairs } from '../../lib/lists';
 import { scoreTool, groupOf, GROUP_LABELS, type Tool } from '../../lib/score';
 import { softwareApp } from '../../lib/jsonld';
 import {
-  CATEGORY_LABELS, COMMERCIAL_LABELS, ENGINE_LABELS, FREE_TIER_LABELS, STATUS_LABELS,
+  CATEGORY_LABELS, COMMERCIAL_LABELS, ENGINE_LABELS, EXPORT_LABELS, FREE_TIER_LABELS, STATUS_LABELS,
   isoDate, list, outboundRel, outboundUrl, price,
 } from '../../lib/format';
 import { SITE } from '../../site';
@@ -37,11 +40,14 @@ const facts: [string, string, string | undefined][] = [
   ['Price', price(tool), d.pricing.notes],
   ['Commercial use', COMMERCIAL_LABELS[d.license.commercial_use] + (d.license.open_source ? ' · Open source' : ''), d.license.notes],
   ['Engines', list(d.engines, ENGINE_LABELS), undefined],
-  ['Exports', list(d.exports), undefined],
+  ['Exports', list(d.exports, EXPORT_LABELS), undefined],
   ['Runs on', list(d.platforms, { web: 'Web', desktop: 'Desktop', plugin: 'Plugin', api: 'API', cli: 'CLI', 'self-hosted': 'Self-hosted' }), undefined],
   ['Skill level', d.skill_level[0].toUpperCase() + d.skill_level.slice(1), undefined],
   ['Last verified', isoDate(d.last_verified), undefined],
 ];
+const featureDefs = featuresFor(d.categories);
+const knownFeatures = featureDefs.filter((f) => d.features[f.key] !== undefined).length;
+const compareIds = [tool.id, ...alternatives.slice(0, 2).map((s) => s.tool.id)];
 const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what to use instead` : `${d.name} Review (${SITE.year}): Pricing, Features & Alternatives`;
 ---
 
@@ -114,7 +120,7 @@ const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what t
   <h2>Key facts</h2>
   <dl class="facts-grid">
     {facts.map(([label, value, note]) => (
-      <div class="fact">
+      <div class:list={['fact', { wide: !!note }]}>
         <dt>{label}</dt>
         <dd class={value === 'Unverified' ? 'unverified' : undefined}>
           {label === 'Website' ? <a href={d.url} rel="noopener">{value}</a> : value}
@@ -128,6 +134,49 @@ const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what t
       <p class="meta">
         Still being verified against primary sources: {d.needs_verification.join(', ')}. "Unverified" means we haven't
         confirmed it, not that the feature is missing.
+      </p>
+    )
+  }
+
+  {
+    featureDefs.length > 0 && d.status !== 'discontinued' && (
+      <>
+        <h2>Features</h2>
+        <ul class="feature-list">
+          {featureDefs.map((f) => (
+            <li>
+              <span>
+                {f.label}
+                {d.feature_notes[f.key] && <span class="note"> ({d.feature_notes[f.key]})</span>}
+              </span>
+              <FeatureMark value={d.features[f.key]} />
+            </li>
+          ))}
+        </ul>
+        <p class="meta">
+          {knownFeatures} of {featureDefs.length} features verified from {d.name}'s own site, docs or pricing page.
+          "Unverified" means we couldn't confirm it either way yet.
+        </p>
+      </>
+    )
+  }
+
+  {
+    d.plans.length > 0 && (
+      <>
+        <h2>{d.name} pricing plans</h2>
+        <Plans tool={tool} />
+        <p class="meta">Monthly prices in USD as listed by {d.name}. Last checked {isoDate(d.last_verified)}.</p>
+      </>
+    )
+  }
+
+  {
+    d.status !== 'discontinued' && alternatives.length > 0 && (
+      <p>
+        <a class="btn btn-ghost" href={`/compare/?tools=${compareIds.join(',')}`}>
+          Compare {d.name} with {alternatives.slice(0, 2).map((s) => s.tool.data.name).join(' and ')}
+        </a>
       </p>
     )
   }

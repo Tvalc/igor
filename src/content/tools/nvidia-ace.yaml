@@ -31,7 +31,25 @@ license:
 sources:
 - https://developer.nvidia.com/ace
 - https://developer.nvidia.com/ace-for-games
+- https://docs.nvidia.com/ace/latest/workflows/kairos/kairos-unreal-plugin.html
+- https://docs.nvidia.com/ace/ace-unreal-plugin/2.5/ace-unreal-plugin-changelog.html
+- https://blogs.nvidia.com/blog/ai-decoded-gamescom-ace-nemotron-instruct
+- https://developer.nvidia.com/blog/deploy-the-first-on-device-small-language-model-for-improved-game-character-roleplay
+- https://catalog.ngc.nvidia.com/orgs/nim/nvidia/containers/audio2face-3d/-/governing-terms
 needs_verification:
 - commercial use
 - exports
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  unreal_sdk: 'yes'
+  on_device: 'yes'
+  hands_face: partial
+  realtime: 'yes'
+feature_notes:
+  hands_face: Audio-driven facial animation only (Audio2Face); no hand animation found
+  on_device: Nemotron 4B on-device SLM; local Audio2Face-3D plugins need an NVIDIA GPU
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: Unreal and Maya plugins MIT-licensed; NIM containers under NVIDIA terms

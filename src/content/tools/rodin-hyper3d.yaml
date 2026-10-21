@@ -27,7 +27,16 @@ license:
   open_source: false
 sources:
 - https://hyper3d.ai
+- https://runware.ai/docs/models/hyper3d-rodin-gen-2
+- https://runware.ai/docs/models/hyper3d-rodin-gen-2/guides/topology-and-polygon-budget
+- https://empiriolabs.ai/models/hyper3d-gen2
 needs_verification:
 - price
 - commercial use
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  text_to_3d: 'yes'
+  image_to_3d: 'yes'
+  pbr_textures: 'yes'
+  low_poly: 'yes'
+  api: 'yes'

@@ -31,6 +31,37 @@ sources:
 - https://www.jabali.ai/pricing/
 - https://www.jabali.ai/faqs/
 - https://www.jabali.ai/jabalistudio/
+- https://jabali.ai/pricing
+- https://www.jabali.ai/faq
+- https://cxotoday.com/press-release/jabali-ai-launches-jabali-studios-to-democratize-game-creation-through-ai/
+- https://www.jabali.ai/pricing
+- https://www.jabali.ai/explore/2d-games/
+- https://www.jabali.ai/friendjam/
 needs_verification:
 - commercial use
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  no_code: 'yes'
+  hosting: 'yes'
+  export_project: partial
+  ai_art: 'yes'
+  multiplayer: partial
+  mobile: partial
+  edit_code: partial
+feature_notes:
+  multiplayer: Multiplayer games via Jabali Studio (waitlist) and the separate FriendJam product
+  mobile: Runs in mobile browsers; no native app yet
+  edit_code: Source code access only in Jabali Studio (waitlist)
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 3 games/AI characters per week, 100 AI character msgs/wk
+- name: Premium
+  price_usd: 9.99
+  period: month
+  includes: 10 games/wk, 500 Copilot prompts/wk, 1,000 chat msgs/wk
+- name: Ultra
+  price_usd: 24.99
+  period: month
+  includes: 25 games/wk, 5,000 Copilot prompts/wk, unlimited chat

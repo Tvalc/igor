@@ -30,6 +30,26 @@ sources:
 - https://github.com/hi-godot/godot-ai
 - https://github.com/hi-godot/godot-ai/blob/main/docs/TOOLS.md
 - https://github.com/hi-godot/godot-ai/blob/main/README.md
+- https://store.godotengine.org/asset/dlight/godot-ai/
+- https://pypi.org/project/godot-ai
+- https://godotengine.org/asset-library/asset/5050
+- https://godotengine.org/asset-library/asset/edit/22588
+- https://glama.ai/mcp/servers/hi-godot/godot-ai
 needs_verification:
 - exports
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  engine_integration: 'yes'
+  mcp: 'yes'
+  scene_editing: 'yes'
+  runs_game: 'yes'
+  model_choice: 'yes'
+feature_notes:
+  runs_game: Project tools run/stop the project (main, current or custom scene) and capture in-game screenshots
+  model_choice: MCP server usable from any MCP client (Claude Code, Codex, Antigravity, etc.), so the user picks
+    the LLM
+plans:
+- name: Open source
+  price_usd: 0
+  period: free
+  includes: Open source (MIT), self-hosted

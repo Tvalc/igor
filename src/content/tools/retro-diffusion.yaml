@@ -33,5 +33,36 @@ sources:
 - https://retrodiffusion.ai/
 - https://astropulse.itch.io/retrodiffusion
 - https://astropulse.itch.io/retrodiffusion/devlog/1639304/amd-gpu-support-big-announcement
+- https://astropulse.itch.io/retrodiffusionlite
+- https://astropulse.itch.io/retrodiffusion/purchase
+- https://astropulse.gumroad.com/l/RetroDiffusionCredits
+- https://mcpservers.org/servers/retro-diffusion/retro-diffusion-mcp
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  pixel_art: 'yes'
+  sprite_sheets: 'yes'
+  consistent_characters: 'yes'
+  tilesets: 'yes'
+  transparent_bg: 'yes'
+  multi_direction: 'yes'
+  api: 'yes'
+feature_notes:
+  sprite_sheets: Animation cycles exported as GIF or sprite sheet
+  consistent_characters: Up to 9 reference images
+  tilesets: Wang/blob tilesets, tile variations
+  multi_direction: 4-angle walk cycles and 8-direction rotations
+  api: Hosted API/MCP endpoint with developer key
+plans:
+- name: Aseprite extension
+  price_usd: 65
+  period: one-time
+  includes: Full extension, no credits, free future updates
+- name: Aseprite extension Lite
+  price_usd: 20
+  period: one-time
+  includes: Lite extension, one-time purchase
+- name: Web app credits
+  price_usd: null
+  period: usage
+  includes: Pay per generation; 50 free credits for new accounts

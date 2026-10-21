@@ -25,7 +25,7 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: trial
-  starting_price_usd: null
+  starting_price_usd: 19
   notes: Credit packs ($12/20, $32/60, $100/250 per plans page) plus a monthly subscription; 3 free credits on signup;
     public generations don't use credits.
 license:
@@ -37,6 +37,28 @@ sources:
 - https://www.godmodeai.co/term-of-use
 - https://www.godmodeai.co/
 - https://www.godmodeai.co/plans
-needs_verification:
-- price
-last_verified: '2026-10-16'
+- https://backiee.wasmer.app/https_godmodeai_co
+- https://backiee.wasmer.app/https_godmodeai_co/plans
+- https://ludo.ai/compare/best-ai-sprite-generators
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  pixel_art: 'yes'
+  multi_direction: 'yes'
+plans:
+- name: Monthly Subscription
+  price_usd: 19
+  period: month
+  includes: Up to 200 generations/mo; public generations don't use credits
+- name: Starter Pack
+  price_usd: 12
+  period: one-time
+  includes: 20 credits, never expire
+- name: Popular Pack
+  price_usd: 32
+  period: one-time
+  includes: 60 credits, never expire
+- name: 250 credit pack
+  price_usd: 100
+  period: one-time
+  includes: 250 credits (1 credit = 1 sprite generation), never expire

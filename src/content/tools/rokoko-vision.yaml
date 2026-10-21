@@ -29,5 +29,27 @@ sources:
 - https://www.rokoko.com
 - https://www.rokoko.com/products/vision
 - https://www.rokoko.com/pricing
+- https://support.rokoko.com/hc/en-us/articles/15712580191761-Rokoko-Studio-Subscriptions-plans-explained
+- https://www.rokoko.com/insights/introducing-rokoko-vision-3-0
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  video_mocap: 'yes'
+  multi_person: 'no'
+  hands_face: 'no'
+  realtime: 'no'
+  retarget: partial
+feature_notes:
+  multi_person: 1 performer per recording
+  hands_face: No finger or face tracking; needs Smartgloves or face capture hardware
+  realtime: AI capture needs post-processing; webcam live capture removed in Vision 3.0
+  retarget: Custom character import and retargeting on Basic plan, in Rokoko Studio
+plans:
+- name: Starter
+  price_usd: 0
+  period: free
+  includes: 30s Vision processing/mo, FBX export
+- name: Basic
+  price_usd: 12
+  period: month
+  includes: 600s Vision processing/mo, BVH, retargeting; $10/mo yearly

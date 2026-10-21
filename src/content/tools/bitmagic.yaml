@@ -32,6 +32,23 @@ sources:
 - https://bitmagic.ai/pro/
 - https://bitmagic.ai/
 - https://bitmagic.ai/gdk/
+- https://bitmagic.ai/lab/
 needs_verification:
 - price
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  no_code: 'yes'
+  edit_code: partial
+  ai_art: 'yes'
+  multiplayer: partial
+  hosting: 'yes'
+  export_project: partial
+feature_notes:
+  edit_code: Via the GDK with a coding agent; requires Bitmagic Pro
+  multiplayer: Multiplayer and leaderboards listed as part of Bitmagic Pro
+  export_project: GDK scaffolds a local project with engine source; Pro only
+plans:
+- name: Web Creator
+  price_usd: 0
+  period: free
+  includes: Free to start; games free to play

@@ -30,6 +30,23 @@ sources:
 - https://github.com/ahujasid/blender-mcp
 - https://github.com/ahujasid/mcp-for-blender/blob/main/LICENSE
 - https://github.com/ahujasid/blender-mcp/blob/main/TERMS_AND_CONDITIONS.md
+- https://docsearch.algolia.com/mcp/docs/repo/ahujasid/blender-mcp
+- https://glama.ai/mcp/servers/ahujasid/blender-mcp
+- https://mcpservers.org/ja/servers/ahujasid/blender-mcp
 needs_verification:
 - exports
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  mcp: 'yes'
+  scene_editing: 'yes'
+  text_to_3d: partial
+  image_to_3d: partial
+feature_notes:
+  text_to_3d: via Hyper3D Rodin integration; limited free trial key or own hyper3d.ai/fal.ai key
+  image_to_3d: via Hyper3D Rodin or Hunyuan3D (Tencent Cloud API or own local server)
+  scene_editing: edits Blender scenes, not a game engine
+plans:
+- name: Open source
+  price_usd: 0
+  period: free
+  includes: Open source, self-hosted (MIT)

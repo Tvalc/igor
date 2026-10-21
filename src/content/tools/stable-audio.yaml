@@ -28,5 +28,47 @@ license:
   open_source: false
 sources:
 - https://app.cinevva.com/guides/ai-sound-effect-generators
+- https://kb.stability.ai/knowledge-base/stable-audio-subscription-plans-and-credit-system
+- https://alternativeto.net/news/2025/9/stable-audio-2-5-from-stability-ai-delivers-faster-more-intricate-ai-generated-music/
+- https://stableaudio.com/pricing
+- https://stableaudio.com/docs
+- https://stableaudio.com/user-guide/interface
+- https://stability.ai/guides/stable-audio-3-prompt-guide
+- https://stability.ai/explainers/ai-music-stems-and-audio-inpainting-generating-parts-instead-of-finished-songs
+- https://stability.ai/news-updates/stable-audio-2-0
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  api: 'yes'
+  stems: partial
+  loops: 'yes'
+  vocals: 'no'
+  custom_length: 'yes'
+  text_to_sfx: 'yes'
+  loopable: 'yes'
+  variations: partial
+feature_notes:
+  stems: Stem output labeled experimental; separate renders may not align
+  vocals: Not intended to generate intelligible vocals (only vocal-like textures)
+  variations: Multiple results per prompt (up to 5) limited to paid plan
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 50 one-time credits at signup
+- name: Creator
+  price_usd: 12
+  period: month
+  includes: 660 credits/mo
+- name: Pro
+  price_usd: 30
+  period: month
+  includes: 1,800 credits/mo
+- name: Studio
+  price_usd: 90
+  period: month
+  includes: 6,000 credits/mo
+- name: Max
+  price_usd: 199
+  period: month
+  includes: 14,000 credits/mo

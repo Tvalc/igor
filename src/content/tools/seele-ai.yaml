@@ -30,6 +30,44 @@ sources:
 - https://www.seeles.ai/upgrade
 - https://www.seeles.ai/compare/seele-vs-roblox-ai
 - https://www.seeles.ai/features/create/ai-game-maker
+- https://www.seeles.ai/
+- https://www.seeles.ai/compare/seele-vs-upit
+- https://www.seeles.ai/compare/seele-vs-tripo-ai
+- https://www.seeles.ai/aigamemaker
+- https://www.seeles.ai/features/create/ai-powered-code-editor
+- https://www.seeles.ai/features-list
+- https://www.seeles.ai/resources/blogs/ai-mobile-game-development-platforms-2026
 needs_verification:
 - exports
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  no_code: 'yes'
+  edit_code: 'yes'
+  ai_art: 'yes'
+  ai_audio: 'yes'
+  multiplayer: 'yes'
+  hosting: 'yes'
+  export_project: partial
+  mobile: partial
+feature_notes:
+  export_project: Unity project export requires Pro plan
+  mobile: Native iOS/Android via Unity export; browser builds are responsive web
+  multiplayer: Vendor claims built-in networking on all plans; no technical docs found
+  ai_audio: Background music, SFX and voice acting
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 200 Koin/mo, non-commercial
+- name: Standard
+  price_usd: 20
+  period: month
+  includes: 2,000 Koin/mo ($17/mo billed yearly)
+- name: Pro
+  price_usd: 50
+  period: month
+  includes: 6,000 Koin/mo, commercial use ($39/mo yearly)
+- name: Ultra
+  price_usd: 200
+  period: month
+  includes: 25,000 Koin/mo ($167/mo billed yearly)

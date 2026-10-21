@@ -35,7 +35,33 @@ sources:
 - https://www.makko.ai/pricing
 - https://makko.ai
 - https://blog.makko.ai/best-ai-game-makers-in-2026-7-tools-compared/
+- https://www.makko.ai/llms.txt
+- https://www.makko.ai/help/create-animation-bake-sprite-sheet
+- https://blog.makko.ai/consistent-ai-game-art-makko-collections-guide/
+- https://www.makko.ai/
+- https://blog.makko.ai/how-to-add-animated-characters-to-a-game-using-makko/
+- https://blog.makko.ai/what-is-makko-art-studio-the-ai-game-asset-generator-built-for-game-developers/
+- https://blog.makko.ai/7-best-no-code-game-makers-in-2026/
+- https://blog.makko.ai/makko-ai-is-live-make-2d-games-with-ai-no-drawing-no-coding/
 needs_verification:
 - price
 - exports
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  sprite_sheets: 'yes'
+  transparent_bg: 'yes'
+  consistent_characters: 'yes'
+  pixel_art: 'yes'
+  multi_direction: partial
+  no_code: 'yes'
+  ai_art: 'yes'
+  hosting: 'yes'
+  export_project: partial
+feature_notes:
+  multi_direction: Reference sheet gives front, side and back views, not 8 directions
+  export_project: Exporting off-platform requires a paid plan
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 150 Art Budget/mo, 70 AI requests/wk

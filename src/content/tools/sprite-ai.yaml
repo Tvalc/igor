@@ -31,5 +31,28 @@ license:
 sources:
 - https://www.sprite-ai.art
 - https://www.sprite-ai.art/pricing
+- https://www.sprite-ai.art/blog/best-pixel-art-generators-2026
+- https://alternativeto.net/software/sprite-ai/about
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  pixel_art: 'yes'
+  sprite_sheets: 'yes'
+  transparent_bg: 'yes'
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 15 generations, no card required
+- name: Creator
+  price_usd: 8
+  period: month
+  includes: Paid generation allowance
+- name: Studio
+  price_usd: 24
+  period: month
+  includes: Larger generation allowance
+- name: Production
+  price_usd: 50
+  period: month
+  includes: Largest generation allowance

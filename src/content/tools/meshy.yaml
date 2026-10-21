@@ -47,5 +47,40 @@ sources:
 - https://www.meshy.ai/pricing
 - https://docs.meshy.ai/en/webapp/pricing
 - https://www.meshy.ai/features/text-to-3d
+- https://meshy.ai/pricing
+- https://docs.meshy.ai/pricing
+- https://docs.meshy.ai/en/webapp/concepts
+- https://www.meshy.ai/blog/ai-3d-models-for-unity-official-meshy-plugin-2026
+- https://www.meshy.ai/use-cases/free-game-assets/unity
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  text_to_3d: 'yes'
+  image_to_3d: 'yes'
+  pbr_textures: 'yes'
+  auto_rigging: 'yes'
+  low_poly: 'yes'
+  api: 'yes'
+  pbr_maps: 'yes'
+  engine_plugin: partial
+feature_notes:
+  auto_rigging: Humanoid and quadruped
+  low_poly: Remesh to a target polycount
+  engine_plugin: Unity plugin requires Pro plan or higher
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 100 credits/mo; outputs CC BY 4.0 (attribution)
+- name: Pro
+  price_usd: 20
+  period: month
+  includes: 1,000 credits/mo; commercial rights
+- name: Studio
+  price_usd: 60
+  period: month
+  includes: Team plan; $576 billed yearly
+- name: Enterprise
+  price_usd: null
+  period: custom
+  includes: Custom pricing

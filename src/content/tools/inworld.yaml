@@ -35,6 +35,32 @@ sources:
 - https://docs.inworld.ai/portal/billing
 - https://inworld.ai/voice-generator
 - https://inworld.ai/voice-cloning
+- https://inworld.ai/gaming-media
 needs_verification:
 - exports
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  cloning: 'yes'
+  voice_design: 'yes'
+  multilingual: 'yes'
+  api: 'yes'
+  voice: 'yes'
+feature_notes:
+  multilingual: 100+ languages
+plans:
+- name: On-Demand
+  price_usd: 0
+  period: usage
+  includes: Pay as you go, up to 70 min TTS included
+- name: Creator
+  price_usd: 25
+  period: month
+- name: Builder
+  price_usd: 100
+  period: month
+- name: Developer
+  price_usd: 300
+  period: month
+- name: Enterprise
+  price_usd: null
+  period: custom

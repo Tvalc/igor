@@ -27,6 +27,21 @@ license:
   notes: MIT license.
 sources:
 - https://mcpservers.org/hi/servers/github-com-coplaydev-unity-mcp
+- https://github.com/CoplayDev/unity-mcp
+- https://glama.ai/mcp/servers/@CoplayDev/unity-mcp/blob/e3e5485d3904b94962b8cd821d3ad353c02c1ec3/README.md
+- https://glama.ai/mcp/servers/@CoplayDev/unity-mcp/blob/08b8eacab13da57ed13859167fa6033c6441f58d/unity-mcp-skill/references/tools-reference.md
 needs_verification:
 - exports
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  engine_integration: 'yes'
+  mcp: 'yes'
+  scene_editing: 'yes'
+  model_choice: 'yes'
+feature_notes:
+  model_choice: Works with any MCP client (Claude, Cursor, etc.), which sets the LLM
+plans:
+- name: Open source
+  price_usd: 0
+  period: free
+  includes: Open source, self-hosted

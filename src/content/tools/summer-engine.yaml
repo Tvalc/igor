@@ -35,6 +35,39 @@ sources:
 - https://www.summerengine.com/blog/how-to-make-a-game-with-ai
 - https://docs.summerengine.com/essentials/pricing
 - https://www.summerengine.com/steam-game-maker
+- https://www.summerengine.com/pricing
+- https://www.summerengine.com/godot-ai-mcp
+- https://www.summerengine.com/godot-mcp
 needs_verification:
 - commercial use
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  mcp: 'yes'
+  scene_editing: 'yes'
+  runs_game: 'yes'
+  model_choice: 'yes'
+  ai_art: 'yes'
+  ai_audio: 'yes'
+  mobile: 'yes'
+feature_notes:
+  model_choice: Via external MCP clients (Claude Code, Cursor, Codex)
+  ai_art: Cloud generation of images and 3D models uses credits
+  ai_audio: Cloud generation uses credits
+  mobile: Export targets include mobile
+plans:
+- name: Hobby
+  price_usd: 0
+  period: free
+  includes: Limited agent use and AI assets, 100 MCP calls/wk, 1 GiB storage
+- name: Pro
+  price_usd: 20
+  period: month
+  includes: Extended agent usage, higher AI asset limits, 20 GiB storage
+- name: Pro+
+  price_usd: 60
+  period: month
+  includes: 3x Pro AI usage, 100 GiB storage
+- name: Ultra
+  price_usd: 200
+  period: month
+  includes: 10x Pro AI usage, priority access, 500 GiB storage

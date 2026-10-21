@@ -5,6 +5,8 @@ import Faq from '../../components/Faq.astro';
 import Podium from '../../components/Podium.astro';
 import Icon, { type IconName } from '../../components/Icon.astro';
 import Monogram from '../../components/Monogram.astro';
+import FeatureMatrix from '../../components/FeatureMatrix.astro';
+import { FEATURES } from '../../lib/features';
 import { publishedLists, toolsWithAlternatives, LIST_ICONS, type ListDef } from '../../lib/lists';
 import { FACTOR_LABELS, strengths, type Scored } from '../../lib/score';
 import { itemList, faqPage } from '../../lib/jsonld';
@@ -28,6 +30,8 @@ const commercialOnes = ranked.filter((s) => s.tool.data.license.commercial_use =
 const beginnerOnes = ranked.filter((s) => s.tool.data.skill_level === 'beginner');
 const hasMakko = ranked.some((s) => s.tool.data.makko_owned);
 const withAlts = await toolsWithAlternatives();
+const matrixTools = ranked.slice(0, 6).map((s) => s.tool);
+const matrixDefs = def.features ? FEATURES[def.features] : [];
 const names = (xs: Scored[], n = 3) => xs.slice(0, n).map((s) => s.tool.data.name).join(', ');
 
 const faqs = [
@@ -98,6 +102,20 @@ const description = `${def.title}, ranked: ${names(ranked)} and more, compared o
 
   <h2>Full ranking</h2>
   <RankTable ranked={ranked} />
+
+  {
+    matrixDefs.length > 0 && matrixTools.some((t) => Object.keys(t.data.features).length > 0) && (
+      <>
+        <h2>Feature comparison: top {matrixTools.length}</h2>
+        <FeatureMatrix tools={matrixTools} defs={matrixDefs} />
+        <p>
+          <a class="btn btn-ghost" href={`/compare/?tools=${matrixTools.slice(0, 4).map((t) => t.id).join(',')}`}>
+            Compare the top 4 side by side
+          </a>
+        </p>
+      </>
+    )
+  }
 
   <h2>The top picks, briefly</h2>
   {

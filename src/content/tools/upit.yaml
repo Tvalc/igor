@@ -24,7 +24,21 @@ license:
   open_source: false
 sources:
 - https://upit.com
+- https://apps.apple.com/ng/app/upit-ai-game-maker/id6741482135
+- https://upit.com/learn/about
+- https://upit.com/up/announcements/krvbmz30k
+- https://upit.com/up/announcements/1mzq0c45w
 needs_verification:
 - price
 - commercial use
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  mobile: 'yes'
+  no_code: 'yes'
+  edit_code: 'yes'
+  ai_art: 'yes'
+  ai_audio: 'yes'
+  hosting: 'yes'
+feature_notes:
+  hosting: 'Publish tab: private (link-only) or public'
+  ai_audio: AI assistant Ava generates code, graphics and sound

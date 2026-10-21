@@ -36,5 +36,32 @@ sources:
 - https://mubert.com/affiliate-program
 - https://mubert.com/render/pricing
 - https://mubert.com/render/faq
+- https://mubert.com/fr/render/pricing
+- https://www.producthunt.com/p/mubert/mubert-api
+- https://vidmuse.ai/blog/mubert
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  stems: 'yes'
+  loops: 'yes'
+  custom_length: 'yes'
+  api: 'yes'
+feature_notes:
+  stems: Stem edit/swap via Mubert API v3
+plans:
+- name: Ambassador
+  price_usd: 0
+  period: free
+  includes: Non-commercial use
+- name: Creator
+  price_usd: 14
+  period: month
+  includes: Non-commercial use
+- name: Pro
+  price_usd: 39
+  period: month
+  includes: Commercial use
+- name: Business
+  price_usd: 199
+  period: month
+  includes: Commercial use incl. apps and games

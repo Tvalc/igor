@@ -17,6 +17,12 @@ export const ENGINE_LABELS: Record<string, string> = {
   unity: 'Unity', unreal: 'Unreal', godot: 'Godot', roblox: 'Roblox', blender: 'Blender', aseprite: 'Aseprite', web: 'Web',
 };
 
+export const EXPORT_LABELS: Record<string, string> = {
+  web: 'Web', windows: 'Windows', mac: 'Mac', linux: 'Linux', ios: 'iOS', android: 'Android', steam: 'Steam',
+  png: 'PNG', 'sprite-sheet': 'Sprite sheet', gif: 'GIF', glb: 'GLB', fbx: 'FBX', obj: 'OBJ', usdz: 'USDZ',
+  'pbr-maps': 'PBR maps', bvh: 'BVH', mp3: 'MP3', wav: 'WAV', 'source-code': 'Source code',
+};
+
 export const FREE_TIER_LABELS = {
   yes: 'Free tier', limited: 'Limited free tier', trial: 'Free trial', no: 'No free tier', unknown: 'Unverified',
 } as const;

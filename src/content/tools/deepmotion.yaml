@@ -31,6 +31,19 @@ sources:
 - https://www.deepmotion.com
 - https://deepmotion.com/faq
 - https://www.deepmotion.com/pricing-animate3d
+- https://deepmotion.com/post/multi-person-tracking
+- https://deepmotion.com/post/multi-person-tracking-guide
+- https://deepmotion.com/post/deepmotion-ue5-animation-retargeting-just-got-easier
+- https://www.deepmotion.com/post/the-next-generation-of-motion-intelligence-solutions-from-deepmotion
 needs_verification:
 - price
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  video_mocap: 'yes'
+  multi_person: partial
+  hands_face: 'yes'
+  text_to_motion: 'yes'
+  retarget: 'yes'
+feature_notes:
+  text_to_motion: Via SayMotion text-to-animation product
+  retarget: Custom Character upload with automatic retargeting; SayMotion auto-retargeting for UE5

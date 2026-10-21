@@ -3,11 +3,14 @@ import Base from '../../layouts/Base.astro';
 import Faq from '../../components/Faq.astro';
 import Monogram from '../../components/Monogram.astro';
 import ScoreRing from '../../components/ScoreRing.astro';
+import FeatureMatrix from '../../components/FeatureMatrix.astro';
+import Plans from '../../components/Plans.astro';
+import { COMMERCIAL_RANK, FREE_RANK, fromPrice, priceLabel, sharedFeatures } from '../../lib/compare';
 import { comparisonPairs, toolsWithAlternatives, type ListDef } from '../../lib/lists';
 import { scoreTool, FACTOR_LABELS, type Factor, type Group, type Tool } from '../../lib/score';
 import { faqPage } from '../../lib/jsonld';
 import {
-  COMMERCIAL_LABELS, ENGINE_LABELS, FREE_TIER_LABELS, STATUS_LABELS, isoDate, list, price, tier,
+  COMMERCIAL_LABELS, ENGINE_LABELS, EXPORT_LABELS, FREE_TIER_LABELS, STATUS_LABELS, isoDate, list, tier,
 } from '../../lib/format';
 import { SITE } from '../../site';
 
@@ -35,17 +38,53 @@ const bWins = wins(sb, sa);
 const hasMakko = a.data.makko_owned || b.data.makko_owned;
 const withAlts = await toolsWithAlternatives();
 
-const rows: [string, (t: Tool) => string][] = [
+// Each row can name a "better" side so the table can mark it; ties and unknowns mark nothing.
+type Row = [string, (t: Tool) => string, ((t: Tool) => number | null)?, ('max' | 'min')?];
+const rows: Row[] = [
   ['Best for', (t) => t.data.best_for],
-  ['Free tier', (t) => FREE_TIER_LABELS[t.data.pricing.free_tier]],
-  ['Price', (t) => price(t)],
-  ['Commercial use', (t) => COMMERCIAL_LABELS[t.data.license.commercial_use] + (t.data.license.open_source ? ' (open source)' : '')],
+  ['Free tier', (t) => FREE_TIER_LABELS[t.data.pricing.free_tier], (t) => FREE_RANK[t.data.pricing.free_tier] || null],
+  ['Starting price', (t) => priceLabel(t), (t) => fromPrice(t), 'min'],
+  ['Commercial use', (t) => COMMERCIAL_LABELS[t.data.license.commercial_use] + (t.data.license.open_source ? ' (open source)' : ''), (t) => COMMERCIAL_RANK[t.data.license.commercial_use] || null],
   ['Engines', (t) => list(t.data.engines, ENGINE_LABELS)],
-  ['Exports', (t) => list(t.data.exports)],
+  ['Exports', (t) => list(t.data.exports, EXPORT_LABELS)],
   ['Skill level', (t) => t.data.skill_level],
   ['Status', (t) => STATUS_LABELS[t.data.status]],
   ['Last verified', (t) => isoDate(t.data.last_verified)],
 ];
+
+const better = (row: Row) => {
+  const [, , val, mode = 'max'] = row;
+  if (!val) return null;
+  const x = val(a), y = val(b);
+  if (x === null || y === null || x === y) return null;
+  return (mode === 'max' ? x > y : x < y) ? a.id : b.id;
+};
+
+const featureDefs = sharedFeatures([a, b]);
+const engineNames = (t: Tool) => t.data.engines.map((e) => ENGINE_LABELS[e]);
+/** Reasons to pick `t` over `o`, from facts only. A gap in the other tool's data is never counted as a reason. */
+function chooseIf(t: Tool, o: Tool): string[] {
+  const out: string[] = [];
+  const td = t.data, od = o.data;
+  if (FREE_RANK[td.pricing.free_tier] > FREE_RANK[od.pricing.free_tier] && od.pricing.free_tier !== 'unknown' && ['yes', 'limited'].includes(td.pricing.free_tier))
+    out.push('you want to start for free');
+  const tp = fromPrice(t), op = fromPrice(o);
+  if (tp !== null && op !== null && tp < op) out.push(`you want a lower starting price (${priceLabel(t)} vs ${priceLabel(o)})`);
+  if (COMMERCIAL_RANK[td.license.commercial_use] > COMMERCIAL_RANK[od.license.commercial_use] && od.license.commercial_use !== 'unknown')
+    out.push(`you plan to sell what you make (commercial use: ${COMMERCIAL_LABELS[td.license.commercial_use].toLowerCase()})`);
+  if (td.skill_level === 'beginner' && od.skill_level !== 'beginner') out.push("you're a beginner or don't code");
+  const extraEngines = engineNames(t).filter((e) => !engineNames(o).includes(e));
+  if (extraEngines.length && od.engines.length) out.push(`you work in ${extraEngines.join(' or ')}`);
+  for (const f of featureDefs) {
+    const v = td.features[f.key], w = od.features[f.key];
+    if (v === 'yes' && (w === 'no' || w === 'partial')) out.push(`you need ${f.label.toLowerCase()}`);
+  }
+  if (td.license.open_source && !od.license.open_source) out.push('you want open source you can self-host');
+  return out.slice(0, 5);
+}
+const chooseA = chooseIf(a, b);
+const chooseB = chooseIf(b, a);
+const plansShown = a.data.plans.length > 0 || b.data.plans.length > 0;
 
 const faqs = [
   {
@@ -56,7 +95,7 @@ const faqs = [
   },
   {
     q: `Which is cheaper, ${a.data.name} or ${b.data.name}?`,
-    a: `${a.data.name}: ${FREE_TIER_LABELS[a.data.pricing.free_tier].toLowerCase()}, ${price(a).toLowerCase()}. ${b.data.name}: ${FREE_TIER_LABELS[b.data.pricing.free_tier].toLowerCase()}, ${price(b).toLowerCase()}.`,
+    a: `${a.data.name}: ${FREE_TIER_LABELS[a.data.pricing.free_tier].toLowerCase()}, ${priceLabel(a).toLowerCase()}. ${b.data.name}: ${FREE_TIER_LABELS[b.data.pricing.free_tier].toLowerCase()}, ${priceLabel(b).toLowerCase()}.`,
   },
 ];
 ---
@@ -124,17 +163,70 @@ const faqs = [
           <td class="num"><span class={`score tier-${tier(sb.score)}`}>{sb.score}</span></td>
         </tr>
         {
-          rows.map(([label, fn]) => (
-            <tr>
-              <td><strong>{label}</strong></td>
-              <td>{fn(a)}</td>
-              <td>{fn(b)}</td>
-            </tr>
-          ))
+          rows.map((row) => {
+            const [label, fn] = row;
+            const win = better(row);
+            return (
+              <tr>
+                <td><strong>{label}</strong></td>
+                <td class:list={[{ best: win === a.id }, { unverified: fn(a) === 'Unverified' }]}>{fn(a)}</td>
+                <td class:list={[{ best: win === b.id }, { unverified: fn(b) === 'Unverified' }]}>{fn(b)}</td>
+              </tr>
+            );
+          })
         }
       </tbody>
     </table>
   </div>
+
+  <p class="meta">★ marks the better value where the facts differ. "Unverified" means we haven't confirmed it yet.</p>
+
+  {
+    (chooseA.length > 0 || chooseB.length > 0) && (
+      <>
+        <h2>Which should you choose?</h2>
+        <div class="choose">
+          {[[a, chooseA], [b, chooseB]].map(([t, reasons]) => (
+            <div class="card">
+              <h3>Choose {(t as Tool).data.name} if…</h3>
+              {(reasons as string[]).length ? (
+                <ul>{(reasons as string[]).map((r) => <li>{r}</li>)}</ul>
+              ) : (
+                <p>{(t as Tool).data.best_for}</p>
+              )}
+            </div>
+          ))}
+        </div>
+      </>
+    )
+  }
+
+  {
+    featureDefs.length > 0 && (
+      <>
+        <h2>Features compared</h2>
+        <FeatureMatrix tools={[a, b]} defs={featureDefs} />
+      </>
+    )
+  }
+
+  {
+    plansShown && (
+      <>
+        <h2>Pricing plans</h2>
+        {[a, b].map((t) => (
+          <>
+            <h3>{t.data.name}</h3>
+            {t.data.plans.length ? <Plans tool={t} /> : <p class="unverified">{t.data.pricing.notes ?? 'Plans not yet verified.'}</p>}
+          </>
+        ))}
+      </>
+    )
+  }
+
+  <p>
+    <a class="btn btn-ghost" href={`/compare/?tools=${a.id},${b.id}`}>Add a third tool to this comparison</a>
+  </p>
 
   <h2>Factor by factor</h2>
   <div class="table-wrap">

@@ -1,0 +1,26 @@
+---
+import type { Tool } from '../lib/score';
+
+interface Props {
+  tool: Tool;
+}
+const { tool } = Astro.props;
+const PERIOD: Record<string, string> = { month: '/mo', year: '/mo, billed yearly', 'one-time': ' one-time', usage: ' pay as you go', free: '', custom: '' };
+const amount = (p: Tool['data']['plans'][number]) =>
+  p.price_usd === null ? 'Custom' : p.price_usd === 0 ? 'Free' : `$${p.price_usd}`;
+---
+
+<div class="plans">
+  {
+    tool.data.plans.map((p) => (
+      <div class="plan">
+        <h3>{p.name}</h3>
+        <div class="plan-price">
+          {amount(p)}
+          {p.price_usd ? <small>{PERIOD[p.period]}</small> : null}
+        </div>
+        {p.includes && <p>{p.includes}</p>}
+      </div>
+    ))
+  }
+</div>

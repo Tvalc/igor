@@ -28,6 +28,35 @@ affiliate:
 sources:
 - https://www.adobe.com/products/substance3d.html
 - https://helpx.adobe.com/substance-3d/pricing-change.html
+- https://blog.adobe.com/en/publish/2025/02/20/substance-3d-innovations-pricing-updates
+- https://helpx.adobe.com/no/substance-3d/pricing-change.html
+- https://helpx.adobe.com/substance-3d-sampler/release-notes/version-5-1-substance-3d-sampler.html
+- https://helpx.adobe.com/substance-3d-sampler/filters/tools/tiling.html
+- https://helpx.adobe.com/substance-3d-sampler/filters/tools/image-to-material.html
+- https://helpx.adobe.com/substance-3d-sampler/filters/tools/upscale.html
+- https://experienceleague.adobe.com/en/docs/substance-3d/ecosystem/game-engines/game-engines
+- https://www.adobe.com/products/substance3d/plugins/substance-in-unity.html
 needs_verification:
 - commercial use
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  seamless: 'yes'
+  pbr_maps: 'yes'
+  upscale: 'yes'
+  engine_plugin: 'yes'
+feature_notes:
+  upscale: Sampler Upscale layer, 2x or 4x
+  engine_plugin: Free official plugins for Unity and Unreal Engine
+plans:
+- name: Texturing
+  price_usd: 24.99
+  period: month
+  includes: Unmetered Substance 3D Assets; $249.88/yr prepaid option
+- name: Collection
+  price_usd: 59.99
+  period: month
+  includes: Individual; $599.88/yr prepaid option
+- name: Collection (Teams)
+  price_usd: 119.99
+  period: month
+  includes: Per team seat; $1,439.88/yr prepaid option

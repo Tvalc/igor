@@ -31,6 +31,21 @@ sources:
 - https://ai-game.dev
 - https://github.com/IvanMurzak/Unity-MCP
 - https://ai-game.dev/
+- https://ai-game.dev/docs-md/docs.md
+- https://ai-game.dev/docs/best-practices/unity
+- https://agentpedia.codes/mcp/unity-mcp-ai-game-developer
 needs_verification:
 - exports
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  engine_integration: 'yes'
+  mcp: 'yes'
+  scene_editing: 'yes'
+  model_choice: 'yes'
+feature_notes:
+  model_choice: Works with Claude, Cursor, Windsurf, Copilot and Gemini clients
+plans:
+- name: Open source
+  price_usd: 0
+  period: free
+  includes: Open source, self-hosted

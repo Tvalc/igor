@@ -41,5 +41,41 @@ sources:
 - https://help.scenario.com/articles/4276871610-pricing-plans
 - https://www.scenario.com/terms-and-conditions
 - https://www.scenario.com/
+- https://help.scenario.com/en/articles/pricing-plans/
+- https://help.scenario.com/articles/1129045411-frequently-asked-questions-faq
+- https://docs.scenario.com/docs/key-capabilities-at-a-glance
+- https://help.scenario.com/articles/4280773511-train-a-consistent-character-model
+- https://help.scenario.com/en/articles/pixelate
+- https://help.scenario.com/en/articles/image-to-3d-best-practices/
+- https://www.scenario.com/models/pixal3d
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  pixel_art: 'yes'
+  consistent_characters: 'yes'
+  custom_training: partial
+  transparent_bg: 'yes'
+  api: 'yes'
+  image_to_3d: 'yes'
+feature_notes:
+  pixel_art: Pixelate tool converts images to pixel art
+  custom_training: Style/character model training on Pro plan and up
+  transparent_bg: Remove Background tool
+  image_to_3d: Image-to-3D models (e.g. Pixal3D), GLB output
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 50 daily credits
+- name: Starter
+  price_usd: 15
+  period: month
+  includes: 1,500 credits/mo, single user, 50 GB storage
+- name: Pro
+  price_usd: 45
+  period: month
+  includes: 5,000 credits/mo, custom training, priority queue
+- name: Max
+  price_usd: 75
+  period: month
+  includes: 10,000 credits/mo, up to 25 users

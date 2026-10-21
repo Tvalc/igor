@@ -39,6 +39,26 @@ sources:
 - https://gdevelop.io
 - https://gdevelop.io/pricing
 - https://github.com/4ian/GDevelop
+- https://gdevelop.io/pricing/business
+- https://gdevelop.io/blog/why-use-gdevelop-when-you-can-use-ai
+- https://gdevelop.io/blog/make-games-with-ai-agent-gdevelop-automated-prompt
+- https://en.wikipedia.org/wiki/GDevelop
 needs_verification:
 - price
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  no_code: 'yes'
+  edit_code: 'yes'
+  multiplayer: 'yes'
+  hosting: 'yes'
+  mobile: partial
+  export_project: 'yes'
+feature_notes:
+  mobile: 'Free tier: 1 Android build/day; iOS one-click export on paid tiers only'
+  edit_code: JavaScript code blocks alongside events
+  multiplayer: Lobby/player limits vary by tier
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: Free MIT engine, gd.games publishing, 1 Android build/day

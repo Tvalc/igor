@@ -27,6 +27,46 @@ sources:
 - https://antigravity.google
 - https://gemini.google/subscriptions/
 - https://antigravity.google/pricing
+- https://antigravity.google/pricing?hl=pt
+- https://aimeetcode.substack.com/p/antigravity-full-guide-from-install
+- https://www.heyuan110.com/posts/ai/2026-03-10-google-antigravity-review/
+- https://innfactory.ai/en/ai-harness/antigravity/
+- https://antigravity.google/pricing/
+- https://antigravity.google/docs/plans/
+- https://antigravity.google/blog/changes-to-antigravity-plans/
+- https://antigravity.google/blog/google-io-2026/
+- https://antigravity.google/docs/ide/browser/
+- https://antigravity.google/docs/sdk/local-models/
+- https://developers.googleblog.com/introducing-support-for-local-ai-models-in-the-antigravity-sdk/
 needs_verification:
 - commercial use
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  model_choice: 'yes'
+  mcp: 'yes'
+  runs_game: partial
+  local_models: partial
+feature_notes:
+  runs_game: Browser subagent launches and tests running web apps (desktop app only)
+  local_models: Only via the Antigravity SDK (LiteRT, Ollama, LM Studio, vLLM)
+plans:
+- name: Individual
+  price_usd: 0
+  period: free
+  includes: Unlimited Tab completions; basic weekly rate limits
+- name: Google AI Pro
+  price_usd: 19.99
+  period: month
+  includes: Higher 5-hour quota; AI credits for overage
+- name: Google AI Ultra
+  price_usd: 100
+  period: month
+  includes: 5x Pro rate limits; priority access
+- name: Google AI Ultra (top)
+  price_usd: 200
+  period: month
+  includes: 20x Pro rate limits
+- name: Business (Google Cloud)
+  price_usd: 30
+  period: month
+  includes: Standard/Plus plans from $30 per seat

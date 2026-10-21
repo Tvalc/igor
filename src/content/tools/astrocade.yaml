@@ -29,7 +29,26 @@ license:
 sources:
 - https://www.pocketgamer.biz/astrocade-raises-56m-to-expand-ai-powered-games-creation-platform/
 - https://www.astrocade.com/blog/how-game-creators-are-turning-creativity-into-cash-on-astrocade
+- https://www.group.dentsu.com/en/news/release/001671.html
+- https://tooldirectory.ai/tools/astrocade
+- https://nilo.io/articles/how-to-play-astrocade
+- https://yespress.io/astrocade.md
+- https://superdatascience.com/997
 needs_verification:
 - price
 - commercial use
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  no_code: 'yes'
+  ai_art: 'yes'
+  ai_audio: 'yes'
+  hosting: 'yes'
+  mobile: partial
+feature_notes:
+  mobile: Android app for playing and creating; no iOS app confirmed
+  ai_audio: background music generated automatically
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: Create and play for free

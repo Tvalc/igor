@@ -31,5 +31,29 @@ sources:
 - https://bolt.new
 - https://bolt.new/bolt-lite
 - https://bolt.new/pricing
+- https://support.bolt.new/building/deploy
+- https://support.bolt.new/building/build-your-first-app
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  no_code: 'yes'
+  mobile: 'yes'
+  hosting: 'yes'
+  export_project: 'yes'
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 1M tokens/mo, 300K/day, Bolt branding on sites
+- name: Pro
+  price_usd: 25
+  period: month
+  includes: 10M tokens/mo, no daily cap, rollover, custom domains
+- name: Teams
+  price_usd: 30
+  period: month
+  includes: Per member; Pro + centralized billing, admin controls
+- name: Enterprise
+  price_usd: null
+  period: custom
+  includes: Custom pricing

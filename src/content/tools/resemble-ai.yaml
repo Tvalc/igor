@@ -22,8 +22,8 @@ exports:
 skill_level: intermediate
 pricing:
   model: freemium
-  free_tier: unknown
-  starting_price_usd: null
+  free_tier: 'yes'
+  starting_price_usd: 350
   notes: Flex $0/mo pay-as-you-go credits (never expire); Team $350/mo ($280 billed yearly); Business $1,000/mo;
     Enterprise custom
 license:
@@ -32,8 +32,39 @@ license:
 sources:
 - https://dasha.ai/blog/elevenlabs-alternatives
 - https://www.resemble.ai/pricing
+- https://resemble.ai/pricing/
+- https://knowledge.resemble.ai/speech-to-speech
+- https://www.resemble.ai/introducing-rapid-voice-cloning-create-voice-clones-in-seconds/
+- https://www.resemble.ai/multilingual-tts-voice-cloning/
+- https://www.resemble.ai/text-to-speech-converter/
+- https://www.resemble.ai/resources/fastest-text-to-speech-api-real-time-conversion
 needs_verification:
-- free tier
-- price
 - commercial use
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  speech_to_speech: 'yes'
+  cloning: 'yes'
+  voice_design: 'yes'
+  emotion_control: 'yes'
+  multilingual: 'yes'
+  api: 'yes'
+feature_notes:
+  api: Voice Cloning API requires Business plan or higher
+  multilingual: Chatterbox Multilingual clones in 23 languages
+plans:
+- name: Flex
+  price_usd: 0
+  period: usage
+  includes: Pay-as-you-go; 1 seat
+- name: Team
+  price_usd: 350
+  period: month
+  includes: 5 seats; $280/mo billed yearly
+- name: Business
+  price_usd: 1000
+  period: month
+  includes: 20 seats; $800/mo billed yearly
+- name: Enterprise
+  price_usd: null
+  period: custom
+  includes: Custom pricing, contact sales

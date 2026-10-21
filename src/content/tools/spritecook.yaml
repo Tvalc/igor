@@ -34,5 +34,38 @@ sources:
 - https://www.spritecook.ai/game-sprite-generator
 - https://www.spritecook.ai/ai-sprite-sheet-generator
 - https://www.spritecook.ai/
+- https://www.spritecook.ai/api-docs
+- https://www.spritecook.ai/compare/scenario
+- https://www.spritecook.ai/compare/spritesheets-ai
+- https://www.spritecook.ai/blog/creating-pixel-art-assets
+- https://www.spritecook.ai/blog/top-down-tileset
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  pixel_art: 'yes'
+  sprite_sheets: 'yes'
+  consistent_characters: 'yes'
+  custom_training: 'no'
+  tilesets: 'yes'
+  transparent_bg: 'yes'
+  api: 'yes'
+feature_notes:
+  consistent_characters: Saved theme plus up to 3 sprite style references (reference_asset_id in API)
+  custom_training: Vendor says consistency comes from themes, with no model training
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 40 credits/30 days, commercial use allowed
+- name: Starter
+  price_usd: 8
+  period: month
+  includes: 800 credits/mo (~100 images)
+- name: Adventurer
+  price_usd: 30
+  period: month
+  includes: 3,000 credits/mo (~375 images)
+- name: Archmage
+  price_usd: 70
+  period: month
+  includes: 7,000 credits/mo (~875 images)

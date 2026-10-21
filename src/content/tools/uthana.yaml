@@ -32,6 +32,31 @@ sources:
 - https://uthana.com
 - https://uthana.com/pricing
 - https://uthana.com/terms
+- https://uthana.com/faq
+- https://uthana.com/models/text-to-motion
+- https://uthana.com/models/video-to-motion
+- https://uthana.com/docs/api/capabilities/text-to-motion
+- https://uthana.com/product/auto-rigging
+- https://uthana.com/solutions/3d-games-studios
 needs_verification:
 - price
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  text_to_motion: 'yes'
+  video_mocap: 'yes'
+  retarget: 'yes'
+  realtime: 'yes'
+  hands_face: partial
+feature_notes:
+  hands_face: Video-to-motion captures fingers; no facial capture mentioned
+  video_mocap: Best with a single person, full body visible
+  realtime: Control and record characters live with mouse, keyboard or gamepad
+plans:
+- name: Pay-as-you-go
+  price_usd: 0
+  period: usage
+  includes: Text-to-motion $0.02-0.10/s; video $0.05/s; rig $0.15
+- name: Enterprise
+  price_usd: null
+  period: custom
+  includes: Datasets, custom data, integrations quoted per project

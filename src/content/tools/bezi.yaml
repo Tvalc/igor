@@ -31,7 +31,45 @@ sources:
 - https://www.bezi.com/pricing
 - https://docs.bezi.com/account/plans
 - https://www.bezi.com/terms-of-service
+- https://discussions.unity.com/t/released-bezi-ai-powered-game-development-assistant-for-unity/1708451
+- https://www.bezi.com/blog/introducing-actions
+- https://docs.bezi.com/get-started/changelog
+- https://docs.bezi.com/get-started/welcome
+- https://docs.bezi.com/fundamentals/agent-mode
+- https://www.bezi.com/blog/introducing-mcps
+- https://www.bezi.com/blog/introducing-model-selection-a-new-credit-system
 needs_verification:
 - commercial use
 - exports
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  engine_integration: 'yes'
+  scene_editing: 'yes'
+  runs_game: 'yes'
+  mcp: 'yes'
+  model_choice: 'yes'
+feature_notes:
+  mcp: Connects external tools (GitHub, Blender, Figma) via MCP; in-engine edits run through its own Unity plugin,
+    not MCP
+  runs_game: Agent mode works in Play Mode with edit-play-verify loops
+plans:
+- name: Trial
+  price_usd: 0
+  period: free
+  includes: 100 one-time credits
+- name: Pro
+  price_usd: 20
+  period: month
+  includes: 800 credits/mo; overage $0.05/credit
+- name: Advanced
+  price_usd: 60
+  period: month
+  includes: 2,400 credits/mo
+- name: Ultimate
+  price_usd: 180
+  period: month
+  includes: 7,200 credits/mo (per docs; pricing page differs)
+- name: Team
+  price_usd: 200
+  period: month
+  includes: 8,000 pooled credits, 3 seats

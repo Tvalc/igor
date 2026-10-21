@@ -455,3 +455,26 @@ The session hit its web-search limit before these were checked: Move AI, Plask, 
 | ludo-ai | license.notes | None | ToS license: nonexclusive, worldwide, personal and commercial use on every plan; | https://ludo.ai/docs/game-asset-generation |
 | ludo-ai | exports | [] | ['png', 'sprite-sheet', 'gif', 'glb', 'obj'] | https://ludo.ai/docs/3d-generator |
 | ludo-ai | engines | [] | ['unity'] | https://ludo.ai/developers/unity |
+
+## Second pass, 2026-10-21: features and pricing plans
+
+The site now compares tools feature by feature, so each tool got a capability checklist for its
+category (defined in `src/lib/features.ts`) and its current pricing plans.
+
+- Two research passes over all 83 active tools, using vendor sources only (pricing pages, docs, help
+  centers, llms.txt, GitHub READMEs). Third-party reviews from 2025 or later were allowed for
+  features, never for plans.
+- **Features:** 398 verified values (Yes, Partly or No) across 82 tools. Anything without a source
+  stays Unverified.
+- **Plans:** 229 plans across 74 tools.
+- Plans filled 8 missing starting prices (God Mode AI, Resemble AI, AIVA, Ziva, Move AI, Plask, Sloyd,
+  Udio) and 2 missing free tiers (Resemble AI, Ziva).
+- Key facts still unknown: commercial use 27, price 17 (was 25), exports 21.
+- **Status changes found:**
+  - Luma Genie is no longer a standalone product; its assets now live in the Luma app.
+  - Cursor's maker was acquired by SpaceX/xAI.
+- **Judgement calls to re-check:**
+  - Tripo Team price ($165/mo, from $1,980/yr for 3 seats)
+  - God Mode AI plans (taken from a mirror copy of its pricing page)
+  - Bezi Ultimate (docs and pricing page disagree)
+  - Krotos Studio prices raised to $19.99/$49.99 per its current pricing page

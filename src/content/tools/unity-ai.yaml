@@ -34,6 +34,43 @@ sources:
 - https://unity.com/features/ai
 - https://learn.unity.com/course/prototype-a-scene-with-unity-ai/tutorial/using-ai-generated-assets-responsibly?version=6.2
 - https://unity.com/legal/unityai-guiding-principles
+- https://docs.unity3d.com/Manual//unity-ai.html
+- https://docs.unity3d.com/Packages/com.unity.ai.generators@1.6/manual/index.html
+- https://docs.unity3d.com/Packages/com.unity.ai.assistant@2.11/manual/about/assistant-modes.html
+- https://docs.unity3d.com/Packages/com.unity.ai.assistant@2.0/manual/unity-mcp-overview.html
+- https://docs.unity3d.com/Packages/com.unity.ai.generators@1.0/manual/Sprite/modify-sprite.html
+- https://docs.unity3d.com/Packages/com.unity.ai.assistant@2.1/manual/Sprite/modify-sprite.html
+- https://unity.com/products
+- https://app.cinevva.com/news/2026-05-04-unity-ai-open-beta
 needs_verification:
 - exports
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  engine_integration: 'yes'
+  mcp: 'yes'
+  scene_editing: 'yes'
+  model_choice: 'yes'
+  ai_art: 'yes'
+  ai_audio: 'yes'
+  sprite_sheets: 'yes'
+  transparent_bg: 'yes'
+  pixel_art: partial
+feature_notes:
+  scene_editing: Agent mode creates, modifies or removes objects and assets with approval
+  model_choice: AI Gateway connects third-party models; Unity MCP connects agents like Claude Code, Cursor
+  sprite_sheets: Spritesheet tab makes 4x4 (16-frame) sheets
+  transparent_bg: Remove BG tab in Sprite Generator
+  pixel_art: Pixelate post-processing option only
+plans:
+- name: Personal
+  price_usd: 0
+  period: free
+  includes: 14-day AI trial with 1,000 credits
+- name: Pro
+  price_usd: 210
+  period: month
+  includes: Unity Pro seat; 2,000 AI credits/mo
+- name: Enterprise
+  price_usd: null
+  period: custom
+  includes: 3,000 AI credits/mo

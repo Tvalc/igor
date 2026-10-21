@@ -18,13 +18,43 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 10
 license:
   commercial_use: unknown
   open_source: false
 sources:
 - https://www.udio.com
+- https://routenote.com/blog/udio-stops-user-downloads-after-umg-deal-heres-why/
+- https://vantaige.io/ai-tool/udio
+- https://cocowork.fr/en/tools/udio/
+- https://www.udio.com/pricing
+- https://help.udio.com/en/articles/10739134-credits-and-credit-limits
+- https://help.udio.com/en/articles/12683565-changes-associated-with-the-universal-music-group-umg-partnership
+- https://help.udio.com/en/articles/10756277-udio-public-api
+- https://www.udio.com/guide
+- https://www.udio.com/blog/longer-track-length
 needs_verification:
-- price
 - commercial use
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  stems: 'no'
+  vocals: 'yes'
+  custom_length: 'yes'
+  api: 'no'
+feature_notes:
+  stems: Audio and stem downloads disabled since the Oct 2025 UMG partnership
+  custom_length: 32s or 2-min clips, extend up to 15 min, trim to any length
+  api: Help center says no public API
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 100 credits/mo, 10 credits/day cap
+- name: Standard
+  price_usd: 10
+  period: month
+  includes: 2,400 credits/mo; $8/mo billed yearly
+- name: Pro
+  price_usd: 30
+  period: month
+  includes: 6,000 credits/mo, up to 10 songs at once; $24/mo yearly

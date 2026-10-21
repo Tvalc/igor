@@ -29,5 +29,43 @@ license:
 sources:
 - https://cursor.com
 - https://cursor.com/help/account-and-billing/pricing
+- https://smartscope.blog/en/blog/cursor-x-subscription-pricing-third-party-models-2026/
+- https://www.technobezz.com/news/xai-launches-the-x-subscription-premium-plan
+- https://pasqualepillitteri.it/en/news/23256/the-x-subscription-launches-grok-cursor-x-premium-8-dollars
+- https://forum.cursor.com/t/questions-about-models-and-mcp/73507
+- https://www.summerengine.com/godot-mcp
+- https://forum.cursor.com/t/setup-ollama-local-model-in-cursor/144687
+- https://forum.cursor.com/t/how-to-use-a-custom-openai-compatible-api-in-cursor-setup-limits-and-tips/171497
+- https://forum.cursor.com/t/unlocking-cursor-s-full-potential-for-unity-developers/80757
+- https://www.techzine.eu/news/devops/142197/spacex-acquires-cursor-for-60-billion/
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  mcp: 'yes'
+  model_choice: partial
+  local_models: partial
+  scene_editing: partial
+feature_notes:
+  local_models: No localhost support; local models only via a public HTTPS tunnel plus the OpenAI base URL override
+  scene_editing: No built-in engine scene access; only through third-party MCP servers such as unity-mcp
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: Limited shared Grok allowance
+- name: Plus
+  price_usd: 8
+  period: month
+  includes: Base Grok allowance shared across Cursor, Grok and X
+- name: Premium
+  price_usd: 30
+  period: month
+  includes: 4x Plus allowance; cloud agents; third-party models via top-ups
+- name: Super
+  price_usd: 100
+  period: month
+  includes: 15x Plus allowance
+- name: Ultra
+  price_usd: 200
+  period: month
+  includes: 50x Plus allowance

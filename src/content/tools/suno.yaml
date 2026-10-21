@@ -32,5 +32,25 @@ sources:
 - https://help.suno.com/en/articles/13876865
 - https://help.suno.com/en/articles/2425729
 - https://help.suno.com/en/articles/13614785
+- https://help.suno.com/en/articles/6141441
+- https://help.suno.com/en/articles/2425985
+- https://help.suno.com/en/articles/13924929
+- https://help.suno.com/en/articles/2409601
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  stems: partial
+  vocals: 'yes'
+  custom_length: 'yes'
+feature_notes:
+  stems: Pro and Premier only; Vocals+Instrumental or 12-track split of finished songs
+  custom_length: Up to 8 min per generation on v6; Extend lengthens songs
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 7 lifetime trial downloads, non-commercial
+- name: Pro
+  price_usd: 10
+  period: month
+  includes: 2,500 credits, 20 downloads/mo

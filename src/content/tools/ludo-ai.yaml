@@ -43,5 +43,33 @@ sources:
 - https://ludo.ai/docs/game-asset-generation
 - https://ludo.ai/docs/3d-generator
 - https://ludo.ai/developers/unity
+- https://new.ludo.ai/pricing
+- https://ludo.ai/faq
+- https://ludo.ai/blog/introducing-ludo-ai-api-mcp-integration
+- https://ludo.ai/tools/game-assets-in-claude
+- https://ludo.ai/tools/sprite-generator-for-godot
+- https://www.summerengine.com/summer-vs-ludo
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  ai_art: 'yes'
+  ai_audio: 'yes'
+  no_code: partial
+  hosting: partial
+  pixel_art: 'yes'
+  sprite_sheets: 'yes'
+  transparent_bg: 'yes'
+  api: partial
+feature_notes:
+  no_code: Playable Generator makes simple prototypes; FAQ calls Ludo a pre-production tool
+  hosting: web prototypes shareable by link (third-party report)
+  api: API and MCP on Pro and Studio plans only
+plans:
+- name: Indie
+  price_usd: 15
+  period: year
+  includes: $180/yr; 3,000 credits/yr upfront, shared pool
+- name: Pro
+  price_usd: 35
+  period: year
+  includes: 12,000 credits/yr for 3D/video; unlimited ideation and images
