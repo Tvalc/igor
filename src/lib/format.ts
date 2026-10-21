@@ -28,7 +28,7 @@ export const FREE_TIER_LABELS = {
 } as const;
 
 export const COMMERCIAL_LABELS = {
-  yes: 'Allowed', 'paid-plans': 'Paid plans only', restricted: 'Restricted', no: 'Not allowed', unknown: 'Unverified',
+  yes: 'Allowed', 'paid-plans': 'Allowed on paid plans', restricted: 'Restricted', no: 'Not allowed', unknown: 'Unverified',
 } as const;
 
 export const STATUS_LABELS = {

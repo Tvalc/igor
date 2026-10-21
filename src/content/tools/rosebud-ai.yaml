@@ -24,8 +24,8 @@ pricing:
   model: freemium
   free_tier: 'yes'
   starting_price_usd: 15
-  notes: Free plan; Indie Dev $15/mo (100k credits); 10x Dev $30/mo (300k, commercial rights); Pro $50/mo (1M credits,
-    code download, Windows export)
+  notes: Free Newbie plan (8,000 credits a week); Indie Dev $15/mo (100k credits); 10x Dev $30/mo (300k, commercial
+    rights); Pro $50/mo (1M credits, code download); Scale $100/mo (2M credits)
 license:
   commercial_use: paid-plans
   open_source: false
@@ -57,10 +57,10 @@ feature_notes:
   multiplayer: "Built-in real-time multiplayer with a multiplayer starter template"
   mobile: "Games play in a phone's web browser from the share link, no install"
 plans:
-- name: Free
+- name: Newbie
   price_usd: 0
   period: free
-  includes: Make and share games
+  includes: 8,000 credits/wk, hosted games, remixing
 - name: Indie Dev
   price_usd: 15
   period: month
@@ -72,4 +72,8 @@ plans:
 - name: Pro
   price_usd: 50
   period: month
-  includes: 1M credits, code download, Windows export
+  includes: 1M credits, downloadable project code
+- name: Scale
+  price_usd: 100
+  period: month
+  includes: 2M credits, auto-scaling hosting
