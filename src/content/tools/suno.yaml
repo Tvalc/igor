@@ -36,15 +36,21 @@ sources:
 - https://help.suno.com/en/articles/2425985
 - https://help.suno.com/en/articles/13924929
 - https://help.suno.com/en/articles/2409601
+- https://help.suno.com/en/articles/10625537
+- https://platform.suno.com/
 needs_verification: []
 last_verified: '2026-10-21'
 features:
   stems: partial
   vocals: 'yes'
   custom_length: 'yes'
+  loops: partial
+  api: 'yes'
 feature_notes:
   stems: Pro and Premier only; Vocals+Instrumental or 12-track split of finished songs
   custom_length: Up to 8 min per generation on v6; Extend lengthens songs
+  loops: "Suno Sounds (beta) has a Loop mode for short repeating clips with set key and tempo, not full songs"
+  api: "Official REST API on a separate developer platform for songs, covers and mashups"
 plans:
 - name: Free
   price_usd: 0

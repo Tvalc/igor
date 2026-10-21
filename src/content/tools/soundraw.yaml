@@ -36,6 +36,7 @@ sources:
 - https://soundraw.io/license
 - https://docs.channel.io/soundraw-faq/en/categories/SOUNDRAW-Features-and-Functions-ced55f63
 - https://explore.soundraw.io/soundraw-vs-suno
+- https://docs.channel.io/soundraw-faq/en/articles/Can-I-make-a-song-longer-than-5-minutes-1e787a47
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -43,10 +44,12 @@ features:
   stems: partial
   custom_length: 'yes'
   api: partial
+  loops: partial
 feature_notes:
   stems: Artist Pro tier and above
   custom_length: Up to 5 minutes per song
   api: Business/enterprise API, not self-serve
+  loops: "No loop button; remove the outro in the editor, then repeat the track in audio software"
 plans:
 - name: Artist Starter
   price_usd: 29.99

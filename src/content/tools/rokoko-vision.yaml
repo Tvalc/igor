@@ -31,6 +31,7 @@ sources:
 - https://www.rokoko.com/pricing
 - https://support.rokoko.com/hc/en-us/articles/15712580191761-Rokoko-Studio-Subscriptions-plans-explained
 - https://www.rokoko.com/insights/introducing-rokoko-vision-3-0
+- https://www.rokoko.com/insights/introducing-text-to-motion
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -39,11 +40,13 @@ features:
   hands_face: 'no'
   realtime: 'no'
   retarget: partial
+  text_to_motion: partial
 feature_notes:
   multi_person: 1 performer per recording
   hands_face: No finger or face tracking; needs Smartgloves or face capture hardware
   realtime: AI capture needs post-processing; webcam live capture removed in Vision 3.0
   retarget: Custom character import and retargeting on Basic plan, in Rokoko Studio
+  text_to_motion: "Experimental, in Rokoko's Create web app and Studio, not in Vision itself"
 plans:
 - name: Starter
   price_usd: 0

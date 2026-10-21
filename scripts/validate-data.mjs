@@ -17,7 +17,7 @@ for (const f of readdirSync(TOOLS).filter((f) => f.endsWith('.yaml'))) {
 const today = new Date().toISOString().slice(0, 10);
 const owned = [];
 for (const [slug, t] of tools) {
-  if (t.status === 'discontinued' && !t.successor) errors.push(`${slug}: discontinued tools need a successor`);
+  // A successor is optional: some tools are replaced by products we don't track (CGDream → CGTrader AI).
   if (t.successor && !tools.has(t.successor)) errors.push(`${slug}: successor "${t.successor}" does not exist`);
   if (!t.sources?.length) errors.push(`${slug}: at least one source URL is required`);
   if (String(t.last_verified) > today) errors.push(`${slug}: last_verified is in the future`);

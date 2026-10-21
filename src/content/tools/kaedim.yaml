@@ -34,6 +34,8 @@ sources:
 - https://docs.kaedim3d.com/kaedim-co-creation/pricing
 - https://aiindigo.com/blog/kaedim-review-2026-bridging-the-gap-between-2d-and-3d
 - https://docs.kaedim3d.com/web-app/add-ons/automatic-texturing
+- https://docs.kaedim3d.com/creating-assets/create-page/generate-image
+- https://docs.kaedim3d.com/creating-assets/game-ready-assets
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -41,9 +43,13 @@ features:
   low_poly: 'yes'
   api: partial
   pbr_textures: partial
+  text_to_3d: partial
+  auto_rigging: partial
 feature_notes:
   pbr_textures: Automatic Texturing add-on (Color/Roughness/Normal maps); plans with add-on access, activated via
     call; best for realistic wood/metal/fabric
+  text_to_3d: "Text first makes a 2D image, which is then turned into 3D"
+  auto_rigging: "Only on the Game-ready with Rig asset type; rigging can take up to 2 hours"
 plans:
 - name: Trial
   price_usd: 50

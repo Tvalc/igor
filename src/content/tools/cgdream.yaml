@@ -1,14 +1,15 @@
 name: CGDream
 url: https://cgdream.ai
-tagline: Free-tier image and sprite generation.
-description: CGDream generates images and sprites, with a free tier.
+tagline: 'Retired: CGDream''s image generator has moved into CGTrader AI.'
+description: CGDream was a free-tier image and sprite generator from CGTrader. It closed on October 3, 2026, and its image
+  generation moved into CGTrader AI.
 best_for: Free sprite and concept drafts.
 categories:
 - art-2d
 tags:
 - sprites
 - 2d
-status: active
+status: discontinued
 platforms:
 - web
 engines: []
@@ -26,6 +27,7 @@ license:
   open_source: false
   notes: Free-tier outputs personal use only; paid-tier outputs personal and commercial
 sources:
+- https://cgdream.ai/my-images
 - https://cgdream.ai
 - https://cgdream.ai/features/ai-drawing-generator
 - https://cgdream.ai/terms-of-service

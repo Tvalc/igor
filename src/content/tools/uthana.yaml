@@ -47,10 +47,12 @@ features:
   retarget: 'yes'
   realtime: 'yes'
   hands_face: partial
+  multi_person: 'no'
 feature_notes:
   hands_face: Video-to-motion captures fingers; no facial capture mentioned
   video_mocap: Best with a single person, full body visible
   realtime: Control and record characters live with mouse, keyboard or gamepad
+  multi_person: "Videos should contain one person; crop to a single performer"
 plans:
 - name: Pay-as-you-go
   price_usd: 0

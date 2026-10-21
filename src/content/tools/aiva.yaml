@@ -41,8 +41,10 @@ last_verified: '2026-10-21'
 features:
   vocals: 'no'
   custom_length: 'yes'
+  api: partial
 feature_notes:
   custom_length: 'Duration capped by plan: up to 3 min on Free/Standard, up to 5:30 on Pro'
+  api: "No self-serve API; access only through a separately negotiated licensing deal"
 plans:
 - name: Free
   price_usd: 0

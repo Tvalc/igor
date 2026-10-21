@@ -44,6 +44,9 @@ sources:
 - https://www.layer.ai/features/style-training
 - https://www.layer.ai/use-cases/sprite-generation
 - https://help.layer.ai/en/articles/12589582-how-to-train-a-single-character-style-in-layer
+- https://layer.ai/use-cases/game-tilesets
+- https://layer.ai/docs/models/pixelcut-background-removal
+- https://layer.ai/docs
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -52,8 +55,14 @@ features:
   consistent_characters: 'yes'
   custom_training: 'yes'
   multi_direction: 'yes'
+  tilesets: 'yes'
+  transparent_bg: 'yes'
+  api: 'yes'
 feature_notes:
   consistent_characters: Via single-character style training
+  tilesets: "Tile atlas with edges, corners and transitions; you map tiles to your engine's rules"
+  transparent_bg: "Background removal models give cut-out images with transparent backgrounds"
+  api: "API with access to 500+ models; uses Creative Units"
 plans:
 - name: Free
   price_usd: 0

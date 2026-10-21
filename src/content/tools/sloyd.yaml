@@ -35,6 +35,8 @@ sources:
 - https://sloyd.ai/text-to-3d
 - https://www.sloyd.ai/blog/using-sloyd-for-low-poly-game-assets
 - https://assetstore.unity.com/packages/tools/generative-ai/sloyd-sdk-258591
+- https://www.sloyd.ai/glossary/normal-map
+- https://www.sloyd.ai/animations
 needs_verification:
 - commercial use
 last_verified: '2026-10-21'
@@ -43,8 +45,11 @@ features:
   image_to_3d: 'yes'
   low_poly: 'yes'
   api: partial
+  pbr_textures: 'yes'
+  auto_rigging: 'yes'
 feature_notes:
   api: API key/SDK (Unity plugin) requires a paid subscription
+  auto_rigging: "Humanoid characters in a T-pose or A-pose; preset animations can be added"
 plans:
 - name: Guest
   price_usd: 0

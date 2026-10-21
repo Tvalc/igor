@@ -36,6 +36,7 @@ sources:
 - https://huggingface.co/spaces/tencent/Hunyuan3D-2.1/blob/main/hy3dpaint/README.md
 - https://fal.ai/hunyuan-3d
 - https://www.atlascloud.ai/models/tencent/hunyuan3d-pro/text-to-3d
+- https://intl.cloud.tencent.com/document/product/1284/79641
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -44,9 +45,11 @@ features:
   pbr_textures: 'yes'
   low_poly: 'yes'
   api: 'yes'
+  auto_rigging: partial
 feature_notes:
   low_poly: Low-poly mode and smart retopology in Hunyuan3D Pro (hosted)
   api: REST API in open release; hosted via Tencent Cloud and third parties
+  auto_rigging: "Via Tencent Cloud's auto-rigging API for T-posed characters or animals; not in the open model"
 plans:
 - name: Open source
   price_usd: 0
