@@ -11,17 +11,16 @@ status: active
 platforms:
 - web
 engines: []
-exports:
-- mp3
-- wav
+exports: []
 skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
   starting_price_usd: 10
 license:
-  commercial_use: unknown
+  commercial_use: 'no'
   open_source: false
+  notes: "Udio and its licensors own all Output; the terms forbid downloading Output or exploiting it for any commercial purpose, and allow only sharing links on approved platforms."
 sources:
 - https://www.udio.com
 - https://routenote.com/blog/udio-stops-user-downloads-after-umg-deal-heres-why/
@@ -33,8 +32,8 @@ sources:
 - https://help.udio.com/en/articles/10756277-udio-public-api
 - https://www.udio.com/guide
 - https://www.udio.com/blog/longer-track-length
-needs_verification:
-- commercial use
+- https://www.udio.com/terms-of-service
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   stems: 'no'

@@ -24,8 +24,9 @@ pricing:
   starting_price_usd: null
   notes: Roblox Studio is free; no charge for Cube 3D mesh generation (soft rate limit, future paid overage possible)
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: "Under the Roblox Terms you keep whatever rights you hold in AI prompts and outputs, while Roblox gets a licence to use them to run and improve its services, including model training subject to your data-sharing settings."
 sources:
 - https://about.roblox.com/newsroom/2026/02/accelerating-creation-powered-roblox-cube-foundation-model
 - https://devforum.roblox.com/t/beta-cube-3d-generation-tools-and-apis-for-creators/3558947
@@ -42,8 +43,10 @@ sources:
 - https://github.com/Roblox/roblox-studio-agent-plugin
 - https://create.roblox.com/docs/ai/accelerated-workflows
 - https://create.roblox.com/docs/avatar-setup
+- https://create.roblox.com/docs/reference/engine/classes/GenerationService
+- https://en.help.roblox.com/hc/en-us/articles/115004647846-Roblox-Terms-of-Use
+- https://create.roblox.com/docs/en-us/art/modeling/gltf-export.md
 needs_verification:
-- commercial use
 - exports
 last_verified: '2026-10-21'
 features:
@@ -64,6 +67,8 @@ features:
   local_models: 'no'
   pbr_textures: 'yes'
   auto_rigging: partial
+  image_to_3d: partial
+  low_poly: partial
 feature_notes:
   text_to_3d: Cube 3D /generate in Assistant; beta, static meshes without textures at launch
   api: in-experience Lua Mesh Generation API (beta)
@@ -80,6 +85,8 @@ feature_notes:
   local_models: "Your-own-key option lists only Anthropic, OpenAI and Google cloud models"
   pbr_textures: "Texture Generator's Quality mode makes 4K PBR textures for meshes"
   auto_rigging: "Avatar Setup auto-rigs humanoid character bodies to Roblox's R15 skeleton only"
+  image_to_3d: "Image input is supported through the Luau GenerateModelAsync API"
+  low_poly: "Generation API's MaxTriangles setting caps triangle count for low-poly results"
 plans:
 - name: Free
   price_usd: 0

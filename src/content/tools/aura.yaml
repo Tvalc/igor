@@ -16,7 +16,8 @@ platforms:
 engines:
 - unreal
 - unity
-exports: []
+exports:
+- source-code
 skill_level: intermediate
 pricing:
   model: trial
@@ -25,8 +26,9 @@ pricing:
   notes: Indie $20/mo ($10/mo billed annually); Pro $40/mo; Ultimate $200/mo ($1800/yr); 2-week free trial with
     $10 premium credit
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: "Customer owns all Output (ToS 4.2); paid subscriptions allow internal business use, while free trials and betas are limited to internal evaluation."
 sources:
 - https://www.tryaura.dev/updates/aura-for-unity-launches-may-14
 - https://www.tryaura.dev/pricing
@@ -38,9 +40,10 @@ sources:
 - https://www.tryaura.dev/documentation/prompting-tips/
 - https://www.tryaura.dev/updates/unreal-ai-agent-blueprints
 - https://www.tryaura.dev/updates/aura-1-0-launches-today
-needs_verification:
-- commercial use
-- exports
+- https://www.tryaura.dev/terms-of-service/
+- https://www.tryaura.dev/documentation/unity-coding-agent-csharp
+- https://www.tryaura.dev/documentation/coding-agent-cpp
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   engine_integration: 'yes'

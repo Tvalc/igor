@@ -21,8 +21,9 @@ pricing:
   starting_price_usd: 19.99
   notes: Free $0 with weekly rate limits; higher limits via Google AI Pro $19.99/mo, Ultra $99.99 and $199.99/mo
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: "Use is governed by Google's Terms of Service plus the Antigravity Additional Terms: Google won't claim ownership of content you generate and no non-commercial limit applies, but Google may use your interactions to improve its products unless you opt out in settings."
 sources:
 - https://antigravity.google
 - https://gemini.google/subscriptions/
@@ -38,8 +39,9 @@ sources:
 - https://antigravity.google/docs/ide/browser/
 - https://antigravity.google/docs/sdk/local-models/
 - https://developers.googleblog.com/introducing-support-for-local-ai-models-in-the-antigravity-sdk/
-needs_verification:
-- commercial use
+- https://antigravity.google/terms
+- https://policies.google.com/terms
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   model_choice: 'yes'

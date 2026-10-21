@@ -15,7 +15,8 @@ platforms:
 - plugin
 engines:
 - unity
-exports: []
+exports:
+- source-code
 skill_level: advanced
 pricing:
   model: open-source
@@ -34,8 +35,8 @@ sources:
 - https://ai-game.dev/docs-md/docs.md
 - https://ai-game.dev/docs/best-practices/unity
 - https://agentpedia.codes/mcp/unity-mcp-ai-game-developer
-needs_verification:
-- exports
+- https://raw.githubusercontent.com/IvanMurzak/Unity-MCP/main/README.md
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   engine_integration: 'yes'

@@ -24,8 +24,9 @@ pricing:
   starting_price_usd: null
   notes: Free to create and play; creators earn $100 when a game is selected for the feed
 license:
-  commercial_use: unknown
+  commercial_use: restricted
   open_source: false
+  notes: "You own your prompts and game content, but the Terms limit the service to personal, non-commercial use and let you use Astrocade-generated content only to make and publish games on Astrocade; creators earn through Astrocade's own play-based payouts."
 sources:
 - https://www.pocketgamer.biz/astrocade-raises-56m-to-expand-ai-powered-games-creation-platform/
 - https://www.astrocade.com/blog/how-game-creators-are-turning-creativity-into-cash-on-astrocade
@@ -34,9 +35,11 @@ sources:
 - https://nilo.io/articles/how-to-play-astrocade
 - https://yespress.io/astrocade.md
 - https://superdatascience.com/997
+- https://www.astrocade.com/blog/introducing-astrocade-mcp
+- https://www.astrocade.com/terms-of-service
+- https://www.astrocade.com/creators
 needs_verification:
 - price
-- commercial use
 last_verified: '2026-10-21'
 features:
   no_code: 'yes'
@@ -44,9 +47,11 @@ features:
   ai_audio: 'yes'
   hosting: 'yes'
   mobile: partial
+  edit_code: partial
 feature_notes:
   mobile: Android app for playing and creating; no iOS app confirmed
   ai_audio: background music generated automatically
+  edit_code: "Through the Astrocade MCP your own coding agent writes and edits the game code; the app is prompt-based"
 plans:
 - name: Free
   price_usd: 0

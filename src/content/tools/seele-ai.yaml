@@ -13,7 +13,12 @@ status: active
 platforms:
 - web
 engines: []
-exports: []
+exports:
+- web
+- source-code
+- fbx
+- obj
+- glb
 skill_level: beginner
 pricing:
   model: freemium
@@ -37,8 +42,7 @@ sources:
 - https://www.seeles.ai/features/create/ai-powered-code-editor
 - https://www.seeles.ai/features-list
 - https://www.seeles.ai/resources/blogs/ai-mobile-game-development-platforms-2026
-needs_verification:
-- exports
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   no_code: 'yes'

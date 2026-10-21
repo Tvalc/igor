@@ -20,8 +20,8 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
-  notes: Web Creator free to start (queued when busy); Pro subscription unlocks the GDK and a spark allowance.
+  starting_price_usd: 19.9
+  notes: "Games are free to play; Bitmagic Pro is 19.90 USD/month and unlocks the GDK plus a rolling spark allowance (weekly and 5-hour windows); extra sparks can be bought."
 license:
   commercial_use: 'yes'
   open_source: false
@@ -33,8 +33,7 @@ sources:
 - https://bitmagic.ai/
 - https://bitmagic.ai/gdk/
 - https://bitmagic.ai/lab/
-needs_verification:
-- price
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   no_code: 'yes'
@@ -52,7 +51,11 @@ feature_notes:
   ai_audio: "Sound assets via the GDK generate command; requires Bitmagic Pro"
   mobile: "Touch controls built in; iOS builds via TestFlight need a Mac and Pro; Android not yet"
 plans:
-- name: Web Creator
+- name: "Web Creator"
   price_usd: 0
   period: free
-  includes: Free to start; games free to play
+  includes: "Free to start; games free to play"
+- name: "Bitmagic Pro"
+  price_usd: 19.9
+  period: month
+  includes: "GDK access, rolling spark allowance, World Forger, iOS/TestFlight build"

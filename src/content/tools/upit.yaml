@@ -16,21 +16,23 @@ exports:
 - web
 skill_level: beginner
 pricing:
-  model: freemium
+  model: free
   free_tier: 'yes'
   starting_price_usd: null
+  notes: "No paid plans are published; the iOS app is free with no in-app purchases listed and the Terms mention no fees."
 license:
-  commercial_use: unknown
+  commercial_use: 'no'
   open_source: false
+  notes: "FRVR (Upit's owner) owns the games generated on the platform and grants only a personal licence to use and display them within Upit; commercially exploiting the service or its content needs FRVR's written permission."
 sources:
 - https://upit.com
 - https://apps.apple.com/ng/app/upit-ai-game-maker/id6741482135
 - https://upit.com/learn/about
 - https://upit.com/up/announcements/krvbmz30k
 - https://upit.com/up/announcements/1mzq0c45w
-needs_verification:
-- price
-- commercial use
+- https://upit.com/legal/terms-of-service
+- https://apps.apple.com/us/app/upit-ai-game-maker/id6741482135
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   mobile: 'yes'

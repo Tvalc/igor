@@ -1,7 +1,8 @@
 name: StraySpark AI Everywhere
 url: https://www.strayspark.studio
-tagline: Paid bundle of MCP servers for Unreal, Blender and Godot.
-description: StraySpark AI Everywhere is a paid bundle of MCP tools covering Unreal Engine, Blender and Godot.
+tagline: 'Retired: StraySpark''s MCP server bundle for Unreal, Blender and Godot.'
+description: StraySpark AI Everywhere was a paid bundle of MCP tools for Unreal Engine, Blender and Godot. It was retired
+  on August 30, 2026 and is no longer sold.
 best_for: Devs who want broad MCP coverage across several tools.
 categories:
 - code
@@ -10,7 +11,7 @@ tags:
 - unreal
 - blender
 - godot
-status: active
+status: discontinued
 platforms:
 - plugin
 engines:
@@ -20,11 +21,10 @@ engines:
 exports: []
 skill_level: advanced
 pricing:
-  model: paid
+  model: one-time
   free_tier: 'no'
   starting_price_usd: null
-  notes: AI Everywhere bundle (Unreal, Blender, Godot MCP servers) listed at $149.99; Personal vs Professional license
-    tiers
+  notes: "Retired on 30 August 2026 and no longer sold (replaced by the Unreal Complete, Blender Complete and Professional All Access bundles); last listed at $439.99 one-time (Professional) vs $669.97 separately. Existing buyers keep access."
 license:
   commercial_use: restricted
   open_source: false
@@ -40,7 +40,6 @@ sources:
 - https://www.strayspark.studio/faq
 - https://www.strayspark.studio/blog/local-ai-blender-ollama-guide-2026
 needs_verification:
-- price
 - exports
 last_verified: '2026-10-21'
 features:
@@ -55,7 +54,7 @@ feature_notes:
   model_choice: Bring your own MCP client (Claude Code, Cursor, Windsurf)
   local_models: "Works with local models via Ollama or LM Studio, but only the smaller default tool set fits"
 plans:
-- name: AI Everywhere bundle
-  price_usd: 149.99
+- name: "AI Everywhere bundle (retired)"
+  price_usd: 439.99
   period: one-time
-  includes: From price; Unreal, Blender, Godot MCP servers; lifetime updates
+  includes: "Unreal, Blender, Godot MCP servers; lifetime updates; no longer for sale"

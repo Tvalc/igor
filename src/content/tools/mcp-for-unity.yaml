@@ -15,7 +15,14 @@ platforms:
 - plugin
 engines:
 - unity
-exports: []
+exports:
+- source-code
+- windows
+- mac
+- linux
+- android
+- ios
+- web
 skill_level: advanced
 pricing:
   model: open-source
@@ -31,8 +38,10 @@ sources:
 - https://glama.ai/mcp/servers/@CoplayDev/unity-mcp/blob/e3e5485d3904b94962b8cd821d3ad353c02c1ec3/README.md
 - https://glama.ai/mcp/servers/@CoplayDev/unity-mcp/blob/08b8eacab13da57ed13859167fa6033c6441f58d/unity-mcp-skill/references/tools-reference.md
 - https://github.com/CoplayDev/unity-mcp/blob/main/website/docs/reference/tools/core/manage_editor.md
-needs_verification:
-- exports
+- https://raw.githubusercontent.com/CoplayDev/unity-mcp/main/README.md
+- https://raw.githubusercontent.com/CoplayDev/unity-mcp/main/website/docs/reference/tools/index.md
+- https://raw.githubusercontent.com/CoplayDev/unity-mcp/main/website/docs/reference/tools/core/manage_build.md
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   engine_integration: 'yes'

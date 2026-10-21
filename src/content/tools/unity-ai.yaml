@@ -17,7 +17,10 @@ platforms:
 - plugin
 engines:
 - unity
-exports: []
+exports:
+- sprite-sheet
+- pbr-maps
+- wav
 skill_level: intermediate
 pricing:
   model: paid
@@ -44,8 +47,13 @@ sources:
 - https://app.cinevva.com/news/2026-05-04-unity-ai-open-beta
 - https://github.com/Unity-Technologies/skills/blob/main/skills/unity-cli/SKILL.md
 - https://unity.com/blog/unity-ai-how-to-get-started
-needs_verification:
-- exports
+- https://docs.unity3d.com/Packages/com.unity.ai.assistant@2.21/manual/integration/assistant-api.html
+- https://unity.com/features/multiplatform
+- https://unity.com/features/multiplayer
+- https://docs.unity3d.com/Packages/com.unity.ai.assistant@2.21/manual/Sprite/spritesheet-generation.html
+- https://docs.unity3d.com/Packages/com.unity.ai.assistant@2.21/manual/Material/material-pbr.html
+- https://docs.unity3d.com/Packages/com.unity.ai.assistant@2.21/manual/Sound/sound-overview.html
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   engine_integration: 'yes'
@@ -59,6 +67,9 @@ features:
   pixel_art: partial
   runs_game: partial
   edit_code: 'yes'
+  api: partial
+  mobile: 'yes'
+  multiplayer: 'yes'
 feature_notes:
   scene_editing: Agent mode creates, modifies or removes objects and assets with approval
   model_choice: AI Gateway connects third-party models; Unity MCP connects agents like Claude Code, Cursor
@@ -67,6 +78,9 @@ feature_notes:
   pixel_art: Pixelate post-processing option only
   runs_game: "Through Unity's beta CLI and MCP server, AI agents can enter Play mode and run tests"
   edit_code: "Agent mode writes C# scripts into your project, which you can open and edit"
+  api: "C# AssistantApi lets your own editor scripts run the assistant; no public web API"
+  mobile: "Games are built in the Unity engine, which exports to iOS and Android"
+  multiplayer: "Built in Unity, which has Netcode and Multiplayer Services for online games"
 plans:
 - name: Personal
   price_usd: 0

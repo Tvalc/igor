@@ -24,25 +24,29 @@ pricing:
   notes: Free plan (no AI credits, watermark on web exports); Hobby $15/mo ($12 yearly, 2,000 AI credits); Pro $30
     ($25, 3,000); Max $70 ($60, 10,000)
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: "Users keep all ownership of their User Content on every plan; Spline Community remixes come under a Standard Commercial License that allows personal and commercial use."
 sources:
 - https://spline.design
 - https://docs.spline.design/generate/ai-3d-generation
 - https://spline.design/pricing
 - https://docs.spline.design/account/pricing
 - https://spline.design/ai-generate
-needs_verification:
-- commercial use
+- https://docs.spline.design/generate/spline-mcp-server
+- https://spline.design/terms
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   text_to_3d: partial
   image_to_3d: partial
   pbr_textures: partial
+  api: partial
 feature_notes:
   text_to_3d: Paid plans only (uses AI credits)
   image_to_3d: Paid plans only (uses AI credits)
   pbr_textures: Generated meshes include base color, metallic-roughness and normal maps; paid plans only
+  api: "3D model generation is available to AI agents through the Spline MCP server"
 plans:
 - name: Free
   price_usd: 0

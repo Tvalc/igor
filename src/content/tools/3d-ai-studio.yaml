@@ -27,8 +27,9 @@ pricing:
   notes: Basic $19/mo (1,000 credits), Studio $29/mo, Pro $149/mo; ~$12/$23/$139 per mo billed annually; $34 one-time
     2,000-credit pack; free starter credits
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: "Generated assets are private and owned by you, and the pricing page says commercial use is allowed on all generated models; the API terms also allow commercial use of outputs, subject to third-party model terms."
 sources:
 - https://www.3daistudio.com/blog/best-ai-texture-and-pbr-generators-2026
 - https://www.3daistudio.com/Pricing
@@ -41,8 +42,9 @@ sources:
 - https://www.3daistudio.com/Platform/API/Documentation/texturing
 - https://docs.3daistudio.com/textures/seamless-texture
 - https://www.3daistudio.com/ImageGeneration/utilities
-needs_verification:
-- commercial use
+- https://www.3daistudio.com/UseCases/Blender
+- https://www.3daistudio.com/Platform/API/TermsAndConditions
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   text_to_3d: 'yes'
@@ -54,10 +56,12 @@ features:
   pbr_maps: 'yes'
   seamless: 'yes'
   upscale: 'yes'
+  engine_plugin: 'no'
 feature_notes:
   low_poly: Quad Remesh retopology to a target polygon count
   seamless: "Seamless Texture Generator with tiling direction control and preview"
   upscale: "Image upscaling up to 4x in Image Studio"
+  engine_plugin: "Browser-only, no Blender or engine add-on; you import exported GLB, FBX or OBJ files"
 plans:
 - name: Pro
   price_usd: 149

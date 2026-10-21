@@ -53,6 +53,7 @@ features:
   api: 'yes'
   consistent_characters: 'yes'
   text_to_motion: partial
+  custom_training: partial
 plans:
 - name: Monthly Subscription
   price_usd: 19
@@ -76,3 +77,4 @@ feature_notes:
   api: "REST API plus a remote MCP server"
   consistent_characters: "Animates one character image across many actions; reuse the idle pose to stay consistent"
   text_to_motion: "Describe a custom motion in a prompt in the pixel-art generator; 2D sprite animation only"
+  custom_training: "Custom models trained on your art style are offered to enterprise and studio clients only"

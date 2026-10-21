@@ -48,6 +48,7 @@ sources:
 - https://blog.makko.ai/makko-ai-is-live-make-2d-games-with-ai-no-drawing-no-coding/
 - https://blog.makko.ai/best-free-ai-game-making-tools-2026/
 - https://www.makko.ai/news/frontier-models-studio-tools-july-2026
+- https://www.makko.ai/news/quests-new-models-mobile-september-2026
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -63,12 +64,14 @@ features:
   edit_code: 'yes'
   tilesets: 'yes'
   text_to_motion: partial
+  mobile: 'yes'
 feature_notes:
   multi_direction: Reference sheet gives front, side and back views, not 8 directions
   export_project: Exporting off-platform requires a paid plan
   edit_code: "Code Studio has a tabbed file editor, Git source control and GitHub sync"
   tilesets: "Ground Tileset preset in image generation"
   text_to_motion: "Describe a movement to generate a 2D sprite animation, not 3D motion data"
+  mobile: "Dashboard, projects and game editor work on phones; games play in the browser"
 plans:
 - name: Free
   price_usd: 0

@@ -38,5 +38,11 @@ plans:
   includes: Weights, sample data and WHAM Demonstrator via Azure AI Foundry
 features:
   ai_art: partial
+  ai_audio: 'no'
+  no_code: 'no'
+  edit_code: 'no'
 feature_notes:
   ai_art: "Generates gameplay visuals for ideation, not art assets you can reuse in a game"
+  ai_audio: "Model card says it can only generate visuals and controller inputs, so no audio"
+  no_code: "A research model that generates gameplay visuals and actions; it doesn't build games"
+  edit_code: "Outputs only visuals and controller inputs; there's no game code to view or edit"

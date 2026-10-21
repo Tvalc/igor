@@ -33,8 +33,9 @@ pricing:
   notes: Free 200 credits/mo (up to 13 models, public); Professional 3,000 credits/mo (~$19.90/mo); DCC Bridge on
     Pro/Max/Team only
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: "Free-plan models are public and for non-commercial use only; Pro, Max and Team plans make models private and include commercial use."
 affiliate:
   program: Tripo Affiliate Program
   commission: up to 30% for 12 months
@@ -50,8 +51,7 @@ sources:
 - https://developers.tripo3d.ai/en/docs/animations-retarget
 - https://www.tripo3d.ai/features/ai-3d-character-animation
 - https://www.tripo3d.ai/blog/how-to-animate-an-ai-generated-3d-model
-needs_verification:
-- commercial use
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   text_to_3d: 'yes'

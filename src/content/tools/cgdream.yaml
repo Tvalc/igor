@@ -18,10 +18,9 @@ exports:
 skill_level: beginner
 pricing:
   model: freemium
-  free_tier: 'yes'
+  free_tier: trial
   starting_price_usd: null
-  notes: 'Free: 100 daily credits per image type; premium plans add unlimited daily credits, private mode and commercial
-    rights'
+  notes: "CGDream has been retired and moved into CGTrader AI: 5 free generations, then the CGTrader Subscription at $9.99/mo (sale price, normally $24.99) for 25 AI generations or Marketplace downloads per month, on a 12-month commitment."
 license:
   commercial_use: paid-plans
   open_source: false
@@ -34,8 +33,10 @@ sources:
 - https://cgdream.ai/features/ai-game-character-generator
 - https://cgdream.ai/features/ai-image-to-image-ai-generator
 - https://cgdream.ai/pricing
-needs_verification:
-- price
+- https://www.cgtrader.com/ai-image-generator
+- https://www.cgtrader.com/ai-3d-model-generator
+- https://www.cgtrader.com/subscription
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   consistent_characters: 'yes'

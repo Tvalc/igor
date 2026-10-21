@@ -22,18 +22,18 @@ pricing:
   free_tier: 'yes'
   starting_price_usd: null
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: true
-  notes: Add-on code is GPL-3.0 (or later). Rights in generated images depend on the Stable Diffusion model you
-    load.
+  notes: "The add-on is GPL-3.0, which allows commercial use; rights in the images you generate depend on the licence of the Stable Diffusion model you load (the setup guide suggests stabilityai/stable-diffusion-2-1-base)."
 sources:
 - https://github.com/carson-katri/dream-textures
 - https://github.com/carson-katri/dream-textures/blob/main/__init__.py
 - https://github.com/carson-katri/dream-textures/blob/main/docs/TEXTURE_PROJECTION.md
 - https://github.com/kurethedead/dream-textures
 - https://blendermarket.com/products/dream-textures
-needs_verification:
-- commercial use
+- https://github.com/carson-katri/dream-textures/blob/main/LICENSE
+- https://github.com/carson-katri/dream-textures/blob/main/docs/SETUP.md
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   seamless: 'yes'

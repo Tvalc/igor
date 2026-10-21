@@ -24,8 +24,9 @@ pricing:
   free_tier: 'yes'
   starting_price_usd: 15
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: "The free Guest plan is personal-use only; Plus and Pro include a commercial licence, only Pro allows redistribution or marketplace reselling, and commercial rights stop for new work after you cancel."
 affiliate:
   program: Sloyd Affiliate Program
   commission: 20% for 12 months
@@ -37,8 +38,8 @@ sources:
 - https://assetstore.unity.com/packages/tools/generative-ai/sloyd-sdk-258591
 - https://www.sloyd.ai/glossary/normal-map
 - https://www.sloyd.ai/animations
-needs_verification:
-- commercial use
+- https://www.sloyd.ai/pricing
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   text_to_3d: 'yes'

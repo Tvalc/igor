@@ -29,9 +29,11 @@ pricing:
   notes: 'Desktop app free; Free plan has limited hosted agent use and AI asset creations, 1 GiB cloud storage.
     Paid: Basic $5, Pro $20, Pro+ $60, Ultra $200/mo.'
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: "Users own their games and AI-generated content and may export and sell games anywhere, including Steam, with no fee, revenue share or per-install charge from the bundled runtime."
 sources:
+- https://www.summerengine.com/multiplayer
 - https://www.summerengine.com/blog/how-to-make-a-game-with-ai
 - https://docs.summerengine.com/essentials/pricing
 - https://www.summerengine.com/steam-game-maker
@@ -43,8 +45,11 @@ sources:
 - https://www.summerengine.com/blog/multiplayer-games-with-ai
 - https://www.summerengine.com/blog/engine-native-ai-agent-harness
 - https://www.summerengine.com/mcp/how-to-make-games-for-free-with-local-llms
-needs_verification:
-- commercial use
+- https://docs.summerengine.com/publishing/upload-and-submit
+- https://www.summerengine.com/terms
+- https://www.summerengine.com/legal/runtime-license
+- https://www.summerengine.com/legal/ai-terms
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   mcp: 'yes'
@@ -56,10 +61,11 @@ features:
   mobile: 'yes'
   no_code: 'yes'
   edit_code: 'yes'
-  multiplayer: partial
+  multiplayer: 'yes'
   export_project: 'yes'
   engine_integration: 'yes'
   local_models: partial
+  hosting: partial
 feature_notes:
   model_choice: Via external MCP clients (Claude Code, Cursor, Codex)
   ai_art: Cloud generation of images and 3D models uses credits
@@ -67,10 +73,11 @@ feature_notes:
   mobile: Export targets include mobile
   no_code: "Describe a game in plain language and the AI builds a playable project"
   edit_code: "Projects use standard Godot 4 scripts and scenes you can edit directly"
-  multiplayer: "Steam peer-to-peer co-op via Godot networking; no hosted servers or matchmaking"
+  multiplayer: "Summer SDK handles multiplayer servers for you"
   export_project: "Project files live on your machine as a normal Godot 4 project"
   engine_integration: "The AI agent is built into Summer's own Godot-compatible engine"
   local_models: "Local models via Ollama through an external agent app; built-in AI is hosted"
+  hosting: "Publishes web builds to Summer Games, but every release needs owner approval and staff review"
 plans:
 - name: Hobby
   price_usd: 0

@@ -13,15 +13,17 @@ platforms:
 - plugin
 engines:
 - godot
-exports: []
+exports:
+- source-code
 skill_level: intermediate
 pricing:
   model: freemium
   free_tier: 'yes'
   starting_price_usd: 20
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: "Ziva's Terms say you keep all rights to the code and content you create with it, on every plan."
 sources:
 - https://ziva.sh
 - https://ziva.sh/
@@ -30,9 +32,8 @@ sources:
 - https://ziva.sh/blogs/ziva-3-release
 - https://ziva.sh/blogs/ziva-vs-gdai-mcp
 - https://ziva.sh/blogs/ai-agent-playtest-godot-game
-needs_verification:
-- commercial use
-- exports
+- https://ziva.sh/terms
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   engine_integration: 'yes'

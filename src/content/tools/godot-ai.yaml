@@ -15,7 +15,8 @@ platforms:
 - plugin
 engines:
 - godot
-exports: []
+exports:
+- source-code
 skill_level: advanced
 pricing:
   model: open-source
@@ -35,8 +36,9 @@ sources:
 - https://godotengine.org/asset-library/asset/5050
 - https://godotengine.org/asset-library/asset/edit/22588
 - https://glama.ai/mcp/servers/hi-godot/godot-ai
-needs_verification:
-- exports
+- https://raw.githubusercontent.com/hi-godot/godot-ai/main/docs/TOOLS.md
+- https://raw.githubusercontent.com/hi-godot/godot-ai/main/README.md
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   engine_integration: 'yes'

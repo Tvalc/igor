@@ -5,7 +5,6 @@ description: Ludo.ai helps designers research game ideas and trends, then genera
   and other content. It offers API and MCP access for use in other tools.
 best_for: Designers validating game concepts and generating early assets.
 categories:
-- game-maker
 - art-2d
 - art-3d
 tags:
@@ -56,10 +55,6 @@ sources:
 needs_verification: []
 last_verified: '2026-10-21'
 features:
-  ai_art: 'yes'
-  ai_audio: 'yes'
-  no_code: partial
-  hosting: partial
   pixel_art: 'yes'
   sprite_sheets: 'yes'
   transparent_bg: 'yes'
@@ -74,8 +69,6 @@ features:
   auto_rigging: 'yes'
   low_poly: 'yes'
 feature_notes:
-  no_code: Playable Generator makes simple prototypes; FAQ calls Ludo a pre-production tool
-  hosting: web prototypes shareable by link (third-party report)
   api: API and MCP on Pro and Studio plans only
   consistent_characters: "Uses a reference image, plus rotate and re-pose tools, to keep characters matching"
   custom_training: "No custom model training; consistency comes from reference images and style presets"

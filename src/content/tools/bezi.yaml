@@ -14,7 +14,8 @@ platforms:
 - plugin
 engines:
 - unity
-exports: []
+exports:
+- source-code
 skill_level: intermediate
 pricing:
   model: trial
@@ -23,9 +24,9 @@ pricing:
   notes: Trial 100 one-time credits; Pro $20/mo (800 credits); Advanced $60/mo; Team $200/mo (3 seats); yearly billing
     20% off
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
-  notes: ToS assigns Output to the user, subject to compliance with the Terms
+  notes: "Bezi assigns users all rights in Output and claims no ownership of User Materials; the ToS licenses use for personal or commercial purposes depending on account type, with no plan excluded."
 sources:
 - https://www.bezi.com
 - https://www.bezi.com/pricing
@@ -38,9 +39,9 @@ sources:
 - https://docs.bezi.com/fundamentals/agent-mode
 - https://www.bezi.com/blog/introducing-mcps
 - https://www.bezi.com/blog/introducing-model-selection-a-new-credit-system
-needs_verification:
-- commercial use
-- exports
+- https://docs.bezi.com/account/plans.md
+- https://docs.bezi.com/fundamentals/agent-mode.md
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   engine_integration: 'yes'

@@ -21,8 +21,9 @@ pricing:
   free_tier: limited
   starting_price_usd: 18
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: "Move AI retains ownership of mocap Output but grants users a worldwide, royalty-free, transferable, sublicensable licence to use it, including commercially, except for AI training or competing products."
 sources:
 - https://www.move.ai
 - https://docs.move.ai/knowledge/move-one-pricing
@@ -33,8 +34,10 @@ sources:
 - https://docs.move.ai/knowledge/engine-release-notes
 - https://docs.move.ai/knowledge/single-file-upload
 - https://docs.move.ai/knowledge/genesis-overview
-needs_verification:
-- commercial use
+- https://move.ai/terms-of-use
+- https://move.ai/move-one-app-eula
+- https://move.ai/move-pro-eula
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   video_mocap: 'yes'

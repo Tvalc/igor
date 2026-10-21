@@ -17,7 +17,9 @@ platforms:
 engines:
 - unity
 - unreal
-exports: []
+exports:
+- mp3
+- wav
 skill_level: advanced
 pricing:
   model: freemium
@@ -42,8 +44,10 @@ sources:
 - https://docs.inworld.ai/realtime/usage/tool-calling
 - https://inworld.ai/on-device
 - https://docs.inworld.ai/tts/capabilities/steering
-needs_verification:
-- exports
+- https://docs.inworld.ai/realtime/overview
+- https://docs.inworld.ai/tts/capabilities/generating-audio.md
+- https://docs.inworld.ai/llms.txt
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   cloning: 'yes'
@@ -57,6 +61,7 @@ features:
   actions: 'yes'
   on_device: partial
   emotion_control: 'yes'
+  speech_to_speech: partial
 feature_notes:
   multilingual: 100+ languages
   unity_sdk: "Unity 2022.3 LTS or later; Windows, Mac, Android and iOS"
@@ -64,6 +69,7 @@ feature_notes:
   actions: "Tool calling lets the AI call functions your game handles"
   on_device: "On-device text to speech is in private preview, by request"
   emotion_control: "Natural-language delivery steering on TTS-2, plus emotion tags"
+  speech_to_speech: "Realtime API does spoken conversations; no voice changer to re-voice your recordings"
 plans:
 - name: On-Demand
   price_usd: 0

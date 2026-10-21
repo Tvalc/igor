@@ -16,21 +16,34 @@ engines: []
 exports: []
 skill_level: beginner
 pricing:
-  model: paid
+  model: bundled
   free_tier: 'no'
-  starting_price_usd: null
+  starting_price_usd: 99.99
+  notes: "Only available with a Google AI Ultra plan: Ultra 5x $99.99/mo or Ultra 20x $199.99/mo (not included in Google AI Pro); 18+, 140+ countries."
 license:
   commercial_use: 'no'
   open_source: false
 sources:
 - https://blog.google/innovation-and-ai/models-and-research/google-deepmind/project-genie/
 - https://blog.google/innovation-and-ai/models-and-research/google-deepmind/project-genie-expands/
+- https://support.google.com/labs/answer/16875695
+- https://one.google.com/about/google-ai-plans/
 needs_verification:
-- price
 - exports
 last_verified: '2026-10-21'
 features:
   no_code: 'yes'
   ai_art: partial
+  export_project: 'no'
 feature_notes:
   ai_art: "Generates explorable worlds and preview images (World Sketching), not exportable game assets"
+  export_project: "You can only download a video of your exploration, not the world or project files"
+plans:
+- name: "Google AI Ultra 5x"
+  price_usd: 99.99
+  period: month
+  includes: "Project Genie access, 20 TB storage"
+- name: "Google AI Ultra 20x"
+  price_usd: 199.99
+  period: month
+  includes: "Project Genie access, 30 TB storage, highest limits"

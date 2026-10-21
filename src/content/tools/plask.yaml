@@ -21,8 +21,9 @@ pricing:
   free_tier: 'yes'
   starting_price_usd: 18
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: "Plask's FAQ says copyrights in animations created by subscribers belong to them, and its Terms grant commercial-use rights to paid commercial-plan subscribers, while the base service licence is personal and non-commercial."
 sources:
 - https://plask.ai
 - https://plask.ai/pricing
@@ -33,8 +34,9 @@ sources:
 - https://plask.ai/en-US/docs/10040
 - https://plask.ai/en-US/docs/10035
 - https://plask.ai/en-US/docs/47
-needs_verification:
-- commercial use
+- https://plask.ai/en-US/docs/faqs
+- https://plask.ai/en-US/docs/100002
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   video_mocap: 'yes'

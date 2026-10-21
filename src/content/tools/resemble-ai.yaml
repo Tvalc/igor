@@ -1,8 +1,8 @@
 name: Resemble AI
 url: https://www.resemble.ai
-tagline: Custom voice cloning, speech-to-speech and self-hostable text to speech.
-description: Resemble AI creates custom and cloned voices and offers speech-to-speech conversion, with an option
-  to self-host for teams that can't send audio to a cloud API.
+tagline: 'Retired for new customers: Resemble AI now focuses on deepfake detection.'
+description: Resemble AI made custom and cloned voices and speech-to-speech conversion. In August 2026 it stopped selling
+  voice AI to new customers and now sells deepfake detection; existing customers keep access.
 best_for: Teams that need custom character voices or self-hosted voice generation.
 categories:
 - voice
@@ -10,7 +10,7 @@ tags:
 - tts
 - voice-cloning
 - speech-to-speech
-status: active
+status: discontinued
 platforms:
 - web
 - api
@@ -30,6 +30,7 @@ license:
   commercial_use: unknown
   open_source: false
 sources:
+- https://www.resemble.ai/resources/why-a-former-voice-ai-company-went-all-in-on-deepfake-detection
 - https://dasha.ai/blog/elevenlabs-alternatives
 - https://www.resemble.ai/pricing
 - https://resemble.ai/pricing/

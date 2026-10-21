@@ -36,15 +36,18 @@ sources:
 - https://vidmuse.ai/blog/aiva-ai-review
 - https://www.itechguides.com/products/aiva/
 - https://blog.aiva.ai/
+- https://aiva.crisp.help/en/article/what-formats-can-i-download-the-music-in-1ppr6no/
 needs_verification: []
 last_verified: '2026-10-21'
 features:
   vocals: 'no'
   custom_length: 'yes'
   api: partial
+  stems: partial
 feature_notes:
   custom_length: 'Duration capped by plan: up to 3 min on Free/Standard, up to 5:30 on Pro'
   api: "No self-serve API; access only through a separately negotiated licensing deal"
+  stems: "Stems download needs the Pro plan; Free and Standard download only MP3 and MIDI"
 plans:
 - name: Free
   price_usd: 0

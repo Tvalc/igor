@@ -36,9 +36,11 @@ last_verified: '2026-10-21'
 features:
   text_to_sfx: 'yes'
   api: partial
+  variations: partial
 feature_notes:
   text_to_sfx: audiogen-medium 1.5B text-to-sound; needs 16GB GPU
   api: "Python library you run yourself; no hosted web API"
+  variations: "Python API generates a batch of samples per call with random sampling; no app UI"
 plans:
 - name: Open source
   price_usd: 0

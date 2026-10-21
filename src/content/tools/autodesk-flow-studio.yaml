@@ -40,6 +40,7 @@ sources:
 - https://www.autodesk.com/products/flow-studio/features
 - https://www.autodesk.com/solutions/media-entertainment/ai-motion-capture-with-flow-studio
 - https://autodesk.com/products/flow-studio/overview
+- https://help.wonderdynamics.com/create-new-project/3d-editor/animations/
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -47,8 +48,10 @@ features:
   multi_person: partial
   retarget: 'yes'
   hands_face: 'yes'
+  text_to_motion: 'no'
 feature_notes:
   multi_person: 'Performer limit by plan: Free 1, Standard 3, Pro 4, Enterprise 7'
+  text_to_motion: "New character animations are extracted from reference video; there's no text-prompt option"
 plans:
 - name: Free
   price_usd: 0

@@ -24,8 +24,9 @@ pricing:
   notes: Premium $9.99/mo, Ultra $24.99/mo, Pro $99.99/mo (cheaper annually); plans include monthly Sparks credits;
     free during early access.
 license:
-  commercial_use: unknown
+  commercial_use: restricted
   open_source: false
+  notes: "Users own generated Assets, but selling or commercialising a Game outside Jabali needs an eligible export tier or written permission (the Jabali Code License forbids commercial use without a separate licence); on-platform monetisation is by revenue share."
 sources:
 - https://jabali.ai
 - https://www.jabali.ai/pricing/
@@ -37,8 +38,10 @@ sources:
 - https://www.jabali.ai/pricing
 - https://www.jabali.ai/explore/2d-games/
 - https://www.jabali.ai/friendjam/
-needs_verification:
-- commercial use
+- https://www.jabali.ai/product-updates/
+- https://www.jabali.ai/terms-and-conditions/
+- https://www.jabali.ai/license/
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   no_code: 'yes'
@@ -48,10 +51,12 @@ features:
   multiplayer: partial
   mobile: partial
   edit_code: partial
+  ai_audio: partial
 feature_notes:
   multiplayer: Multiplayer games via Jabali Studio (waitlist) and the separate FriendJam product
   mobile: Runs in mobile browsers; no native app yet
   edit_code: Source code access only in Jabali Studio (waitlist)
+  ai_audio: "Music, vocal track and SFX generation in Jabali's FriendJam builder, paid with Sparks"
 plans:
 - name: Free
   price_usd: 0

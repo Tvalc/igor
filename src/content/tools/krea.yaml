@@ -37,6 +37,7 @@ sources:
 - https://www.krea.ai/apps/background-remover/transparent-background
 - https://www.krea.ai/apps/character-ai
 - https://www.krea.ai/plugins
+- https://www.krea.ai/docs/user-guide/features/3d
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -47,11 +48,13 @@ features:
   upscale: 'yes'
   pixel_art: partial
   engine_plugin: 'yes'
+  pbr_maps: partial
 feature_notes:
   transparent_bg: Via background remover; exports transparent PNG
   upscale: Enhancer upscales images/video 1x-8x
   pixel_art: "Pixel-art style is one option in its general image tools; no dedicated pixel art tool"
   engine_plugin: "Official Photoshop and Blender plugins"
+  pbr_maps: "Optional PBR materials only on generated 3D models, not standalone texture maps"
 plans:
 - name: Free
   price_usd: 0

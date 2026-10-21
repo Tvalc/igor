@@ -24,10 +24,9 @@ exports:
 skill_level: beginner
 pricing:
   model: freemium
-  free_tier: trial
-  starting_price_usd: null
-  notes: Monthly subscription tiers; free trial with a limited number of generations; Enterprise custom; API priced
-    per generation
+  free_tier: 'yes'
+  starting_price_usd: 12
+  notes: "Free: 40 fast generations, then 5 slower generations per day (up to 200x200 px, no map tools); Pixel Apprentice $12/mo, Pixel Artisan $24/mo, Pixel Architect $50/mo; ~25% off annually; Enterprise custom."
 license:
   commercial_use: 'yes'
   open_source: false
@@ -48,8 +47,7 @@ sources:
 - https://api.pixellab.ai/v2/docs
 - https://www.pixellab.ai/create-character
 - https://www.pixellab.ai/docs/tools/animate-with-skeleton
-needs_verification:
-- price
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   pixel_art: 'yes'
@@ -69,11 +67,23 @@ feature_notes:
   custom_training: "No model training; a Pro tool matches your style from reference images"
   retarget: "2D only: saved skeleton poses can be reused on other characters"
 plans:
-- name: Free Trial
+- name: "Free"
   price_usd: 0
   period: free
-  includes: Limited number of generations
-- name: Enterprise
+  includes: "40 fast gens, then 5 daily slower gens; commercial use"
+- name: "Pixel Apprentice"
+  price_usd: 12
+  period: month
+  includes: "2,000 generations/mo, up to 320x320, animation and map tools"
+- name: "Pixel Artisan"
+  price_usd: 24
+  period: month
+  includes: "5,000 generations/mo, up to 512x512, priority queue"
+- name: "Pixel Architect"
+  price_usd: 50
+  period: month
+  includes: "10,000 generations/mo, highest priority, 20 concurrent jobs"
+- name: "Enterprise"
   price_usd: null
   period: custom
-  includes: SSO, custom generation pools, invoice billing
+  includes: "SSO, custom generation pools, invoice billing"

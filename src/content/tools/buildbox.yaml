@@ -20,12 +20,14 @@ exports:
 - android
 skill_level: beginner
 pricing:
-  model: trial
+  model: paid
   free_tier: trial
-  starting_price_usd: null
+  starting_price_usd: 24.99
+  notes: "Buildbox 4: Beginner $24.99/mo billed monthly (preview only, no exports, 200 AI tokens/week); Pro $274.99/yr billed yearly (Android and PC exports, 350 AI tokens/mo); Ultimate Bundle $574.99/yr. Shown as sale prices against $49.98/mo and $549.98/yr; no free trial advertised."
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: "You own the game content you create (not Buildbox's assets); exporting a game to sell needs the Pro plan since Beginner is preview-only, and the Terms let Buildbox apply its ad monetization with a revenue share."
 sources:
 - https://www.buildbox.com
 - https://gamedesignskills.com/game-development/buildbox/
@@ -35,14 +37,37 @@ sources:
 - https://www.buildbox.com/how-to-create-game-assets-using-the-buildbox-ai-tool/
 - https://www.buildbox.com/portfolio/exporting/
 - https://signup.buildbox.com/plans
-needs_verification:
-- price
-- commercial use
+- https://www.buildbox.com/help/buildbox-3-manual/customizing-nodes/
+- https://www.buildbox.com/help/buildbox-3-manual/export-project-2/
+- https://buildboxworld.com/
+- https://signup.buildbox.com/product/bb4
+- https://www.buildbox.com/terms/
+- https://www.buildbox.com/sale-terms-of-service/
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   no_code: 'yes'
   ai_art: 'yes'
   mobile: partial
+  edit_code: 'yes'
+  export_project: 'yes'
+  hosting: partial
 feature_notes:
   mobile: Exports iOS/Android builds that must be compiled in Xcode/Android tools; quick testing via Buildbox World
     app
+  edit_code: "Customizable nodes can be edited directly in a JavaScript panel (Buildbox 3 docs)"
+  export_project: "Exports a project folder per platform (e.g. Xcode or Android Studio) for you to compile"
+  hosting: "Share exports to the Buildbox World mobile app or with friends via a unique link"
+plans:
+- name: "Beginner"
+  price_usd: 24.99
+  period: month
+  includes: "3D games, 1 world, 20 scenes, preview only, 200 AI tokens/week"
+- name: "Pro"
+  price_usd: 274.99
+  period: year
+  includes: "Unlimited worlds, Android and PC exports, 350 AI tokens/mo, keep 100% of sales revenue"
+- name: "Ultimate Bundle"
+  price_usd: 574.99
+  period: year
+  includes: "Buildbox Classic, 3 and 4 Pro plus Soundbox"

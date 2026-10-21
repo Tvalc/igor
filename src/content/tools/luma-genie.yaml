@@ -1,14 +1,14 @@
 name: Luma Genie
 url: https://lumalabs.ai/genie
-tagline: Text to 3D from Luma AI, now folded into the main Luma app.
-description: 'Luma Genie generates 3D models from text. It''s no longer sold as a standalone product: Genie assets
-  now live in the Luma app, and Luma doesn''t publish separate Genie pricing.'
+tagline: 'Retired: Luma AI''s text-to-3D tool, no longer offered.'
+description: Luma Genie generated 3D models from text. Luma no longer offers it; the Genie page now redirects to Luma's
+  homepage, which features only its image and video models.
 best_for: Quick text-to-3D concepts.
 categories:
 - art-3d
 tags:
 - 3d
-status: active
+status: discontinued
 platforms:
 - web
 engines: []

@@ -44,6 +44,10 @@ sources:
 - https://sorceress.games/blog/how-to-make-a-video-game-with-ai-no-coding-required
 - https://sorceress.games/pages/auto-sprite
 - https://sorceress.games/wiki/sorceress/sorceress-tool-api
+- https://sorceress.games/pages/3d-to-2d
+- https://sorceress.games/wiki/sorceress/sfx-gen
+- https://sorceress.games/wiki/sorceress/publishing-my-games
+- https://sorceress.games/wiki/wizard-genie/engine-integrations
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -61,12 +65,24 @@ features:
   text_to_sfx: 'yes'
   upscale: 'yes'
   loopable: partial
+  api: 'yes'
+  consistent_characters: 'yes'
+  multi_direction: 'yes'
+  variations: 'yes'
+  export_project: 'yes'
+  engine_plugin: partial
 feature_notes:
   hosting: Publish to Sorceress Arcade or GitHub Pages
   pbr_maps: Only base color is AI; normal/roughness/metallic/AO derived algorithmically
   ai_audio: SFX Gen, Music Gen and voice in Sound Studio (credit-based)
   upscale: "Built-in upscale in the image generator; True Pixel scales pixel art up to 16x"
   loopable: "A loop option for seamless sounds is documented in the Sorceress Tool API"
+  api: "Sorceress Tool API: one key for image, SFX, speech and music generation over HTTP"
+  consistent_characters: "Reference images (up to 14, varies by model) keep a character consistent"
+  multi_direction: "3D to 2D renders front, side, back, isometric or 16-direction sprite sets from a 3D model"
+  variations: "SFX Gen makes 1 to 4 variations of the same prompt"
+  export_project: "Download a whole WizardGenie Drive cloud project as a ZIP"
+  engine_plugin: "WizardGenie desktop links to Roblox Studio via its Bridge plugin, and to Unreal via MCP"
 plans:
 - name: Free
   price_usd: 0
