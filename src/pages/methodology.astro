@@ -63,7 +63,8 @@ const factors = Object.keys(FACTOR_LABELS) as Factor[];
         <strong>Features are checked, not assumed.</strong> Every tool has a feature checklist for its category (for
         example pixel art, sprite sheets and 8-direction views for sprite tools). A feature is marked Yes, Partly or No
         only when the vendor's own site, docs or pricing page says so; everything else shows as "Not confirmed". Features
-        power the comparison tables and don't change scores.
+        are 15% of every score: Yes counts fully, Partly counts 60%, No counts nothing, and "Not confirmed" counts 40%, so
+        an unconfirmed feature never helps more than a limited one.
       </li>
       <li>
         <strong>Scores are computed, not chosen.</strong> The scoring code is open in our repository, and nobody
