@@ -1,9 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon, { type IconName } from '../components/Icon.astro';
-import Monogram from '../components/Monogram.astro';
-import ScoreRing from '../components/ScoreRing.astro';
-import RankTable from '../components/RankTable.astro';
+import ToolCard from '../components/ToolCard.astro';
+import ToolLogo from '../components/ToolLogo.astro';
+import SearchBox from '../components/SearchBox.astro';
+import { CATEGORY_LABELS } from '../lib/format';
+import { CATEGORIES } from '../content.config';
 import { activeTools, comparisonPairs, publishedLists, LIST_ICONS } from '../lib/lists';
 import { SITE } from '../site';
 
@@ -51,7 +53,18 @@ const routes = [
   },
 ];
 
-const pixelMap = [1, 0, 0, 0, 1, 1, 2, 0, 2, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1];
+const CAT_ICONS: Record<string, IconName> = {
+  'game-maker': 'gamepad', 'art-2d': 'pixel', 'art-3d': 'cube', texture: 'grid', animation: 'motion',
+  code: 'code', voice: 'mic', music: 'music', sfx: 'wave', npc: 'chat',
+};
+const catTiles = CATEGORIES.map((c) => ({ c, n: tools.filter((t) => t.data.status !== 'discontinued' && (t.data.categories as string[]).includes(c)).length }));
+const topPicks = picks.slice(0, 6);
+const pairEntries = [...(await comparisonPairs()).entries()];
+const popularPairs = ['ai-game-makers', 'ai-sprite-generators', 'ai-3d-model-generators', 'ai-coding-tools-for-game-dev', 'ai-music-generators-for-games', 'ai-voice-generators-for-games']
+  .map((slug) => pairEntries.find(([, p]) => p.list.slug === slug))
+  .filter((x) => x !== undefined)
+  .concat(pairEntries.filter(([, p]) => p.list.slug === 'ai-game-makers').slice(1, 3))
+  .slice(0, 8);
 
 const website = {
   '@context': 'https://schema.org',
@@ -76,47 +89,68 @@ const organization = {
 >
   <section class="hero" slot="hero">
     <div class="wrap">
-      <span class="eyebrow"><Icon name="gamepad" size={16} /> Updated weekly · {SITE.year}</span>
-      <h1>Make games with AI. <em>Pick the right tool.</em></h1>
+      <span class="eyebrow"><Icon name="gamepad" size={16} /> {live} AI game dev tools compared</span>
+      <h1>Find the right AI tool to <em>make your game</em></h1>
       <p class="lede">
-        There are three ways to make a game with AI: a prompt-to-game platform, an AI assistant inside a game engine,
-        or a coding agent. We rank all {live} tools on one <a href="/methodology">public rubric</a>, using verified free
-        tiers, pricing, commercial rights and exports.
+        Compare AI game makers, sprite and 3D generators, coding assistants and audio AI side by side: prices, free
+        plans, commercial rights and features, checked against each vendor's own site.
       </p>
-      <div class="hero-actions">
-        <a class="btn btn-dark" href="/guides/how-to-make-a-game-with-ai">Start the guide <Icon name="arrow" size={18} /></a>
-        <a class="btn btn-ghost" href="/best/">See the rankings</a>
-        <a class="btn btn-ghost" href="/compare/">Compare tools</a>
+      <SearchBox variant="hero" placeholder="Search tools, e.g. sprite generator, Unity, Meshy" />
+      <div class="chips">
+        <a class="chip" href="/best/no-code-ai-game-makers"><Icon name="wand" size={15} /> Make a game, no code</a>
+        <a class="chip" href="/best/2d-game-makers"><Icon name="pixel" size={15} /> 2D games</a>
+        <a class="chip" href="/best/ai-sprite-generators"><Icon name="image" size={15} /> Sprites &amp; pixel art</a>
+        <a class="chip" href="/best/ai-3d-model-generators"><Icon name="cube" size={15} /> 3D models</a>
+        <a class="chip" href="/best/free-ai-game-dev-tools"><Icon name="gift" size={15} /> Free tools</a>
+        <a class="chip" href="/compare/"><Icon name="layers" size={15} /> Compare tools</a>
       </div>
-      <div class="stats">
-        <div class="stat"><strong>{live}</strong><span>tools tracked</span></div>
-        <div class="stat"><strong>{lists.length}</strong><span>ranked categories</span></div>
-        <div class="stat"><strong>{pairs}</strong><span>head-to-heads</span></div>
-        <div class="stat"><strong>Weekly</strong><span>fact re-checks</span></div>
+      <div class="trust">
+        <span><Icon name="shield" size={16} /> Facts checked on vendor sites</span>
+        <span><Icon name="clock" size={16} /> Re-checked weekly</span>
+        <span><Icon name="check" size={16} /> {pairs} head-to-head comparisons</span>
+        <span><Icon name="check" size={16} /> <a href="/methodology">Public scoring rubric</a></span>
       </div>
-    </div>
-    <div class="pixels" aria-hidden="true">
-      {pixelMap.map((v) => <i class={v === 1 ? 'on' : v === 2 ? 'on2' : ''} />)}
     </div>
   </section>
 
   <div class="section-head">
-    <h2>Current #1 in each category</h2>
+    <h2>Browse by category</h2>
+    <a href="/tools/">All {live} tools →</a>
+  </div>
+  <div class="grid">
+    {
+      catTiles.map(({ c, n }) => (
+        <a class="card cat-tile" href={`/tools/?category=${c}`}>
+          <span class="card-icon"><Icon name={CAT_ICONS[c]} /></span>
+          <span>
+            <strong>{CATEGORY_LABELS[c]}</strong>
+            <span class="sub">{n} tools</span>
+          </span>
+        </a>
+      ))
+    }
+  </div>
+
+  <div class="section-head">
+    <h2>Top pick in each category</h2>
     <a href="/best/">All {lists.length} rankings →</a>
   </div>
-  <div class="grid-picks">
+  <ul class="tool-grid">
+    {topPicks.map((p) => <ToolCard scored={p.top!} pick={`#1 ${p.label}`} />)}
+  </ul>
+
+  <div class="section-head">
+    <h2>Popular comparisons</h2>
+    <a href="/compare/">Build your own →</a>
+  </div>
+  <div class="grid">
     {
-      picks.map((p) => (
-        <a class="card" href={`/best/${p.slug}`}>
-          <span class="eyebrow">{p.label}</span>
-          <div class="podium-head" style="margin-top:10px">
-            <span style="display:flex;align-items:center;gap:10px">
-              <Monogram name={p.top!.tool.data.name} />
-              <strong>{p.top!.tool.data.name}</strong>
-            </span>
-            <ScoreRing score={p.top!.score} size={44} />
-          </div>
-          <p>{p.top!.tool.data.best_for}</p>
+      popularPairs.map(([slug, p]) => (
+        <a class="card pair-card" href={`/compare/${slug}`}>
+          <ToolLogo name={p.a.data.name} url={p.a.data.url} size="sm" />
+          <span class="vs">VS</span>
+          <ToolLogo name={p.b.data.name} url={p.b.data.url} size="sm" />
+          <strong>{p.a.data.name} vs {p.b.data.name}</strong>
         </a>
       ))
     }
@@ -124,7 +158,7 @@ const organization = {
 
   <div class="section-head">
     <h2>Three ways to make a game with AI</h2>
-    <a href="/guides/how-to-make-a-game-with-ai">Full step-by-step guide →</a>
+    <a href="/guides/how-to-make-a-game-with-ai">Step-by-step guide →</a>
   </div>
   <div class="grid-3">
     {
@@ -140,29 +174,19 @@ const organization = {
     }
   </div>
 
-  {
-    byslug['ai-game-makers'] && (
-      <>
-        <div class="section-head">
-          <h2>Best AI game makers</h2>
-          <a href="/best/ai-game-makers">Full ranking →</a>
-        </div>
-        <RankTable ranked={byslug['ai-game-makers'].ranked} limit={6} />
-      </>
-    )
-  }
-
   <div class="section-head">
-    <h2>Browse by what you need</h2>
-    <a href="/tools/">All {live} tools →</a>
+    <h2>Every ranking</h2>
+    <a href="/best/">See all →</a>
   </div>
   <div class="grid">
     {
       lists.map(({ def, ranked }) => (
-        <a class="card" href={`/best/${def.slug}`}>
+        <a class="card cat-tile" href={`/best/${def.slug}`}>
           <span class="card-icon"><Icon name={(LIST_ICONS[def.slug] ?? 'gamepad') as IconName} /></span>
-          <h3>{def.title.replace(/^Best /, '')}</h3>
-          <p>{ranked.length} tools ranked · #1 {ranked[0].tool.data.name}</p>
+          <span>
+            <strong>{def.title.replace(/^Best /, '')}</strong>
+            <span class="sub">{ranked.length} ranked · #1 {ranked[0].tool.data.name}</span>
+          </span>
         </a>
       ))
     }
@@ -180,7 +204,7 @@ const organization = {
       <p>Concept art, sprites, 3D models, textures, and who owns the rights.</p>
     </a>
     <a class="card" href="/methodology">
-      <span class="card-icon"><Icon name="check" /></span>
+      <span class="card-icon"><Icon name="shield" /></span>
       <h3>How we rank</h3>
       <p>Six factors, published weights, no hand-picked scores. Run by the Makko team, disclosed everywhere.</p>
     </a>

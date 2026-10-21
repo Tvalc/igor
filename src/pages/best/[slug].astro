@@ -2,15 +2,16 @@
 import Base from '../../layouts/Base.astro';
 import RankTable from '../../components/RankTable.astro';
 import Faq from '../../components/Faq.astro';
-import Podium from '../../components/Podium.astro';
+import PicksBox from '../../components/PicksBox.astro';
+import ToolCard from '../../components/ToolCard.astro';
+import FilterSidebar from '../../components/FilterSidebar.astro';
+import { computePicks } from '../../lib/picks';
 import Icon, { type IconName } from '../../components/Icon.astro';
-import Monogram from '../../components/Monogram.astro';
 import FeatureMatrix from '../../components/FeatureMatrix.astro';
 import { FEATURES } from '../../lib/features';
 import { publishedLists, toolsWithAlternatives, LIST_ICONS, type ListDef } from '../../lib/lists';
 import { FACTOR_LABELS, strengths, type Scored } from '../../lib/score';
 import { itemList, faqPage } from '../../lib/jsonld';
-import { CATEGORY_LABELS, tier } from '../../lib/format';
 import { SITE } from '../../site';
 
 export async function getStaticPaths() {
@@ -32,6 +33,7 @@ const hasMakko = ranked.some((s) => s.tool.data.makko_owned);
 const withAlts = await toolsWithAlternatives();
 const matrixTools = ranked.slice(0, 6).map((s) => s.tool);
 const matrixDefs = def.features ? FEATURES[def.features] : [];
+const pickLabel = new Map(computePicks(ranked).map((p) => [p.s.tool.id, p.label]));
 const names = (xs: Scored[], n = 3) => xs.slice(0, n).map((s) => s.tool.data.name).join(', ');
 
 const faqs = [
@@ -74,8 +76,12 @@ const description = `${def.title}, ranked: ${names(ranked)} and more, compared o
     faqPage(faqs),
   ]}
 >
-  <span class="eyebrow" style="margin-top:18px"><Icon name={(LIST_ICONS[def.slug] ?? 'gamepad') as IconName} size={16} /> Ranking · updated {SITE.year}</span>
+  <span class="eyebrow" style="margin-top:18px"><Icon name={(LIST_ICONS[def.slug] ?? 'gamepad') as IconName} size={16} /> Ranking</span>
   <h1>{title}</h1>
+  <p class="updated">
+    <span>Updated {SITE.year}</span><span>{ranked.length} tools compared</span><span>Scores from verified facts</span>
+    <a href="/methodology">How we rank</a>
+  </p>
   <div class="answer">
     <p>
       The best options are <strong>{first.tool.data.name}</strong>, <strong>{second.tool.data.name}</strong>
@@ -84,10 +90,6 @@ const description = `${def.title}, ranked: ${names(ranked)} and more, compared o
       {def.blurb}
     </p>
   </div>
-  <p class="meta">
-    {ranked.length} tools ranked · Scores are facts-based, and hands-on tests are being added ·
-    <a href="/methodology">How we rank</a>
-  </p>
   {
     hasMakko && (
       <p class="notice">
@@ -97,10 +99,36 @@ const description = `${def.title}, ranked: ${names(ranked)} and more, compared o
     )
   }
 
-  <h2>Top 3 picks</h2>
-  <Podium ranked={ranked} />
+  <h2>Our picks</h2>
+  <PicksBox ranked={ranked} />
 
-  <h2>Full ranking</h2>
+  <h2>All {ranked.length} ranked</h2>
+  <div class="listing" data-listing data-noun="tools">
+    <FilterSidebar items={ranked} showCategory={false} showSearch={false} />
+    <div>
+      <div class="sortbar">
+        <p class="result-count" data-count aria-live="polite">{ranked.length} tools</p>
+        <div class="sortbar-right">
+          <button type="button" class="btn btn-ghost btn-sm filters-toggle" data-open-filters><Icon name="filter" size={16} /> Filters</button>
+          <label>Sort
+            <select name="sort">
+              <option value="rank">Our ranking</option>
+              <option value="price">Lowest price</option>
+              <option value="name">Name A–Z</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <div class="active-chips" data-chips></div>
+      <ol class="tool-list" data-items>
+        {ranked.map((s, i) => <ToolCard scored={s} rank={i + 1} pick={pickLabel.get(s.tool.id)} details />)}
+      </ol>
+      <p class="no-results" data-empty hidden>No tools on this list match these filters.</p>
+    </div>
+    <div class="scrim" data-scrim hidden></div>
+  </div>
+
+  <h2>Comparison table</h2>
   <RankTable ranked={ranked} />
 
   {
@@ -117,23 +145,20 @@ const description = `${def.title}, ranked: ${names(ranked)} and more, compared o
     )
   }
 
-  <h2>The top picks, briefly</h2>
   {
-    ranked.slice(0, 5).map((s, i) => (
-      <section>
-        <h3 style="display:flex;align-items:center;gap:10px">
-          <Monogram name={s.tool.data.name} size="sm" />
-          <span>{i + 1}. <a href={`/tools/${s.tool.id}`}>{s.tool.data.name}</a></span>
-          <span class={`score tier-${tier(s.score)}`}>{s.score}</span>
-        </h3>
-        <p>{s.tool.data.description}</p>
-        <p class="meta">
-          {s.tool.data.categories.map((c) => CATEGORY_LABELS[c]).join(' · ')}
-          {withAlts.has(s.tool.id) && <> · <a href={`/alternatives/${s.tool.id}`}>{s.tool.data.name} alternatives</a></>}
-        </p>
-      </section>
-    ))
+    withAlts.size > 0 && (
+      <p class="meta">
+        Looking for alternatives? {ranked.slice(0, 5).filter((s) => withAlts.has(s.tool.id)).map((s, i) => (
+          <>{i > 0 && ' · '}<a href={`/alternatives/${s.tool.id}`}>{s.tool.data.name} alternatives</a></>
+        ))}
+      </p>
+    )
   }
+
+  <script>
+    import { initListing } from '../../lib/listing';
+    initListing(document.querySelector<HTMLElement>('[data-listing]')!);
+  </script>
 
   <Faq faqs={faqs} />
 </Base>

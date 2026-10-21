@@ -4,6 +4,11 @@ import { NAV, SECTION_INDEXES, SITE } from '../site';
 import { breadcrumbs as breadcrumbsLd } from '../lib/jsonld';
 import { publishedLists } from '../lib/lists';
 import BrandMark from '../components/BrandMark.astro';
+import SearchBox from '../components/SearchBox.astro';
+import CompareTray from '../components/CompareTray.astro';
+import { activeTools } from '../lib/lists';
+import { priceLabel } from '../lib/compare';
+import { CATEGORY_LABELS } from '../lib/format';
 
 interface Props {
   title: string;
@@ -22,6 +27,17 @@ const canonical = new URL(SECTION_INDEXES.includes(`${path}/`) ? `${path}/` : pa
 const fullTitle = title.includes(SITE.name) ? title : `${title} | ${SITE.name}`;
 const ogImage = new URL('/og.png', Astro.site).toString();
 const footerLists = (await publishedLists()).slice(0, 8);
+// Compact tool index for the header search and the compare tray, embedded once per page.
+const searchData = (await activeTools())
+  .filter((t) => t.data.status !== 'discontinued')
+  .map((t) => ({
+    id: t.id,
+    name: t.data.name,
+    cat: t.data.categories.map((c) => CATEGORY_LABELS[c]).join(', '),
+    price: priceLabel(t) === 'Unverified' ? '' : priceLabel(t),
+    host: new URL(t.data.url).hostname.replace(/^www\./, ''),
+    text: `${t.data.name} ${t.data.tagline} ${t.data.tags.join(' ')} ${t.data.categories.map((c) => CATEGORY_LABELS[c]).join(' ')}`.toLowerCase(),
+  }));
 const ld = [...jsonLd];
 if (crumbs.length) {
   ld.push(breadcrumbsLd([{ name: 'Home', url: base }, ...crumbs.map((c) => ({ name: c.name, url: base + c.href }))]));
@@ -49,7 +65,7 @@ if (crumbs.length) {
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="theme-color" content="#ffd000" />
+    <meta name="theme-color" content="#ffffff" />
     {ld.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
   </head>
   <body>
@@ -59,6 +75,10 @@ if (crumbs.length) {
         <nav aria-label="Main">
           {NAV.map((n) => <a href={n.href}>{n.label}</a>)}
         </nav>
+        <div class="header-tools">
+          <SearchBox variant="header" />
+          <a class="compare-pill" id="compare-pill" href="/compare/" hidden>Compare</a>
+        </div>
       </div>
     </header>
     <slot name="hero" />
@@ -119,5 +139,7 @@ if (crumbs.length) {
         </p>
       </div>
     </footer>
+    <CompareTray />
+    <script type="application/json" id="search-data" set:html={JSON.stringify(searchData)} />
   </body>
 </html>

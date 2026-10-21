@@ -1,7 +1,7 @@
 ---
 import { getCollection, getEntry } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import RankTable from '../../components/RankTable.astro';
+import ToolCard from '../../components/ToolCard.astro';
 import { alternativesFor, toolsWithAlternatives } from '../../lib/lists';
 import { type Tool } from '../../lib/score';
 import { itemList } from '../../lib/jsonld';
@@ -48,7 +48,7 @@ const free = alts.find((s) => s.tool.data.pricing.free_tier === 'yes');
       {free && <> If you want a free option, start with {free.tool.data.name}.</>}
     </p>
   </div>
-  <RankTable ranked={alts} />
+  <ol class="tool-list" style="margin-top:22px">{alts.map((s, i) => <ToolCard scored={s} rank={i + 1} details />)}</ol>
   <p class="meta">
     Ranked on our {lc(CATEGORY_LABELS[d.categories[0]])} rubric. <a href={`/tools/${tool.id}`}>Back to the {d.name} review</a>
   </p>

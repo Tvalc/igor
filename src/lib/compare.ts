@@ -24,7 +24,9 @@ export const priceLabel = (t: Tool) => {
   const label = price(t);
   if (label !== 'Unverified') return label;
   const n = fromPrice(t);
-  return n === null ? label : n === 0 ? 'Free' : `From $${n}/mo`;
+  if (n !== null) return n === 0 ? 'Free' : `From $${n}/mo`;
+  // Paid prices unknown, but a confirmed free plan is still the honest headline.
+  return t.data.pricing.free_tier === 'yes' ? 'Free plan' : label;
 };
 
 export async function clientTools() {
@@ -36,6 +38,7 @@ export async function clientTools() {
       return {
         id: t.id,
         name: d.name,
+        host: new URL(d.url).hostname.replace(/^www\./, ''),
         tagline: d.tagline,
         best: d.best_for,
         cats: d.categories as string[],

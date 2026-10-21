@@ -6,9 +6,14 @@ export function siteLinks() {
   const preview = home.endsWith('index.html');
   const root = preview ? home.slice(0, -'index.html'.length) : home.replace(/\/?$/, '/');
   const ext = preview ? '.html' : '';
+  const index = preview ? 'index.html' : '';
   return {
     tool: (id: string) => `${root}tools/${id}${ext}`,
     pair: (slug: string) => `${root}compare/${slug}${ext}`,
-    builder: (ids: string[]) => `${root}compare/${preview ? 'index.html' : ''}?tools=${ids.join(',')}`,
+    builder: (ids: string[]) => `${root}compare/${index}${ids.length ? `?tools=${ids.join(',')}` : ''}`,
+    directory: (q = '') => `${root}tools/${index}${q ? `?q=${encodeURIComponent(q)}` : ''}`,
   };
 }
+
+/** Logo URL for a tool's site: the favicon service returns a usable icon for almost every vendor. */
+export const logoSrc = (host: string) => `https://www.google.com/s2/favicons?domain=${host}&sz=128`;

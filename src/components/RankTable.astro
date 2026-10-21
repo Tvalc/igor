@@ -1,7 +1,9 @@
 ---
-import Monogram from './Monogram.astro';
+import ToolLogo from './ToolLogo.astro';
+import Stars from './Stars.astro';
 import type { Scored } from '../lib/score';
-import { COMMERCIAL_LABELS, FREE_TIER_LABELS, price, tier, verifiedFacts } from '../lib/format';
+import { COMMERCIAL_LABELS, FREE_TIER_LABELS, verifiedFacts } from '../lib/format';
+import { priceLabel } from '../lib/compare';
 
 interface Props {
   ranked: Scored[];
@@ -34,23 +36,23 @@ const cls = (v: string) => (v === 'Unverified' ? 'unverified' : undefined);
               <td class="rank">{i + 1}</td>
               <td>
                 <div class="tool-cell">
-                  <Monogram name={d.name} size="sm" />
+                  <ToolLogo name={d.name} url={d.url} size="sm" />
                   <span>
                     <a href={`/tools/${s.tool.id}`}>{d.name}</a>
-                    {d.makko_owned && <span class="pill owned" title="Run by the same team as this site">Our team</span>}
+                    {d.makko_owned && <> <span class="pill owned" title="Run by the same team as this site">Our team</span></>}
                     {d.sponsored && <span class="pill">Sponsored</span>}
                     {d.status !== 'active' && <span class="pill">{d.status}</span>}
                   </span>
                 </div>
               </td>
               <td class="num">
-                <span class={`score tier-${tier(s.score)}`}>{s.score}</span>
+                <Stars score={s.score} compact />
                 <span class="facts-count" title={verifiedFacts(s.tool).missing.length ? `Not yet verified: ${verifiedFacts(s.tool).missing.join(', ')}` : 'All key facts verified'}>
                   {verifiedFacts(s.tool).n}/{verifiedFacts(s.tool).total} facts
                 </span>
               </td>
               <td class={cls(FREE_TIER_LABELS[d.pricing.free_tier])}>{FREE_TIER_LABELS[d.pricing.free_tier]}</td>
-              <td class:list={['num', cls(price(s.tool))]}>{price(s.tool)}</td>
+              <td class:list={['num', cls(priceLabel(s.tool))]}>{priceLabel(s.tool)}</td>
               <td class={cls(COMMERCIAL_LABELS[d.license.commercial_use])}>{COMMERCIAL_LABELS[d.license.commercial_use]}</td>
               <td class="td-muted">{d.best_for}</td>
             </tr>

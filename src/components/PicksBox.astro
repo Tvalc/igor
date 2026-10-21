@@ -1,0 +1,32 @@
+---
+// "Our picks" summary, NerdWallet-style: each slot is computed from the ranking and the facts, never hand-picked.
+import ToolLogo from './ToolLogo.astro';
+import Stars from './Stars.astro';
+import type { Scored } from '../lib/score';
+import { computePicks } from '../lib/picks';
+import { outboundRel, outboundUrl } from '../lib/format';
+
+interface Props {
+  ranked: Scored[];
+}
+const picks = computePicks(Astro.props.ranked);
+---
+
+<div class="picks">
+  {
+    picks.map((p) => (
+      <div class="pick">
+        <span class="pick-label">{p.label}</span>
+        <div class="pick-head">
+          <ToolLogo name={p.s.tool.data.name} url={p.s.tool.data.url} size="md" />
+          <div>
+            <a href={`/tools/${p.s.tool.id}`}>{p.s.tool.data.name}</a>
+            <div><Stars score={p.s.score} compact /></div>
+          </div>
+        </div>
+        <p>{p.why}</p>
+        <a class="btn btn-sm btn-block" href={outboundUrl(p.s.tool)} rel={outboundRel(p.s.tool)} target="_blank">Visit {p.s.tool.data.name}</a>
+      </div>
+    ))
+  }
+</div>

@@ -1,0 +1,31 @@
+---
+import type { Tool } from '../lib/score';
+import { prosCons } from '../lib/proscons';
+
+interface Props {
+  tool: Tool;
+  max?: number;
+  showUnverified?: boolean;
+}
+const { tool, max = 4, showUnverified = true } = Astro.props;
+const { pros, cons, unverified } = prosCons(tool);
+---
+
+<div class="proscons">
+  {
+    pros.length > 0 && (
+      <div class="pros">
+        <h4>Pros</h4>
+        <ul>{pros.slice(0, max).map((p) => <li>{p}</li>)}</ul>
+      </div>
+    )
+  }
+  {
+    (cons.length > 0 || (showUnverified && unverified.length > 0)) && (
+      <div class={cons.length ? 'cons' : 'unk'}>
+        <h4>{cons.length ? 'Cons' : 'Still checking'}</h4>
+        <ul>{(cons.length ? cons : unverified).slice(0, max).map((c) => <li>{c}</li>)}</ul>
+      </div>
+    )
+  }
+</div>

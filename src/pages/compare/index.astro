@@ -66,11 +66,12 @@ const presets = lists.map(({ def, ranked }) => ({
 
   <script type="application/json" id="compare-data" set:html={JSON.stringify(data)} />
   <script>
-    import { siteLinks } from '../../lib/links';
+    import { siteLinks, logoSrc } from '../../lib/links';
+    import { getCompare, setCompare } from '../../lib/compare-store';
 
     type Plan = { name: string; price_usd: number | null; period: string; includes?: string };
     type T = {
-      id: string; name: string; best: string; catLabel: string; cats: string[]; score: number; tier: string;
+      id: string; name: string; host: string; best: string; catLabel: string; cats: string[]; score: number; tier: string;
       free: string; freeLabel: string; price: number | null; priceLabel: string; commercial: string; commercialLabel: string;
       engines: string; exports: string; platforms: string; skill: string; status: string; owned: boolean;
       features: Record<string, string>; plans: Plan[];
@@ -89,7 +90,16 @@ const presets = lists.map(({ def, ranked }) => ({
     const ICON: Record<string, [string, string]> = { yes: ['✓', 'Yes'], partial: ['◐', 'Partly'], no: ['✕', 'No'], unknown: ['?', 'Unverified'] };
 
     const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
-    let ids = (new URLSearchParams(location.search).get('tools') ?? '').split(',').filter((id) => byId.has(id)).slice(0, MAX);
+    const fromUrl = (new URLSearchParams(location.search).get('tools') ?? '').split(',').filter((id) => byId.has(id));
+    let ids = (fromUrl.length ? fromUrl : getCompare().filter((id) => byId.has(id))).slice(0, MAX);
+    let onlyDiff = false;
+    const logo = (t: T) => {
+      let h = 0;
+      for (const ch of t.name) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+      const w = t.name.replace(/\(.*?\)/g, '').split(/[\s.\-&]+/).filter(Boolean);
+      const ini = (w.length > 1 ? w[0][0] + w[1][0] : t.name.slice(0, 2)).toUpperCase();
+      return `<span class="logo logo-sm"><span class="mono mono-sm" style="--h:${h % 360}">${ini}</span><img src="${logoSrc(t.host)}" alt="" width="32" height="32" referrerpolicy="no-referrer" onload="this.naturalWidth > 16 ? this.parentNode.classList.add('has-img') : this.remove()" onerror="this.remove()"></span>`;
+    };
 
     function setIds(next: string[]) {
       ids = [...new Set(next)].filter((id) => byId.has(id)).slice(0, MAX);
@@ -97,6 +107,7 @@ const presets = lists.map(({ def, ranked }) => ({
       if (ids.length) url.searchParams.set('tools', ids.join(','));
       else url.searchParams.delete('tools');
       history.replaceState(null, '', url);
+      setCompare(ids);
       render();
     }
 
@@ -105,7 +116,7 @@ const presets = lists.map(({ def, ranked }) => ({
       picker.innerHTML = Array.from({ length: MAX }, (_, i) => {
         const t = byId.get(ids[i]);
         return t
-          ? `<div class="slot"><label>Tool ${i + 1}</label><div class="slot-chosen"><a href="${links.tool(t.id)}">${esc(t.name)}</a><button type="button" data-remove="${t.id}" aria-label="Remove ${esc(t.name)}">Remove</button></div></div>`
+          ? `<div class="slot"><label>Tool ${i + 1}</label><div class="slot-chosen"><a href="${links.tool(t.id)}">${logo(t)}${esc(t.name)}</a><button type="button" data-remove="${t.id}" aria-label="Remove ${esc(t.name)}">Remove</button></div></div>`
           : `<div class="slot"><label for="slot-${i}">Tool ${i + 1}</label><input id="slot-${i}" list="tool-names" placeholder="Add a tool" autocomplete="off" ${i > ids.length ? 'disabled' : ''}></div>`;
       }).join('');
       picker.querySelectorAll<HTMLButtonElement>('[data-remove]').forEach((b) =>
@@ -134,8 +145,10 @@ const presets = lists.map(({ def, ranked }) => ({
     function row(label: string, tools: T[], cell: (t: T) => string, score?: (t: T) => number | null, mode: 'max' | 'min' = 'max') {
       const vals = score ? tools.map(score) : [];
       const top = score ? best(vals, mode) : null;
-      return `<tr><td><strong>${label}</strong></td>${tools
-        .map((t, i) => `<td${top !== null && vals[i] === top ? ' class="best"' : ''}>${cell(t)}</td>`)
+      const cells = tools.map(cell);
+      const same = cells.every((c) => c === cells[0]);
+      return `<tr${same ? ' class="same"' : ''}><td><strong>${label}</strong></td>${tools
+        .map((t, i) => `<td${top !== null && vals[i] === top ? ' class="best"' : ''}>${cells[i]}</td>`)
         .join('')}</tr>`;
     }
 
@@ -175,8 +188,9 @@ const presets = lists.map(({ def, ranked }) => ({
         .join('');
       const pair = tools.length === 2 ? [tools[0].id, tools[1].id].sort().join('-vs-') : '';
       box.innerHTML = `
-        <div class="table-wrap"><table>
-          <thead><tr><th>Fact</th>${tools.map((t) => `<th><a href="${links.tool(t.id)}">${esc(t.name)}</a></th>`).join('')}</tr></thead>
+        <label class="diff-toggle"><input type="checkbox" id="diff-only" ${onlyDiff ? 'checked' : ''}> Only show differences</label>
+        <div class="table-wrap${onlyDiff ? ' only-diff' : ''}" id="diff-table"><table>
+          <thead><tr><th>Fact</th>${tools.map((t) => `<th><span class="th-tool">${logo(t)}<a href="${links.tool(t.id)}">${esc(t.name)}</a></span></th>`).join('')}</tr></thead>
           <tbody>
             ${row('Score', tools, (t) => `<span class="score tier-${t.tier}">${t.score}</span>`, (t) => t.score)}
             ${row('Best for', tools, (t) => esc(t.best))}
@@ -202,6 +216,10 @@ const presets = lists.map(({ def, ranked }) => ({
     function render() {
       renderPicker();
       renderTable();
+      document.getElementById('diff-only')?.addEventListener('change', (e) => {
+        onlyDiff = (e.target as HTMLInputElement).checked;
+        document.getElementById('diff-table')?.classList.toggle('only-diff', onlyDiff);
+      });
     }
 
     document.querySelectorAll<HTMLAnchorElement>('.presets a').forEach((a) =>

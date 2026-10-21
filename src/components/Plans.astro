@@ -6,6 +6,8 @@ interface Props {
 }
 const { tool } = Astro.props;
 const PERIOD: Record<string, string> = { month: '/mo', year: '/mo, billed yearly', 'one-time': ' one-time', usage: ' pay as you go', free: '', custom: '' };
+const paid = tool.data.plans.filter((p) => p.price_usd && p.period !== 'usage');
+const entry = paid.length ? paid.reduce((a, b) => (b.price_usd! < a.price_usd! ? b : a)) : undefined;
 const amount = (p: Tool['data']['plans'][number]) =>
   p.price_usd === null ? 'Custom' : p.price_usd === 0 ? 'Free' : `$${p.price_usd}`;
 ---
@@ -13,7 +15,8 @@ const amount = (p: Tool['data']['plans'][number]) =>
 <div class="plans">
   {
     tool.data.plans.map((p) => (
-      <div class="plan">
+      <div class:list={['plan', { featured: p === entry }]}>
+        {p === entry && <span class="plan-flag">Cheapest paid plan</span>}
         <h3>{p.name}</h3>
         <div class="plan-price">
           {amount(p)}

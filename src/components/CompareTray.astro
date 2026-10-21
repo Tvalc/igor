@@ -1,0 +1,51 @@
+---
+// Floating compare bar, shared by every page. Checkboxes anywhere with data-compare="<id>" feed it.
+---
+
+<div class="tray" id="compare-tray" hidden>
+  <span class="tray-names" id="tray-names"></span>
+  <button type="button" id="tray-clear">Clear</button>
+  <a class="btn btn-sm" id="tray-go" href="/compare/">Compare now</a>
+</div>
+
+<script>
+  import { getCompare, setCompare, toggleCompare, MAX_COMPARE } from '../lib/compare-store';
+  import { siteLinks } from '../lib/links';
+
+  const links = siteLinks();
+  const raw = document.getElementById('search-data')?.textContent;
+  const names = new Map<string, string>((raw ? JSON.parse(raw) : []).map((t: { id: string; name: string }) => [t.id, t.name]));
+  const tray = document.getElementById('compare-tray')!;
+  const label = document.getElementById('tray-names')!;
+  const go = document.getElementById('tray-go') as HTMLAnchorElement;
+  const pill = document.getElementById('compare-pill') as HTMLAnchorElement | null;
+  const onBuilder = !!document.getElementById('compare-table');
+
+  function sync() {
+    const ids = getCompare().filter((id) => names.has(id));
+    document.querySelectorAll<HTMLInputElement>('input[data-compare]').forEach((b) => {
+      b.checked = ids.includes(b.dataset.compare!);
+      b.disabled = !b.checked && ids.length >= MAX_COMPARE;
+    });
+    tray.hidden = ids.length === 0 || onBuilder;
+    label.textContent = ids.map((id) => names.get(id)).join(' · ') + (ids.length === 1 ? '  (add one more)' : '');
+    go.href = links.builder(ids);
+    go.toggleAttribute('aria-disabled', ids.length < 2);
+    if (pill) {
+      pill.hidden = ids.length === 0;
+      pill.href = links.builder(ids);
+      pill.textContent = `Compare (${ids.length})`;
+    }
+  }
+
+  document.addEventListener('change', (e) => {
+    const b = e.target as HTMLInputElement;
+    if (b.matches?.('input[data-compare]')) toggleCompare(b.dataset.compare!, b.checked);
+  });
+  document.getElementById('tray-clear')!.addEventListener('click', () => setCompare([]));
+  go.addEventListener('click', (e) => {
+    if (getCompare().length < 2) e.preventDefault();
+  });
+  document.addEventListener('compare-change', sync);
+  sync();
+</script>
