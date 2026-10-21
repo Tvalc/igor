@@ -46,6 +46,8 @@ sources:
 - https://www.pixellab.ai/docs/tools/animation
 - https://www.pixellab.ai/mcp
 - https://api.pixellab.ai/v2/docs
+- https://www.pixellab.ai/create-character
+- https://www.pixellab.ai/docs/tools/animate-with-skeleton
 needs_verification:
 - price
 last_verified: '2026-10-21'
@@ -57,9 +59,15 @@ features:
   transparent_bg: 'yes'
   consistent_characters: 'yes'
   text_to_motion: partial
+  sprite_sheets: 'yes'
+  custom_training: partial
+  retarget: partial
 feature_notes:
   consistent_characters: Style/character reference images; Pro tools need Tier 1 subscription
   text_to_motion: Text-to-animation produces 2D pixel-art frames, not 3D motion data
+  sprite_sheets: "Characters export as sprite sheets or individual frames"
+  custom_training: "No model training; a Pro tool matches your style from reference images"
+  retarget: "2D only: saved skeleton poses can be reused on other characters"
 plans:
 - name: Free Trial
   price_usd: 0

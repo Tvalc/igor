@@ -49,6 +49,10 @@ sources:
 - https://ludo.ai/tools/game-assets-in-claude
 - https://ludo.ai/tools/sprite-generator-for-godot
 - https://www.summerengine.com/summer-vs-ludo
+- https://ludo.ai/tools/consistent-game-art-style
+- https://ludo.ai/tools/tileset-generator
+- https://ludo.ai/tools/sprite-rotation-generator
+- https://ludo.ai/features/3d-generator
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -60,10 +64,28 @@ features:
   sprite_sheets: 'yes'
   transparent_bg: 'yes'
   api: partial
+  consistent_characters: 'yes'
+  custom_training: 'no'
+  tilesets: partial
+  multi_direction: 'yes'
+  text_to_3d: 'yes'
+  image_to_3d: 'yes'
+  pbr_textures: 'yes'
+  auto_rigging: 'yes'
+  low_poly: 'yes'
 feature_notes:
   no_code: Playable Generator makes simple prototypes; FAQ calls Ludo a pre-production tool
   hosting: web prototypes shareable by link (third-party report)
   api: API and MCP on Pro and Studio plans only
+  consistent_characters: "Uses a reference image, plus rotate and re-pose tools, to keep characters matching"
+  custom_training: "No custom model training; consistency comes from reference images and style presets"
+  tilesets: "Generates matching individual tiles; standard map tiles have no seamless-edge guarantee"
+  multi_direction: "Rotates a sprite to 8 camera angles; Directional Sprites (beta) offers 4 or 8 sides"
+  text_to_3d: "Makes a 2D concept image from your prompt, then converts it to a 3D model"
+  image_to_3d: "Prop and Hero models; background removed automatically"
+  pbr_textures: "Textured GLB export with PBR materials"
+  auto_rigging: "Auto-rigs generated or uploaded models in about a minute; rigged export is GLB only"
+  low_poly: "Adjustable max triangle count from 1,000 to 200,000"
 plans:
 - name: Indie
   price_usd: 15

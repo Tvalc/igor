@@ -27,6 +27,7 @@ sources:
 - https://www.microsoft.com/en-us/research/blog/introducing-muse
 - https://huggingface.co/microsoft/wham
 - https://the-decoder.com/microsoft-releases-real-time-ai-generated-playable-demo-of-quake-ii/
+- https://www.microsoft.com/en-us/research/blog/introducing-muse-our-first-generative-ai-model-designed-for-gameplay-ideation/
 needs_verification:
 - exports
 last_verified: '2026-10-21'
@@ -35,3 +36,7 @@ plans:
   price_usd: 0
   period: free
   includes: Weights, sample data and WHAM Demonstrator via Azure AI Foundry
+features:
+  ai_art: partial
+feature_notes:
+  ai_art: "Generates gameplay visuals for ideation, not art assets you can reuse in a game"

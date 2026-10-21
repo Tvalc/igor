@@ -33,11 +33,15 @@ sources:
 - https://cascadeur.com/jp/plans
 - https://cascadeur.com/ru/blog/general/cascadeur-20231-introduces-finger-autoposing-video-mocap-and-macos-version
 - https://cascadeur.com/tutor/move-ai-video-mocap
+- https://cascadeur.com/help/category/203
+- https://cascadeur.com/blog/view/cascadeur-2026-1-new-renderer-ue-live-link
 needs_verification: []
 last_verified: '2026-10-21'
 features:
   video_mocap: 'yes'
   retarget: 'yes'
+  multi_person: 'no'
+  realtime: partial
 plans:
 - name: Free
   price_usd: 0
@@ -51,3 +55,6 @@ plans:
   price_usd: 49
   period: month
   includes: $33/mo yearly; unlimited commercial use; 14-day trial
+feature_notes:
+  multi_person: "Video mocap (alpha) captures one actor per video"
+  realtime: "Live Link streams animation to Unreal in real time; Windows only, paid plans"

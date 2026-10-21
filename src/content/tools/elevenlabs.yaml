@@ -43,6 +43,8 @@ sources:
 - https://docs.cdntest.elevenlabs.io/product-guides/playground/sound-effects?error=true
 - https://pkg.go.dev/github.com/plexusone/elevenlabs-go
 - https://www.usagepricing.com/blueprint/activity/elevenlabs-2026-10-05-v4-launch-tts-price-cut
+- https://github.com/elevenlabs/skills/blob/main/text-to-speech/references/voice-settings.md
+- https://github.com/elevenlabs/skills/blob/main/music/references/api_reference.md
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -55,9 +57,13 @@ features:
   loopable: 'yes'
   stems: 'yes'
   vocals: 'yes'
+  emotion_control: 'yes'
+  custom_length: 'yes'
 feature_notes:
   loopable: sound effects max 30 seconds with looping toggle
   vocals: music generation includes lyrics
+  emotion_control: "Audio tags like [whispers] or [excited] direct emotion and delivery"
+  custom_length: "Music length from 3 seconds to 10 minutes"
 plans:
 - name: Free
   price_usd: 0

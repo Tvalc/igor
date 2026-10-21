@@ -31,6 +31,17 @@ sources:
 - https://devforum.roblox.com/t/beta-cube-3d-generation-tools-and-apis-for-creators/3558947
 - https://create.roblox.com/docs/en-us/assistant/guide
 - https://corp.roblox.com/newsroom/2025/03/introducing-roblox-cube
+- https://create.roblox.com/docs/ai/build
+- https://create.roblox.com/docs/tutorials/fundamentals/coding-1/create-a-script
+- https://create.roblox.com/docs/studio/texture-generator
+- https://create.roblox.com/docs/scripting/locations
+- https://create.roblox.com/docs/studio
+- https://create.roblox.com/docs/production/publishing/publish-games-and-places
+- https://create.roblox.com/docs/projects/place-files
+- https://create.roblox.com/docs/studio/mcp
+- https://github.com/Roblox/roblox-studio-agent-plugin
+- https://create.roblox.com/docs/ai/accelerated-workflows
+- https://create.roblox.com/docs/avatar-setup
 needs_verification:
 - commercial use
 - exports
@@ -40,9 +51,35 @@ features:
   scene_editing: 'yes'
   text_to_3d: partial
   api: 'yes'
+  no_code: partial
+  edit_code: 'yes'
+  ai_art: 'yes'
+  multiplayer: 'yes'
+  mobile: 'yes'
+  hosting: 'yes'
+  export_project: 'yes'
+  mcp: 'yes'
+  runs_game: 'yes'
+  model_choice: 'yes'
+  local_models: 'no'
+  pbr_textures: 'yes'
+  auto_rigging: partial
 feature_notes:
   text_to_3d: Cube 3D /generate in Assistant; beta, static meshes without textures at launch
   api: in-experience Lua Mesh Generation API (beta)
+  no_code: "Roblox's Build tool makes simple side-scrollers and puzzle games from text; Studio Assistant writes scripts"
+  edit_code: "Built-in Luau script editor in Roblox Studio"
+  ai_art: "Generates 3D meshes, textures and materials inside Studio"
+  multiplayer: "Roblox games are multiplayer by default"
+  mobile: "Games play on phones, tablets, consoles and desktop; building needs a PC or Mac"
+  hosting: "Publish to Roblox straight from Studio's File menu"
+  export_project: "Save places locally as .rbxl or .rbxlx files"
+  mcp: "Studio has a built-in MCP server for Claude, Codex and other MCP clients"
+  runs_game: "Assistant and connected AI tools can start playtests and read the output"
+  model_choice: "Bring your own API key for Anthropic, OpenAI or Google models"
+  local_models: "Your-own-key option lists only Anthropic, OpenAI and Google cloud models"
+  pbr_textures: "Texture Generator's Quality mode makes 4K PBR textures for meshes"
+  auto_rigging: "Avatar Setup auto-rigs humanoid character bodies to Roblox's R15 skeleton only"
 plans:
 - name: Free
   price_usd: 0

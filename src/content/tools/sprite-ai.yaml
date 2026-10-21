@@ -33,12 +33,20 @@ sources:
 - https://www.sprite-ai.art/pricing
 - https://www.sprite-ai.art/blog/best-pixel-art-generators-2026
 - https://alternativeto.net/software/sprite-ai/about
+- https://www.sprite-ai.art/docs/api-reference
+- https://www.sprite-ai.art/guides/isometric-pixel-art
+- https://www.sprite-ai.art/docs/aseprite
+- https://www.sprite-ai.art/docs/introduction
 needs_verification: []
 last_verified: '2026-10-21'
 features:
   pixel_art: 'yes'
   sprite_sheets: 'yes'
   transparent_bg: 'yes'
+  consistent_characters: 'yes'
+  tilesets: partial
+  multi_direction: 'yes'
+  api: 'yes'
 plans:
 - name: Free
   price_usd: 0
@@ -56,3 +64,8 @@ plans:
   price_usd: 50
   period: month
   includes: Largest generation allowance
+feature_notes:
+  consistent_characters: "Reference sprites and restyle keep the same character and pose"
+  tilesets: "Generates single tiles; no one-click tileset with edge and corner transitions"
+  multi_direction: "Rotates a sprite to all 8 directions or the 4 cardinal ones"
+  api: "REST API with a key from a free account; also an MCP server and Aseprite plugin"

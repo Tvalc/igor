@@ -35,12 +35,14 @@ sources:
 - https://github.blog/changelog/2026-10-07-discover-local-models-in-github-copilot-cli
 - https://docs.github.com/en/enterprise-cloud@latest/copilot/how-tos/copilot-in-your-ide/use-copilot-agents/use-agent-mode
 - https://github.blog/changelog/2025-07-16-agent-mode-for-jetbrains-eclipse-and-xcode-is-now-generally-available/
+- https://github.blog/changelog/2025-07-02-copilot-coding-agent-now-has-its-own-web-browser/
 needs_verification: []
 last_verified: '2026-10-21'
 features:
   mcp: 'yes'
   model_choice: 'yes'
   local_models: partial
+  runs_game: partial
 plans:
 - name: Free
   price_usd: 0
@@ -58,3 +60,5 @@ plans:
   price_usd: 100
   period: month
   includes: 20,000 AI credits/mo; upgrade for existing Copilot users
+feature_notes:
+  runs_game: "Cloud agent can run web apps in a built-in browser and screenshot them; not game engines"

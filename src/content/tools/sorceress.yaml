@@ -42,6 +42,8 @@ sources:
 - https://sorceress.games/pages/sound-studio
 - https://sorceress.games/blog/ai-sprite-generator-pixel-walk-cycles-idles-and-vfx
 - https://sorceress.games/blog/how-to-make-a-video-game-with-ai-no-coding-required
+- https://sorceress.games/pages/auto-sprite
+- https://sorceress.games/wiki/sorceress/sorceress-tool-api
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -57,10 +59,14 @@ features:
   seamless: 'yes'
   pbr_maps: 'yes'
   text_to_sfx: 'yes'
+  upscale: 'yes'
+  loopable: partial
 feature_notes:
   hosting: Publish to Sorceress Arcade or GitHub Pages
   pbr_maps: Only base color is AI; normal/roughness/metallic/AO derived algorithmically
   ai_audio: SFX Gen, Music Gen and voice in Sound Studio (credit-based)
+  upscale: "Built-in upscale in the image generator; True Pixel scales pixel art up to 16x"
+  loopable: "A loop option for seamless sounds is documented in the Sorceress Tool API"
 plans:
 - name: Free
   price_usd: 0

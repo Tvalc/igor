@@ -38,8 +38,11 @@ last_verified: '2026-10-21'
 features:
   seamless: 'yes'
   upscale: 'yes'
+  engine_plugin: 'yes'
 plans:
 - name: Open source
   price_usd: 0
   period: free
   includes: Open source, self-hosted (runs Stable Diffusion locally in Blender)
+feature_notes:
+  engine_plugin: "Runs as a Blender add-on"

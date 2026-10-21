@@ -30,12 +30,15 @@ sources:
 - https://github.com/facebookresearch/audiocraft/blob/main/model_cards/AUDIOGEN_MODEL_CARD.md
 - https://huggingface.co/spaces/facebook/MusicGen/raw/5325fcc37771a4fe5fc34a557e23b4988718602d/README.md
 - https://huggingface.co/spaces/CryptoThaler/melody/blob/main/docs/AUDIOGEN.md
+- https://github.com/facebookresearch/audiocraft/blob/main/docs/AUDIOGEN.md
 needs_verification: []
 last_verified: '2026-10-21'
 features:
   text_to_sfx: 'yes'
+  api: partial
 feature_notes:
   text_to_sfx: audiogen-medium 1.5B text-to-sound; needs 16GB GPU
+  api: "Python library you run yourself; no hosted web API"
 plans:
 - name: Open source
   price_usd: 0

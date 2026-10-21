@@ -35,9 +35,13 @@ features:
   image_to_3d: 'yes'
   text_to_3d: 'yes'
   pbr_textures: partial
+  low_poly: partial
+  api: partial
 feature_notes:
   text_to_3d: TRELLIS-text models released 03/2025; README recommends text-to-image then image-to-3D for quality
   pbr_textures: Full PBR materials come with the successor TRELLIS.2 (separate repo)
+  low_poly: "GLB export can simplify the mesh to fewer triangles; no retopology"
+  api: "Python API and local web demo for self-hosting; no official hosted API"
 plans:
 - name: Open source
   price_usd: 0

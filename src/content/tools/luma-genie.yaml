@@ -26,6 +26,7 @@ sources:
 - https://lumalabs.ai/series-b
 - https://lumalabs.ai/learning-hub/genie-capture
 - https://lumalabs.ai/pricing
+- https://lumalabs.ai/llm-info
 needs_verification:
 - free tier
 - price
@@ -35,5 +36,7 @@ last_verified: '2026-10-21'
 features:
   text_to_3d: 'yes'
   low_poly: 'yes'
+  api: 'no'
 feature_notes:
   low_poly: Genie 1.0 outputs quad meshes with materials at any polygon count
+  api: "Luma's API covers its image and video models; no Genie 3D endpoint is listed"

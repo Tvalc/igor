@@ -36,6 +36,11 @@ sources:
 - https://blogs.nvidia.com/blog/ai-decoded-gamescom-ace-nemotron-instruct
 - https://developer.nvidia.com/blog/deploy-the-first-on-device-small-language-model-for-improved-game-character-roleplay
 - https://catalog.ngc.nvidia.com/orgs/nim/nvidia/containers/audio2face-3d/-/governing-terms
+- https://github.com/NVIDIA/ACE
+- https://github.com/NVIDIA/game-agent-sdk/blob/main/docs/sphinx/source/agent-deep-dive.md
+- https://github.com/NVIDIA/game-agent-sdk
+- https://github.com/NVIDIA/Audio2Face-3D-SDK
+- https://github.com/NVIDIA/Maya-ACE
 needs_verification:
 - commercial use
 - exports
@@ -45,9 +50,19 @@ features:
   on_device: 'yes'
   hands_face: partial
   realtime: 'yes'
+  voice: 'yes'
+  memory: partial
+  actions: partial
+  multi_person: partial
+  retarget: partial
 feature_notes:
   hands_face: Audio-driven facial animation only (Audio2Face); no hand animation found
   on_device: Nemotron 4B on-device SLM; local Audio2Face-3D plugins need an NVIDIA GPU
+  voice: "Riva text-to-speech is one of the ACE components"
+  memory: "Beta Game Agent SDK can save and reload conversations between sessions; long-term recall is up to you"
+  actions: "Tool calls through the beta Game Agent SDK for C/C++ engines; needs a recent NVIDIA GPU"
+  multi_person: "Faces only: Audio2Face can animate several characters from separate audio streams at once"
+  retarget: "Facial animation only: works with any character and custom blendshape sets"
 plans:
 - name: Free
   price_usd: 0

@@ -37,5 +37,7 @@ features:
   no_code: 'yes'
   multiplayer: 'yes'
   ai_art: 'yes'
+  hosting: 'yes'
 feature_notes:
   ai_art: Generates populated 3D worlds and assets from prompts
+  hosting: "Share games publicly and play online with friends"

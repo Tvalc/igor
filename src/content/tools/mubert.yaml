@@ -46,8 +46,10 @@ features:
   loops: 'yes'
   custom_length: 'yes'
   api: 'yes'
+  vocals: partial
 feature_notes:
   stems: Stem edit/swap via Mubert API v3
+  vocals: "Some tracks have a vocal stem of textures or short samples; no sung lyrics"
 plans:
 - name: Ambassador
   price_usd: 0

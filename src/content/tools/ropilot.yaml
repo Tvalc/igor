@@ -35,6 +35,7 @@ sources:
 - https://ropilot.ai/blog/ropilot-vs-roblox-assistant
 - https://ropilot.ai/automate-roblox-scripts
 - https://docs.ropilot.ai/docs/quickstart
+- https://ropilot.ai/ai-roblox-script-generator
 needs_verification:
 - commercial use
 - exports
@@ -46,10 +47,14 @@ features:
   edit_code: 'yes'
   scene_editing: 'yes'
   runs_game: partial
+  no_code: 'yes'
+  ai_art: partial
 feature_notes:
   edit_code: Writes Luau across files as reviewable diffs
   scene_editing: Creates instances and applies changes directly in Roblox Studio
   runs_game: Automated playtest loop (input simulation, screenshots) labeled beta
+  no_code: "Describe features in plain English and it writes and playtests them inside Roblox Studio"
+  ai_art: "Builds 3D models and animations by driving Blender, then imports them into Roblox"
 plans:
 - name: Free
   price_usd: 0

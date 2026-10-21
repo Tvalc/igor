@@ -38,15 +38,18 @@ sources:
 - https://developers.openai.com/codex/mcp
 - https://developers.openai.com/zh-Hans/docs/config-file/config-sample
 - https://docs.ollama.com/codex
+- https://developers.openai.com/codex/use-cases/browser-games
 needs_verification: []
 last_verified: '2026-10-21'
 features:
   mcp: 'yes'
   model_choice: 'yes'
   local_models: 'yes'
+  runs_game: 'yes'
 feature_notes:
   model_choice: model / model_provider keys in config.toml; -m flag
   local_models: --oss mode runs local models (e.g. gpt-oss via Ollama or LM Studio)
+  runs_game: "Tests browser games in a live browser using its Playwright skill"
 plans:
 - name: Free
   price_usd: 0

@@ -43,10 +43,14 @@ features:
   multiplayer: partial
   hosting: 'yes'
   export_project: partial
+  ai_audio: partial
+  mobile: partial
 feature_notes:
   edit_code: Via the GDK with a coding agent; requires Bitmagic Pro
   multiplayer: Multiplayer and leaderboards listed as part of Bitmagic Pro
   export_project: GDK scaffolds a local project with engine source; Pro only
+  ai_audio: "Sound assets via the GDK generate command; requires Bitmagic Pro"
+  mobile: "Touch controls built in; iOS builds via TestFlight need a Mac and Pro; Android not yet"
 plans:
 - name: Web Creator
   price_usd: 0

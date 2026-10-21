@@ -38,6 +38,11 @@ sources:
 - https://www.summerengine.com/pricing
 - https://www.summerengine.com/godot-ai-mcp
 - https://www.summerengine.com/godot-mcp
+- https://www.summerengine.com/make-a-game-without-coding
+- https://docs.summerengine.com/knowledge-base/godot-compatibility
+- https://www.summerengine.com/blog/multiplayer-games-with-ai
+- https://www.summerengine.com/blog/engine-native-ai-agent-harness
+- https://www.summerengine.com/mcp/how-to-make-games-for-free-with-local-llms
 needs_verification:
 - commercial use
 last_verified: '2026-10-21'
@@ -49,11 +54,23 @@ features:
   ai_art: 'yes'
   ai_audio: 'yes'
   mobile: 'yes'
+  no_code: 'yes'
+  edit_code: 'yes'
+  multiplayer: partial
+  export_project: 'yes'
+  engine_integration: 'yes'
+  local_models: partial
 feature_notes:
   model_choice: Via external MCP clients (Claude Code, Cursor, Codex)
   ai_art: Cloud generation of images and 3D models uses credits
   ai_audio: Cloud generation uses credits
   mobile: Export targets include mobile
+  no_code: "Describe a game in plain language and the AI builds a playable project"
+  edit_code: "Projects use standard Godot 4 scripts and scenes you can edit directly"
+  multiplayer: "Steam peer-to-peer co-op via Godot networking; no hosted servers or matchmaking"
+  export_project: "Project files live on your machine as a normal Godot 4 project"
+  engine_integration: "The AI agent is built into Summer's own Godot-compatible engine"
+  local_models: "Local models via Ollama through an external agent app; built-in AI is hosted"
 plans:
 - name: Hobby
   price_usd: 0

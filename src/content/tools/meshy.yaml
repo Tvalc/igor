@@ -52,6 +52,8 @@ sources:
 - https://docs.meshy.ai/en/webapp/concepts
 - https://www.meshy.ai/blog/ai-3d-models-for-unity-official-meshy-plugin-2026
 - https://www.meshy.ai/use-cases/free-game-assets/unity
+- https://docs.meshy.ai/en/api/text-to-motion
+- https://help.meshy.ai/en/articles/16102795-how-to-create-seamless-pbr-textures-with-meshy
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -63,10 +65,14 @@ features:
   api: 'yes'
   pbr_maps: 'yes'
   engine_plugin: partial
+  text_to_motion: 'yes'
+  seamless: partial
 feature_notes:
   auto_rigging: Humanoid and quadruped
   low_poly: Remesh to a target polycount
   engine_plugin: Unity plugin requires Pro plan or higher
+  text_to_motion: "Generates 2 to 10 second motion clips from a text prompt"
+  seamless: "Textures are made for a model's surface; a help guide covers prompting for seamless materials"
 plans:
 - name: Free
   price_usd: 0

@@ -36,6 +36,12 @@ sources:
 - https://inworld.ai/voice-generator
 - https://inworld.ai/voice-cloning
 - https://inworld.ai/gaming-media
+- https://docs.inworld.ai/docs/Unity/runtime/get-started
+- https://inworld.ai/blog/introducing-unreal-ai-runtime-sdk
+- https://docs.inworld.ai/realtime/usage/long-term-memory
+- https://docs.inworld.ai/realtime/usage/tool-calling
+- https://inworld.ai/on-device
+- https://docs.inworld.ai/tts/capabilities/steering
 needs_verification:
 - exports
 last_verified: '2026-10-21'
@@ -45,8 +51,19 @@ features:
   multilingual: 'yes'
   api: 'yes'
   voice: 'yes'
+  unity_sdk: 'yes'
+  unreal_sdk: 'yes'
+  memory: partial
+  actions: 'yes'
+  on_device: partial
+  emotion_control: 'yes'
 feature_notes:
   multilingual: 100+ languages
+  unity_sdk: "Unity 2022.3 LTS or later; Windows, Mac, Android and iOS"
+  memory: "Realtime API keeps memory per session; your app must save and restore it between sessions"
+  actions: "Tool calling lets the AI call functions your game handles"
+  on_device: "On-device text to speech is in private preview, by request"
+  emotion_control: "Natural-language delivery steering on TTS-2, plus emotion tags"
 plans:
 - name: On-Demand
   price_usd: 0

@@ -45,6 +45,8 @@ sources:
 - https://helpx.adobe.com/firefly/using/customize-a-firefly-model.html
 - https://helpx.adobe.com/firefly/work-with-audio-and-video/work-with-audio/text-to-sound-effects.html
 - https://developer.adobe.com/firefly-services/docs/firefly-api/guides
+- https://www.adobe.com/products/firefly/features/pixel-art-generator.html
+- https://helpx.adobe.com/firefly/web/work-with-images/edit-images/remove-background.html
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -53,11 +55,15 @@ features:
   consistent_characters: partial
   variations: 'yes'
   api: 'yes'
+  pixel_art: partial
+  transparent_bg: partial
 feature_notes:
   consistent_characters: Via Firefly Custom Models (character/style training); public beta for CC, full access on
     enterprise plans
   variations: Generate Sound Effects returns 4 variations per generation, up to 30s each
   api: Firefly Services API (image generation) via Adobe Developer Console credentials
+  pixel_art: "Pixel art is a style effect; you can't set the pixel size or grid"
+  transparent_bg: "Via the Remove background edit, then download as transparent PNG; not generated directly"
 plans:
 - name: Free
   price_usd: 0

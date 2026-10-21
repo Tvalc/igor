@@ -38,6 +38,7 @@ sources:
 - https://forum.cursor.com/t/how-to-use-a-custom-openai-compatible-api-in-cursor-setup-limits-and-tips/171497
 - https://forum.cursor.com/t/unlocking-cursor-s-full-potential-for-unity-developers/80757
 - https://www.techzine.eu/news/devops/142197/spacex-acquires-cursor-for-60-billion/
+- https://cursor.com/docs/agent/tools/browser
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -45,9 +46,11 @@ features:
   model_choice: partial
   local_models: partial
   scene_editing: partial
+  runs_game: partial
 feature_notes:
   local_models: No localhost support; local models only via a public HTTPS tunnel plus the OpenAI base URL override
   scene_editing: No built-in engine scene access; only through third-party MCP servers such as unity-mcp
+  runs_game: "Agent can drive a built-in browser to test web games and read console errors"
 plans:
 - name: Free
   price_usd: 0

@@ -43,6 +43,7 @@ sources:
 - https://code.claude.com/docs/en/model-config
 - https://code.claude.com/docs/en/desktop
 - https://claude.com/marketplace/plugins/unity
+- https://code.claude.com/docs/en/llm-gateway
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -50,10 +51,12 @@ features:
   model_choice: partial
   engine_integration: partial
   runs_game: partial
+  local_models: 'no'
 feature_notes:
   model_choice: Claude models only (via Anthropic, Bedrock, Google Cloud, Foundry)
   engine_integration: Via plugins/MCP (e.g. Unity's official plugin); does not run inside the editor
   runs_game: Desktop app can start dev servers, preview and verify web apps and iOS simulator
+  local_models: "Runs on Anthropic's Claude models only; local or non-Claude models aren't supported"
 plans:
 - name: Pro
   price_usd: 20

@@ -42,8 +42,10 @@ features:
   mcp: 'yes'
   scene_editing: 'yes'
   model_choice: 'yes'
+  runs_game: 'yes'
 feature_notes:
   model_choice: Works with Claude, Cursor, Windsurf, Copilot and Gemini clients
+  runs_game: "Starts and stops Play mode, runs PlayMode tests and captures Game View screenshots"
 plans:
 - name: Open source
   price_usd: 0

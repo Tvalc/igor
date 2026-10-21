@@ -36,6 +36,8 @@ sources:
 - https://llamagen.ai/pricing/models
 - https://llamagen.ai/hi/features/lora-training
 - https://llamagen.ai/bg/articles/best-ai-pixel-art-generators-2026
+- https://llamagen.ai/pixel-game-tools/rpg-tileset-generator
+- https://llamagen.ai/pixel-game-tools/godot-pixel-art-tools
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -43,8 +45,12 @@ features:
   sprite_sheets: 'yes'
   consistent_characters: 'yes'
   custom_training: partial
+  tilesets: partial
+  multi_direction: 'yes'
 feature_notes:
   custom_training: LlamaGen platform LoRA character training (10-30 images); not confirmed inside PixelBox itself
+  tilesets: "Tileset generator is a Labs preview that returns one concept image, not separate tiles"
+  multi_direction: "4-direction Idle/Walk/Attack character packs, plus a separate 8-direction sprite tool"
 plans:
 - name: Free
   price_usd: 0

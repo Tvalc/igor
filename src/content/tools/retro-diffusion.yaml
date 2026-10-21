@@ -37,6 +37,7 @@ sources:
 - https://astropulse.itch.io/retrodiffusion/purchase
 - https://astropulse.gumroad.com/l/RetroDiffusionCredits
 - https://mcpservers.org/servers/retro-diffusion/retro-diffusion-mcp
+- https://github.com/Retro-Diffusion/api-examples
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -47,12 +48,14 @@ features:
   transparent_bg: 'yes'
   multi_direction: 'yes'
   api: 'yes'
+  custom_training: partial
 feature_notes:
   sprite_sheets: Animation cycles exported as GIF or sprite sheet
   consistent_characters: Up to 9 reference images
   tilesets: Wang/blob tilesets, tile variations
   multi_direction: 4-angle walk cycles and 8-direction rotations
   api: Hosted API/MCP endpoint with developer key
+  custom_training: "Custom styles built from one reference image; no full model training"
 plans:
 - name: Aseprite extension
   price_usd: 65

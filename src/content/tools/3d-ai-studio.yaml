@@ -39,6 +39,8 @@ sources:
 - https://docs.3daistudio.com/
 - https://www.3daistudio.com/Platform/API/Documentation
 - https://www.3daistudio.com/Platform/API/Documentation/texturing
+- https://docs.3daistudio.com/textures/seamless-texture
+- https://www.3daistudio.com/ImageGeneration/utilities
 needs_verification:
 - commercial use
 last_verified: '2026-10-21'
@@ -50,8 +52,12 @@ features:
   low_poly: 'yes'
   api: 'yes'
   pbr_maps: 'yes'
+  seamless: 'yes'
+  upscale: 'yes'
 feature_notes:
   low_poly: Quad Remesh retopology to a target polygon count
+  seamless: "Seamless Texture Generator with tiling direction control and preview"
+  upscale: "Image upscaling up to 4x in Image Studio"
 plans:
 - name: Pro
   price_usd: 149

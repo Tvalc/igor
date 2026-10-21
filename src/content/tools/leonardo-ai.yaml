@@ -40,6 +40,7 @@ sources:
 - https://leonardo.ai/learn/core-feature/how-to-create-consistent-characters-with-character-reference
 - https://docs.leonardo.ai/docs/getting-started
 - https://leonardo.ai/api
+- https://leonardo.ai/news/ai-art-styles
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -47,8 +48,10 @@ features:
   custom_training: 'yes'
   consistent_characters: 'yes'
   api: 'yes'
+  pixel_art: 'yes'
 feature_notes:
   consistent_characters: Character Reference with Low/Mid/High strength; supported on some models only
+  pixel_art: "Pixel-art style through prompts; Lucid Origin model recommended"
 plans:
 - name: Free
   price_usd: 0

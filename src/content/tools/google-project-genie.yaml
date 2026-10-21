@@ -31,3 +31,6 @@ needs_verification:
 last_verified: '2026-10-21'
 features:
   no_code: 'yes'
+  ai_art: partial
+feature_notes:
+  ai_art: "Generates explorable worlds and preview images (World Sketching), not exportable game assets"

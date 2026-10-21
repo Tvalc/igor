@@ -48,6 +48,11 @@ sources:
 - https://help.scenario.com/en/articles/pixelate
 - https://help.scenario.com/en/articles/image-to-3d-best-practices/
 - https://www.scenario.com/models/pixal3d
+- https://github.com/scenario-labs/skills/blob/main/skills/scenario-sprite-animation/SKILL.md
+- https://github.com/scenario-labs/skills/blob/main/skills/scenario-game-assets/SKILL.md
+- https://github.com/scenario-labs/skills/blob/main/skills/scenario-sprite-animation/references/directional-cycles.md
+- https://github.com/scenario-labs/skills/blob/main/skills/scenario-3d/SKILL.md
+- https://github.com/scenario-labs/skills/blob/main/skills/scenario-meshy/SKILL.md
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -57,11 +62,24 @@ features:
   transparent_bg: 'yes'
   api: 'yes'
   image_to_3d: 'yes'
+  sprite_sheets: 'yes'
+  tilesets: 'yes'
+  multi_direction: partial
+  text_to_3d: 'yes'
+  pbr_textures: 'yes'
+  auto_rigging: 'yes'
+  low_poly: 'yes'
 feature_notes:
   pixel_art: Pixelate tool converts images to pixel art
   custom_training: Style/character model training on Pro plan and up
   transparent_bg: Remove Background tool
   image_to_3d: Image-to-3D models (e.g. Pixal3D), GLB output
+  sprite_sheets: "Animation models and grid tools make sprite sheets and slice them into frames"
+  tilesets: "Tileset models generate full tilesets and terrain transitions"
+  multi_direction: "4- or 8-direction cycles are built one facing at a time from turnarounds, not in one step"
+  pbr_textures: "3D models can come with PBR materials; meshes can also be retextured"
+  auto_rigging: "Separate rigging step for bipeds and quadrupeds, plus animation retargeting"
+  low_poly: "Remesh to a target polycount (100 to 300,000 faces)"
 plans:
 - name: Free
   price_usd: 0

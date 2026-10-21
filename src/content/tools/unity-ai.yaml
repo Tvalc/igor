@@ -42,6 +42,8 @@ sources:
 - https://docs.unity3d.com/Packages/com.unity.ai.assistant@2.1/manual/Sprite/modify-sprite.html
 - https://unity.com/products
 - https://app.cinevva.com/news/2026-05-04-unity-ai-open-beta
+- https://github.com/Unity-Technologies/skills/blob/main/skills/unity-cli/SKILL.md
+- https://unity.com/blog/unity-ai-how-to-get-started
 needs_verification:
 - exports
 last_verified: '2026-10-21'
@@ -55,12 +57,16 @@ features:
   sprite_sheets: 'yes'
   transparent_bg: 'yes'
   pixel_art: partial
+  runs_game: partial
+  edit_code: 'yes'
 feature_notes:
   scene_editing: Agent mode creates, modifies or removes objects and assets with approval
   model_choice: AI Gateway connects third-party models; Unity MCP connects agents like Claude Code, Cursor
   sprite_sheets: Spritesheet tab makes 4x4 (16-frame) sheets
   transparent_bg: Remove BG tab in Sprite Generator
   pixel_art: Pixelate post-processing option only
+  runs_game: "Through Unity's beta CLI and MCP server, AI agents can enter Play mode and run tests"
+  edit_code: "Agent mode writes C# scripts into your project, which you can open and edit"
 plans:
 - name: Personal
   price_usd: 0

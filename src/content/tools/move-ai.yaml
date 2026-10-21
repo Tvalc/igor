@@ -32,6 +32,7 @@ sources:
 - https://docs.move.ai/knowledge/unreal-engine-retargeting-move-one-animations
 - https://docs.move.ai/knowledge/engine-release-notes
 - https://docs.move.ai/knowledge/single-file-upload
+- https://docs.move.ai/knowledge/genesis-overview
 needs_verification:
 - commercial use
 last_verified: '2026-10-21'
@@ -40,8 +41,10 @@ features:
   retarget: 'yes'
   realtime: 'yes'
   hands_face: partial
+  multi_person: partial
 feature_notes:
   hands_face: Hand and finger tracking supported; no face capture found
+  multi_person: "Up to 8 actors, but only with the multi-camera Genesis system"
 plans:
 - name: Free
   price_usd: 0

@@ -33,6 +33,11 @@ sources:
 - https://bolt.new/pricing
 - https://support.bolt.new/building/deploy
 - https://support.bolt.new/building/build-your-first-app
+- https://support.bolt.new/building/using-bolt/code-view
+- https://support.bolt.new/building/images
+- https://support.bolt.new/building/using-bolt/connect-mcp
+- https://support.bolt.new/building/intro-bolt
+- https://support.bolt.new/building/using-bolt/agents
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -40,6 +45,11 @@ features:
   mobile: 'yes'
   hosting: 'yes'
   export_project: 'yes'
+  edit_code: 'yes'
+  ai_art: partial
+  mcp: 'yes'
+  runs_game: 'yes'
+  model_choice: partial
 plans:
 - name: Free
   price_usd: 0
@@ -57,3 +67,9 @@ plans:
   price_usd: null
   period: custom
   includes: Custom pricing
+feature_notes:
+  edit_code: "Code view lets you open, edit, create and delete files (read-only in Safari)"
+  ai_art: "Image generation is an add-on for paid plans and is off by default"
+  mcp: "Built-in connectors plus custom MCP servers by URL"
+  runs_game: "Builds and runs a live preview in the browser"
+  model_choice: "Pick Standard or Max agent; Bolt picks the model. Open models only in the experimental Forge agent"

@@ -38,6 +38,7 @@ sources:
 - https://charisma.ai/blog/charisma-plug-n-play
 - https://github.com/charisma-ai/charisma-sdk-unreal/releases
 - https://docs.charisma.ai/memories-gates
+- https://docs.charisma.ai/plug-n-play/unity
 needs_verification:
 - price
 - exports
@@ -47,11 +48,13 @@ features:
   unreal_sdk: 'yes'
   voice: 'yes'
   memory: 'yes'
+  actions: 'yes'
 feature_notes:
   unity_sdk: Plug 'n' Play SDK needs a Pro story (paid credits)
   unreal_sdk: Plug 'n' Play plugin needs a Pro story (paid credits); UE4.26+/UE5
   voice: 1000+ AI voices plus speech recognition
   memory: Story memories (word/sentence etc.) used by gates
+  actions: "Story metadata triggers in-game events such as animations and movement"
 plans:
 - name: Pro (pay-as-you-go)
   price_usd: 5

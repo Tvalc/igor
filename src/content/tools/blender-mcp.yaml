@@ -41,10 +41,20 @@ features:
   scene_editing: 'yes'
   text_to_3d: partial
   image_to_3d: partial
+  engine_integration: 'no'
+  model_choice: 'yes'
+  pbr_textures: partial
+  auto_rigging: partial
+  low_poly: partial
 feature_notes:
   text_to_3d: via Hyper3D Rodin integration; limited free trial key or own hyper3d.ai/fal.ai key
   image_to_3d: via Hyper3D Rodin or Hunyuan3D (Tencent Cloud API or own local server)
   scene_editing: edits Blender scenes, not a game engine
+  engine_integration: "Runs inside Blender, a 3D modeling app, not inside a game engine"
+  model_choice: "Works with any MCP client (Claude, Codex, Cursor, VS Code and others), so you pick the AI"
+  pbr_textures: "PBR materials from Poly Haven textures or Hunyuan3D generation; not every generator"
+  auto_rigging: "The AI can rig models by writing Blender Python; no dedicated one-click auto-rigger"
+  low_poly: "The AI can retopologize via Blender Python; free low-poly models importable from Poly Pizza"
 plans:
 - name: Open source
   price_usd: 0
