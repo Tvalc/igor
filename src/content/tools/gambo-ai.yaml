@@ -22,7 +22,6 @@ license:
   open_source: false
 sources:
 - https://gambo.ai
-- https://gambo.ai/
 needs_verification: []
 last_verified: '2026-10-16'
 successor: rosebud-ai

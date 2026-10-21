@@ -49,6 +49,7 @@ sources:
 - https://blog.makko.ai/best-free-ai-game-making-tools-2026/
 - https://www.makko.ai/news/frontier-models-studio-tools-july-2026
 - https://www.makko.ai/news/quests-new-models-mobile-september-2026
+- https://www.makko.ai/help/save-any-image-as-any-game-asset
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -65,29 +66,33 @@ features:
   tilesets: 'yes'
   text_to_motion: partial
   mobile: 'yes'
+  custom_training: partial
 feature_notes:
   multi_direction: Reference sheet gives front, side and back views, not 8 directions
   export_project: Exporting off-platform requires a paid plan
   edit_code: "Code Studio has a tabbed file editor, Git source control and GitHub sync"
-  tilesets: "Ground Tileset preset in image generation"
+  tilesets: "Tilesets preset group (e.g. Ground Tileset) in image generation, tuned to repeat without seams"
   text_to_motion: "Describe a movement to generate a 2D sprite animation, not 3D motion data"
   mobile: "Dashboard, projects and game editor work on phones; games play in the browser"
+  custom_training: "No model training; Collections steer style from your own uploaded or generated reference art"
 plans:
-- name: Free
+- name: "Free"
   price_usd: 0
   period: free
-  includes: 150 Art Budget/mo, 70 AI requests/wk
-- name: Starter
+  includes: "70 chats/wk, 150 art credits/mo, Lite 720p animation, 1 generation at a time, no off-platform export"
+- name: "Starter"
   price_usd: 20
   period: month
-  includes: 500 AI credits/wk
-- name: Creator
+  includes: "500 chats/wk, 1,000 art credits/mo, adds GPT-6.1 Sol, full 1080p animation, off-platform export"
+- name: "Creator"
   price_usd: 50
   period: month
-- name: Hobbyist
+  includes: "1,500 chats/wk, 3,000 art credits/mo, adds Claude Sonnet 5.5"
+- name: "Hobbyist"
   price_usd: 100
   period: month
-- name: Pro
+  includes: "3,000 chats/wk, 6,000 art credits/mo, adds Claude Opus 5.5"
+- name: "Pro"
   price_usd: 200
   period: month
-  includes: Highest limits, frontier AI models
+  includes: "6,000 chats/wk, 13,000 art credits/mo, same models as Hobbyist, new models first"

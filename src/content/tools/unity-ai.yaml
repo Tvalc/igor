@@ -1,8 +1,7 @@
 name: Unity AI
-url: https://unity.com/ai
-tagline: Unity's built-in Assistant, Generators, AI Gateway and official MCP server.
-description: Unity AI replaced Unity Muse. It bundles an in-editor Assistant, asset Generators, an AI Gateway and
-  an official MCP server. It entered open beta in May 2026 at $10/month on Unity Personal and is included with Pro.
+url: "https://unity.com/features/ai"
+tagline: "Unity's in-editor AI assistant, AI gateway, CLI with built-in MCP mode, and official agent plugin."
+description: "Unity's AI tools (branded Unity AI until recently, and the successor to Unity Muse) bundle an in-editor agentic assistant with asset generators, an AI gateway for third-party agents, the Unity CLI with a built-in MCP mode, and an official plugin for Claude Code, Codex and Grok. The older in-package Unity MCP server is deprecated in favour of the CLI. The assistant is in beta: included with Pro and Enterprise, or $10 a month on Personal after a free trial. The CLI, MCP server and plugin are free."
 best_for: Unity developers who want first-party AI inside the editor.
 categories:
 - code
@@ -12,9 +11,11 @@ tags:
 - unity
 - mcp
 - agent
+- cli
 status: beta
 platforms:
 - plugin
+- cli
 engines:
 - unity
 exports:
@@ -26,8 +27,7 @@ pricing:
   model: paid
   free_tier: trial
   starting_price_usd: 10
-  notes: 'Personal: 14-day trial (1,000 credits) then $10/mo for 1,000 credits/mo; Pro includes 2,000 credits/mo;
-    MCP server and AI Gateway don''t use credits'
+  notes: "Personal: 14-day trial (1,000 credits) then $10/mo for 1,000 credits/mo; Pro includes 2,000 credits/mo; CLI, MCP server, official plugin and AI gateway are free and use no credits"
 license:
   commercial_use: 'no'
   open_source: false
@@ -53,6 +53,10 @@ sources:
 - https://docs.unity3d.com/Packages/com.unity.ai.assistant@2.21/manual/Sprite/spritesheet-generation.html
 - https://docs.unity3d.com/Packages/com.unity.ai.assistant@2.21/manual/Material/material-pbr.html
 - https://docs.unity3d.com/Packages/com.unity.ai.assistant@2.21/manual/Sound/sound-overview.html
+- https://docs.unity3d.com/Packages/com.unity.ai.assistant@2.21/manual/integration/unity-mcp-overview.html
+- https://github.com/Unity-Technologies/skills/blob/main/skills/unity-cli/references/integration-advanced.md
+- https://docs.unity3d.com/Packages/com.unity.ai.assistant@2.21/manual/integration/unity-mcp-get-started.html
+- https://raw.githubusercontent.com/Unity-Technologies/skills/main/skills/unity-cli/references/integration-advanced.md
 needs_verification: []
 last_verified: '2026-10-21'
 features:

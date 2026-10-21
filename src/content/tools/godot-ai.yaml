@@ -1,8 +1,7 @@
 name: Godot AI
-url: https://godotengine.org/asset-library/asset/5050
-tagline: About 40 MCP tools (120+ operations) for Godot from the creators of MCP for Unity.
-description: Godot AI is a free, MIT-licensed Godot plugin and MCP server exposing about 40 tools (120+ operations)
-  to AI assistants. It comes from the creators of MCP for Unity.
+url: "https://github.com/hi-godot/godot-ai"
+tagline: "46 MCP tools (120+ operations) for a live Godot 4.7+ editor, from the creators of MCP for Unity."
+description: "Godot AI is a free, MIT-licensed Godot plugin and MCP server that connects Claude Code, Codex and other MCP clients to a live Godot editor through 46 tools (120+ operations). Version 4 (latest 4.3.0) requires Godot 4.7 or newer. It comes from the creators of MCP for Unity."
 best_for: Godot devs using Claude, Cursor or another MCP client.
 categories:
 - code
@@ -38,6 +37,9 @@ sources:
 - https://glama.ai/mcp/servers/hi-godot/godot-ai
 - https://raw.githubusercontent.com/hi-godot/godot-ai/main/docs/TOOLS.md
 - https://raw.githubusercontent.com/hi-godot/godot-ai/main/README.md
+- https://github.com/hi-godot/godot-ai/releases
+- https://github.com/hi-godot/godot-ai/blob/main/docs/v4-migration.md
+- https://raw.githubusercontent.com/hi-godot/godot-ai/main/docs/v4-migration.md
 needs_verification: []
 last_verified: '2026-10-21'
 features:

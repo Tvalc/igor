@@ -1,7 +1,7 @@
-name: BlenderMCP
-url: https://github.com/ahujasid/blender-mcp
-tagline: Connect Claude and other assistants to Blender over MCP.
-description: BlenderMCP is an open-source MCP server that lets AI assistants create and edit Blender scenes.
+name: "MCP for Blender"
+url: "https://www.mcp-for-blender.com"
+tagline: "Open-source MCP addon that lets Claude and any other LLM control Blender."
+description: "MCP for Blender (formerly BlenderMCP; the PyPI package is now mcp-for-blender) is an open-source, MIT-licensed Blender addon and MCP server that lets AI assistants create and edit Blender scenes. Optional Premium plans from $10 a month add built-in AI 3D generation (Hunyuan3D, Tripo, Hyper3D Rodin) without your own API keys."
 best_for: Prompting Blender to build or modify 3D scenes.
 categories:
 - code
@@ -18,9 +18,10 @@ engines:
 exports: []
 skill_level: advanced
 pricing:
-  model: open-source
+  model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 10
+  notes: "Addon is free and open source (bring your own Hunyuan3D or Rodin keys); Premium: Hobby $10/mo (25 standard generations), Pro $20, Studio $60, Max $100; Enterprise custom; 2 months free yearly"
 license:
   commercial_use: 'yes'
   open_source: true
@@ -33,6 +34,11 @@ sources:
 - https://docsearch.algolia.com/mcp/docs/repo/ahujasid/blender-mcp
 - https://glama.ai/mcp/servers/ahujasid/blender-mcp
 - https://mcpservers.org/ja/servers/ahujasid/blender-mcp
+- https://www.mcp-for-blender.com
+- https://www.mcp-for-blender.com/premium
+- https://github.com/ahujasid/mcp-for-blender
+- https://pypi.org/project/mcp-for-blender/
+- https://raw.githubusercontent.com/ahujasid/mcp-for-blender/main/README.md
 needs_verification:
 - exports
 last_verified: '2026-10-21'
@@ -56,7 +62,27 @@ feature_notes:
   auto_rigging: "The AI can rig models by writing Blender Python; no dedicated one-click auto-rigger"
   low_poly: "The AI can retopologize via Blender Python; free low-poly models importable from Poly Pizza"
 plans:
-- name: Open source
+- name: "Free"
   price_usd: 0
   period: free
-  includes: Open source, self-hosted (MIT)
+  includes: "Open-source addon; scene editing, Poly Haven, Sketchfab, Poly Pizza; own API keys for 3D generation"
+- name: "Hobby"
+  price_usd: 10
+  period: month
+  includes: "25 standard 3D generations/mo, up to 3 computers"
+- name: "Pro"
+  price_usd: 20
+  period: month
+  includes: "25 standard + 8 high-quality generations/mo (Hunyuan3D Pro, Tripo HD, Rodin)"
+- name: "Studio"
+  price_usd: 60
+  period: month
+  includes: "60 standard + 30 high-quality generations/mo, 3 at once"
+- name: "Max"
+  price_usd: 100
+  period: month
+  includes: "100 standard + 50 high-quality generations/mo, 3 at once"
+- name: "Enterprise"
+  price_usd: null
+  period: custom
+  includes: "Custom limits and more computers per license"

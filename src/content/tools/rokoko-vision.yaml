@@ -1,8 +1,7 @@
 name: Rokoko Vision
 url: https://www.rokoko.com
 tagline: AI motion capture from video, with a free starter plan.
-description: Rokoko Vision captures motion from webcam or video with AI. A free plan allows 30 seconds a month with
-  FBX export; paid plans add BVH.
+description: "Rokoko Vision captures motion from webcam or video with AI. A free plan allows 30 seconds a month with FBX export; paid plans add BVH. Rokoko's separate Create web app generates motion clips from text prompts, free for up to 5 clips added to Studio."
 best_for: Free, quick mocap for prototypes.
 categories:
 - animation
@@ -32,6 +31,7 @@ sources:
 - https://support.rokoko.com/hc/en-us/articles/15712580191761-Rokoko-Studio-Subscriptions-plans-explained
 - https://www.rokoko.com/insights/introducing-rokoko-vision-3-0
 - https://www.rokoko.com/insights/introducing-text-to-motion
+- https://www.rokoko.com/products/studio/rokoko-create
 needs_verification: []
 last_verified: '2026-10-21'
 features:

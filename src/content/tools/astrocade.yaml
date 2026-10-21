@@ -1,8 +1,7 @@
 name: Astrocade
 url: https://www.astrocade.com
 tagline: An AI agent that builds and remixes games from prompts.
-description: Astrocade lets players create, remix and share small games by prompting an AI agent. The company raised
-  $56M in May 2026.
+description: "Astrocade lets players create, remix and share small games by prompting a team of AI agents (Astrocade 2.0). Since October 2026 a hosted Astrocade MCP lets Claude Code, Codex, Cursor, ChatGPT and other agents build, edit and publish Astrocade games. The company raised $56M in May 2026."
 best_for: Casual creators who want to make and share small games socially.
 categories:
 - game-maker
@@ -11,6 +10,7 @@ tags:
 - browser
 - social
 - remix
+- mcp
 status: active
 platforms:
 - web
@@ -38,6 +38,9 @@ sources:
 - https://www.astrocade.com/blog/introducing-astrocade-mcp
 - https://www.astrocade.com/terms-of-service
 - https://www.astrocade.com/creators
+- https://www.astrocade.com/blog/astrocade-2-worlds-first-agentic-ai-game-creation-platform
+- https://www.astrocade.com/create/mcp
+- https://www.astrocade.com/llms.txt
 needs_verification:
 - price
 last_verified: '2026-10-21'
@@ -51,7 +54,7 @@ features:
 feature_notes:
   mobile: Android app for playing and creating; no iOS app confirmed
   ai_audio: background music generated automatically
-  edit_code: "Through the Astrocade MCP your own coding agent writes and edits the game code; the app is prompt-based"
+  edit_code: "Through the Astrocade MCP your own AI agent writes and edits the game code; not in the in-app creator"
 plans:
 - name: Free
   price_usd: 0

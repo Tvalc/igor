@@ -1,14 +1,15 @@
 name: Sloyd
 url: https://www.sloyd.ai
 tagline: Parametric 3D props you can tweak with sliders.
-description: Sloyd generates game-ready 3D props from parametric templates that you adjust, rather than from free-form
-  diffusion.
+description: "Sloyd generates game-ready 3D props from parametric templates you adjust, plus text- and image-to-3D. It can also auto-rig humanoid characters and animate them from presets, text prompts or video."
 best_for: Clean, game-ready props with predictable topology.
 categories:
 - art-3d
+- animation
 tags:
 - 3d
 - props
+- animation
 status: active
 platforms:
 - web
@@ -18,6 +19,8 @@ engines: []
 exports:
 - glb
 - obj
+- fbx
+- usdz
 skill_level: beginner
 pricing:
   model: freemium
@@ -48,9 +51,13 @@ features:
   api: partial
   pbr_textures: 'yes'
   auto_rigging: 'yes'
+  text_to_motion: 'yes'
+  video_mocap: partial
 feature_notes:
   api: API key/SDK (Unity plugin) requires a paid subscription
   auto_rigging: "Humanoid characters in a T-pose or A-pose; preset animations can be added"
+  text_to_motion: "Text-to-animation from a prompt; needs a subscription"
+  video_mocap: "Maps a short full-body video clip onto your character; Pro plan only"
 plans:
 - name: Guest
   price_usd: 0

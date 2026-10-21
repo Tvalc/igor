@@ -64,7 +64,7 @@ features:
   mcp: 'yes'
   runs_game: 'yes'
   model_choice: 'yes'
-  local_models: 'no'
+  local_models: partial
   pbr_textures: 'yes'
   auto_rigging: partial
   image_to_3d: partial
@@ -82,7 +82,7 @@ feature_notes:
   mcp: "Studio has a built-in MCP server for Claude, Codex and other MCP clients"
   runs_game: "Assistant and connected AI tools can start playtests and read the output"
   model_choice: "Bring your own API key for Anthropic, OpenAI or Google models"
-  local_models: "Your-own-key option lists only Anthropic, OpenAI and Google cloud models"
+  local_models: "Assistant runs on Roblox's cloud models; Studio's built-in MCP server works with any stdio MCP client, including ones running local models"
   pbr_textures: "Texture Generator's Quality mode makes 4K PBR textures for meshes"
   auto_rigging: "Avatar Setup auto-rigs humanoid character bodies to Roblox's R15 skeleton only"
   image_to_3d: "Image input is supported through the Luau GenerateModelAsync API"

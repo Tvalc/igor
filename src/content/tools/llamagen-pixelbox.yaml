@@ -38,6 +38,7 @@ sources:
 - https://llamagen.ai/bg/articles/best-ai-pixel-art-generators-2026
 - https://llamagen.ai/pixel-game-tools/rpg-tileset-generator
 - https://llamagen.ai/pixel-game-tools/godot-pixel-art-tools
+- https://llamagen.ai/pixel-game-tools/8-direction-sprite-generator
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -50,7 +51,7 @@ features:
 feature_notes:
   custom_training: LlamaGen platform LoRA character training (10-30 images); not confirmed inside PixelBox itself
   tilesets: "Tileset generator is a Labs preview that returns one concept image, not separate tiles"
-  multi_direction: "4-direction Idle/Walk/Attack character packs, plus a separate 8-direction sprite tool"
+  multi_direction: "4-direction Idle/Walk/Attack character packs; the 8-direction tool is a Labs preview that returns one concept image"
 plans:
 - name: Free
   price_usd: 0
