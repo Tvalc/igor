@@ -105,10 +105,13 @@ const faqs = [
     a: `${a.data.name}: ${FREE_TIER_LABELS[a.data.pricing.free_tier].toLowerCase()}, ${priceLabel(a).toLowerCase()}. ${b.data.name}: ${FREE_TIER_LABELS[b.data.pricing.free_tier].toLowerCase()}, ${priceLabel(b).toLowerCase()}.`,
   },
 ];
+// Search results cut titles near 60 characters; long tool names drop the question.
+const vs = `${a.data.name} vs ${b.data.name} (${SITE.year})`;
+const title = vs.length <= 30 ? `${vs}: Which Is Better?` : vs;
 ---
 
 <Base
-  title={`${a.data.name} vs ${b.data.name} (${SITE.year}): Which Is Better?`}
+  title={title}
   description={`${a.data.name} vs ${b.data.name} compared on free tiers, pricing, commercial rights, engines and exports. Scores: ${sa.score} vs ${sb.score}.`}
   crumbs={[{ name: 'Compare', href: '/compare/' }, { name: `${a.data.name} vs ${b.data.name}`, href: `/compare/${a.id}-vs-${b.id}` }]}
   jsonLd={[faqPage(faqs)]}

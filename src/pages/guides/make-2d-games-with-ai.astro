@@ -2,8 +2,9 @@
 import Base from '../../layouts/Base.astro';
 import { RankTable } from '../../components/site/RankTable';
 import { Faq } from '../../components/site/Faq';
-import { LISTS, rankedList } from '../../lib/lists';
-import { faqPage } from '../../lib/jsonld';
+import { activeTools, LISTS, rankedList } from '../../lib/lists';
+import { article, faqPage } from '../../lib/jsonld';
+import { isoDate, longDate, newestVerified } from '../../lib/format';
 import { SITE } from '../../site';
 
 const get = async (slug: string) => rankedList(LISTS.find((l) => l.slug === slug)!);
@@ -31,13 +32,17 @@ const faqs = [
     a: 'If you want no code, stay inside an AI game maker. If you want a real engine, Godot and GDevelop are both strong at 2D, and both have AI assistants and MCP integrations.',
   },
 ];
+const title = `How to Make 2D Games with AI (${SITE.year} Guide)`;
+const description = 'Make a 2D game with AI: pick a 2D AI game maker, generate consistent sprites and animations, build levels, and publish. Includes rankings of the best 2D AI tools.';
+const base = Astro.site!.toString().replace(/\/$/, '');
+const updated = newestVerified(await activeTools());
 ---
 
 <Base
-  title={`How to Make 2D Games with AI (${SITE.year} Guide)`}
-  description="Make a 2D game with AI: pick a 2D AI game maker, generate consistent sprites and animations, build levels, and publish. Includes rankings of the best 2D AI tools."
+  title={title}
+  description={description}
   crumbs={[{ name: 'Guides', href: '/guides/how-to-make-a-game-with-ai' }, { name: 'Make 2D games with AI', href: '/guides/make-2d-games-with-ai' }]}
-  jsonLd={[faqPage(faqs)]}
+  jsonLd={[faqPage(faqs), article({ headline: title, description, url: `${base}/guides/make-2d-games-with-ai`, dateModified: isoDate(updated) }, base)]}
 >
   <article class="prose">
     <h1>How to make 2D games with AI</h1>
@@ -48,7 +53,7 @@ const faqs = [
         tilesets. Lock your art style first. Then build one level, playtest it, and expand.
       </p>
     </div>
-    <p class="meta">Updated {SITE.year} · Rankings below update automatically from our tool data.</p>
+    <p class="meta">Updated <time datetime={isoDate(updated)}>{longDate(updated)}</time> · Rankings below update automatically from our tool data.</p>
 
     <h2>1. Decide your art style before anything else</h2>
     <p>

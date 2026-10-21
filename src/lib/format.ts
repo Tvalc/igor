@@ -48,6 +48,9 @@ export const price = (t: Tool) => {
 };
 
 export const isoDate = (d: Date) => d.toISOString().slice(0, 10);
+export const longDate = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+// A page is as fresh as the most recently verified tool on it.
+export const newestVerified = (tools: Tool[]) => new Date(Math.max(...tools.map((t) => t.data.last_verified.valueOf())));
 
 export const outboundUrl = (t: Tool) => t.data.affiliate?.url ?? t.data.url;
 export const outboundRel = (t: Tool) =>

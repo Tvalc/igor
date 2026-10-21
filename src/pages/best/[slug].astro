@@ -12,7 +12,8 @@ import { ArrowRight, BadgeCheck, CalendarDays, ListOrdered, Trophy } from 'lucid
 import { FEATURES } from '../../lib/features';
 import { publishedLists, toolsWithAlternatives, type ListDef } from '../../lib/lists';
 import { FACTOR_LABELS, strengths, type Scored } from '../../lib/score';
-import { itemList, faqPage } from '../../lib/jsonld';
+import { article, itemList, faqPage } from '../../lib/jsonld';
+import { isoDate, longDate, newestVerified } from '../../lib/format';
 import { SITE } from '../../site';
 
 export async function getStaticPaths() {
@@ -64,7 +65,8 @@ const faqs = [
 ].filter(Boolean) as { q: string; a: string }[];
 
 const title = `${def.title} (${SITE.year})`;
-const description = `${def.title}, ranked: ${names(ranked)} and more, compared on free tiers, pricing, commercial rights and exports. Updated ${SITE.year}.`;
+const description = `${def.title}, ranked: ${names(ranked)} and more, compared on free tiers, pricing, commercial rights and exports.`;
+const updated = newestVerified(ranked.map((s) => s.tool));
 const ListIcon = LIST_ICON[def.slug] ?? Trophy;
 ---
 
@@ -76,13 +78,14 @@ const ListIcon = LIST_ICON[def.slug] ?? Trophy;
   jsonLd={[
     itemList(def.title, ranked.map((s) => ({ name: s.tool.data.name, url: `${base}/tools/${s.tool.id}` }))),
     faqPage(faqs),
+    article({ headline: title, description, url: `${base}/best/${def.slug}`, dateModified: isoDate(updated) }, base),
   ]}
 >
   <header class="mt-6 max-w-3xl">
     <span class="eyebrow"><ListIcon className="size-3.5" /> Ranking</span>
     <h1 class="mt-3 text-3xl font-bold sm:text-5xl">{title}</h1>
     <div class="text-muted-foreground mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
-      <span class="inline-flex items-center gap-1.5"><CalendarDays className="size-4" /> Updated {SITE.year}</span>
+      <span class="inline-flex items-center gap-1.5"><CalendarDays className="size-4" /> Updated <time datetime={isoDate(updated)}>{longDate(updated)}</time></span>
       <span class="inline-flex items-center gap-1.5"><ListOrdered className="size-4" /> {ranked.length} tools compared</span>
       <a href="/methodology" class="hover:text-foreground inline-flex items-center gap-1.5 underline"><BadgeCheck className="size-4" /> How we rank</a>
     </div>

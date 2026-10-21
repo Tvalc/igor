@@ -2,8 +2,9 @@
 import Base from '../../layouts/Base.astro';
 import { RankTable } from '../../components/site/RankTable';
 import { Faq } from '../../components/site/Faq';
-import { LISTS, rankedList } from '../../lib/lists';
-import { faqPage } from '../../lib/jsonld';
+import { activeTools, LISTS, rankedList } from '../../lib/lists';
+import { article, faqPage } from '../../lib/jsonld';
+import { isoDate, longDate, newestVerified } from '../../lib/format';
 import { SITE } from '../../site';
 
 const get = async (slug: string) => rankedList(LISTS.find((l) => l.slug === slug)!);
@@ -31,13 +32,17 @@ const faqs = [
     a: 'Small, focused games work best: arcade games, platformers, puzzle games, visual novels and simple multiplayer experiments. Large games still need a human to design the structure, while AI speeds up code, art and audio.',
   },
 ];
+const title = `How to Make a Game with AI (${SITE.year} Guide)`;
+const description = 'How to make a game with AI, step by step: choose between prompt-to-game platforms, AI inside a real engine, or a coding agent, then add AI art and audio and publish.';
+const base = Astro.site!.toString().replace(/\/$/, '');
+const updated = newestVerified(await activeTools());
 ---
 
 <Base
-  title={`How to Make a Game with AI (${SITE.year} Guide)`}
-  description="How to make a game with AI, step by step: choose between prompt-to-game platforms, AI inside a real engine, or a coding agent, then add AI art and audio and publish."
+  title={title}
+  description={description}
   crumbs={[{ name: 'Guides', href: '/guides/how-to-make-a-game-with-ai' }, { name: 'Make a game with AI', href: '/guides/how-to-make-a-game-with-ai' }]}
-  jsonLd={[faqPage(faqs)]}
+  jsonLd={[faqPage(faqs), article({ headline: title, description, url: `${base}/guides/how-to-make-a-game-with-ai`, dateModified: isoDate(updated) }, base)]}
 >
   <article class="prose">
     <h1>How to make a game with AI</h1>
@@ -50,7 +55,7 @@ const faqs = [
         with the first option.
       </p>
     </div>
-    <p class="meta">Updated {SITE.year} · Rankings below update automatically from our tool data.</p>
+    <p class="meta">Updated <time datetime={isoDate(updated)}>{longDate(updated)}</time> · Rankings below update automatically from our tool data.</p>
 
     <h2>Step 1: Keep the first game small</h2>
     <p>

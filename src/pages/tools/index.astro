@@ -3,16 +3,20 @@ import Base from '../../layouts/Base.astro';
 import Listing from '../../components/site/Listing.astro';
 import { activeTools } from '../../lib/lists';
 import { scoreTool } from '../../lib/score';
+import { itemList } from '../../lib/jsonld';
 import { SITE } from '../../site';
 
 const tools = (await activeTools()).map((t) => scoreTool(t)).sort((a, b) => b.score - a.score);
-const live = tools.filter((s) => s.tool.data.status !== 'discontinued').length;
+const listed = tools.filter((s) => s.tool.data.status !== 'discontinued');
+const live = listed.length;
+const base = Astro.site!.toString().replace(/\/$/, '');
 ---
 
 <Base
   title={`All AI Game Development Tools (${live} tracked, ${SITE.year})`}
   description={`Filter and compare ${live} AI game development tools by category, price, free plan, commercial rights, engine and export format.`}
   crumbs={[{ name: 'Tools', href: '/tools/' }]}
+  jsonLd={[itemList('AI game development tools', listed.map((s) => ({ name: s.tool.data.name, url: `${base}/tools/${s.tool.id}` })))]}
 >
   <header class="mt-6 mb-10 max-w-3xl">
     <h1 class="text-3xl font-bold sm:text-5xl">All AI game dev tools</h1>

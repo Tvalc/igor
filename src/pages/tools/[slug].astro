@@ -57,7 +57,7 @@ const compareIds = [tool.id, ...alternatives.slice(0, 2).map((s) => s.tool.id)];
 const startPrice = fromPrice(tool);
 const headline = priceHeadline(tool);
 const dead = d.status === 'discontinued';
-const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what to use instead` : `${d.name} Review (${SITE.year}): Pricing, Features & Alternatives`;
+const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what to use instead` : `${d.name} Review (${SITE.year}): Pricing & Alternatives`;
 ---
 
 <Base
