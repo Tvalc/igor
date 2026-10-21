@@ -16,10 +16,13 @@ export function softwareApp(s: Scored, base: string) {
     description: d.description,
     applicationCategory: APP_CATEGORY[d.categories[0]] ?? 'MultimediaApplication',
     operatingSystem: d.platforms.includes('web') ? 'Web' : undefined,
+    // Rich results want an offer on every app: free tools at 0, paid ones at their cheapest verified plan.
     offers:
       d.pricing.free_tier === 'yes' || d.pricing.model === 'free' || d.pricing.model === 'open-source'
         ? { '@type': 'Offer', price: '0', priceCurrency: 'USD' }
-        : undefined,
+        : d.pricing.starting_price_usd != null
+          ? { '@type': 'Offer', price: String(d.pricing.starting_price_usd), priceCurrency: 'USD' }
+          : undefined,
     review: {
       '@type': 'Review',
       author: { '@type': 'Organization', name: SITE.name, url: base },
@@ -58,5 +61,21 @@ export function faqPage(faqs: { q: string; a: string }[]) {
       name: f.q,
       acceptedAnswer: { '@type': 'Answer', text: f.a },
     })),
+  };
+}
+
+// Rankings and guides: a dated article, so answer engines can tell how fresh the facts are.
+export function article(a: { headline: string; description: string; url: string; dateModified: string }, base: string) {
+  const org = { '@type': 'Organization', name: SITE.name, url: `${base}/` };
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: a.headline,
+    description: a.description,
+    mainEntityOfPage: a.url,
+    image: `${base}/og.png`,
+    dateModified: a.dateModified,
+    author: org,
+    publisher: org,
   };
 }

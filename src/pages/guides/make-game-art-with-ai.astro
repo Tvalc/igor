@@ -2,8 +2,9 @@
 import Base from '../../layouts/Base.astro';
 import { RankTable } from '../../components/site/RankTable';
 import { Faq } from '../../components/site/Faq';
-import { LISTS, rankedList } from '../../lib/lists';
-import { faqPage } from '../../lib/jsonld';
+import { activeTools, LISTS, rankedList } from '../../lib/lists';
+import { article, faqPage } from '../../lib/jsonld';
+import { isoDate, longDate, newestVerified } from '../../lib/format';
 import { SITE } from '../../site';
 
 const get = async (slug: string) => rankedList(LISTS.find((l) => l.slug === slug)!);
@@ -31,13 +32,17 @@ const faqs = [
     a: `For props and many characters, yes. Tools such as ${names(threeD, 2)} export standard formats (GLB, FBX, OBJ) and some auto-rig characters. Hero assets usually still need retopology and cleanup in Blender.`,
   },
 ];
+const title = `How to Make Game Art with AI (${SITE.year} Guide)`;
+const description = 'How to make game art with AI: concept art, consistent sprites, 3D models, textures and animation, plus the best AI game art tools ranked on rights and exports.';
+const base = Astro.site!.toString().replace(/\/$/, '');
+const updated = newestVerified(await activeTools());
 ---
 
 <Base
-  title={`How to Make Game Art with AI (${SITE.year} Guide)`}
-  description="How to make game art with AI: concept art, consistent sprites, 3D models, textures and animation, plus the best AI game art tools ranked on rights and exports."
+  title={title}
+  description={description}
   crumbs={[{ name: 'Guides', href: '/guides/how-to-make-a-game-with-ai' }, { name: 'Make game art with AI', href: '/guides/make-game-art-with-ai' }]}
-  jsonLd={[faqPage(faqs)]}
+  jsonLd={[faqPage(faqs), article({ headline: title, description, url: `${base}/guides/make-game-art-with-ai`, dateModified: isoDate(updated) }, base)]}
 >
   <article class="prose">
     <h1>How to make game art with AI</h1>
@@ -49,7 +54,7 @@ const faqs = [
         each tool.
       </p>
     </div>
-    <p class="meta">Updated {SITE.year} · Rankings below update automatically from our tool data.</p>
+    <p class="meta">Updated <time datetime={isoDate(updated)}>{longDate(updated)}</time> · Rankings below update automatically from our tool data.</p>
 
     <h2>1. Concept art and a style guide</h2>
     <p>
