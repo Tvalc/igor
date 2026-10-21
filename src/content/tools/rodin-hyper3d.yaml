@@ -21,14 +21,41 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: limited
-  starting_price_usd: null
+  starting_price_usd: 30
+  notes: "Free plan generates before you pay and charges per confirmed result ($1.50 per direct credit); Creator $30/mo ($24/mo billed yearly); Business $120/mo ($96/mo yearly) adds API; Enterprise custom; Education pricing for verified users."
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: "The ToS places no limits on use of Rodin Output, but 'unlimited export and any use' comes with Creator and above; ChatAvatar commercial licensing needs Business or a purchased licence."
 sources:
 - https://hyper3d.ai
-needs_verification:
-- pricing
-- license
-- exports
-last_verified: '2026-10-16'
+- https://runware.ai/docs/models/hyper3d-rodin-gen-2
+- https://runware.ai/docs/models/hyper3d-rodin-gen-2/guides/topology-and-polygon-budget
+- https://empiriolabs.ai/models/hyper3d-gen2
+- https://hyper3d.ai/pricing
+- https://hyper3d.ai/legal/terms
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  text_to_3d: 'yes'
+  image_to_3d: 'yes'
+  pbr_textures: 'yes'
+  low_poly: 'yes'
+  api: 'yes'
+plans:
+- name: "Free"
+  price_usd: 0
+  period: usage
+  includes: "Pay by result, direct credits $1.50 each, 10 private assets"
+- name: "Creator"
+  price_usd: 30
+  period: month
+  includes: "~60 models/mo, unlimited export and any use; $24/mo yearly"
+- name: "Business"
+  price_usd: 120
+  period: month
+  includes: "~416 models/mo, full API, ChatAvatar commercial licence; $96/mo yr"
+- name: "Enterprise"
+  price_usd: null
+  period: custom
+  includes: "On-prem deployment, custom LoRA/fine-tuning, volume discount"

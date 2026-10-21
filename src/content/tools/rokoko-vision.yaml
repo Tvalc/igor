@@ -1,7 +1,7 @@
 name: Rokoko Vision
 url: https://www.rokoko.com
-tagline: Free video-based motion capture.
-description: Rokoko Vision is a free tool from Rokoko that captures motion from a webcam or video.
+tagline: AI motion capture from video, with a free starter plan.
+description: "Rokoko Vision captures motion from webcam or video with AI. A free plan allows 30 seconds a month with FBX export; paid plans add BVH. Rokoko's separate Create web app generates motion clips from text prompts, free for up to 5 clips added to Studio."
 best_for: Free, quick mocap for prototypes.
 categories:
 - animation
@@ -18,14 +18,41 @@ exports:
 skill_level: beginner
 pricing:
   model: freemium
-  free_tier: 'yes'
-  starting_price_usd: null
+  free_tier: limited
+  starting_price_usd: 12
+  notes: 'Free Starter: 30s Vision processing/mo, FBX only; Basic $12/mo ($10/mo annual) adds BVH and 600s/mo'
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
 sources:
 - https://www.rokoko.com
-needs_verification:
-- pricing
-- license
-last_verified: '2026-10-16'
+- https://www.rokoko.com/products/vision
+- https://www.rokoko.com/pricing
+- https://support.rokoko.com/hc/en-us/articles/15712580191761-Rokoko-Studio-Subscriptions-plans-explained
+- https://www.rokoko.com/insights/introducing-rokoko-vision-3-0
+- https://www.rokoko.com/insights/introducing-text-to-motion
+- https://www.rokoko.com/products/studio/rokoko-create
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  video_mocap: 'yes'
+  multi_person: 'no'
+  hands_face: 'no'
+  realtime: 'no'
+  retarget: partial
+  text_to_motion: partial
+feature_notes:
+  multi_person: 1 performer per recording
+  hands_face: No finger or face tracking; needs Smartgloves or face capture hardware
+  realtime: AI capture needs post-processing; webcam live capture removed in Vision 3.0
+  retarget: Custom character import and retargeting on Basic plan, in Rokoko Studio
+  text_to_motion: "Experimental, in Rokoko's Create web app and Studio, not in Vision itself"
+plans:
+- name: Starter
+  price_usd: 0
+  period: free
+  includes: 30s Vision processing/mo, FBX export
+- name: Basic
+  price_usd: 12
+  period: month
+  includes: 600s Vision processing/mo, BVH, retargeting; $10/mo yearly

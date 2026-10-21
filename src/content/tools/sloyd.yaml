@@ -1,14 +1,15 @@
 name: Sloyd
 url: https://www.sloyd.ai
 tagline: Parametric 3D props you can tweak with sliders.
-description: Sloyd generates game-ready 3D props from parametric templates that you adjust, rather than from free-form
-  diffusion.
+description: "Sloyd generates game-ready 3D props from parametric templates you adjust, plus text- and image-to-3D. It can also auto-rig humanoid characters and animate them from presets, text prompts or video."
 best_for: Clean, game-ready props with predictable topology.
 categories:
 - art-3d
+- animation
 tags:
 - 3d
 - props
+- animation
 status: active
 platforms:
 - web
@@ -18,20 +19,55 @@ engines: []
 exports:
 - glb
 - obj
+- fbx
+- usdz
 skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 15
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: "The free Guest plan is personal-use only; Plus and Pro include a commercial licence, only Pro allows redistribution or marketplace reselling, and commercial rights stop for new work after you cancel."
 affiliate:
   program: Sloyd Affiliate Program
   commission: 20% for 12 months
 sources:
 - https://sloyd.ai/affiliate
-needs_verification:
-- pricing
-- license
-last_verified: '2026-10-16'
+- https://www.sloyd.ai/blog/ai-3d-model-generator-pricing
+- https://sloyd.ai/text-to-3d
+- https://www.sloyd.ai/blog/using-sloyd-for-low-poly-game-assets
+- https://assetstore.unity.com/packages/tools/generative-ai/sloyd-sdk-258591
+- https://www.sloyd.ai/glossary/normal-map
+- https://www.sloyd.ai/animations
+- https://www.sloyd.ai/pricing
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  text_to_3d: 'yes'
+  image_to_3d: 'yes'
+  low_poly: 'yes'
+  api: partial
+  pbr_textures: 'yes'
+  auto_rigging: 'yes'
+  text_to_motion: 'yes'
+  video_mocap: partial
+feature_notes:
+  api: API key/SDK (Unity plugin) requires a paid subscription
+  auto_rigging: "Humanoid characters in a T-pose or A-pose; preset animations can be added"
+  text_to_motion: "Text-to-animation from a prompt; needs a subscription"
+  video_mocap: "Maps a short full-body video clip onto your character; Pro plan only"
+plans:
+- name: Guest
+  price_usd: 0
+  period: free
+  includes: 1 AI 3D generation/day, GLB/OBJ export, personal use
+- name: Plus
+  price_usd: 15
+  period: month
+  includes: Fair-use unlimited text/image to 3D, commercial license
+- name: Pro
+  price_usd: 50
+  period: month
+  includes: Plus + 4K textures, multi-image to 3D, 60 credits/mo

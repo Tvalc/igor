@@ -1,7 +1,8 @@
 name: Krea
 url: https://www.krea.ai
 tagline: Real-time image and texture generation.
-description: Krea generates and edits images in real time, including textures.
+description: Krea is a web creative suite that generates and edits images, video and 3D, including real-time image
+  generation and textures.
 best_for: Fast iteration on concept art and textures.
 categories:
 - art-2d
@@ -19,13 +20,58 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 9
+  notes: Basic $9/mo (5,000 units), Pro $35/mo, Max $105/mo; Free 100 units/day, no card
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: Commercial license only on paid plans (Basic and up); free-plan images not licensed for commercial use
 sources:
 - https://www.krea.ai
-needs_verification:
-- pricing
-- license
-last_verified: '2026-10-16'
+- https://www.krea.ai/pricing
+- https://www.krea.ai/docs/pt-BR/developers/tutorials/train-image-style
+- https://www.krea.ai/docs/user-guide/agent/plans-and-credits.md
+- https://www.krea.ai/docs/user-guide/help-and-support/manage-subscriptions
+- https://www.krea.ai/docs/user-guide/features/enhancer
+- https://www.krea.ai/apps/background-remover/transparent-background
+- https://www.krea.ai/apps/character-ai
+- https://www.krea.ai/plugins
+- https://www.krea.ai/docs/user-guide/features/3d
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  custom_training: 'yes'
+  consistent_characters: 'yes'
+  api: 'yes'
+  transparent_bg: 'yes'
+  upscale: 'yes'
+  pixel_art: partial
+  engine_plugin: 'yes'
+  pbr_maps: partial
+feature_notes:
+  transparent_bg: Via background remover; exports transparent PNG
+  upscale: Enhancer upscales images/video 1x-8x
+  pixel_art: "Pixel-art style is one option in its general image tools; no dedicated pixel art tool"
+  engine_plugin: "Official Photoshop and Blender plugins"
+  pbr_maps: "Optional PBR materials only on generated 3D models, not standalone texture maps"
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 100 compute units/day; no video, no commercial license
+- name: Basic
+  price_usd: 9
+  period: month
+  includes: 5,000 compute units/mo, commercial license
+- name: Pro
+  price_usd: 35
+  period: month
+  includes: 20,000 compute units/mo, all video models
+- name: Max
+  price_usd: 105
+  period: month
+  includes: 60,000 compute units/mo, unlimited LoRA training
+- name: Business
+  price_usd: 200
+  period: month
+  includes: 80,000 compute units/mo, up to 50 seats

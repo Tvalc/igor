@@ -20,6 +20,7 @@ engines:
 - blender
 - unity
 - unreal
+- godot
 exports:
 - glb
 - fbx
@@ -29,17 +30,66 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 20
+  notes: Free 100 credits/mo; Pro $20/mo (1,000 credits); Premium $40 (3,000); Ultra $100 (8,000); Studio team $70
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: Free plan outputs CC BY 4.0 (commercial use with credit to Meshy); paid plans get a private licence, no
+    attribution
 affiliate:
   program: Meshy Affiliate Program
   commission: 20% for 12 months
 sources:
 - https://meshy.ai/affiliates
-needs_verification:
-- pricing
-- license
-- engines
-last_verified: '2026-10-16'
+- https://help.meshy.ai/en/articles/9992001-can-i-use-my-generated-assets-for-commercial-projects
+- https://help.meshy.ai/en/articles/16102098-can-i-use-meshy-assets-commercially
+- https://www.meshy.ai/pricing
+- https://docs.meshy.ai/en/webapp/pricing
+- https://www.meshy.ai/features/text-to-3d
+- https://meshy.ai/pricing
+- https://docs.meshy.ai/pricing
+- https://docs.meshy.ai/en/webapp/concepts
+- https://www.meshy.ai/blog/ai-3d-models-for-unity-official-meshy-plugin-2026
+- https://www.meshy.ai/use-cases/free-game-assets/unity
+- https://docs.meshy.ai/en/api/text-to-motion
+- https://help.meshy.ai/en/articles/16102795-how-to-create-seamless-pbr-textures-with-meshy
+- https://docs.meshy.ai/webapp/guides/3d-model/rigging
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  text_to_3d: 'yes'
+  image_to_3d: 'yes'
+  pbr_textures: 'yes'
+  auto_rigging: 'yes'
+  low_poly: 'yes'
+  api: 'yes'
+  pbr_maps: 'yes'
+  engine_plugin: partial
+  text_to_motion: 'yes'
+  seamless: partial
+  retarget: partial
+feature_notes:
+  auto_rigging: Humanoid and quadruped
+  low_poly: Remesh to a target polycount
+  engine_plugin: Unity plugin requires Pro plan or higher
+  text_to_motion: "Generates 2 to 10 second motion clips from a text prompt"
+  seamless: "Textures are made for a model's surface; a help guide covers prompting for seamless materials"
+  retarget: "Upload your own character and Meshy auto-rigs and animates it; custom skeletons aren't supported"
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 100 credits/mo; outputs CC BY 4.0 (attribution)
+- name: Pro
+  price_usd: 20
+  period: month
+  includes: 1,000 credits/mo; commercial rights
+- name: Studio
+  price_usd: 60
+  period: month
+  includes: Team plan; $576 billed yearly
+- name: Enterprise
+  price_usd: null
+  period: custom
+  includes: Custom pricing

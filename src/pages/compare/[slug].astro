@@ -1,15 +1,25 @@
 ---
 import Base from '../../layouts/Base.astro';
-import Faq from '../../components/Faq.astro';
-import Monogram from '../../components/Monogram.astro';
-import ScoreRing from '../../components/ScoreRing.astro';
+import { Faq } from '../../components/site/Faq';
+import { ToolLogo } from '../../components/site/ToolLogo';
+import { Stars } from '../../components/site/Stars';
+import { FeatureMatrix } from '../../components/site/FeatureMatrix';
+import { Plans } from '../../components/site/Plans';
+import { Badge } from '../../components/ui/badge';
+import { buttonVariants } from '../../components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table';
+import { cn } from '../../lib/utils';
+import { ArrowUpRight, Check, Plus, Trophy } from 'lucide-react';
+import { COMMERCIAL_RANK, FREE_RANK, fromPrice, priceHeadline, priceLabel, sharedFeatures } from '../../lib/compare';
 import { comparisonPairs, toolsWithAlternatives, type ListDef } from '../../lib/lists';
 import { scoreTool, FACTOR_LABELS, type Factor, type Group, type Tool } from '../../lib/score';
 import { faqPage } from '../../lib/jsonld';
 import {
-  COMMERCIAL_LABELS, ENGINE_LABELS, FREE_TIER_LABELS, STATUS_LABELS, isoDate, list, price, tier,
+  COMMERCIAL_LABELS, ENGINE_LABELS, EXPORT_LABELS, FREE_TIER_LABELS, STATUS_LABELS, isoDate, list, tier,
 } from '../../lib/format';
 import { SITE } from '../../site';
+import { outboundRel, outboundUrl, shown } from '../../lib/format';
 
 export async function getStaticPaths() {
   return [...(await comparisonPairs()).entries()].map(([slug, p]) => ({ params: { slug }, props: p }));
@@ -35,28 +45,64 @@ const bWins = wins(sb, sa);
 const hasMakko = a.data.makko_owned || b.data.makko_owned;
 const withAlts = await toolsWithAlternatives();
 
-const rows: [string, (t: Tool) => string][] = [
+// Each row can name a "better" side so the table can mark it; ties and unknowns mark nothing.
+type Row = [string, (t: Tool) => string, ((t: Tool) => number | null)?, ('max' | 'min')?];
+const rows: Row[] = [
   ['Best for', (t) => t.data.best_for],
-  ['Free tier', (t) => FREE_TIER_LABELS[t.data.pricing.free_tier]],
-  ['Price', (t) => price(t)],
-  ['Commercial use', (t) => COMMERCIAL_LABELS[t.data.license.commercial_use] + (t.data.license.open_source ? ' (open source)' : '')],
+  ['Free tier', (t) => FREE_TIER_LABELS[t.data.pricing.free_tier], (t) => FREE_RANK[t.data.pricing.free_tier] || null],
+  ['Starting price', (t) => priceLabel(t), (t) => fromPrice(t), 'min'],
+  ['Commercial use', (t) => (t.data.license.open_source ? `${shown(COMMERCIAL_LABELS[t.data.license.commercial_use])} (open source)` : COMMERCIAL_LABELS[t.data.license.commercial_use]), (t) => COMMERCIAL_RANK[t.data.license.commercial_use] || null],
   ['Engines', (t) => list(t.data.engines, ENGINE_LABELS)],
-  ['Exports', (t) => list(t.data.exports)],
-  ['Skill level', (t) => t.data.skill_level],
+  ['Exports', (t) => list(t.data.exports, EXPORT_LABELS)],
+  ['Skill level', (t) => t.data.skill_level[0].toUpperCase() + t.data.skill_level.slice(1)],
   ['Status', (t) => STATUS_LABELS[t.data.status]],
   ['Last verified', (t) => isoDate(t.data.last_verified)],
 ];
+
+const better = (row: Row) => {
+  const [, , val, mode = 'max'] = row;
+  if (!val) return null;
+  const x = val(a), y = val(b);
+  if (x === null || y === null || x === y) return null;
+  return (mode === 'max' ? x > y : x < y) ? a.id : b.id;
+};
+
+const featureDefs = sharedFeatures([a, b]);
+const engineNames = (t: Tool) => t.data.engines.map((e) => ENGINE_LABELS[e]);
+/** Reasons to pick `t` over `o`, from facts only. A gap in the other tool's data is never counted as a reason. */
+function chooseIf(t: Tool, o: Tool): string[] {
+  const out: string[] = [];
+  const td = t.data, od = o.data;
+  if (FREE_RANK[td.pricing.free_tier] > FREE_RANK[od.pricing.free_tier] && od.pricing.free_tier !== 'unknown' && ['yes', 'limited'].includes(td.pricing.free_tier))
+    out.push('you want to start for free');
+  const tp = fromPrice(t), op = fromPrice(o);
+  if (tp !== null && op !== null && tp < op) out.push(`you want a lower starting price (${priceLabel(t)} vs ${priceLabel(o)})`);
+  if (COMMERCIAL_RANK[td.license.commercial_use] > COMMERCIAL_RANK[od.license.commercial_use] && od.license.commercial_use !== 'unknown')
+    out.push(`you plan to sell what you make (commercial use: ${COMMERCIAL_LABELS[td.license.commercial_use].toLowerCase()})`);
+  if (td.skill_level === 'beginner' && od.skill_level !== 'beginner') out.push("you're a beginner or don't code");
+  const extraEngines = engineNames(t).filter((e) => !engineNames(o).includes(e));
+  if (extraEngines.length && od.engines.length) out.push(`you work in ${extraEngines.join(' or ')}`);
+  for (const f of featureDefs) {
+    const v = td.features[f.key], w = od.features[f.key];
+    if (v === 'yes' && (w === 'no' || w === 'partial')) out.push(`you need ${f.label.toLowerCase()}`);
+  }
+  if (td.license.open_source && !od.license.open_source) out.push('you want open source you can self-host');
+  return out.slice(0, 5);
+}
+const chooseA = chooseIf(a, b);
+const chooseB = chooseIf(b, a);
+const plansShown = a.data.plans.length > 0 || b.data.plans.length > 0;
 
 const faqs = [
   {
     q: `Is ${a.data.name} or ${b.data.name} better?`,
     a: winner
-      ? `${winner.tool.data.name} scores higher on our ${listDef.title.replace(/^Best /, '')} rubric (${sa.score} vs ${sb.score}). The right pick depends on the job. ${a.data.name} is best for: ${a.data.best_for} ${b.data.name} is best for: ${b.data.best_for}`
-      : `They tie at ${sa.score}/100 on our rubric. ${a.data.name} is best for: ${a.data.best_for} ${b.data.name} is best for: ${b.data.best_for}`,
+      ? `${winner.tool.data.name} scores higher in our ${listDef.title.replace(/^Best /, '')} ranking (${sa.score} vs ${sb.score}). The right pick depends on the job. ${a.data.name} is best for: ${a.data.best_for} ${b.data.name} is best for: ${b.data.best_for}`
+      : `They tie at ${sa.score}/100 in our scoring. ${a.data.name} is best for: ${a.data.best_for} ${b.data.name} is best for: ${b.data.best_for}`,
   },
   {
     q: `Which is cheaper, ${a.data.name} or ${b.data.name}?`,
-    a: `${a.data.name}: ${FREE_TIER_LABELS[a.data.pricing.free_tier].toLowerCase()}, ${price(a).toLowerCase()}. ${b.data.name}: ${FREE_TIER_LABELS[b.data.pricing.free_tier].toLowerCase()}, ${price(b).toLowerCase()}.`,
+    a: `${a.data.name}: ${FREE_TIER_LABELS[a.data.pricing.free_tier].toLowerCase()}, ${priceLabel(a).toLowerCase()}. ${b.data.name}: ${FREE_TIER_LABELS[b.data.pricing.free_tier].toLowerCase()}, ${priceLabel(b).toLowerCase()}.`,
   },
 ];
 ---
@@ -67,106 +113,172 @@ const faqs = [
   crumbs={[{ name: 'Compare', href: '/compare/' }, { name: `${a.data.name} vs ${b.data.name}`, href: `/compare/${a.id}-vs-${b.id}` }]}
   jsonLd={[faqPage(faqs)]}
 >
-  <h1>{a.data.name} vs {b.data.name}</h1>
-  <div class="versus">
-    {[sa, sb].map((s, i) => (
-      <>
-        {i === 1 && <span class="vs-badge" aria-hidden="true">VS</span>}
-        <a class={`card vs-card${winner?.tool.id === s.tool.id ? ' vs-win' : ''}`} href={`/tools/${s.tool.id}`}>
-          <Monogram name={s.tool.data.name} size="lg" />
-          <span class="vs-name">{s.tool.data.name}</span>
-          <ScoreRing score={s.score} size={60} />
-          {winner?.tool.id === s.tool.id && <span class="pill">Higher score</span>}
-        </a>
-      </>
+  <h1 class="mt-6 text-3xl font-bold sm:text-5xl">{a.data.name} vs {b.data.name}</h1>
+  <p class="text-muted-foreground mt-3 text-lg">Side-by-side on price, free plans, commercial rights, features and exports.</p>
+
+  <div class="relative mt-8 grid gap-4 sm:grid-cols-2">
+    {[sa, sb].map((s) => (
+      <Card className={cn('items-center gap-3 py-7 text-center', winner?.tool.id === s.tool.id && 'border-pick ring-pick/30 ring-4')}>
+        <ToolLogo name={s.tool.data.name} url={s.tool.data.url} size="lg" />
+        <a href={`/tools/${s.tool.id}`} class="font-display text-xl font-semibold hover:underline">{s.tool.data.name}</a>
+        <Stars score={s.score} />
+        {winner?.tool.id === s.tool.id && <Badge variant="pick"><Trophy /> Higher score</Badge>}
+        <p class="text-sm leading-tight">
+          <span class="font-semibold">{priceHeadline(s.tool).main}</span>
+          {priceHeadline(s.tool).sub && <span class="text-muted-foreground block text-xs">{priceHeadline(s.tool).sub}</span>}
+        </p>
+        {s.tool.data.status !== 'discontinued' && (
+          <a class={buttonVariants({ size: 'sm', variant: winner?.tool.id === s.tool.id ? 'default' : 'outline' })} href={outboundUrl(s.tool)} rel={outboundRel(s.tool)} target="_blank">Visit site <ArrowUpRight /></a>
+        )}
+      </Card>
     ))}
+    <span class="bg-primary text-primary-foreground font-display ring-background absolute top-1/2 left-1/2 hidden size-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full text-sm font-bold ring-8 sm:grid">VS</span>
   </div>
+
   <div class="answer">
     <p>
-      {
-        winner ? (
-          <>
-            <strong>{winner.tool.data.name}</strong> comes out ahead, {Math.max(sa.score, sb.score)} to{' '}
-            {Math.min(sa.score, sb.score)}, on our{' '}
-            {listDef.title.replace(/^Best /, '')} rubric.
-          </>
-        ) : (
-          <>They tie at {sa.score}/100 on our rubric.</>
-        )
-      }
+      {winner ? <><strong>{winner.tool.data.name}</strong> comes out ahead, {Math.max(sa.score, sb.score)} to {Math.min(sa.score, sb.score)}, in our {listDef.title.replace(/^Best /, '')} ranking.</> : <>They tie at {sa.score}/100 in our scoring.</>}
       {aWins.length > 0 && <> {a.data.name} leads on {aWins.join(', ')}.</>}
       {bWins.length > 0 && <> {b.data.name} leads on {bWins.join(', ')}.</>}
       {a.data.name} is best for: {a.data.best_for} {b.data.name} is best for: {b.data.best_for}
     </p>
   </div>
+  {hasMakko && <p class="notice">Disclosure: this site is run by {SITE.owner}. Both tools are scored the same way.</p>}
+
   {
-    hasMakko && (
-      <p class="notice">
-        Disclosure: this site is run by {SITE.owner}. Both tools are scored by the same public rubric.
-      </p>
+    (chooseA.length > 0 || chooseB.length > 0) && (
+      <>
+        <h2 class="mt-12 mb-5 text-2xl font-semibold">Which should you choose?</h2>
+        <div class="grid gap-4 md:grid-cols-2">
+          {[[a, chooseA], [b, chooseB]].map(([t, reasons]) => (
+            <Card className="gap-4 py-5">
+              <CardHeader className="px-5">
+                <CardTitle className="flex items-center gap-3 text-base">
+                  <ToolLogo name={(t as Tool).data.name} url={(t as Tool).data.url} size="sm" /> Choose {(t as Tool).data.name} if…
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="px-5">
+                {(reasons as string[]).length ? (
+                  <ul class="space-y-2 text-sm">{(reasons as string[]).map((r) => <li class="flex gap-2"><Check className="text-success mt-0.5 size-4 shrink-0" />{r}</li>)}</ul>
+                ) : (
+                  <p class="text-muted-foreground text-sm">{(t as Tool).data.best_for}</p>
+                )}
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </>
     )
   }
 
-  <h2>Side by side</h2>
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th></th>
-          <th><a href={`/tools/${a.id}`}>{a.data.name}</a></th>
-          <th><a href={`/tools/${b.id}`}>{b.data.name}</a></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Score</strong></td>
-          <td class="num"><span class={`score tier-${tier(sa.score)}`}>{sa.score}</span></td>
-          <td class="num"><span class={`score tier-${tier(sb.score)}`}>{sb.score}</span></td>
-        </tr>
-        {
-          rows.map(([label, fn]) => (
-            <tr>
-              <td><strong>{label}</strong></td>
-              <td>{fn(a)}</td>
-              <td>{fn(b)}</td>
-            </tr>
-          ))
-        }
-      </tbody>
-    </table>
+  <div class="mt-12 mb-5 flex flex-wrap items-end justify-between gap-3">
+    <h2 class="text-2xl font-semibold">Side by side</h2>
+    <div data-island="diff" data-props={JSON.stringify({ target: '#vs-table' })} class="h-6"></div>
+  </div>
+  <div id="vs-table" class="bg-card overflow-hidden rounded-xl border shadow-sm">
+    <Table className="table-fixed">
+      <TableHeader>
+        <TableRow className="bg-muted/50 hover:bg-muted/50">
+          <TableHead className="w-32 sm:w-48">Fact</TableHead>
+          {[a, b].map((t) => (
+            <TableHead>
+              <a href={`/tools/${t.id}`} class="text-foreground inline-flex items-center gap-2 font-medium hover:underline">
+                <ToolLogo name={t.data.name} url={t.data.url} size="sm" /> <span class="truncate">{t.data.name}</span>
+              </a>
+            </TableHead>
+          ))}
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <TableCell className="text-muted-foreground font-medium">Score</TableCell>
+          <TableCell className={cn(winner?.tool.id === a.id && 'best')}><Stars score={sa.score} compact /></TableCell>
+          <TableCell className={cn(winner?.tool.id === b.id && 'best')}><Stars score={sb.score} compact /></TableCell>
+        </TableRow>
+        {rows.map((row) => {
+          const [label, fn] = row;
+          const win = better(row);
+          return (
+            <TableRow className={cn(fn(a) === fn(b) && 'same')}>
+              <TableCell className="text-muted-foreground align-top font-medium whitespace-normal">{label}</TableCell>
+              {[a, b].map((t) => (
+                <TableCell className={cn('align-top whitespace-normal', win === t.id && 'best', fn(t) === 'Unverified' && 'text-muted-foreground')}>
+                  {shown(fn(t), label === 'Starting price' ? 'price' : 'fact')}
+                </TableCell>
+              ))}
+            </TableRow>
+          );
+        })}
+      </TableBody>
+    </Table>
+  </div>
+  <p class="text-muted-foreground mt-2 text-xs">★ marks the better option in each row.</p>
+
+  {
+    featureDefs.length > 0 && (
+      <>
+        <h2 class="mt-12 mb-5 text-2xl font-semibold">Features compared</h2>
+        <FeatureMatrix tools={[a, b]} defs={featureDefs} />
+      </>
+    )
+  }
+
+  {
+    plansShown && (
+      <>
+        <h2 class="mt-12 mb-5 text-2xl font-semibold">Pricing plans</h2>
+        <div class="space-y-8">
+          {[a, b].map((t) => (
+            <div>
+              <h3 class="mb-3 flex items-center gap-2 text-lg font-semibold"><ToolLogo name={t.data.name} url={t.data.url} size="sm" /> {t.data.name}</h3>
+              {t.data.plans.length ? <Plans tool={t} /> : <p class="text-muted-foreground text-sm">{t.data.pricing.notes ?? 'See the vendor site for current plans.'}</p>}
+            </div>
+          ))}
+        </div>
+      </>
+    )
+  }
+
+  <div class="mt-8">
+    <a class={buttonVariants({ variant: 'outline' })} href={`/compare/?tools=${a.id},${b.id}`}><Plus /> Add a third tool to this comparison</a>
   </div>
 
-  <h2>Factor by factor</h2>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>Factor</th><th>{a.data.name}</th><th>{b.data.name}</th><th>Edge</th></tr></thead>
-      <tbody>
-        {
-          factorKeys.map((k) => (
-            <tr>
-              <td>{FACTOR_LABELS[k].label}</td>
-              <td class="num">{Math.round(sa.factors[k] * 100)}</td>
-              <td class="num">{Math.round(sb.factors[k] * 100)}</td>
-              <td>{edge(k)}</td>
-            </tr>
-          ))
-        }
-      </tbody>
-    </table>
+  <h2 class="mt-12 mb-5 text-2xl font-semibold">Score by factor</h2>
+  <div class="bg-card overflow-hidden rounded-xl border shadow-sm">
+    <Table>
+      <TableHeader>
+        <TableRow className="bg-muted/50 hover:bg-muted/50">
+          <TableHead>Factor</TableHead><TableHead>{a.data.name}</TableHead><TableHead>{b.data.name}</TableHead><TableHead>Edge</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {factorKeys.map((k) => (
+          <TableRow>
+            <TableCell className="font-medium">{FACTOR_LABELS[k].label}</TableCell>
+            <TableCell className="tabular-nums">{Math.round(sa.factors[k] * 100)}</TableCell>
+            <TableCell className="tabular-nums">{Math.round(sb.factors[k] * 100)}</TableCell>
+            <TableCell>{edge(k) === 'Even' ? <span class="text-muted-foreground">Even</span> : <Badge variant="secondary">{edge(k)}</Badge>}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
   </div>
 
-  <h2>What each one is</h2>
-  <h3><a href={`/tools/${a.id}`}>{a.data.name}</a></h3>
-  <p>{a.data.description}</p>
-  <h3><a href={`/tools/${b.id}`}>{b.data.name}</a></h3>
-  <p>{b.data.description}</p>
-
-  <p>
-    See the full ranking: <a href={`/best/${listDef.slug}`}>{listDef.title}</a>.
-    {[a, b].filter((t) => withAlts.has(t.id)).map((t) => (
-      <> · <a href={`/alternatives/${t.id}`}>{t.data.name} alternatives</a></>
+  <h2 class="mt-12 mb-4 text-2xl font-semibold">What each one is</h2>
+  <div class="grid gap-4 md:grid-cols-2">
+    {[a, b].map((t) => (
+      <Card className="gap-3 py-5">
+        <CardHeader className="px-5"><CardTitle><a class="hover:underline" href={`/tools/${t.id}`}>{t.data.name}</a></CardTitle></CardHeader>
+        <CardContent className="text-muted-foreground px-5 text-sm leading-relaxed">{t.data.description}</CardContent>
+      </Card>
     ))}
-  </p>
+  </div>
+  <div class="mt-6 flex flex-wrap gap-2">
+    <a class={buttonVariants({ variant: 'secondary', size: 'sm' })} href={`/best/${listDef.slug}`}>{listDef.title}</a>
+    {[a, b].filter((t) => withAlts.has(t.id)).map((t) => (
+      <a class={buttonVariants({ variant: 'secondary', size: 'sm' })} href={`/alternatives/${t.id}`}>{t.data.name} alternatives</a>
+    ))}
+  </div>
 
   <Faq faqs={faqs} />
 </Base>

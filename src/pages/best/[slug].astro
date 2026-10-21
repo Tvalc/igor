@@ -1,14 +1,18 @@
 ---
 import Base from '../../layouts/Base.astro';
-import RankTable from '../../components/RankTable.astro';
-import Faq from '../../components/Faq.astro';
-import Podium from '../../components/Podium.astro';
-import Icon, { type IconName } from '../../components/Icon.astro';
-import Monogram from '../../components/Monogram.astro';
-import { publishedLists, toolsWithAlternatives, LIST_ICONS, type ListDef } from '../../lib/lists';
+import { RankTable } from '../../components/site/RankTable';
+import { Faq } from '../../components/site/Faq';
+import { PicksBox } from '../../components/site/PicksBox';
+import { FeatureMatrix } from '../../components/site/FeatureMatrix';
+import { LIST_ICON } from '../../components/site/icons';
+import Listing from '../../components/site/Listing.astro';
+import { buttonVariants } from '../../components/ui/button';
+import { computePicks } from '../../lib/picks';
+import { ArrowRight, BadgeCheck, CalendarDays, ListOrdered, Trophy } from 'lucide-react';
+import { FEATURES } from '../../lib/features';
+import { publishedLists, toolsWithAlternatives, type ListDef } from '../../lib/lists';
 import { FACTOR_LABELS, strengths, type Scored } from '../../lib/score';
 import { itemList, faqPage } from '../../lib/jsonld';
-import { CATEGORY_LABELS, tier } from '../../lib/format';
 import { SITE } from '../../site';
 
 export async function getStaticPaths() {
@@ -28,6 +32,9 @@ const commercialOnes = ranked.filter((s) => s.tool.data.license.commercial_use =
 const beginnerOnes = ranked.filter((s) => s.tool.data.skill_level === 'beginner');
 const hasMakko = ranked.some((s) => s.tool.data.makko_owned);
 const withAlts = await toolsWithAlternatives();
+const matrixTools = ranked.slice(0, 6).map((s) => s.tool);
+const matrixDefs = def.features ? FEATURES[def.features] : [];
+const pickLabel = new Map(computePicks(ranked).map((p) => [p.s.tool.id, p.label]));
 const names = (xs: Scored[], n = 3) => xs.slice(0, n).map((s) => s.tool.data.name).join(', ');
 
 const faqs = [
@@ -43,8 +50,8 @@ const faqs = [
     q: `Can I sell games made with these tools?`,
     a:
       commercialOnes.length > 0
-        ? `We've verified that ${names(commercialOnes)} allow commercial use outright. Others allow it only on paid plans, or we haven't verified it yet. Each tool page shows the current status.`
-        : `We haven't yet verified unrestricted commercial use for any tool on this list. Several allow it on paid plans. Check each tool page before shipping.`,
+        ? `We've verified that ${names(commercialOnes)} allow commercial use outright. Others allow it only on paid plans or don't say. Each tool page shows the details.`
+        : `None of these tools clearly allows commercial use on every plan. Several allow it on paid plans, so check each tool page before shipping.`,
   },
   beginnerOnes.length > 0 && {
     q: `Which tools work for complete beginners?`,
@@ -52,12 +59,13 @@ const faqs = [
   },
   {
     q: 'How are these tools ranked?',
-    a: `Every tool is scored on the same public rubric: accessibility, output and integrations, commercial rights, value and maturity. Hands-on test results are added as tests are published. Affiliate links and sponsorships never change a score.`,
+    a: `Every tool is scored the same way, on accessibility, output and integrations, commercial rights, value and maturity. Hands-on test results are added as tests are published. Affiliate links and sponsorships never change a score.`,
   },
 ].filter(Boolean) as { q: string; a: string }[];
 
 const title = `${def.title} (${SITE.year})`;
 const description = `${def.title}, ranked: ${names(ranked)} and more, compared on free tiers, pricing, commercial rights and exports. Updated ${SITE.year}.`;
+const ListIcon = LIST_ICON[def.slug] ?? Trophy;
 ---
 
 <Base
@@ -70,9 +78,16 @@ const description = `${def.title}, ranked: ${names(ranked)} and more, compared o
     faqPage(faqs),
   ]}
 >
-  <span class="eyebrow" style="margin-top:18px"><Icon name={(LIST_ICONS[def.slug] ?? 'gamepad') as IconName} size={16} /> Ranking · updated {SITE.year}</span>
-  <h1>{title}</h1>
-  <div class="answer">
+  <header class="mt-6 max-w-3xl">
+    <span class="eyebrow"><ListIcon className="size-3.5" /> Ranking</span>
+    <h1 class="mt-3 text-3xl font-bold sm:text-5xl">{title}</h1>
+    <div class="text-muted-foreground mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+      <span class="inline-flex items-center gap-1.5"><CalendarDays className="size-4" /> Updated {SITE.year}</span>
+      <span class="inline-flex items-center gap-1.5"><ListOrdered className="size-4" /> {ranked.length} tools compared</span>
+      <a href="/methodology" class="hover:text-foreground inline-flex items-center gap-1.5 underline"><BadgeCheck className="size-4" /> How we rank</a>
+    </div>
+  </header>
+  <div class="answer max-w-3xl">
     <p>
       The best options are <strong>{first.tool.data.name}</strong>, <strong>{second.tool.data.name}</strong>
       {third && <>and <strong>{third.tool.data.name}</strong></>}.
@@ -80,41 +95,46 @@ const description = `${def.title}, ranked: ${names(ranked)} and more, compared o
       {def.blurb}
     </p>
   </div>
-  <p class="meta">
-    {ranked.length} tools ranked · Scores are facts-based, and hands-on tests are being added ·
-    <a href="/methodology">How we rank</a>
-  </p>
   {
     hasMakko && (
-      <p class="notice">
-        Disclosure: this site is run by {SITE.owner}. Makko appears on this list, ranked by the same rubric as
-        everything else.
+      <p class="notice max-w-3xl">
+        Disclosure: this site is run by {SITE.owner}. Makko appears on this list, scored the same way as everything else.
       </p>
     )
   }
 
-  <h2>Top 3 picks</h2>
-  <Podium ranked={ranked} />
+  <h2 class="mt-12 mb-5 text-2xl font-semibold">Our picks</h2>
+  <PicksBox ranked={ranked} />
 
-  <h2>Full ranking</h2>
+  <h2 class="mt-14 mb-5 text-2xl font-semibold">All {ranked.length} ranked</h2>
+  <Listing items={ranked} ranked picks={pickLabel} categories={false} search={false} />
+
+  <h2 class="mt-14 mb-5 text-2xl font-semibold">Comparison table</h2>
   <RankTable ranked={ranked} />
 
-  <h2>The top picks, briefly</h2>
   {
-    ranked.slice(0, 5).map((s, i) => (
-      <section>
-        <h3 style="display:flex;align-items:center;gap:10px">
-          <Monogram name={s.tool.data.name} size="sm" />
-          <span>{i + 1}. <a href={`/tools/${s.tool.id}`}>{s.tool.data.name}</a></span>
-          <span class={`score tier-${tier(s.score)}`}>{s.score}</span>
-        </h3>
-        <p>{s.tool.data.description}</p>
-        <p class="meta">
-          {s.tool.data.categories.map((c) => CATEGORY_LABELS[c]).join(' · ')}
-          {withAlts.has(s.tool.id) && <> · <a href={`/alternatives/${s.tool.id}`}>{s.tool.data.name} alternatives</a></>}
-        </p>
-      </section>
-    ))
+    matrixDefs.length > 0 && matrixTools.some((t) => Object.keys(t.data.features).length > 0) && (
+      <>
+        <div class="mt-14 mb-5 flex flex-wrap items-end justify-between gap-3">
+          <h2 class="text-2xl font-semibold">Feature comparison: top {matrixTools.length}</h2>
+          <a class={buttonVariants({ variant: 'outline', size: 'sm' })} href={`/compare/?tools=${matrixTools.slice(0, 4).map((t) => t.id).join(',')}`}>
+            Compare the top 4 side by side <ArrowRight />
+          </a>
+        </div>
+        <FeatureMatrix tools={matrixTools} defs={matrixDefs} />
+      </>
+    )
+  }
+
+  {
+    withAlts.size > 0 && (
+      <div class="mt-8 flex flex-wrap items-center gap-2 text-sm">
+        <span class="text-muted-foreground">Looking for alternatives?</span>
+        {ranked.slice(0, 5).filter((s) => withAlts.has(s.tool.id)).map((s) => (
+          <a href={`/alternatives/${s.tool.id}`} class={buttonVariants({ variant: 'secondary', size: 'sm' })}>{s.tool.data.name} alternatives</a>
+        ))}
+      </div>
+    )
   }
 
   <Faq faqs={faqs} />

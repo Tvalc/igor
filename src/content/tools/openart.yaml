@@ -19,13 +19,57 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 14
+  notes: Starter $14/mo (4k credits), Plus $34 (12k), Pro $56 (24k), Wonder $240 (106k); discounts on annual billing.
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: Commercial use only on Plus tier and above (not Starter); free outputs may carry a watermark.
 sources:
 - https://openart.ai
-needs_verification:
-- pricing
-- license
-last_verified: '2026-10-16'
+- https://openart.ai/suite/terms
+- https://openart.ai/pricing
+- https://openart.ai/pt-br/pricing
+- https://selfielabstudio.com/blog/openart-ai-train-custom-avatars-fast-in-minutes-20260219
+- https://artificial-intelligence-wiki.com/best-ai-tools/ai-image-and-video-generators/openart-ai-guide/
+- https://openart.ai/blog/what-is-openart/
+- https://openart.ai/mcp/
+- https://openart.ai/help
+- https://openart.ai/features/transparent-background-maker
+- https://openart.ai/features/photo-to-pixel-art
+- https://openart.ai/generator/sprite
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  consistent_characters: 'yes'
+  custom_training: 'yes'
+  pixel_art: 'yes'
+  transparent_bg: 'yes'
+  api: partial
+  multi_direction: partial
+feature_notes:
+  transparent_bg: Via Transparent Background Maker tool
+  api: No public REST API; access via OpenArt CLI and MCP server (OAuth, plan credits)
+  multi_direction: Multi-View generates a set of angles for a saved character; not sprite-specific 4/8-direction
+    output
+plans:
+- name: Free trial
+  price_usd: 0
+  period: free
+  includes: 40 credits over 7 days
+- name: Starter
+  price_usd: 14
+  period: month
+  includes: 4,000 credits/mo, per seat
+- name: Plus
+  price_usd: 34
+  period: month
+  includes: 12,000 credits/mo, per seat
+- name: Pro
+  price_usd: 56
+  period: month
+  includes: 24,000 credits/mo, per seat
+- name: Wonder
+  price_usd: 240
+  period: month
+  includes: 106,000 credits/mo, per seat

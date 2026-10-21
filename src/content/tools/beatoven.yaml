@@ -18,14 +18,26 @@ exports:
 skill_level: beginner
 pricing:
   model: freemium
-  free_tier: 'yes'
+  free_tier: limited
   starting_price_usd: null
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: Licence is granted when you download a track (paid); non-exclusive and perpetual. Beatoven keeps ownership;
+    resale and distribution to streaming platforms are not allowed.
 sources:
 - https://www.beatoven.ai
+- https://www.beatoven.ai/ai-music-generator
+- https://aiindigo.com/blog/beatoven-ai-review-is-ai-music-finally-practical-for-creators-in-2026
+- https://providers.apievangelist.com/providers/beatoven/
+- https://github.com/Beatoven/public-api/blob/main/docs/api-spec.md
 needs_verification:
-- pricing
-- license
-last_verified: '2026-10-16'
+- price
+last_verified: '2026-10-21'
+features:
+  stems: partial
+  custom_length: 'yes'
+  api: 'yes'
+  loops: partial
+feature_notes:
+  loops: "API has a looping option for more repetition; seamless loop export isn't promised"

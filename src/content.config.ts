@@ -1,5 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { FEATURE_VALUES, featuresFor } from './lib/features';
 
 // Every fact on the site comes from these schemas. Automation agents edit the YAML files;
 // anything that doesn't validate fails the build.
@@ -21,7 +22,7 @@ export const ENGINES = ['unity', 'unreal', 'godot', 'roblox', 'blender', 'asepri
 
 export const EXPORTS = [
   'web', 'windows', 'mac', 'linux', 'ios', 'android', 'steam',
-  'png', 'sprite-sheet', 'gif', 'glb', 'fbx', 'obj', 'usdz', 'pbr-maps', 'bvh',
+  'png', 'webp', 'sprite-sheet', 'gif', 'glb', 'fbx', 'obj', 'usdz', 'pbr-maps', 'bvh',
   'mp3', 'wav', 'source-code',
 ] as const;
 
@@ -53,6 +54,19 @@ const tools = defineCollection({
       open_source: z.boolean().default(false),
       notes: z.string().optional(),
     }),
+    // Capability checklist (src/lib/features.ts). A missing key means "not yet verified".
+    features: z.record(z.string(), z.enum(FEATURE_VALUES)).default({}),
+    feature_notes: z.record(z.string(), z.string()).default({}),
+    plans: z
+      .array(
+        z.object({
+          name: z.string(),
+          price_usd: z.number().nullable(), // monthly; 0 for free, null for custom pricing
+          period: z.enum(['free', 'month', 'year', 'one-time', 'usage', 'custom']),
+          includes: z.string().max(120).optional(),
+        }),
+      )
+      .default([]),
     affiliate: z
       .object({
         url: z.string().url().optional(), // filled in once the program is joined
@@ -73,6 +87,11 @@ const tools = defineCollection({
     sources: z.array(z.string().url()).default([]),
     needs_verification: z.array(z.string()).default([]),
     last_verified: z.coerce.date(),
+  }).superRefine((t, ctx) => {
+    const allowed = new Set(featuresFor(t.categories).map((f) => f.key));
+    for (const k of Object.keys(t.features)) {
+      if (!allowed.has(k)) ctx.addIssue({ code: 'custom', path: ['features', k], message: `"${k}" is not a feature of this tool's categories` });
+    }
   }),
 });
 

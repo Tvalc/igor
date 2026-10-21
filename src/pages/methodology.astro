@@ -8,7 +8,7 @@ const factors = Object.keys(FACTOR_LABELS) as Factor[];
 
 <Base
   title="How We Rank AI Game Dev Tools"
-  description="The public scoring rubric behind every Make AI Games ranking: factors, weights per category, how unknown facts are handled, and how hands-on tests are added."
+  description="The public scoring method behind every Make AI Games ranking: factors, weights per category, how unknown facts are handled, and how hands-on tests are added."
   crumbs={[{ name: 'How we rank', href: '/methodology' }]}
 >
   <article class="prose">
@@ -27,8 +27,8 @@ const factors = Object.keys(FACTOR_LABELS) as Factor[];
     </ul>
   </article>
 
-  <h2>Weights by category</h2>
-  <p>Different jobs need different things. Commercial rights matter most for audio, and integrations matter most for coding tools.</p>
+  <h2 class="mt-12 mb-3 text-2xl font-semibold">Weights by category</h2>
+  <p class="text-muted-foreground mb-5 max-w-3xl">Different jobs need different things. Commercial rights matter most for audio, and integrations matter most for coding tools.</p>
   <div class="table-wrap">
     <table>
       <thead>
@@ -47,16 +47,24 @@ const factors = Object.keys(FACTOR_LABELS) as Factor[];
     </table>
   </div>
 
-  <article class="prose">
+  <article class="prose mt-4">
     <h2>Rules we follow</h2>
     <ul>
       <li>
         <strong>Facts come from primary sources.</strong> Each tool page lists its sources and a last-verified date.
-        Fields we haven't confirmed are marked "Unverified".
+        Anything we haven't confirmed shows as "Not listed", "Not confirmed" or "See site for pricing", never as a yes or a no.
       </li>
       <li>
         <strong>Unknown never helps a tool.</strong> An unverified fact scores below the midpoint, so verifying a tool
-        can only move it in the direction the facts point.
+        can only move it in the direction the facts point. The four key facts are free tier, price, commercial use and exports; a tool missing
+        some of them scores lower until they're confirmed. Vendors can send a primary source to fill a gap.
+      </li>
+      <li>
+        <strong>Features are checked, not assumed.</strong> Every tool has a feature checklist for its category (for
+        example pixel art, sprite sheets and 8-direction views for sprite tools). A feature is marked Yes, Partly or No
+        only when the vendor's own site, docs or pricing page says so; everything else shows as "Not confirmed". Features
+        are 15% of every score: Yes counts fully, Partly counts 60%, No counts nothing, and "Not confirmed" counts 40%, so
+        an unconfirmed feature never helps more than a limited one.
       </li>
       <li>
         <strong>Scores are computed, not chosen.</strong> The scoring code is open in our repository, and nobody
@@ -72,7 +80,7 @@ const factors = Object.keys(FACTOR_LABELS) as Factor[];
       </li>
       <li>
         <strong>Freshness is automated.</strong> Agents re-check pricing, status and changelogs every week and propose
-        changes with sources. Schema checks reject malformed data before it ships.
+        changes with sources. Automated checks catch bad or missing data before it goes live.
       </li>
     </ul>
 

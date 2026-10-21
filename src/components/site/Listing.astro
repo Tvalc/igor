@@ -1,0 +1,32 @@
+---
+// Sidebar filters (client island) beside a server-rendered list of ToolCards. Works without JS: all cards show.
+import { ToolCard } from './ToolCard';
+import type { Scored } from '../../lib/score';
+import { filterConfig } from '../../lib/filter-config';
+
+interface Props {
+  items: Scored[];
+  ranked?: boolean; // numbered cards with pros and cons
+  picks?: Map<string, string>;
+  categories?: boolean;
+  search?: boolean;
+  views?: boolean;
+}
+const { items, ranked = false, picks, categories = true, search = true, views = false } = Astro.props;
+const config = JSON.stringify({ config: filterConfig(items, { categories, search, views, ranked }) });
+---
+
+<div class="grid gap-8 lg:grid-cols-[250px_1fr]">
+  <aside class="lg:sticky lg:top-24 lg:max-h-[calc(100dvh-7rem)] lg:self-start lg:overflow-y-auto lg:pr-2" aria-label="Filters">
+    <div data-island="filters" data-props={config}></div>
+  </aside>
+  <div class="min-w-0">
+    <div id="listing-toolbar">
+      <p class="mb-5 text-sm font-medium">{items.length} tools</p>
+    </div>
+    <ul data-items class={ranked || !views ? 'grid gap-5' : 'grid gap-5 sm:grid-cols-2 xl:grid-cols-3'}>
+      {items.map((s, i) => <ToolCard scored={s} rank={ranked ? i + 1 : undefined} pick={picks?.get(s.tool.id)} details={ranked} />)}
+    </ul>
+    <p data-empty hidden class="text-muted-foreground rounded-xl border border-dashed p-10 text-center text-sm">No tools match these filters. Try removing one.</p>
+  </div>
+</div>

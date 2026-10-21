@@ -1,7 +1,7 @@
 ---
 import { getCollection, getEntry } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import RankTable from '../../components/RankTable.astro';
+import { ToolCard } from '../../components/site/ToolCard';
 import { alternativesFor, toolsWithAlternatives } from '../../lib/lists';
 import { type Tool } from '../../lib/score';
 import { itemList } from '../../lib/jsonld';
@@ -31,13 +31,13 @@ const free = alts.find((s) => s.tool.data.pricing.free_tier === 'yes');
   crumbs={[{ name: d.name, href: `/tools/${tool.id}` }, { name: 'Alternatives', href: `/alternatives/${tool.id}` }]}
   jsonLd={[itemList(`${d.name} alternatives`, alts.map((s) => ({ name: s.tool.data.name, url: `${base}/tools/${s.tool.id}` })))]}
 >
-  <h1>Best {d.name} alternatives</h1>
+  <h1 class="mt-6 text-3xl font-bold sm:text-5xl">Best {d.name} alternatives</h1>
   <div class="answer">
     <p>
       {
         d.status === 'discontinued' && successor ? (
           <>
-            {d.name} is discontinued. The direct replacement is <a href={`/tools/${successor.id}`}>{successor.data.name}</a>.
+            {d.name} is discontinued. The direct replacement is <a class="underline" href={`/tools/${successor.id}`}>{successor.data.name}</a>.
             Other strong options:{' '}
           </>
         ) : (
@@ -48,8 +48,8 @@ const free = alts.find((s) => s.tool.data.pricing.free_tier === 'yes');
       {free && <> If you want a free option, start with {free.tool.data.name}.</>}
     </p>
   </div>
-  <RankTable ranked={alts} />
+  <ol class="mt-8 grid gap-5">{alts.map((s, i) => <ToolCard scored={s} rank={i + 1} details />)}</ol>
   <p class="meta">
-    Ranked on our {lc(CATEGORY_LABELS[d.categories[0]])} rubric. <a href={`/tools/${tool.id}`}>Back to the {d.name} review</a>
+    Ranked on our {lc(CATEGORY_LABELS[d.categories[0]])} scoring. <a href={`/tools/${tool.id}`}>Back to the {d.name} review</a>
   </p>
 </Base>

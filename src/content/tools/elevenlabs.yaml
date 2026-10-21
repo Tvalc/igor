@@ -18,7 +18,6 @@ platforms:
 - plugin
 engines:
 - unity
-- unreal
 exports:
 - mp3
 - wav
@@ -26,15 +25,57 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 6
+  notes: Starter $6/mo (30k credits; $5/mo billed annually); Free 10k credits/mo
 license:
   commercial_use: paid-plans
   open_source: false
+  notes: All paid plans include a commercial licence (except Beta Services); the free plan cannot be used commercially
 affiliate:
   program: ElevenLabs Affiliate Program (PartnerStack)
   commission: 22% for 12 months
 sources:
 - https://elevenlabs.io/affiliate
-needs_verification:
-- pricing
-last_verified: '2026-10-16'
+- https://elevenlabs.io/pricing
+- https://help.elevenlabs.io/hc/en-us/articles/13313564601361-Can-I-publish-the-content-I-generate-on-the-platform
+- https://elevenlabs.io/api?trk=test
+- https://elevenlabs.io/ja/text-to-speech-api-2
+- https://docs.cdntest.elevenlabs.io/product-guides/playground/sound-effects?error=true
+- https://pkg.go.dev/github.com/plexusone/elevenlabs-go
+- https://www.usagepricing.com/blueprint/activity/elevenlabs-2026-10-05-v4-launch-tts-price-cut
+- https://github.com/elevenlabs/skills/blob/main/text-to-speech/references/voice-settings.md
+- https://github.com/elevenlabs/skills/blob/main/music/references/api_reference.md
+- https://elevenlabs.io/docs/eleven-creative/playground/sound-effects
+- https://elevenlabs.io/docs/overview/capabilities/sound-effects
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  cloning: 'yes'
+  voice_design: 'yes'
+  multilingual: 'yes'
+  speech_to_speech: 'yes'
+  api: 'yes'
+  text_to_sfx: 'yes'
+  loopable: 'yes'
+  stems: 'yes'
+  vocals: 'yes'
+  emotion_control: 'yes'
+  custom_length: 'yes'
+  variations: 'yes'
+  loops: partial
+feature_notes:
+  loopable: sound effects max 30 seconds with looping toggle
+  vocals: music generation includes lyrics
+  emotion_control: "Audio tags like [whispers] or [excited] direct emotion and delivery"
+  custom_length: "Music length from 3 seconds to 10 minutes"
+  variations: "Each sound effect generation creates four versions to choose from"
+  loops: "The Looping toggle is in Sound Effects (short clips like drum loops), not in Eleven Music"
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 10k credits/mo
+- name: Starter
+  price_usd: 6
+  period: month
+  includes: 30k credits/mo

@@ -23,12 +23,54 @@ skill_level: advanced
 pricing:
   model: paid
   free_tier: 'no'
-  starting_price_usd: null
+  starting_price_usd: 20
+  notes: Included in Claude Pro ($20/mo, or $17/mo billed annually), Max, Team and Enterprise; or pay-as-you-go
+    API billing. Not on the Free plan
 license:
   commercial_use: 'yes'
   open_source: false
 sources:
 - https://claude.com/claude-code
-needs_verification:
-- pricing
-last_verified: '2026-10-16'
+- https://claude.com/pricing
+- https://code.claude.com/docs/en/setup
+- https://support.claude.com/en/articles/11049741
+- https://code.claude.com/docs/en/mcp-quickstart
+- https://claudelog.com/configuration
+- https://support.claude.com/en/articles/8325606-what-is-the-pro-plan
+- https://support.claude.com/en/articles/11049741-what-is-the-max-plan
+- https://support.claude.com/en/articles/9266767-what-is-the-team-plan
+- https://code.claude.com/docs/en/mcp
+- https://code.claude.com/docs/en/model-config
+- https://code.claude.com/docs/en/desktop
+- https://claude.com/marketplace/plugins/unity
+- https://code.claude.com/docs/en/llm-gateway
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  mcp: 'yes'
+  model_choice: partial
+  engine_integration: partial
+  runs_game: partial
+  local_models: 'no'
+feature_notes:
+  model_choice: Claude models only (via Anthropic, Bedrock, Google Cloud, Foundry)
+  engine_integration: Via plugins/MCP (e.g. Unity's official plugin); does not run inside the editor
+  runs_game: Desktop app can start dev servers, preview and verify web apps and iOS simulator
+  local_models: "Runs on Anthropic's Claude models only; local or non-Claude models aren't supported"
+plans:
+- name: Pro
+  price_usd: 20
+  period: month
+  includes: $17/mo billed annually; Claude Code included
+- name: Max 5x
+  price_usd: 100
+  period: month
+  includes: About 5x Pro usage; Claude Code included
+- name: Max 20x
+  price_usd: 200
+  period: month
+  includes: About 20x Pro usage; Claude Code included
+- name: Team Standard
+  price_usd: 25
+  period: month
+  includes: Per seat ($20 billed annually), min 2 seats; Claude Code included

@@ -7,6 +7,7 @@ export interface ListDef {
   query: string; // the search phrase this page answers
   question: string; // lead FAQ question, phrased the way people ask it
   group: Group | 'mixed'; // 'mixed' lists score each tool with its own category's rubric
+  features?: string; // category whose feature checklist this list's matrix shows
   blurb: string;
   filter: (t: Tool) => boolean;
 }
@@ -17,55 +18,55 @@ const engine = (t: Tool, e: string) => (t.data.engines as string[]).includes(e);
 
 export const LISTS: ListDef[] = [
   {
-    slug: 'ai-game-makers', title: 'Best AI Game Makers', question: 'What is the best AI game maker?',
+    slug: 'ai-game-makers', features: 'game-maker', title: 'Best AI Game Makers', question: 'What is the best AI game maker?',
     query: 'make a game with AI', group: 'maker',
     blurb: 'Platforms that turn a description into a playable game, from no-code prompt-to-game tools to AI-first engines.',
     filter: (t) => has(t, 'game-maker'),
   },
   {
-    slug: '2d-game-makers', title: 'Best AI Tools to Make 2D Games', question: 'What is the best AI tool to make a 2D game?',
+    slug: '2d-game-makers', features: 'game-maker', title: 'Best AI Tools to Make 2D Games', question: 'What is the best AI tool to make a 2D game?',
     query: 'make 2D games with AI', group: 'maker',
     blurb: 'AI game makers that handle 2D games well, including tools that generate the sprites too.',
     filter: (t) => has(t, 'game-maker') && tag(t, '2d'),
   },
   {
-    slug: 'no-code-ai-game-makers', title: 'Best No-Code AI Game Makers', question: 'What is the best way to make a game with AI without coding?',
+    slug: 'no-code-ai-game-makers', features: 'game-maker', title: 'Best No-Code AI Game Makers', question: 'What is the best way to make a game with AI without coding?',
     query: 'make a game with AI without coding', group: 'maker',
     blurb: 'AI game makers you can use without writing a line of code.',
     filter: (t) => has(t, 'game-maker') && t.data.skill_level === 'beginner',
   },
   {
-    slug: 'ai-game-art-generators', title: 'Best AI Game Art Generators', question: 'What is the best AI tool to make game art?',
+    slug: 'ai-game-art-generators', features: 'art-2d', title: 'Best AI Game Art Generators', question: 'What is the best AI tool to make game art?',
     query: 'make game art with AI', group: 'art',
     blurb: 'Tools for concept art, sprites, characters and in-game 2D art.',
     filter: (t) => has(t, 'art-2d'),
   },
   {
-    slug: 'ai-sprite-generators', title: 'Best AI Sprite & Pixel Art Generators', question: 'What is the best AI sprite generator?',
+    slug: 'ai-sprite-generators', features: 'art-2d', title: 'Best AI Sprite & Pixel Art Generators', question: 'What is the best AI sprite generator?',
     query: 'AI sprite generator', group: 'art',
     blurb: 'Game-aware sprite tools: pixel art, sprite sheets, multi-direction characters and tilesets.',
     filter: (t) => has(t, 'art-2d') && (tag(t, 'sprites') || tag(t, 'pixel-art')),
   },
   {
-    slug: 'ai-3d-model-generators', title: 'Best AI 3D Model Generators for Games', question: 'What is the best AI 3D model generator for games?',
+    slug: 'ai-3d-model-generators', features: 'art-3d', title: 'Best AI 3D Model Generators for Games', question: 'What is the best AI 3D model generator for games?',
     query: 'AI 3D model generator for games', group: 'art',
     blurb: 'Text- and image-to-3D tools, judged on game-ready exports, rigging and licensing.',
     filter: (t) => has(t, 'art-3d') && !has(t, 'code'),
   },
   {
-    slug: 'ai-texture-generators', title: 'Best AI Texture & PBR Material Generators', question: 'What is the best AI texture generator for games?',
+    slug: 'ai-texture-generators', features: 'texture', title: 'Best AI Texture & PBR Material Generators', question: 'What is the best AI texture generator for games?',
     query: 'AI texture generator for games', group: 'art',
     blurb: 'Tools that generate textures and tileable PBR materials.',
     filter: (t) => has(t, 'texture'),
   },
   {
-    slug: 'ai-animation-tools', title: 'Best AI Animation & Mocap Tools for Games', question: 'What is the best AI animation tool for games?',
+    slug: 'ai-animation-tools', features: 'animation', title: 'Best AI Animation & Mocap Tools for Games', question: 'What is the best AI animation tool for games?',
     query: 'AI animation for games', group: 'art',
     blurb: 'Video-to-mocap, text-to-motion, AI-assisted keyframing and sprite animation.',
     filter: (t) => has(t, 'animation'),
   },
   {
-    slug: 'ai-coding-tools-for-game-dev', title: 'Best AI Coding Tools for Game Development', question: 'What is the best AI coding tool for game development?',
+    slug: 'ai-coding-tools-for-game-dev', features: 'code', title: 'Best AI Coding Tools for Game Development', question: 'What is the best AI coding tool for game development?',
     query: 'AI coding assistant for game development', group: 'code',
     blurb: 'Coding agents, editor assistants and MCP servers that write and edit game code.',
     filter: (t) => has(t, 'code'),
@@ -89,25 +90,25 @@ export const LISTS: ListDef[] = [
     filter: (t) => engine(t, 'unreal'),
   },
   {
-    slug: 'ai-voice-generators-for-games', title: 'Best AI Voice Generators for Games', question: 'What is the best AI voice generator for games?',
+    slug: 'ai-voice-generators-for-games', features: 'voice', title: 'Best AI Voice Generators for Games', question: 'What is the best AI voice generator for games?',
     query: 'AI voice generator for games', group: 'audio',
     blurb: 'Text to speech and voice design for characters and dialogue.',
     filter: (t) => has(t, 'voice'),
   },
   {
-    slug: 'ai-music-generators-for-games', title: 'Best AI Music Generators for Games', question: 'What is the best AI music generator for games?',
+    slug: 'ai-music-generators-for-games', features: 'music', title: 'Best AI Music Generators for Games', question: 'What is the best AI music generator for games?',
     query: 'AI music for games', group: 'audio',
     blurb: 'Soundtracks, loops and background music, judged on commercial rights.',
     filter: (t) => has(t, 'music'),
   },
   {
-    slug: 'ai-sound-effect-generators', title: 'Best AI Sound Effect Generators', question: 'What is the best AI sound effect generator?',
+    slug: 'ai-sound-effect-generators', features: 'sfx', title: 'Best AI Sound Effect Generators', question: 'What is the best AI sound effect generator?',
     query: 'AI sound effects for games', group: 'audio',
     blurb: 'Text-to-SFX and sound design tools.',
     filter: (t) => has(t, 'sfx'),
   },
   {
-    slug: 'ai-npc-tools', title: 'Best AI NPC & Character Dialogue Tools', question: 'What is the best AI NPC tool?',
+    slug: 'ai-npc-tools', features: 'npc', title: 'Best AI NPC & Character Dialogue Tools', question: 'What is the best AI NPC tool?',
     query: 'AI NPC dialogue', group: 'audio',
     blurb: 'Runtimes and platforms for conversational, voiced game characters.',
     filter: (t) => has(t, 'npc'),
@@ -121,16 +122,6 @@ export const LISTS: ListDef[] = [
 ];
 
 export const MIN_LIST_SIZE = 3;
-
-// Icon names from src/components/Icon.astro.
-export const LIST_ICONS: Record<string, string> = {
-  'ai-game-makers': 'gamepad', '2d-game-makers': 'pixel', 'no-code-ai-game-makers': 'wand',
-  'ai-game-art-generators': 'image', 'ai-sprite-generators': 'pixel', 'ai-3d-model-generators': 'cube',
-  'ai-texture-generators': 'grid', 'ai-animation-tools': 'motion', 'ai-coding-tools-for-game-dev': 'code',
-  'ai-for-unity': 'engine', 'ai-for-godot': 'engine', 'ai-for-unreal': 'engine',
-  'ai-voice-generators-for-games': 'mic', 'ai-music-generators-for-games': 'music',
-  'ai-sound-effect-generators': 'wave', 'ai-npc-tools': 'chat', 'free-ai-game-dev-tools': 'gift',
-};
 
 export async function activeTools() {
   return (await getCollection('tools')).sort((a, b) => a.data.name.localeCompare(b.data.name));

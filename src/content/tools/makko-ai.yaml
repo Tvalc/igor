@@ -16,22 +16,83 @@ tags:
 status: active
 platforms:
 - web
-engines: []
-exports: []
+engines:
+- aseprite
+exports:
+- png
+- webp
 skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 20
+  notes: Free plan with 150 Art Budget a month and 70 AI requests a week (no card needed); paid plans $20, $50,
+    $100 and $200 a month; one-time credit top-ups that never expire.
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: 'Makko FAQ: creators keep full ownership of games and assets, may release them commercially, and Makko
+    takes no revenue share or royalties.'
 makko_owned: true
 sources:
+- https://www.makko.ai/pricing
 - https://makko.ai
 - https://blog.makko.ai/best-ai-game-makers-in-2026-7-tools-compared/
-needs_verification:
-- pricing
-- license
-- exports
-last_verified: '2026-10-16'
+- https://www.makko.ai/llms.txt
+- https://www.makko.ai/help/create-animation-bake-sprite-sheet
+- https://blog.makko.ai/consistent-ai-game-art-makko-collections-guide/
+- https://www.makko.ai/
+- https://blog.makko.ai/how-to-add-animated-characters-to-a-game-using-makko/
+- https://blog.makko.ai/what-is-makko-art-studio-the-ai-game-asset-generator-built-for-game-developers/
+- https://blog.makko.ai/7-best-no-code-game-makers-in-2026/
+- https://blog.makko.ai/makko-ai-is-live-make-2d-games-with-ai-no-drawing-no-coding/
+- https://blog.makko.ai/best-free-ai-game-making-tools-2026/
+- https://www.makko.ai/news/frontier-models-studio-tools-july-2026
+- https://www.makko.ai/news/quests-new-models-mobile-september-2026
+- https://www.makko.ai/help/save-any-image-as-any-game-asset
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  sprite_sheets: 'yes'
+  transparent_bg: 'yes'
+  consistent_characters: 'yes'
+  pixel_art: 'yes'
+  multi_direction: partial
+  no_code: 'yes'
+  ai_art: 'yes'
+  hosting: 'yes'
+  export_project: partial
+  edit_code: 'yes'
+  tilesets: 'yes'
+  text_to_motion: partial
+  mobile: 'yes'
+  custom_training: partial
+feature_notes:
+  multi_direction: Reference sheet gives front, side and back views, not 8 directions
+  export_project: Exporting off-platform requires a paid plan
+  edit_code: "Code Studio has a tabbed file editor, Git source control and GitHub sync"
+  tilesets: "Tilesets preset group (e.g. Ground Tileset) in image generation, tuned to repeat without seams"
+  text_to_motion: "Describe a movement to generate a 2D sprite animation, not 3D motion data"
+  mobile: "Dashboard, projects and game editor work on phones; games play in the browser"
+  custom_training: "No model training; Collections steer style from your own uploaded or generated reference art"
+plans:
+- name: "Free"
+  price_usd: 0
+  period: free
+  includes: "70 chats/wk, 150 art credits/mo, Lite 720p animation, 1 generation at a time, no off-platform export"
+- name: "Starter"
+  price_usd: 20
+  period: month
+  includes: "500 chats/wk, 1,000 art credits/mo, adds GPT-6.1 Sol, full 1080p animation, off-platform export"
+- name: "Creator"
+  price_usd: 50
+  period: month
+  includes: "1,500 chats/wk, 3,000 art credits/mo, adds Claude Sonnet 5.5"
+- name: "Hobbyist"
+  price_usd: 100
+  period: month
+  includes: "3,000 chats/wk, 6,000 art credits/mo, adds Claude Opus 5.5"
+- name: "Pro"
+  price_usd: 200
+  period: month
+  includes: "6,000 chats/wk, 13,000 art credits/mo, same models as Hobbyist, new models first"

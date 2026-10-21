@@ -22,13 +22,73 @@ pricing:
   model: free
   free_tier: 'yes'
   starting_price_usd: null
+  notes: Roblox Studio is free; no charge for Cube 3D mesh generation (soft rate limit, future paid overage possible)
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: "Under the Roblox Terms you keep whatever rights you hold in AI prompts and outputs, while Roblox gets a licence to use them to run and improve its services, including model training subject to your data-sharing settings."
 sources:
 - https://about.roblox.com/newsroom/2026/02/accelerating-creation-powered-roblox-cube-foundation-model
+- https://devforum.roblox.com/t/beta-cube-3d-generation-tools-and-apis-for-creators/3558947
+- https://create.roblox.com/docs/en-us/assistant/guide
+- https://corp.roblox.com/newsroom/2025/03/introducing-roblox-cube
+- https://create.roblox.com/docs/ai/build
+- https://create.roblox.com/docs/tutorials/fundamentals/coding-1/create-a-script
+- https://create.roblox.com/docs/studio/texture-generator
+- https://create.roblox.com/docs/scripting/locations
+- https://create.roblox.com/docs/studio
+- https://create.roblox.com/docs/production/publishing/publish-games-and-places
+- https://create.roblox.com/docs/projects/place-files
+- https://create.roblox.com/docs/studio/mcp
+- https://github.com/Roblox/roblox-studio-agent-plugin
+- https://create.roblox.com/docs/ai/accelerated-workflows
+- https://create.roblox.com/docs/avatar-setup
+- https://create.roblox.com/docs/reference/engine/classes/GenerationService
+- https://en.help.roblox.com/hc/en-us/articles/115004647846-Roblox-Terms-of-Use
+- https://create.roblox.com/docs/en-us/art/modeling/gltf-export.md
 needs_verification:
-- pricing
-- license
 - exports
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  engine_integration: 'yes'
+  scene_editing: 'yes'
+  text_to_3d: partial
+  api: 'yes'
+  no_code: partial
+  edit_code: 'yes'
+  ai_art: 'yes'
+  multiplayer: 'yes'
+  mobile: 'yes'
+  hosting: 'yes'
+  export_project: 'yes'
+  mcp: 'yes'
+  runs_game: 'yes'
+  model_choice: 'yes'
+  local_models: partial
+  pbr_textures: 'yes'
+  auto_rigging: partial
+  image_to_3d: partial
+  low_poly: partial
+feature_notes:
+  text_to_3d: Cube 3D /generate in Assistant; beta, static meshes without textures at launch
+  api: in-experience Lua Mesh Generation API (beta)
+  no_code: "Roblox's Build tool makes simple side-scrollers and puzzle games from text; Studio Assistant writes scripts"
+  edit_code: "Built-in Luau script editor in Roblox Studio"
+  ai_art: "Generates 3D meshes, textures and materials inside Studio"
+  multiplayer: "Roblox games are multiplayer by default"
+  mobile: "Games play on phones, tablets, consoles and desktop; building needs a PC or Mac"
+  hosting: "Publish to Roblox straight from Studio's File menu"
+  export_project: "Save places locally as .rbxl or .rbxlx files"
+  mcp: "Studio has a built-in MCP server for Claude, Codex and other MCP clients"
+  runs_game: "Assistant and connected AI tools can start playtests and read the output"
+  model_choice: "Bring your own API key for Anthropic, OpenAI or Google models"
+  local_models: "Assistant runs on Roblox's cloud models; Studio's built-in MCP server works with any stdio MCP client, including ones running local models"
+  pbr_textures: "Texture Generator's Quality mode makes 4K PBR textures for meshes"
+  auto_rigging: "Avatar Setup auto-rigs humanoid character bodies to Roblox's R15 skeleton only"
+  image_to_3d: "Image input is supported through the Luau GenerateModelAsync API"
+  low_poly: "Generation API's MaxTriangles setting caps triangle count for low-poly results"
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: Included in Roblox Studio

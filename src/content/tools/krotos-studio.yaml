@@ -17,14 +17,49 @@ exports:
 skill_level: beginner
 pricing:
   model: freemium
-  free_tier: 'yes'
-  starting_price_usd: null
+  free_tier: limited
+  starting_price_usd: 19.99
+  notes: Studio $19.99/mo ($9.99/mo annual); Pro $49.99/mo ($23.33/mo annual); 5-day free trial; free account with
+    limited features
 license:
-  commercial_use: unknown
+  commercial_use: restricted
   open_source: false
+  notes: Royalty-free; base Studio tier covers ads/client work only; Pro/Max needed for video games, TV, film.
 sources:
 - https://www.krotos.studio
-needs_verification:
-- pricing
-- license
-last_verified: '2026-10-16'
+- https://krotos.studio/premiere-pro-plugin
+- https://krotos.studio/pricing
+- https://krotos.studio/faq
+- https://krotos.studio/find-your-plan
+- https://krotos.hummingbirdmedia.com/krotos-introduces-ai-ambience-generator-in-krotos-studio-create-custom-soundscapes-with-text-based-prompts
+- https://www.newsshooter.com/2025/01/02/krotos-ai-image-to-ambience-feature/
+- https://krotos.studio/pricing-2
+- https://krotos.studio/enterprise
+- https://krotos.studio/blog/krotos-studio-2-1-0-update
+- https://krotos.studio/blog/sound-design-workflows-indie-games
+- https://krotos.studio/blog/creating-your-first-ambience-preset
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  text_to_sfx: partial
+  variations: 'yes'
+  loopable: partial
+  api: partial
+feature_notes:
+  text_to_sfx: Prompts match and combine library samples; FAQ says no generative AI
+  variations: Real-time controls give endless variations (e.g. footsteps)
+  loopable: Ambience presets loop by default
+  api: Video to Sound API on Enterprise tier only
+plans:
+- name: Krotos Studio
+  price_usd: 19.99
+  period: month
+  includes: $9.99/mo billed annually; 5-day free trial
+- name: Krotos Studio Pro
+  price_usd: 49.99
+  period: month
+  includes: $23.33/mo billed annually; adds own SFX import, stems
+- name: Krotos Max
+  price_usd: 83.33
+  period: year
+  includes: Billed annually only

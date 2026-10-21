@@ -14,19 +14,65 @@ status: active
 platforms:
 - web
 engines: []
-exports: []
+exports:
+- png
+- sprite-sheet
+- gif
+- obj
+- glb
+- fbx
 skill_level: intermediate
 pricing:
   model: freemium
   free_tier: limited
-  starting_price_usd: null
+  starting_price_usd: 10
+  notes: 'Usage-based Creative Units (CUs), no seat fees: from $10/mo for 300 CUs, +$60 per 1,000 CUs; up to 10%
+    rollover; CU packs and enterprise plans.'
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: You own generated assets subject to the Terms of Service and Acceptable Use Policy. The pricing page lists
+    'Commercial license for all users'.
 sources:
 - https://www.layer.ai
-needs_verification:
-- pricing
-- license
-- exports
-last_verified: '2026-10-16'
+- https://layer.ai/pricing
+- https://help.layer.ai/en/articles/11057280-commercial-use
+- https://layer.ai/use-cases/sprite-generation
+- https://www.layer.ai/pricing
+- https://help.layer.ai/en/articles/12037310-guide-to-layer-s-subscriptions-pricing
+- https://www.layer.ai/blog/pricing-updates-2025
+- https://www.layer.ai/features/style-training
+- https://www.layer.ai/use-cases/sprite-generation
+- https://help.layer.ai/en/articles/12589582-how-to-train-a-single-character-style-in-layer
+- https://layer.ai/use-cases/game-tilesets
+- https://layer.ai/docs/models/pixelcut-background-removal
+- https://layer.ai/docs
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  pixel_art: 'yes'
+  sprite_sheets: 'yes'
+  consistent_characters: 'yes'
+  custom_training: 'yes'
+  multi_direction: 'yes'
+  tilesets: 'yes'
+  transparent_bg: 'yes'
+  api: 'yes'
+feature_notes:
+  consistent_characters: Via single-character style training
+  tilesets: "Tile atlas with edges, corners and transitions; you map tiles to your engine's rules"
+  transparent_bg: "Background removal models give cut-out images with transparent backgrounds"
+  api: "API with access to 500+ models; uses Creative Units"
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 50 CUs to try (+300 with business email)
+- name: Subscription
+  price_usd: 10
+  period: month
+  includes: 300 CUs/mo, unlimited members, +$60 per 1,000 CUs
+- name: Enterprise
+  price_usd: null
+  period: custom
+  includes: Custom tier, annual discounts, SOC 2 Type II

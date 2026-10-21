@@ -19,13 +19,42 @@ skill_level: intermediate
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 19
+  notes: Free (non-commercial, .casc export only); Indie $19/mo or $96/yr; Pro $49/mo or $396/yr.
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: 'Free: no commercial use. Indie: commercial use only if revenue or funding is under $100k/yr. Pro and Teams:
+    full commercial use.'
 sources:
 - https://cascadeur.com
-needs_verification:
-- pricing
-- license
-last_verified: '2026-10-16'
+- https://cascadeur.com/plans
+- https://cascadeur.com/help/cascadeur_end_user_agreement
+- https://cascadeur.com/jp/plans
+- https://cascadeur.com/ru/blog/general/cascadeur-20231-introduces-finger-autoposing-video-mocap-and-macos-version
+- https://cascadeur.com/tutor/move-ai-video-mocap
+- https://cascadeur.com/help/category/203
+- https://cascadeur.com/blog/view/cascadeur-2026-1-new-renderer-ue-live-link
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  video_mocap: 'yes'
+  retarget: 'yes'
+  multi_person: 'no'
+  realtime: partial
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: Non-commercial use, export to .casc format only
+- name: Indie
+  price_usd: 19
+  period: month
+  includes: $8/mo yearly; FBX/DAE/USD/glTF export; revenue under $100k/yr
+- name: Pro
+  price_usd: 49
+  period: month
+  includes: $33/mo yearly; unlimited commercial use; 14-day trial
+feature_notes:
+  multi_person: "Video mocap (alpha) captures one actor per video"
+  realtime: "Live Link streams animation to Unreal in real time; Windows only, paid plans"

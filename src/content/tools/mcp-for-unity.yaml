@@ -15,7 +15,14 @@ platforms:
 - plugin
 engines:
 - unity
-exports: []
+exports:
+- source-code
+- windows
+- mac
+- linux
+- android
+- ios
+- web
 skill_level: advanced
 pricing:
   model: open-source
@@ -27,5 +34,28 @@ license:
   notes: MIT license.
 sources:
 - https://mcpservers.org/hi/servers/github-com-coplaydev-unity-mcp
+- https://github.com/CoplayDev/unity-mcp
+- https://glama.ai/mcp/servers/@CoplayDev/unity-mcp/blob/e3e5485d3904b94962b8cd821d3ad353c02c1ec3/README.md
+- https://glama.ai/mcp/servers/@CoplayDev/unity-mcp/blob/08b8eacab13da57ed13859167fa6033c6441f58d/unity-mcp-skill/references/tools-reference.md
+- https://github.com/CoplayDev/unity-mcp/blob/main/website/docs/reference/tools/core/manage_editor.md
+- https://raw.githubusercontent.com/CoplayDev/unity-mcp/main/README.md
+- https://raw.githubusercontent.com/CoplayDev/unity-mcp/main/website/docs/reference/tools/index.md
+- https://raw.githubusercontent.com/CoplayDev/unity-mcp/main/website/docs/reference/tools/core/manage_build.md
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  engine_integration: 'yes'
+  mcp: 'yes'
+  scene_editing: 'yes'
+  model_choice: 'yes'
+  runs_game: 'yes'
+  local_models: 'yes'
+feature_notes:
+  model_choice: Works with any MCP client (Claude, Cursor, etc.), which sets the LLM
+  runs_game: "Can enter, pause and stop Play mode, run tests and read the console"
+  local_models: "Works with local LLMs through any MCP-capable client"
+plans:
+- name: Open source
+  price_usd: 0
+  period: free
+  includes: Open source, self-hosted

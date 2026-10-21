@@ -1,8 +1,9 @@
 import type { CollectionEntry } from 'astro:content';
+import { featuresFor } from './features';
 
 export type Tool = CollectionEntry<'tools'>;
 export type Group = 'maker' | 'art' | 'code' | 'audio';
-export type Factor = 'access' | 'output' | 'rights' | 'value' | 'maturity' | 'fit';
+export type Factor = 'access' | 'output' | 'rights' | 'value' | 'maturity' | 'fit' | 'features';
 
 // The published rubric. /methodology renders these tables, so the page can't drift from the math.
 export const FACTOR_LABELS: Record<Factor, { label: string; question: string }> = {
@@ -12,14 +13,23 @@ export const FACTOR_LABELS: Record<Factor, { label: string; question: string }> 
   value: { label: 'Value', question: 'How much does it cost to get real use out of it?' },
   maturity: { label: 'Maturity', question: 'Is it a stable product, a beta, or a research demo?' },
   fit: { label: 'Game focus', question: 'Is it built for game development, or a general tool that can also make games?' },
+  features: { label: 'Features', question: "How much of its category's feature checklist does the vendor confirm it has?" },
 };
 
-export const WEIGHTS: Record<Group, Record<Factor, number>> = {
+// Features take 15%; the other factors keep their relative weights in the remaining 85%.
+const FEATURE_WEIGHT = 0.15;
+const BASE: Record<Group, Record<Exclude<Factor, 'features'>, number>> = {
   maker: { access: 0.3, output: 0.2, rights: 0.15, value: 0.1, maturity: 0.1, fit: 0.15 },
   art: { access: 0.2, output: 0.25, rights: 0.25, value: 0.1, maturity: 0.1, fit: 0.1 },
   code: { access: 0.15, output: 0.25, rights: 0.15, value: 0.1, maturity: 0.15, fit: 0.2 },
   audio: { access: 0.25, output: 0.2, rights: 0.25, value: 0.1, maturity: 0.1, fit: 0.1 },
 };
+export const WEIGHTS = Object.fromEntries(
+  Object.entries(BASE).map(([g, w]) => [
+    g,
+    { ...Object.fromEntries(Object.entries(w).map(([k, v]) => [k, v * (1 - FEATURE_WEIGHT)])), features: FEATURE_WEIGHT },
+  ]),
+) as Record<Group, Record<Factor, number>>;
 
 export const GROUP_LABELS: Record<Group, string> = {
   maker: 'AI game makers',
@@ -36,6 +46,15 @@ const MODEL_VALUE = {
   free: 1, 'open-source': 1, 'one-time': 0.85, freemium: 0.75, bundled: 0.6, trial: 0.55, paid: 0.5,
 } as const;
 const STATUS = { active: 1, beta: 0.6, research: 0.2, discontinued: 0 } as const;
+// Unconfirmed features score below Partly, so confirming them can only move a tool the way the facts point.
+const FEATURE = { yes: 1, partial: 0.6, no: 0 } as Record<string, number>;
+const FEATURE_UNKNOWN = 0.4;
+const GROUP_CATEGORIES: Record<Group, string[]> = {
+  maker: ['game-maker'],
+  art: ['art-2d', 'art-3d', 'texture', 'animation'],
+  code: ['code'],
+  audio: ['voice', 'music', 'sfx', 'npc'],
+};
 
 export function groupOf(tool: Tool): Group {
   const c = tool.data.categories[0];
@@ -61,7 +80,15 @@ export function factors(tool: Tool, group: Group): Record<Factor, number> {
 
   const fit = d.tags.includes('general-purpose') ? 0.4 : 1;
 
-  return { access, output, rights, value, maturity: STATUS[d.status], fit };
+  // The checklists for the tool's categories in this group (all its categories if none fall in the group).
+  const inGroup = d.categories.filter((c) => GROUP_CATEGORIES[group].includes(c));
+  const checklist = featuresFor(inGroup.length ? inGroup : d.categories);
+  const have = d.features as Record<string, string>;
+  const features = checklist.length
+    ? checklist.reduce((sum, f) => sum + (have[f.key] ? FEATURE[have[f.key]] : FEATURE_UNKNOWN), 0) / checklist.length
+    : FEATURE_UNKNOWN;
+
+  return { access, output, rights, value, maturity: STATUS[d.status], fit, features };
 }
 
 export interface Scored {

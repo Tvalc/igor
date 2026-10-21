@@ -10,7 +10,7 @@ tags:
 - sfx
 - open-source
 - local
-status: active
+status: research
 platforms:
 - self-hosted
 engines: []
@@ -24,8 +24,25 @@ pricing:
 license:
   commercial_use: 'no'
   open_source: true
-  notes: Weights are CC-BY-NC 4.0.
+  notes: Code MIT; model weights CC-BY-NC 4.0 (non-commercial).
 sources:
 - https://github.com/facebookresearch/audiocraft
+- https://github.com/facebookresearch/audiocraft/blob/main/model_cards/AUDIOGEN_MODEL_CARD.md
+- https://huggingface.co/spaces/facebook/MusicGen/raw/5325fcc37771a4fe5fc34a557e23b4988718602d/README.md
+- https://huggingface.co/spaces/CryptoThaler/melody/blob/main/docs/AUDIOGEN.md
+- https://github.com/facebookresearch/audiocraft/blob/main/docs/AUDIOGEN.md
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  text_to_sfx: 'yes'
+  api: partial
+  variations: partial
+feature_notes:
+  text_to_sfx: audiogen-medium 1.5B text-to-sound; needs 16GB GPU
+  api: "Python library you run yourself; no hosted web API"
+  variations: "Python API generates a batch of samples per call with random sampling; no app UI"
+plans:
+- name: Open source
+  price_usd: 0
+  period: free
+  includes: Open source, self-hosted; code MIT, weights CC-BY-NC 4.0

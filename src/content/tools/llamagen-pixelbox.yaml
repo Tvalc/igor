@@ -14,17 +14,62 @@ platforms:
 engines: []
 exports:
 - png
+- sprite-sheet
 skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 18
+  notes: 'LlamaGen plans: Standard $18/mo, Pro $30, Unlimited $96, Production $200; PixelBox pages advertise free
+    pixel-art generation.'
 license:
-  commercial_use: unknown
+  commercial_use: restricted
   open_source: false
+  notes: Outputs usable for any purpose incl. commercial; companies over $500K/yr revenue must be on Pro or Unlimited.
 sources:
 - https://llamagen.ai
-needs_verification:
-- pricing
-- license
-last_verified: '2026-10-16'
+- https://llamagen.ai/pricing
+- https://help.llamagen.ai/en/account/pricing-faq
+- https://llamagen.ai/ai-pixel-art-generator
+- https://llamagen.ai/en-au/ai-pixel-art-generator
+- https://llamagen.ai/lt/pricing
+- https://llamagen.ai/pricing/models
+- https://llamagen.ai/hi/features/lora-training
+- https://llamagen.ai/bg/articles/best-ai-pixel-art-generators-2026
+- https://llamagen.ai/pixel-game-tools/rpg-tileset-generator
+- https://llamagen.ai/pixel-game-tools/godot-pixel-art-tools
+- https://llamagen.ai/pixel-game-tools/8-direction-sprite-generator
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  pixel_art: 'yes'
+  sprite_sheets: 'yes'
+  consistent_characters: 'yes'
+  custom_training: partial
+  tilesets: partial
+  multi_direction: 'yes'
+feature_notes:
+  custom_training: LlamaGen platform LoRA character training (10-30 images); not confirmed inside PixelBox itself
+  tilesets: "Tileset generator is a Labs preview that returns one concept image, not separate tiles"
+  multi_direction: "4-direction Idle/Walk/Attack character packs; the 8-direction tool is a Labs preview that returns one concept image"
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: Free tier
+- name: Standard
+  price_usd: 18
+  period: month
+  includes: 15,000 credits/mo; $14/mo billed yearly
+- name: Pro
+  price_usd: 30
+  period: month
+  includes: 45,000 credits/mo; $24/mo billed yearly
+- name: Unlimited
+  price_usd: 96
+  period: month
+  includes: 135,000 credits/mo; $58/mo billed yearly
+- name: Production Unlimited
+  price_usd: 200
+  period: month
+  includes: 270,000 credits/mo; $120/mo billed yearly

@@ -1,8 +1,7 @@
 name: Unity AI
-url: https://unity.com/ai
-tagline: Unity's built-in Assistant, Generators, AI Gateway and official MCP server.
-description: Unity AI replaced Unity Muse. It bundles an in-editor Assistant, asset Generators, an AI Gateway and
-  an official MCP server. It entered open beta in May 2026 at $10/month on Unity Personal and is included with Pro.
+url: "https://unity.com/features/ai"
+tagline: "Unity's in-editor AI assistant, AI gateway, CLI with built-in MCP mode, and official agent plugin."
+description: "Unity's AI tools (branded Unity AI until recently, and the successor to Unity Muse) bundle an in-editor agentic assistant with asset generators, an AI gateway for third-party agents, the Unity CLI with a built-in MCP mode, and an official plugin for Claude Code, Codex and Grok. The older in-package Unity MCP server is deprecated in favour of the CLI. The assistant is in beta: included with Pro and Enterprise, or $10 a month on Personal after a free trial. The CLI, MCP server and plugin are free."
 best_for: Unity developers who want first-party AI inside the editor.
 categories:
 - code
@@ -12,23 +11,90 @@ tags:
 - unity
 - mcp
 - agent
-status: active
+- cli
+status: beta
 platforms:
 - plugin
+- cli
 engines:
 - unity
-exports: []
+exports:
+- sprite-sheet
+- pbr-maps
+- wav
 skill_level: intermediate
 pricing:
   model: paid
   free_tier: trial
   starting_price_usd: 10
-  notes: $10/month on Unity Personal; included in Unity Pro.
+  notes: "Personal: 14-day trial (1,000 credits) then $10/mo for 1,000 credits/mo; Pro includes 2,000 credits/mo; CLI, MCP server, official plugin and AI gateway are free and use no credits"
 license:
-  commercial_use: unknown
+  commercial_use: 'no'
   open_source: false
+  notes: 'Open beta under Evaluation Version terms: non-commercial/testing only until GA. Users own inputs/outputs.'
 sources:
 - https://www.buildfastwithai.com/blogs/unity-ai-open-beta-guide-2026
-needs_verification:
-- license
-last_verified: '2026-10-16'
+- https://unity.com/features/ai
+- https://learn.unity.com/course/prototype-a-scene-with-unity-ai/tutorial/using-ai-generated-assets-responsibly?version=6.2
+- https://unity.com/legal/unityai-guiding-principles
+- https://docs.unity3d.com/Manual//unity-ai.html
+- https://docs.unity3d.com/Packages/com.unity.ai.generators@1.6/manual/index.html
+- https://docs.unity3d.com/Packages/com.unity.ai.assistant@2.11/manual/about/assistant-modes.html
+- https://docs.unity3d.com/Packages/com.unity.ai.assistant@2.0/manual/unity-mcp-overview.html
+- https://docs.unity3d.com/Packages/com.unity.ai.generators@1.0/manual/Sprite/modify-sprite.html
+- https://docs.unity3d.com/Packages/com.unity.ai.assistant@2.1/manual/Sprite/modify-sprite.html
+- https://unity.com/products
+- https://app.cinevva.com/news/2026-05-04-unity-ai-open-beta
+- https://github.com/Unity-Technologies/skills/blob/main/skills/unity-cli/SKILL.md
+- https://unity.com/blog/unity-ai-how-to-get-started
+- https://docs.unity3d.com/Packages/com.unity.ai.assistant@2.21/manual/integration/assistant-api.html
+- https://unity.com/features/multiplatform
+- https://unity.com/features/multiplayer
+- https://docs.unity3d.com/Packages/com.unity.ai.assistant@2.21/manual/Sprite/spritesheet-generation.html
+- https://docs.unity3d.com/Packages/com.unity.ai.assistant@2.21/manual/Material/material-pbr.html
+- https://docs.unity3d.com/Packages/com.unity.ai.assistant@2.21/manual/Sound/sound-overview.html
+- https://docs.unity3d.com/Packages/com.unity.ai.assistant@2.21/manual/integration/unity-mcp-overview.html
+- https://github.com/Unity-Technologies/skills/blob/main/skills/unity-cli/references/integration-advanced.md
+- https://docs.unity3d.com/Packages/com.unity.ai.assistant@2.21/manual/integration/unity-mcp-get-started.html
+- https://raw.githubusercontent.com/Unity-Technologies/skills/main/skills/unity-cli/references/integration-advanced.md
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  engine_integration: 'yes'
+  mcp: 'yes'
+  scene_editing: 'yes'
+  model_choice: 'yes'
+  ai_art: 'yes'
+  ai_audio: 'yes'
+  sprite_sheets: 'yes'
+  transparent_bg: 'yes'
+  pixel_art: partial
+  runs_game: partial
+  edit_code: 'yes'
+  api: partial
+  mobile: 'yes'
+  multiplayer: 'yes'
+feature_notes:
+  scene_editing: Agent mode creates, modifies or removes objects and assets with approval
+  model_choice: AI Gateway connects third-party models; Unity MCP connects agents like Claude Code, Cursor
+  sprite_sheets: Spritesheet tab makes 4x4 (16-frame) sheets
+  transparent_bg: Remove BG tab in Sprite Generator
+  pixel_art: Pixelate post-processing option only
+  runs_game: "Through Unity's beta CLI and MCP server, AI agents can enter Play mode and run tests"
+  edit_code: "Agent mode writes C# scripts into your project, which you can open and edit"
+  api: "C# AssistantApi lets your own editor scripts run the assistant; no public web API"
+  mobile: "Games are built in the Unity engine, which exports to iOS and Android"
+  multiplayer: "Built in Unity, which has Netcode and Multiplayer Services for online games"
+plans:
+- name: Personal
+  price_usd: 0
+  period: free
+  includes: 14-day AI trial with 1,000 credits
+- name: Pro
+  price_usd: 210
+  period: month
+  includes: Unity Pro seat; 2,000 AI credits/mo
+- name: Enterprise
+  price_usd: null
+  period: custom
+  includes: 3,000 AI credits/mo

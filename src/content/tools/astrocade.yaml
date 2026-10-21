@@ -1,8 +1,7 @@
 name: Astrocade
 url: https://www.astrocade.com
 tagline: An AI agent that builds and remixes games from prompts.
-description: Astrocade lets players create, remix and share small games by prompting an AI agent. The company raised
-  $56M in May 2026.
+description: "Astrocade lets players create, remix and share small games by prompting a team of AI agents (Astrocade 2.0). Since October 2026 a hosted Astrocade MCP lets Claude Code, Codex, Cursor, ChatGPT and other agents build, edit and publish Astrocade games. The company raised $56M in May 2026."
 best_for: Casual creators who want to make and share small games socially.
 categories:
 - game-maker
@@ -11,6 +10,7 @@ tags:
 - browser
 - social
 - remix
+- mcp
 status: active
 platforms:
 - web
@@ -22,12 +22,41 @@ pricing:
   model: freemium
   free_tier: 'yes'
   starting_price_usd: null
+  notes: Free to create and play; creators earn $100 when a game is selected for the feed
 license:
-  commercial_use: unknown
+  commercial_use: restricted
   open_source: false
+  notes: "You own your prompts and game content, but the Terms limit the service to personal, non-commercial use and let you use Astrocade-generated content only to make and publish games on Astrocade; creators earn through Astrocade's own play-based payouts."
 sources:
 - https://www.pocketgamer.biz/astrocade-raises-56m-to-expand-ai-powered-games-creation-platform/
+- https://www.astrocade.com/blog/how-game-creators-are-turning-creativity-into-cash-on-astrocade
+- https://www.group.dentsu.com/en/news/release/001671.html
+- https://tooldirectory.ai/tools/astrocade
+- https://nilo.io/articles/how-to-play-astrocade
+- https://yespress.io/astrocade.md
+- https://superdatascience.com/997
+- https://www.astrocade.com/blog/introducing-astrocade-mcp
+- https://www.astrocade.com/terms-of-service
+- https://www.astrocade.com/creators
+- https://www.astrocade.com/blog/astrocade-2-worlds-first-agentic-ai-game-creation-platform
+- https://www.astrocade.com/create/mcp
+- https://www.astrocade.com/llms.txt
 needs_verification:
-- pricing
-- license
-last_verified: '2026-10-16'
+- price
+last_verified: '2026-10-21'
+features:
+  no_code: 'yes'
+  ai_art: 'yes'
+  ai_audio: 'yes'
+  hosting: 'yes'
+  mobile: partial
+  edit_code: partial
+feature_notes:
+  mobile: Android app for playing and creating; no iOS app confirmed
+  ai_audio: background music generated automatically
+  edit_code: "Through the Astrocade MCP your own AI agent writes and edits the game code; not in the in-app creator"
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: Create and play for free

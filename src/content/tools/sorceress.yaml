@@ -17,19 +17,89 @@ status: active
 platforms:
 - web
 engines: []
-exports: []
+exports:
+- png
+- sprite-sheet
 skill_level: beginner
 pricing:
-  model: freemium
-  free_tier: 'yes'
-  starting_price_usd: null
+  model: one-time
+  free_tier: limited
+  starting_price_usd: 49
+  notes: $49 one-time lifetime (non-AI tools); AI via non-expiring credit packs from $10/1,000 credits; 100 starter
+    credits via Google sign-in; no subscription
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
 sources:
 - https://sorceress.games
-needs_verification:
-- pricing
-- license
-- exports
-last_verified: '2026-10-16'
+- https://sorceress.games/plans
+- https://sorceress.games/pages/ai-image-gen
+- https://sorceress.games/blog/how-to-make-a-sprite-sheet-in-2-minutes-with-ai-in-2026
+- https://sorceress.games/wiki/sorceress/sorceress-code
+- https://sorceress.games/pages/material-forge
+- https://sorceress.games/pages/tileset-forge
+- https://sorceress.games/pages/sound-studio
+- https://sorceress.games/blog/ai-sprite-generator-pixel-walk-cycles-idles-and-vfx
+- https://sorceress.games/blog/how-to-make-a-video-game-with-ai-no-coding-required
+- https://sorceress.games/pages/auto-sprite
+- https://sorceress.games/wiki/sorceress/sorceress-tool-api
+- https://sorceress.games/pages/3d-to-2d
+- https://sorceress.games/wiki/sorceress/sfx-gen
+- https://sorceress.games/wiki/sorceress/publishing-my-games
+- https://sorceress.games/wiki/wizard-genie/engine-integrations
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  no_code: 'yes'
+  edit_code: 'yes'
+  ai_art: 'yes'
+  ai_audio: 'yes'
+  hosting: 'yes'
+  pixel_art: 'yes'
+  sprite_sheets: 'yes'
+  tilesets: 'yes'
+  transparent_bg: 'yes'
+  seamless: 'yes'
+  pbr_maps: 'yes'
+  text_to_sfx: 'yes'
+  upscale: 'yes'
+  loopable: partial
+  api: 'yes'
+  consistent_characters: 'yes'
+  multi_direction: 'yes'
+  variations: 'yes'
+  export_project: 'yes'
+  engine_plugin: partial
+feature_notes:
+  hosting: Publish to Sorceress Arcade or GitHub Pages
+  pbr_maps: Only base color is AI; normal/roughness/metallic/AO derived algorithmically
+  ai_audio: SFX Gen, Music Gen and voice in Sound Studio (credit-based)
+  upscale: "Built-in upscale in the image generator; True Pixel scales pixel art up to 16x"
+  loopable: "A loop option for seamless sounds is documented in the Sorceress Tool API"
+  api: "Sorceress Tool API: one key for image, SFX, speech and music generation over HTTP"
+  consistent_characters: "Reference images (up to 14, varies by model) keep a character consistent"
+  multi_direction: "3D to 2D renders front, side, back, isometric or 16-direction sprite sets from a 3D model"
+  variations: "SFX Gen makes 1 to 4 variations of the same prompt"
+  export_project: "Download a whole WizardGenie Drive cloud project as a ZIP"
+  engine_plugin: "WizardGenie desktop links to Roblox Studio via its Bridge plugin, and to Unreal via MCP"
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 100 starter credits via Google sign-in
+- name: Lifetime
+  price_usd: 49
+  period: one-time
+  includes: Non-AI tools; AI billed via credits
+- name: Starter credits
+  price_usd: 10
+  period: usage
+  includes: 1,000 credits, never expire
+- name: Plus credits
+  price_usd: 50
+  period: usage
+  includes: 5,000 credits, never expire
+- name: Studio credits
+  price_usd: 100
+  period: usage
+  includes: 10,000 credits, never expire

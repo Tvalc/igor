@@ -1,8 +1,8 @@
 name: Suno
 url: https://suno.com
 tagline: AI music generation from text prompts.
-description: Suno generates full songs and instrumentals from text prompts. Downloads are moving behind paid accounts
-  in 2026, and commercial use requires a paid plan.
+description: Suno generates full songs and instrumentals from text prompts. Since September 2026 free accounts get
+  limited trial downloads, and commercial use requires a paid plan.
 best_for: Soundtracks and menu music.
 categories:
 - music
@@ -19,12 +19,44 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 10
+  notes: 'Free: up to 7 lifetime trial downloads, non-commercial; Pro $10/mo ($8 billed yearly), 2,500 credits,
+    20 downloads/mo; Premier 60 downloads/mo; WAV Pro/Premier only'
 license:
   commercial_use: paid-plans
   open_source: false
+  notes: Free-plan songs non-commercial only; songs downloaded as a paying subscriber carry commercial rights
 sources:
 - https://suno.com
-needs_verification:
-- pricing
-last_verified: '2026-10-16'
+- https://help.suno.com/en/articles/2410049
+- https://help.suno.com/en/articles/13876865
+- https://help.suno.com/en/articles/2425729
+- https://help.suno.com/en/articles/13614785
+- https://help.suno.com/en/articles/6141441
+- https://help.suno.com/en/articles/2425985
+- https://help.suno.com/en/articles/13924929
+- https://help.suno.com/en/articles/2409601
+- https://help.suno.com/en/articles/10625537
+- https://platform.suno.com/
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  stems: partial
+  vocals: 'yes'
+  custom_length: 'yes'
+  loops: partial
+  api: 'yes'
+feature_notes:
+  stems: Pro and Premier only; Vocals+Instrumental or 12-track split of finished songs
+  custom_length: Up to 8 min per generation on v6; Extend lengthens songs
+  loops: "Suno Sounds (beta) has a Loop mode for short repeating clips with set key and tempo, not full songs"
+  api: "Official REST API at platform.suno.com for songs, covers and mashups; sign in with your Suno account, pricing not public"
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 7 lifetime trial downloads, non-commercial
+- name: Pro
+  price_usd: 10
+  period: month
+  includes: 2,500 credits, 20 downloads/mo

@@ -22,12 +22,60 @@ skill_level: intermediate
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 9
+  notes: Lite $9/mo (open-source models); Pro $25/mo; Teams $30/member/mo; Free 1M tokens/mo (300K/day)
 license:
   commercial_use: 'yes'
   open_source: false
 sources:
 - https://bolt.new
-needs_verification:
-- pricing
-last_verified: '2026-10-16'
+- https://bolt.new/bolt-lite
+- https://bolt.new/pricing
+- https://support.bolt.new/building/deploy
+- https://support.bolt.new/building/build-your-first-app
+- https://support.bolt.new/building/using-bolt/code-view
+- https://support.bolt.new/building/images
+- https://support.bolt.new/building/using-bolt/connect-mcp
+- https://support.bolt.new/building/intro-bolt
+- https://support.bolt.new/building/using-bolt/agents
+- https://support.bolt.new/reference/supported-technologies
+- https://support.bolt.new/building/agents
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  no_code: 'yes'
+  mobile: 'yes'
+  hosting: 'yes'
+  export_project: 'yes'
+  edit_code: 'yes'
+  ai_art: partial
+  mcp: 'yes'
+  runs_game: 'yes'
+  model_choice: partial
+  engine_integration: 'no'
+  local_models: 'no'
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 1M tokens/mo, 300K/day, Bolt branding on sites
+- name: Pro
+  price_usd: 25
+  period: month
+  includes: 10M tokens/mo, no daily cap, rollover, custom domains
+- name: Teams
+  price_usd: 30
+  period: month
+  includes: Per member; Pro + centralized billing, admin controls
+- name: Enterprise
+  price_usd: null
+  period: custom
+  includes: Custom pricing
+feature_notes:
+  edit_code: "Code view lets you open, edit, create and delete files (read-only in Safari)"
+  ai_art: "Image generation is an add-on for paid plans and is off by default"
+  mcp: "Built-in connectors plus custom MCP servers by URL"
+  runs_game: "Builds and runs a live preview in the browser"
+  model_choice: "Pick Standard or Max agent; Bolt picks the model. Open models only in the experimental Forge agent"
+  engine_integration: "Browser builder for JavaScript web and Expo mobile apps; doesn't run inside a game engine"
+  local_models: "Only Bolt's hosted agents (Standard, Max, Forge); no option to run a local model"

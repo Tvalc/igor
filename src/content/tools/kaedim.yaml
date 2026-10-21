@@ -1,8 +1,8 @@
 name: Kaedim
 url: https://www.kaedim3d.com
 tagline: Human-checked 3D assets for studios.
-description: Kaedim produces production-quality 3D assets with human artists checking the AI output. Plans run roughly
-  $50 to $1,200 per month.
+description: Kaedim produces production-quality 3D assets with human artists checking the AI output. Plans run $400
+  to $1,200 per month, with a $50 trial and custom Enterprise.
 best_for: Studios that need reliable, production-ready 3D.
 categories:
 - art-3d
@@ -13,18 +13,57 @@ status: active
 platforms:
 - web
 engines: []
-exports: []
+exports:
+- obj
+- fbx
+- glb
 skill_level: intermediate
 pricing:
   model: paid
   free_tier: 'no'
-  starting_price_usd: 50
+  starting_price_usd: 400
+  notes: Indie $400/mo (20 credits); Pro $1,200/mo (60 credits); 7-day trial $50 (5 credits) renews to Indie; Enterprise
+    custom
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: Users own models created while subscribed (ToS section 3.2)
 sources:
-- https://costbench.com/compare/kaedim-vs-luma-genie/
-needs_verification:
-- license
-- exports
-last_verified: '2026-10-16'
+- https://www.kaedim3d.com/plans
+- https://docs.kaedim3d.com/resources/faq
+- https://docs.kaedim3d.com/kaedim-co-creation/pricing
+- https://aiindigo.com/blog/kaedim-review-2026-bridging-the-gap-between-2d-and-3d
+- https://docs.kaedim3d.com/web-app/add-ons/automatic-texturing
+- https://docs.kaedim3d.com/creating-assets/create-page/generate-image
+- https://docs.kaedim3d.com/creating-assets/game-ready-assets
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  image_to_3d: 'yes'
+  low_poly: 'yes'
+  api: partial
+  pbr_textures: partial
+  text_to_3d: partial
+  auto_rigging: partial
+feature_notes:
+  pbr_textures: Automatic Texturing add-on (Color/Roughness/Normal maps); plans with add-on access, activated via
+    call; best for realistic wood/metal/fabric
+  text_to_3d: "Text first makes a 2D image, which is then turned into 3D"
+  auto_rigging: "Only on the Game-ready with Rig asset type; rigging can take up to 2 hours"
+plans:
+- name: Trial
+  price_usd: 50
+  period: one-time
+  includes: 7 days, 5 credits; auto-renews into Indie
+- name: Indie
+  price_usd: 400
+  period: month
+  includes: 20 credits (up to 20 geometries or 1 complete asset)
+- name: Pro
+  price_usd: 1200
+  period: month
+  includes: 60 credits (up to 3 complete assets), priority processing
+- name: Enterprise
+  price_usd: null
+  period: custom
+  includes: Custom volume via sales

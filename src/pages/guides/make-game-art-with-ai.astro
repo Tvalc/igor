@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
-import RankTable from '../../components/RankTable.astro';
-import Faq from '../../components/Faq.astro';
+import { RankTable } from '../../components/site/RankTable';
+import { Faq } from '../../components/site/Faq';
 import { LISTS, rankedList } from '../../lib/lists';
 import { faqPage } from '../../lib/jsonld';
 import { SITE } from '../../site';
@@ -16,7 +16,7 @@ const styleTrained = art.filter((s) => s.tool.data.tags.includes('style-training
 const faqs = [
   {
     q: 'What is the best AI for game art?',
-    a: `For 2D game art, ${names(art)} rank highest on our rubric. For 3D models, ${names(threeD)} lead.`,
+    a: `For 2D game art, ${names(art)} rank highest in our scoring. For 3D models, ${names(threeD)} lead.`,
   },
   {
     q: 'Can I use AI-generated art in a commercial game?',
@@ -90,14 +90,14 @@ const faqs = [
     </p>
   </article>
 
-  <h2>Best AI game art generators</h2>
+  <h2 class="mt-14 mb-4 text-2xl font-semibold">Best AI game art generators</h2>
   <RankTable ranked={art} limit={8} />
-  <p><a href="/best/ai-game-art-generators">Full game art ranking →</a></p>
+  <p class="mt-3"><a class="text-brand text-sm font-medium hover:underline" href="/best/ai-game-art-generators">Full game art ranking →</a></p>
 
-  <h2>Best AI 3D model generators</h2>
+  <h2 class="mt-14 mb-4 text-2xl font-semibold">Best AI 3D model generators</h2>
   <RankTable ranked={threeD} limit={6} />
 
-  <h2>Best AI texture generators</h2>
+  <h2 class="mt-14 mb-4 text-2xl font-semibold">Best AI texture generators</h2>
   <RankTable ranked={textures} limit={5} />
 
   <Faq faqs={faqs} />

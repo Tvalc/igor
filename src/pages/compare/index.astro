@@ -1,42 +1,71 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { comparisonPairs, publishedLists } from '../../lib/lists';
+import { compareData } from '../../lib/compare';
+import { ToolLogo } from '../../components/site/ToolLogo';
+import { ArrowRight } from 'lucide-react';
 
 const pairs = [...(await comparisonPairs()).entries()];
 const lists = (await publishedLists()).filter(({ def }) => def.group !== 'mixed');
+const data = await compareData();
+const presets = lists.map(({ def, ranked }) => ({
+  label: def.title.replace(/^Best /, '').replace(/ for Games?$/, ''),
+  ids: ranked.slice(0, 3).map((s) => s.tool.id),
+}));
 ---
 
 <Base
-  title="AI Game Dev Tool Comparisons: Head-to-Head"
-  description="Head-to-head comparisons of the leading AI game makers, sprite and 3D generators, coding tools and audio AI, on pricing, rights and exports."
+  title="Compare AI Game Dev Tools Side by Side"
+  description="Compare any AI game development tools side by side: free tiers, pricing plans, commercial rights, engines, exports and verified features."
   crumbs={[{ name: 'Compare', href: '/compare/' }]}
 >
-  <h1>Head-to-head comparisons</h1>
-  <div class="answer">
-    <p>
-      {pairs.length} comparisons between the top tools in each category, generated from the same verified data and
-      rubric as our rankings.
+  <header class="mt-6 mb-8 max-w-3xl">
+    <h1 class="text-3xl font-bold sm:text-5xl">Compare AI game dev tools</h1>
+    <p class="text-muted-foreground mt-4 text-lg">
+      Pick up to four tools and see them side by side: free tier, starting price, commercial rights, engines, exports,
+      plans and a feature-by-feature checklist. ★ marks the best value in each row.
     </p>
-  </div>
-  {
-    lists.map(({ def }) => {
-      const mine = pairs.filter(([, p]) => p.list.slug === def.slug);
-      return (
-        mine.length > 0 && (
-          <section>
-            <h2>{def.title.replace(/^Best /, '')}</h2>
-            <ul>
-              {mine.map(([slug, p]) => (
-                <li>
-                  <a href={`/compare/${slug}`}>
-                    {p.a.data.name} vs {p.b.data.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )
-      );
-    })
-  }
+  </header>
+
+  <section aria-label="Comparison builder" class="bg-card rounded-xl border p-4 shadow-sm sm:p-6">
+    <div data-island="builder" data-props={JSON.stringify({ presets })}>
+      <p class="text-muted-foreground py-10 text-center text-sm">Loading the comparison builder…</p>
+    </div>
+    <noscript><p class="notice">The comparison builder needs JavaScript. The head-to-head pages below work without it.</p></noscript>
+  </section>
+
+  <section class="mt-16" aria-labelledby="h2h">
+    <h2 id="h2h" class="text-2xl font-semibold sm:text-3xl">Popular head-to-heads</h2>
+    <p class="text-muted-foreground mt-2">{pairs.length} in-depth comparisons between the top tools in each category, each with a verdict.</p>
+    <div class="mt-8 space-y-10">
+      {
+        lists.map(({ def }) => {
+          const mine = pairs.filter(([, p]) => p.list.slug === def.slug);
+          return (
+            mine.length > 0 && (
+              <div>
+                <h3 class="mb-3 text-lg font-semibold">{def.title.replace(/^Best /, '')}</h3>
+                <ul class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  {mine.map(([slug, p]) => (
+                    <li>
+                      <a href={`/compare/${slug}`} class="group bg-card hover:border-foreground/20 flex items-center gap-3 rounded-lg border p-3 text-sm font-medium shadow-xs transition-all hover:shadow-sm">
+                        <span class="flex -space-x-2">
+                          <ToolLogo name={p.a.data.name} url={p.a.data.url} size="sm" className="ring-background ring-2" />
+                          <ToolLogo name={p.b.data.name} url={p.b.data.url} size="sm" className="ring-background ring-2" />
+                        </span>
+                        <span class="min-w-0 flex-1 truncate">{p.a.data.name} <span class="text-muted-foreground font-normal">vs</span> {p.b.data.name}</span>
+                        <ArrowRight className="text-muted-foreground size-4 shrink-0 transition-transform group-hover:translate-x-0.5" />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          );
+        })
+      }
+    </div>
+  </section>
+
+  <script type="application/json" id="compare-data" set:html={JSON.stringify(data)} />
 </Base>

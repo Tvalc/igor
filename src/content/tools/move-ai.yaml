@@ -19,13 +19,49 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: limited
-  starting_price_usd: null
+  starting_price_usd: 18
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: "Move AI retains ownership of mocap Output but grants users a worldwide, royalty-free, transferable, sublicensable licence to use it, including commercially, except for AI training or competing products."
 sources:
 - https://www.move.ai
-needs_verification:
-- pricing
-- license
-last_verified: '2026-10-16'
+- https://docs.move.ai/knowledge/move-one-pricing
+- https://docs.move.ai/knowledge/how-does-pricing-work-for-move-pro
+- https://move.ai/blog-posts/move-ai-launches-move-live-to-enable-brands-and-studios-to-create-better-3d-digital-experiences
+- https://docs.move.ai/knowledge/can-i-use-the-move-ai-system-just-to-retarget-animation-without-reprocessing-the-take
+- https://docs.move.ai/knowledge/unreal-engine-retargeting-move-one-animations
+- https://docs.move.ai/knowledge/engine-release-notes
+- https://docs.move.ai/knowledge/single-file-upload
+- https://docs.move.ai/knowledge/genesis-overview
+- https://move.ai/terms-of-use
+- https://move.ai/move-one-app-eula
+- https://move.ai/move-pro-eula
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  video_mocap: 'yes'
+  retarget: 'yes'
+  realtime: 'yes'
+  hands_face: partial
+  multi_person: partial
+feature_notes:
+  hands_face: Hand and finger tracking supported; no face capture found
+  multi_person: "Up to 8 actors, but only with the multi-camera Genesis system"
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: Move One, one-time 30 credits (1 credit = 1 person-second)
+- name: Starter
+  price_usd: 18
+  period: month
+  includes: 60 credits/mo + VAT; Gen 2 = 2 credits per person-second
+- name: Standard
+  price_usd: 48
+  period: month
+  includes: 180 credits/mo + VAT; credits do not roll over
+- name: Move Pro
+  price_usd: null
+  period: custom
+  includes: Multi-camera; priced by people, volume, users, minutes

@@ -16,18 +16,62 @@ platforms:
 engines:
 - unreal
 - unity
-exports: []
+exports:
+- source-code
 skill_level: intermediate
 pricing:
-  model: freemium
-  free_tier: unknown
-  starting_price_usd: null
+  model: trial
+  free_tier: trial
+  starting_price_usd: 20
+  notes: Indie $20/mo ($10/mo billed annually); Pro $40/mo; Ultimate $200/mo ($1800/yr); 2-week free trial with
+    $10 premium credit
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: "Customer owns all Output (ToS 4.2); paid subscriptions allow internal business use, while free trials and betas are limited to internal evaluation."
 sources:
 - https://www.tryaura.dev/updates/aura-for-unity-launches-may-14
-needs_verification:
-- pricing
-- license
-last_verified: '2026-10-16'
+- https://www.tryaura.dev/pricing
+- https://www.tryaura.dev/about
+- https://www.tryaura.dev/updates/introducing-aura-15
+- https://www.tryaura.dev/
+- https://www.tryaura.dev/documentation/
+- https://www.tryaura.dev/documentation/pricing-explained/
+- https://www.tryaura.dev/documentation/prompting-tips/
+- https://www.tryaura.dev/updates/unreal-ai-agent-blueprints
+- https://www.tryaura.dev/updates/aura-1-0-launches-today
+- https://www.tryaura.dev/terms-of-service/
+- https://www.tryaura.dev/documentation/unity-coding-agent-csharp
+- https://www.tryaura.dev/documentation/coding-agent-cpp
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  engine_integration: 'yes'
+  mcp: 'yes'
+  scene_editing: 'yes'
+  runs_game: 'yes'
+  model_choice: 'yes'
+feature_notes:
+  runs_game: Verification Agent playtests builds
+  model_choice: Model selector with Anthropic, Google, OpenAI models; also Auto Mode
+plans:
+- name: Free Trial
+  price_usd: 0
+  period: free
+  includes: 2-week trial, $40 Aura credit, Unreal + Unity
+- name: Indie
+  price_usd: 20
+  period: month
+  includes: $10/mo billed annually; $15 premium credit; unlimited Auto Mode
+- name: Pro
+  price_usd: 40
+  period: month
+  includes: $40 Aura credit, 3D model + audio gen, Super Mode
+- name: Ultimate
+  price_usd: 200
+  period: month
+  includes: $280 Aura credit, everything in Pro
+- name: Enterprise
+  price_usd: null
+  period: custom
+  includes: Source access, onboarding, roadmap priority

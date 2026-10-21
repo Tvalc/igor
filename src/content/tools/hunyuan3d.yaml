@@ -17,6 +17,7 @@ platforms:
 engines: []
 exports:
 - glb
+- obj
 skill_level: advanced
 pricing:
   model: open-source
@@ -25,9 +26,32 @@ pricing:
 license:
   commercial_use: restricted
   open_source: true
-  notes: 'Tencent Hunyuan community license: excludes some regions and large-scale use.'
+  notes: 'Tencent Hunyuan 3D community license: not valid in the EU, UK or South Korea; products over 1M monthly
+    active users need a separate licence from Tencent.'
 sources:
 - https://3d.hunyuan.tencent.com
-needs_verification:
-- license
-last_verified: '2026-10-16'
+- https://huggingface.co/tencent/Hunyuan3D-2.1/blob/main/LICENSE
+- https://github.com/Tencent-Hunyuan/Hunyuan3D-2
+- https://huggingface.co/tencent/Hunyuan3D-2.1/blob/main/README.md
+- https://huggingface.co/spaces/tencent/Hunyuan3D-2.1/blob/main/hy3dpaint/README.md
+- https://fal.ai/hunyuan-3d
+- https://www.atlascloud.ai/models/tencent/hunyuan3d-pro/text-to-3d
+- https://intl.cloud.tencent.com/document/product/1284/79641
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  text_to_3d: 'yes'
+  image_to_3d: 'yes'
+  pbr_textures: 'yes'
+  low_poly: 'yes'
+  api: 'yes'
+  auto_rigging: partial
+feature_notes:
+  low_poly: Low-poly mode and smart retopology in Hunyuan3D Pro (hosted)
+  api: REST API in open release; hosted via Tencent Cloud and third parties
+  auto_rigging: "Via Tencent Cloud's auto-rigging API for T-posed characters or animals; not in the open model"
+plans:
+- name: Open source
+  price_usd: 0
+  period: free
+  includes: Open source, self-hosted (Tencent community license)

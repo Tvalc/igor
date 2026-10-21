@@ -28,12 +28,47 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 7.99
+  notes: "Free plan (MIT engine, 40 AI credits/mo, 3 cloud projects, 1 desktop/Android build per day); Silver $7.99/mo, Gold $13.99/mo, Pro $39.99/mo billed monthly, up to 40% off yearly. Companies with over $50k annual revenue must use Pro."
 license:
   commercial_use: 'yes'
   open_source: true
+  notes: Engine/editor MIT-licensed; exported games can be sold without being open-sourced.
 sources:
 - https://gdevelop.io
-needs_verification:
-- pricing
-last_verified: '2026-10-16'
+- https://gdevelop.io/pricing
+- https://github.com/4ian/GDevelop
+- https://gdevelop.io/pricing/business
+- https://gdevelop.io/blog/why-use-gdevelop-when-you-can-use-ai
+- https://gdevelop.io/blog/make-games-with-ai-agent-gdevelop-automated-prompt
+- https://en.wikipedia.org/wiki/GDevelop
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  no_code: 'yes'
+  edit_code: 'yes'
+  multiplayer: 'yes'
+  hosting: 'yes'
+  mobile: partial
+  export_project: 'yes'
+feature_notes:
+  mobile: 'Free tier: 1 Android build/day; iOS one-click export on paid tiers only'
+  edit_code: JavaScript code blocks alongside events
+  multiplayer: Lobby/player limits vary by tier
+plans:
+- name: "Free"
+  price_usd: 0
+  period: free
+  includes: "MIT engine, 40 AI credits/mo, 3 cloud projects, 1 desktop/Android build/day"
+- name: "Silver"
+  price_usd: 7.99
+  period: month
+  includes: "200 AI credits/week, 50 cloud projects, Google Play/desktop/web publishing"
+- name: "Gold"
+  price_usd: 13.99
+  period: month
+  includes: "1000 AI credits/week, 100 cloud projects, iOS publishing"
+- name: "Pro"
+  price_usd: 39.99
+  period: month
+  includes: "3000 AI credits/week, unlimited cloud projects, collaboration, version history"

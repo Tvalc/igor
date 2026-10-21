@@ -25,10 +25,48 @@ pricing:
   free_tier: 'yes'
   starting_price_usd: 29
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: "Users own their Customer Content and AI Generated Content on all tiers; Creator-tier plans grant Convai a royalty-free licence to use that content to improve its services."
 sources:
 - https://app.cinevva.com/guides/ai-npcs-dialogue
+- https://docs.convai.com/api-docs/plugins-and-integrations/unity-plugin
+- https://docs.convai.com/api-docs/plugins-and-integrations/convai-unreal-engine-plugin/overview/what-is-the-convai-unreal-engine-plugin
+- https://docs.convai.com/api-docs/plugins-and-integrations/convai-unreal-engine-plugin/features/long-term-memory
+- https://docs.convai.com/api-docs/plugins-and-integrations/unreal-engine/guides/long-term-memory
+- https://convai.com/tos
+- https://convai.com/pricing
 needs_verification:
-- license
-last_verified: '2026-10-16'
+- exports
+last_verified: '2026-10-21'
+features:
+  unity_sdk: 'yes'
+  unreal_sdk: 'yes'
+  voice: 'yes'
+  memory: 'yes'
+  actions: 'yes'
+plans:
+- name: "Free"
+  price_usd: 0
+  period: free
+  includes: "100 interactions/mo, 60 min cloud avatar studio/Sim"
+- name: "Indie Dev"
+  price_usd: 29
+  period: month
+  includes: "3,000 interactions/mo; $22/mo billed yearly"
+- name: "Professional"
+  price_usd: 99
+  period: month
+  includes: "10,000 interactions/mo, 3 concurrent sessions; $69/mo yearly"
+- name: "Scale"
+  price_usd: 499
+  period: month
+  includes: "50,000 interactions/mo, 15 concurrent sessions; $299/mo yearly"
+- name: "Business"
+  price_usd: 1199
+  period: month
+  includes: "125,000 interactions/mo, 30 concurrent sessions; $499/mo yearly"
+- name: "Enterprise"
+  price_usd: null
+  period: custom
+  includes: "SLAs, on-prem option, data ownership controls"

@@ -1,14 +1,15 @@
 name: CGDream
 url: https://cgdream.ai
-tagline: Free-tier image and sprite generation.
-description: CGDream generates images and sprites, with a free tier.
+tagline: 'Retired: CGDream''s image generator has moved into CGTrader AI.'
+description: CGDream was a free-tier image and sprite generator from CGTrader. It closed on October 3, 2026, and its image
+  generation moved into CGTrader AI.
 best_for: Free sprite and concept drafts.
 categories:
 - art-2d
 tags:
 - sprites
 - 2d
-status: active
+status: discontinued
 platforms:
 - web
 engines: []
@@ -17,14 +18,32 @@ exports:
 skill_level: beginner
 pricing:
   model: freemium
-  free_tier: 'yes'
+  free_tier: trial
   starting_price_usd: null
+  notes: "CGDream has been retired and moved into CGTrader AI: 5 free generations, then the CGTrader Subscription at $9.99/mo (sale price, normally $24.99) for 25 AI generations or Marketplace downloads per month, on a 12-month commitment."
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: Free-tier outputs personal use only; paid-tier outputs personal and commercial
 sources:
+- https://cgdream.ai/my-images
 - https://cgdream.ai
-needs_verification:
-- pricing
-- license
-last_verified: '2026-10-16'
+- https://cgdream.ai/features/ai-drawing-generator
+- https://cgdream.ai/terms-of-service
+- https://cgdream.ai/features/ai-game-character-generator
+- https://cgdream.ai/features/ai-image-to-image-ai-generator
+- https://cgdream.ai/pricing
+- https://www.cgtrader.com/ai-image-generator
+- https://www.cgtrader.com/ai-3d-model-generator
+- https://www.cgtrader.com/subscription
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  consistent_characters: 'yes'
+feature_notes:
+  consistent_characters: '''Consistent Character'' visual input alongside 3D, Structure and Image-to-Image guides'
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 100 daily credits; no commercial rights

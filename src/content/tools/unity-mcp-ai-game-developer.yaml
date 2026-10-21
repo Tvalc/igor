@@ -1,8 +1,8 @@
 name: AI Game Developer (Unity-MCP)
 url: https://ai-game.dev
 tagline: Apache-2.0 open-source Unity MCP server.
-description: AI Game Developer (Unity-MCP) is an Apache-2.0 open-source MCP server for Unity with about 3,000 GitHub
-  stars.
+description: AI Game Developer (Unity-MCP) is an Apache-2.0 open-source MCP server, plugin and CLI for Unity, with
+  about 4,500 GitHub stars.
 best_for: Unity devs who want an alternative open-source MCP bridge.
 categories:
 - code
@@ -15,17 +15,39 @@ platforms:
 - plugin
 engines:
 - unity
-exports: []
+exports:
+- source-code
 skill_level: advanced
 pricing:
   model: open-source
   free_tier: 'yes'
   starting_price_usd: null
+  notes: App and engine plugins free and open source, run locally with no account; optional paid hosted-AI tiers
+    (Indie, Studio, Studio Max).
 license:
   commercial_use: 'yes'
   open_source: true
   notes: Apache-2.0 license.
 sources:
 - https://ai-game.dev
+- https://github.com/IvanMurzak/Unity-MCP
+- https://ai-game.dev/docs-md/docs.md
+- https://ai-game.dev/docs/best-practices/unity
+- https://agentpedia.codes/mcp/unity-mcp-ai-game-developer
+- https://raw.githubusercontent.com/IvanMurzak/Unity-MCP/main/README.md
 needs_verification: []
-last_verified: '2026-10-16'
+last_verified: '2026-10-21'
+features:
+  engine_integration: 'yes'
+  mcp: 'yes'
+  scene_editing: 'yes'
+  model_choice: 'yes'
+  runs_game: 'yes'
+feature_notes:
+  model_choice: Works with Claude, Cursor, Windsurf, Copilot and Gemini clients
+  runs_game: "Starts and stops Play mode, runs PlayMode tests and captures Game View screenshots"
+plans:
+- name: Open source
+  price_usd: 0
+  period: free
+  includes: Open source, self-hosted

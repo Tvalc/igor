@@ -13,19 +13,58 @@ platforms:
 - plugin
 engines:
 - roblox
-exports: []
+- blender
+exports:
+- source-code
 skill_level: intermediate
 pricing:
   model: freemium
-  free_tier: unknown
-  starting_price_usd: null
+  free_tier: limited
+  starting_price_usd: 20
+  notes: Free starter credits / 500 Actions/mo with your own AI. Ropilot Plus $20/mo (credits incl. AI); BYO-AI
+    Starter $20/mo, Pro $50/mo, Max $250/mo; one-time credit packs $8-$400.
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: "Ropilot grants every user a non-exclusive, worldwide, royalty-free licence to use, modify and distribute its outputs (code, scripts) for lawful purposes, without transferring ownership."
 sources:
 - https://ropilot.ai
-needs_verification:
-- pricing
-- license
-- exports
-last_verified: '2026-10-16'
+- https://ropilot.ai/roblox-mcp-server
+- https://ropilot.ai/pricing
+- https://ropilot.ai/use-claude-in-roblox
+- https://ropilot.ai/support
+- https://ropilot.ai/blog/ropilot-vs-roblox-assistant
+- https://ropilot.ai/automate-roblox-scripts
+- https://docs.ropilot.ai/docs/quickstart
+- https://ropilot.ai/ai-roblox-script-generator
+- https://ropilot.ai/terms
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  engine_integration: 'yes'
+  mcp: 'yes'
+  model_choice: 'yes'
+  edit_code: 'yes'
+  scene_editing: 'yes'
+  runs_game: partial
+  no_code: 'yes'
+  ai_art: partial
+feature_notes:
+  edit_code: Writes Luau across files as reviewable diffs
+  scene_editing: Creates instances and applies changes directly in Roblox Studio
+  runs_game: Automated playtest loop (input simulation, screenshots) labeled beta
+  no_code: "Describe features in plain English and it writes and playtests them inside Roblox Studio"
+  ai_art: "Builds 3D models and animations by driving Blender, then imports them into Roblox"
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 250 Ropilot Actions/mo; AI inference not included
+- name: Light
+  price_usd: 20
+  period: month
+  includes: 6,750 Actions/mo during launch sale (4,500 normally)
+- name: Max
+  price_usd: 250
+  period: month
+  includes: 168,750 Actions/mo (sale), 5 concurrent instances

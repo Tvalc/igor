@@ -5,7 +5,6 @@ description: Ludo.ai helps designers research game ideas and trends, then genera
   and other content. It offers API and MCP access for use in other tools.
 best_for: Designers validating game concepts and generating early assets.
 categories:
-- game-maker
 - art-2d
 - art-3d
 tags:
@@ -17,20 +16,75 @@ status: active
 platforms:
 - web
 - api
-engines: []
-exports: []
+engines:
+- unity
+exports:
+- png
+- sprite-sheet
+- gif
+- glb
+- obj
 skill_level: intermediate
 pricing:
-  model: freemium
-  free_tier: limited
-  starting_price_usd: null
+  model: trial
+  free_tier: trial
+  starting_price_usd: 20
+  notes: Indie $20/mo ($15 yearly, 250 credits/mo); Pro $50/mo ($35 yearly, 1,000 credits/mo); free trial 30 credits
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: 'ToS license: nonexclusive, worldwide, personal and commercial use on every plan; trial sprite sheets are
+    watermarked'
 sources:
 - https://ludo.ai/compare/best-ai-game-makers
-needs_verification:
-- pricing
-- license
-- exports
-last_verified: '2026-10-16'
+- https://ludo.ai/pricing
+- https://ludo.ai/docs/account
+- https://ludo.ai/docs/game-asset-generation
+- https://ludo.ai/docs/3d-generator
+- https://ludo.ai/developers/unity
+- https://new.ludo.ai/pricing
+- https://ludo.ai/faq
+- https://ludo.ai/blog/introducing-ludo-ai-api-mcp-integration
+- https://ludo.ai/tools/game-assets-in-claude
+- https://ludo.ai/tools/sprite-generator-for-godot
+- https://www.summerengine.com/summer-vs-ludo
+- https://ludo.ai/tools/consistent-game-art-style
+- https://ludo.ai/tools/tileset-generator
+- https://ludo.ai/tools/sprite-rotation-generator
+- https://ludo.ai/features/3d-generator
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  pixel_art: 'yes'
+  sprite_sheets: 'yes'
+  transparent_bg: 'yes'
+  api: partial
+  consistent_characters: 'yes'
+  custom_training: 'no'
+  tilesets: partial
+  multi_direction: 'yes'
+  text_to_3d: 'yes'
+  image_to_3d: 'yes'
+  pbr_textures: 'yes'
+  auto_rigging: 'yes'
+  low_poly: 'yes'
+feature_notes:
+  api: API and MCP on Pro and Studio plans only
+  consistent_characters: "Uses a reference image, plus rotate and re-pose tools, to keep characters matching"
+  custom_training: "No custom model training; consistency comes from reference images and style presets"
+  tilesets: "Generates matching individual tiles; standard map tiles have no seamless-edge guarantee"
+  multi_direction: "Rotates a sprite to 8 camera angles; Directional Sprites (beta) offers 4 or 8 sides"
+  text_to_3d: "Makes a 2D concept image from your prompt, then converts it to a 3D model"
+  image_to_3d: "Prop and Hero models; background removed automatically"
+  pbr_textures: "Textured GLB export with PBR materials"
+  auto_rigging: "Auto-rigs generated or uploaded models in about a minute; rigged export is GLB only"
+  low_poly: "Adjustable max triangle count from 1,000 to 200,000"
+plans:
+- name: Indie
+  price_usd: 15
+  period: year
+  includes: $180/yr; 3,000 credits/yr upfront, shared pool
+- name: Pro
+  price_usd: 35
+  period: year
+  includes: 12,000 credits/yr for 3D/video; unlimited ideation and images

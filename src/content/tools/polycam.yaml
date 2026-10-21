@@ -18,17 +18,61 @@ exports:
 - pbr-maps
 - glb
 - obj
+- fbx
+- usdz
 skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 12.5
+  notes: Free (limited captures, GLTF export); Basic $150/yr; Business $400/yr per user; Pro plan discontinued (Legacy
+    Pro only)
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: 'AI textures: unrestricted royalty-free commercial license; ToS asks attribution for public display of
+    generated models.'
 sources:
 - https://poly.cam
-needs_verification:
-- pricing
-- license
-last_verified: '2026-10-16'
+- https://poly.cam/pricing
+- https://poly.cam/tools/ai-texture-generator
+- https://poly.cam/legal/terms-of-service
+- https://learn.poly.cam/hc/en-us/articles/27756102599572-What-File-Types-Can-Polycam-Export
+- https://poly.cam/pricing/basic-plan
+- https://poly.cam/blog/best-matterport-alternatives-for-small-teams-creators-in-2026
+- https://app.cinevva.com/guides/ai-texture-generators
+- https://www.lovart.ai/it/blog/5-best-ai-texture-material-generators-2026
+- https://poly.cam/tools/3d-model-generator
+- https://learn.poly.cam/hc/en-us/articles/35116894902292
+- https://learn.poly.cam/ai-texture-generator
+- https://poly.cam/docs/api
+- https://learn.poly.cam/hc/en-us/articles/29334633044244-How-to-use-the-Remesh-tool
+- https://learn.poly.cam/hc/en-us/articles/35116894902292-How-to-Create-a-Model-from-the-3D-Generator
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  seamless: 'yes'
+  pbr_maps: 'yes'
+  image_to_3d: partial
+  api: partial
+  low_poly: 'yes'
+  text_to_3d: 'no'
+feature_notes:
+  image_to_3d: AI 3D Model Generator in evaluation/research phase; single JPEG/PNG input; 3 free generations, unlimited
+    on paid
+  api: "Content Management API for captures and exports is an Enterprise add-on"
+  low_poly: "Remesh tool with a polygon-count slider"
+  text_to_3d: "AI 3D generator works from a single image; text prompts only make textures"
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: Limited captures
+- name: Basic
+  price_usd: 30
+  period: month
+  includes: Individual creators; $12.50/mo billed yearly
+- name: Business
+  price_usd: 33.33
+  period: year
+  includes: $400/yr per user, floor plans, shared team library

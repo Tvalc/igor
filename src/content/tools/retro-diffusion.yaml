@@ -1,8 +1,8 @@
 name: Retro Diffusion
 url: https://www.retrodiffusion.ai
 tagline: Pixel-art models and an Aseprite plugin, sold for a one-time price.
-description: Retro Diffusion makes pixel-art image models and an Aseprite extension, sold as one-time purchases
-  ($20 and $65 tiers) rather than a subscription.
+description: Retro Diffusion makes pixel-art models, sold as a pay-per-generation web app and a one-time Aseprite
+  extension ($20/$65) that is being replaced by its Pixelit editor.
 best_for: Pixel artists working in Aseprite who dislike subscriptions.
 categories:
 - art-2d
@@ -21,13 +21,51 @@ exports:
 skill_level: intermediate
 pricing:
   model: one-time
-  free_tier: 'no'
+  free_tier: trial
   starting_price_usd: 20
+  notes: 'Aseprite extension one-time: Lite $20, full $65. Web app is pay-per-generation from a prepaid balance
+    (from $0.03/image, packs from $5).'
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
 sources:
 - https://www.retrodiffusion.ai
-needs_verification:
-- license
-last_verified: '2026-10-16'
+- https://retrodiffusion.ai/
+- https://astropulse.itch.io/retrodiffusion
+- https://astropulse.itch.io/retrodiffusion/devlog/1639304/amd-gpu-support-big-announcement
+- https://astropulse.itch.io/retrodiffusionlite
+- https://astropulse.itch.io/retrodiffusion/purchase
+- https://astropulse.gumroad.com/l/RetroDiffusionCredits
+- https://mcpservers.org/servers/retro-diffusion/retro-diffusion-mcp
+- https://github.com/Retro-Diffusion/api-examples
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  pixel_art: 'yes'
+  sprite_sheets: 'yes'
+  consistent_characters: 'yes'
+  tilesets: 'yes'
+  transparent_bg: 'yes'
+  multi_direction: 'yes'
+  api: 'yes'
+  custom_training: partial
+feature_notes:
+  sprite_sheets: Animation cycles exported as GIF or sprite sheet
+  consistent_characters: Up to 9 reference images
+  tilesets: Wang/blob tilesets, tile variations
+  multi_direction: 4-angle walk cycles and 8-direction rotations
+  api: Hosted API/MCP endpoint with developer key
+  custom_training: "Custom styles built from one reference image; no full model training"
+plans:
+- name: Aseprite extension
+  price_usd: 65
+  period: one-time
+  includes: Full extension, no credits, free future updates
+- name: Aseprite extension Lite
+  price_usd: 20
+  period: one-time
+  includes: Lite extension, one-time purchase
+- name: Web app credits
+  price_usd: null
+  period: usage
+  includes: Pay per generation; 50 free credits for new accounts

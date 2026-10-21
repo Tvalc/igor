@@ -1,8 +1,8 @@
 name: Bitmagic
 url: https://www.bitmagic.ai
-tagline: Text-to-3D game creation; Bitmagic Mini in Steam Playtest.
-description: Bitmagic generates 3D game worlds from text prompts. Its Bitmagic Mini client has been available through
-  Steam Playtest; we found no 2026 product news.
+tagline: Prompt-to-browser 3D game creator with a free web Creator and a Pro GDK.
+description: Bitmagic turns text prompts into browser-playable 3D games via a free web Creator; Pro adds a GDK your
+  coding agent drives. Games are hosted on bitmagic.ai.
 best_for: Experimenting with prompt-generated 3D worlds.
 categories:
 - game-maker
@@ -13,20 +13,49 @@ status: beta
 platforms:
 - desktop
 engines: []
-exports: []
+exports:
+- web
+- source-code
 skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 19.9
+  notes: "Games are free to play; Bitmagic Pro is 19.90 USD/month and unlocks the GDK plus a rolling spark allowance (weekly and 5-hour windows); extra sparks can be bought."
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: Creators own their games; engine is licensed (may ship games on it, not redistribute as an engine/SDK).
 sources:
 - https://getcoai.com/news/bitmagic-secures-4m-for-text-to-3d-game-platform
-needs_verification:
-- status
-- pricing
-- license
-- exports
-last_verified: '2026-10-16'
+- https://www.bitmagic.ai/about/
+- https://bitmagic.ai/pro/
+- https://bitmagic.ai/
+- https://bitmagic.ai/gdk/
+- https://bitmagic.ai/lab/
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  no_code: 'yes'
+  edit_code: partial
+  ai_art: 'yes'
+  multiplayer: partial
+  hosting: 'yes'
+  export_project: partial
+  ai_audio: partial
+  mobile: partial
+feature_notes:
+  edit_code: Via the GDK with a coding agent; requires Bitmagic Pro
+  multiplayer: Multiplayer and leaderboards listed as part of Bitmagic Pro
+  export_project: GDK scaffolds a local project with engine source; Pro only
+  ai_audio: "Sound assets via the GDK generate command; requires Bitmagic Pro"
+  mobile: "Touch controls built in; iOS builds via TestFlight need a Mac and Pro; Android not yet"
+plans:
+- name: "Web Creator"
+  price_usd: 0
+  period: free
+  includes: "Free to start; games free to play"
+- name: "Bitmagic Pro"
+  price_usd: 19.9
+  period: month
+  includes: "GDK access, rolling spark allowance, World Forger, iOS/TestFlight build"

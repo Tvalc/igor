@@ -16,19 +16,52 @@ platforms:
 engines:
 - unity
 - unreal
-exports: []
+exports:
+- web
 skill_level: intermediate
 pricing:
-  model: freemium
-  free_tier: 'yes'
+  model: paid
+  free_tier: trial
   starting_price_usd: null
+  notes: "Pro is pay-as-you-go credit bundles (US$5/50k, $20/200k, $100/1M, $500/5M credits; one-off, expire after 12 months); a new Pro licence starts with a one-month trial with 50,000 credits; Enterprise is a one-off development fee plus a fixed monthly platform fee."
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: Pro licences are for business customers only; Pro Stories may be published into external platforms such
+    as Unity or Unreal games.
 sources:
 - https://charisma.ai
-needs_verification:
-- pricing
-- license
-- engines
-last_verified: '2026-10-16'
+- https://docs.charisma.ai/licencing
+- https://charisma.ai/pricing
+- https://charisma.ai/terms
+- https://docs.charisma.ai/sdks
+- https://charisma.ai/blog/charisma-plug-n-play
+- https://github.com/charisma-ai/charisma-sdk-unreal/releases
+- https://docs.charisma.ai/memories-gates
+- https://docs.charisma.ai/plug-n-play/unity
+- https://docs.charisma.ai/preview-publish
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  unity_sdk: 'yes'
+  unreal_sdk: 'yes'
+  voice: 'yes'
+  memory: 'yes'
+  actions: 'yes'
+  on_device: 'no'
+feature_notes:
+  unity_sdk: Plug 'n' Play SDK needs a Pro story (paid credits)
+  unreal_sdk: Plug 'n' Play plugin needs a Pro story (paid credits); UE4.26+/UE5
+  voice: 1000+ AI voices plus speech recognition
+  memory: Story memories (word/sentence etc.) used by gates
+  actions: "Story metadata triggers in-game events such as animations and movement"
+  on_device: "Runs on Charisma's cloud servers; games connect to it over a websocket"
+plans:
+- name: "Pro (pay-as-you-go)"
+  price_usd: 5
+  period: usage
+  includes: "Credit bundles: $5/50k, $20/200k, $100/1M, $500/5M credits"
+- name: "Enterprise"
+  price_usd: null
+  period: custom
+  includes: "Development fee plus fixed monthly platform fee"

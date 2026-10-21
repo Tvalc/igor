@@ -23,13 +23,57 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 15
+  notes: Free Newbie plan (8,000 credits a week); Indie Dev $15/mo (100k credits); 10x Dev $30/mo (300k, commercial
+    rights); Pro $50/mo (1M credits, code download); Scale $100/mo (2M credits)
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: Commercial rights only on 10x Dev ($30/mo) and Pro; not on Free or Indie Dev; Rosebud takes no revenue
+    share
 sources:
 - https://rosebud.ai
-needs_verification:
-- pricing
-- license
-last_verified: '2026-10-16'
+- https://rosebud.ai/pricing
+- https://rosebud.ai/blog/pricing-subscription-faqs
+- https://www.summerengine.com/blog/rosebud-ai-pricing
+- https://rosebud.ai/make-your-own-game-online
+- https://rosebud.ai/ai-game-assets
+- https://rosebud.ai/g/multiplayer
+- https://rosebud.ai/online-game-maker
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  edit_code: 'yes'
+  ai_art: 'yes'
+  hosting: 'yes'
+  export_project: partial
+  no_code: 'yes'
+  ai_audio: 'yes'
+  multiplayer: 'yes'
+  mobile: 'yes'
+feature_notes:
+  export_project: Code download and Windows export on Pro plan and higher
+  ai_audio: "Sound effects and music tracks generated in the editor, paid with credits"
+  multiplayer: "Built-in real-time multiplayer with a multiplayer starter template"
+  mobile: "Games play in a phone's web browser from the share link, no install"
+plans:
+- name: Newbie
+  price_usd: 0
+  period: free
+  includes: 8,000 credits/wk, hosted games, remixing
+- name: Indie Dev
+  price_usd: 15
+  period: month
+  includes: 100k credits
+- name: 10x Dev
+  price_usd: 30
+  period: month
+  includes: 300k credits, commercial rights
+- name: Pro
+  price_usd: 50
+  period: month
+  includes: 1M credits, downloadable project code
+- name: Scale
+  price_usd: 100
+  period: month
+  includes: 2M credits, auto-scaling hosting

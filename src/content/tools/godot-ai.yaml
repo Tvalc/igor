@@ -1,8 +1,7 @@
 name: Godot AI
-url: https://godotengine.org/asset-library/asset/5050
-tagline: 80+ MCP tools for Godot from the MCP for Unity team.
-description: Godot AI is a Godot plugin exposing more than 80 MCP tools so AI assistants can work in the Godot editor.
-  It comes from the team behind MCP for Unity.
+url: "https://github.com/hi-godot/godot-ai"
+tagline: "46 MCP tools (120+ operations) for a live Godot 4.7+ editor, from the creators of MCP for Unity."
+description: "Godot AI is a free, MIT-licensed Godot plugin and MCP server that connects Claude Code, Codex and other MCP clients to a live Godot editor through 46 tools (120+ operations). Version 4 (latest 4.3.0) requires Godot 4.7 or newer. It comes from the creators of MCP for Unity."
 best_for: Godot devs using Claude, Cursor or another MCP client.
 categories:
 - code
@@ -15,17 +14,46 @@ platforms:
 - plugin
 engines:
 - godot
-exports: []
+exports:
+- source-code
 skill_level: advanced
 pricing:
   model: open-source
   free_tier: 'yes'
   starting_price_usd: null
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: true
+  notes: MIT licence (hi-godot/godot-ai)
 sources:
 - https://www.godotengine.org/asset-library/asset/5050
-needs_verification:
-- license
-last_verified: '2026-10-16'
+- https://github.com/hi-godot/godot-ai
+- https://github.com/hi-godot/godot-ai/blob/main/docs/TOOLS.md
+- https://github.com/hi-godot/godot-ai/blob/main/README.md
+- https://store.godotengine.org/asset/dlight/godot-ai/
+- https://pypi.org/project/godot-ai
+- https://godotengine.org/asset-library/asset/5050
+- https://godotengine.org/asset-library/asset/edit/22588
+- https://glama.ai/mcp/servers/hi-godot/godot-ai
+- https://raw.githubusercontent.com/hi-godot/godot-ai/main/docs/TOOLS.md
+- https://raw.githubusercontent.com/hi-godot/godot-ai/main/README.md
+- https://github.com/hi-godot/godot-ai/releases
+- https://github.com/hi-godot/godot-ai/blob/main/docs/v4-migration.md
+- https://raw.githubusercontent.com/hi-godot/godot-ai/main/docs/v4-migration.md
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  engine_integration: 'yes'
+  mcp: 'yes'
+  scene_editing: 'yes'
+  runs_game: 'yes'
+  model_choice: 'yes'
+feature_notes:
+  runs_game: Project tools run/stop the project (main, current or custom scene) and capture in-game screenshots
+  model_choice: MCP server usable from any MCP client (Claude Code, Codex, Antigravity, etc.), so the user picks
+    the LLM
+plans:
+- name: Open source
+  price_usd: 0
+  period: free
+  includes: Open source (MIT), self-hosted

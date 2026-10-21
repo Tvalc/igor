@@ -1,7 +1,8 @@
 name: StraySpark AI Everywhere
 url: https://www.strayspark.studio
-tagline: Paid bundle of 768 MCP tools for Unreal, Blender and Godot.
-description: StraySpark AI Everywhere is a paid bundle of MCP tools covering Unreal Engine, Blender and Godot.
+tagline: 'Retired: StraySpark''s MCP server bundle for Unreal, Blender and Godot.'
+description: StraySpark AI Everywhere was a paid bundle of MCP tools for Unreal Engine, Blender and Godot. It was retired
+  on August 30, 2026 and is no longer sold.
 best_for: Devs who want broad MCP coverage across several tools.
 categories:
 - code
@@ -10,7 +11,7 @@ tags:
 - unreal
 - blender
 - godot
-status: active
+status: discontinued
 platforms:
 - plugin
 engines:
@@ -20,15 +21,40 @@ engines:
 exports: []
 skill_level: advanced
 pricing:
-  model: paid
+  model: one-time
   free_tier: 'no'
   starting_price_usd: null
+  notes: "Retired on 30 August 2026 and no longer sold (replaced by the Unreal Complete, Blender Complete and Professional All Access bundles); last listed at $439.99 one-time (Professional) vs $669.97 separately. Existing buyers keep access."
 license:
-  commercial_use: unknown
+  commercial_use: restricted
   open_source: false
+  notes: Commercial use allowed; Personal license for <=$100k revenue/funding, Professional above; no redistribution
+    of source.
 sources:
 - https://www.strayspark.studio/blog/unreal-vs-blender-vs-godot-mcp-comparison-2026
+- https://www.strayspark.studio/products
+- https://www.strayspark.studio/terms
+- https://www.strayspark.studio/products/ai-everywhere
+- https://www.strayspark.studio/products/unreal-mcp-server
+- https://www.strayspark.studio/docs/unreal-mcp-server
+- https://www.strayspark.studio/faq
+- https://www.strayspark.studio/blog/local-ai-blender-ollama-guide-2026
 needs_verification:
-- pricing
-- license
-last_verified: '2026-10-16'
+- exports
+last_verified: '2026-10-21'
+features:
+  engine_integration: 'yes'
+  mcp: 'yes'
+  scene_editing: 'yes'
+  runs_game: 'yes'
+  model_choice: 'yes'
+  local_models: partial
+feature_notes:
+  runs_game: Unreal MCP Server has Play-in-Editor control tools (start PIE, send input, screenshot)
+  model_choice: Bring your own MCP client (Claude Code, Cursor, Windsurf)
+  local_models: "Works with local models via Ollama or LM Studio, but only the smaller default tool set fits"
+plans:
+- name: "AI Everywhere bundle (retired)"
+  price_usd: 439.99
+  period: one-time
+  includes: "Unreal, Blender, Godot MCP servers; lifetime updates; no longer for sale"

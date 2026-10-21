@@ -19,12 +19,46 @@ skill_level: intermediate
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 10
+  notes: Free (2,000 completions/mo plus limited AI credits); Pro $10/mo; Pro+ $39/mo; Max $100/mo
 license:
   commercial_use: 'yes'
   open_source: false
 sources:
 - https://github.com/features/copilot
-needs_verification:
-- pricing
-last_verified: '2026-10-16'
+- https://github.com/features/copilot/plans
+- https://docs.github.com/en/copilot/get-started/plans
+- https://docs.github.com/en/copilot/concepts/billing/individual-plans
+- https://github.blog/news-insights/company-news/github-copilot-individual-plans-introducing-flex-allotments-in-pro-and-pro-and-a-new-max-plan/
+- https://github.blog/changelog/2025-04-03-github-copilot-in-vs-code-march-release-v1-99
+- https://docs.github.com/en/copilot/how-tos/use-copilot-agents/cloud-agent/changing-the-ai-model
+- https://github.blog/changelog/2026-10-07-discover-local-models-in-github-copilot-cli
+- https://docs.github.com/en/enterprise-cloud@latest/copilot/how-tos/copilot-in-your-ide/use-copilot-agents/use-agent-mode
+- https://github.blog/changelog/2025-07-16-agent-mode-for-jetbrains-eclipse-and-xcode-is-now-generally-available/
+- https://github.blog/changelog/2025-07-02-copilot-coding-agent-now-has-its-own-web-browser/
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  mcp: 'yes'
+  model_choice: 'yes'
+  local_models: partial
+  runs_game: partial
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: Up to 2,000 completions/mo, limited AI credits, auto model only
+- name: Pro
+  price_usd: 10
+  period: month
+  includes: 1,500 AI credits/mo (1,000 base + 500 flex)
+- name: Pro+
+  price_usd: 39
+  period: month
+  includes: 7,000 AI credits/mo (3,900 base + 3,100 flex)
+- name: Max
+  price_usd: 100
+  period: month
+  includes: 20,000 AI credits/mo; upgrade for existing Copilot users
+feature_notes:
+  runs_game: "Cloud agent can run web apps in a built-in browser and screenshot them; not game engines"

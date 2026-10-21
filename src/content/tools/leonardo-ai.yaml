@@ -21,13 +21,51 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 12
+  notes: Free 150 fast tokens daily; Essential $12/mo ($10/mo billed yearly); Premium $30/mo; Ultimate $60/mo; Teams
+    from $72 for 3 seats
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: Commercial use on all plans, but free-plan outputs are public and owned by Leonardo; paid subscribers own
+    their outputs
 sources:
 - https://leonardo.ai
-needs_verification:
-- pricing
-- license
-last_verified: '2026-10-16'
+- https://leonardo.ai/news/can-you-use-ai-generated-images-commercially
+- https://leonardo.ai/terms-of-service
+- https://leonardo.ai/pricing
+- https://leonardo.ai/news/midjourney-vs-leonardo-ai
+- https://intercom.help/leonardo-ai/en/articles/9075772-transparency
+- https://eesel.ai/blog/leonardo-ai-pricing
+- https://leonardo.ai/learn/core-feature/how-to-create-consistent-characters-with-character-reference
+- https://docs.leonardo.ai/docs/getting-started
+- https://leonardo.ai/api
+- https://leonardo.ai/news/ai-art-styles
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  transparent_bg: 'yes'
+  custom_training: 'yes'
+  consistent_characters: 'yes'
+  api: 'yes'
+  pixel_art: 'yes'
+feature_notes:
+  consistent_characters: Character Reference with Low/Mid/High strength; supported on some models only
+  pixel_art: "Pixel-art style through prompts; Lucid Origin model recommended"
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 150 fast tokens daily
+- name: Essential
+  price_usd: 12
+  period: month
+  includes: 8,500 fast tokens/mo; up to 10 personal models
+- name: Premium
+  price_usd: 30
+  period: month
+  includes: 25,000 fast tokens/mo; unlimited relaxed images
+- name: Ultimate
+  price_usd: 60
+  period: month
+  includes: 60,000 fast tokens/mo; unlimited relaxed images and video

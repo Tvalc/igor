@@ -18,15 +18,48 @@ exports:
 skill_level: beginner
 pricing:
   model: freemium
-  free_tier: 'yes'
-  starting_price_usd: null
+  free_tier: limited
+  starting_price_usd: 16.99
+  notes: Free to try (no downloads). Creator $16.99/mo ($11.04/mo annual); Artist Starter $29.99, Artist Pro $35.99,
+    Artist Unlimited $50/mo.
 license:
   commercial_use: paid-plans
   open_source: false
+  notes: Paid plans allow commercial use incl. video games; tracks used as downloaded stay licensed only while subscribed;
+    Creator not for standalone music releases.
 affiliate:
   program: Soundraw Affiliate Program
 sources:
 - https://docs.channel.io/soundraw-faq/en/articles/soundraw-affiliate-program-d26000fb
-needs_verification:
-- pricing
-last_verified: '2026-10-16'
+- https://soundraw.io/blog/post/soundraw-licensing-explained
+- https://soundraw.io/
+- https://soundraw.io/license
+- https://docs.channel.io/soundraw-faq/en/categories/SOUNDRAW-Features-and-Functions-ced55f63
+- https://explore.soundraw.io/soundraw-vs-suno
+- https://docs.channel.io/soundraw-faq/en/articles/Can-I-make-a-song-longer-than-5-minutes-1e787a47
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  vocals: 'no'
+  stems: partial
+  custom_length: 'yes'
+  api: partial
+  loops: partial
+feature_notes:
+  stems: Artist Pro tier and above
+  custom_length: Up to 5 minutes per song
+  api: Business/enterprise API, not self-serve
+  loops: "No loop button; remove the outro in the editor, then repeat the track in audio software"
+plans:
+- name: Artist Starter
+  price_usd: 29.99
+  period: month
+  includes: Artist license for releasing music
+- name: Artist Pro
+  price_usd: 35.99
+  period: month
+  includes: Adds WAV and stem downloads
+- name: Artist Unlimited
+  price_usd: 49.99
+  period: month
+  includes: Unlimited downloads, stems

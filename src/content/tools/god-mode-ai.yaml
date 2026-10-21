@@ -24,14 +24,57 @@ exports:
 skill_level: beginner
 pricing:
   model: freemium
-  free_tier: limited
-  starting_price_usd: null
+  free_tier: trial
+  starting_price_usd: 19
+  notes: Credit packs ($12/20, $32/60, $100/250 per plans page) plus a monthly subscription; 3 free credits on signup;
+    public generations don't use credits.
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: Outputs usable commercially, no royalty or credit required.
 sources:
 - https://skillsplayground.com/connectors/co-godmodeai-sprites/
-needs_verification:
-- pricing
-- license
-last_verified: '2026-10-16'
+- https://www.godmodeai.co/term-of-use
+- https://www.godmodeai.co/
+- https://www.godmodeai.co/plans
+- https://backiee.wasmer.app/https_godmodeai_co
+- https://backiee.wasmer.app/https_godmodeai_co/plans
+- https://ludo.ai/compare/best-ai-sprite-generators
+- https://www.godmodeai.co/ai-sprite-generator
+- https://www.godmodeai.co/get-api
+- https://www.godmodeai.co/ai-pixel-art-sprite-generator
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  pixel_art: 'yes'
+  multi_direction: 'yes'
+  sprite_sheets: 'yes'
+  transparent_bg: 'yes'
+  api: 'yes'
+  consistent_characters: 'yes'
+  text_to_motion: partial
+  custom_training: partial
+plans:
+- name: Monthly Subscription
+  price_usd: 19
+  period: month
+  includes: Up to 200 generations/mo; public generations don't use credits
+- name: Starter Pack
+  price_usd: 12
+  period: one-time
+  includes: 20 credits, never expire
+- name: Popular Pack
+  price_usd: 32
+  period: one-time
+  includes: 60 credits, never expire
+- name: 250 credit pack
+  price_usd: 100
+  period: one-time
+  includes: 250 credits (1 credit = 1 sprite generation), never expire
+feature_notes:
+  sprite_sheets: "Exports PNG sprite sheets with JSON frame data"
+  transparent_bg: "Sprite sheets download as transparent PNGs"
+  api: "REST API plus a remote MCP server"
+  consistent_characters: "Animates one character image across many actions; reuse the idle pose to stay consistent"
+  text_to_motion: "Describe a custom motion in a prompt in the pixel-art generator; 2D sprite animation only"
+  custom_training: "Custom models trained on your art style are offered to enterprise and studio clients only"

@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
-import RankTable from '../../components/RankTable.astro';
-import Faq from '../../components/Faq.astro';
+import { RankTable } from '../../components/site/RankTable';
+import { Faq } from '../../components/site/Faq';
 import { LISTS, rankedList } from '../../lib/lists';
 import { faqPage } from '../../lib/jsonld';
 import { SITE } from '../../site';
@@ -92,7 +92,7 @@ const faqs = [
       art with AI</a>, the <a href="/best/ai-sprite-generators">best sprite generators</a> and
       <a href="/best/ai-3d-model-generators">3D model generators</a>. For sound, see <a
       href="/best/ai-music-generators-for-games">music</a>, <a href="/best/ai-sound-effect-generators">sound
-      effects</a> and <a href="/best/ai-voice-generators-for-games">voice</a>.
+      effects</a> and <a href="/tools/?category=voice">voice</a>.
     </p>
 
     <h2>Step 5: Check rights, then publish</h2>
@@ -103,9 +103,9 @@ const faqs = [
     </p>
   </article>
 
-  <h2>The best AI game makers right now</h2>
+  <h2 class="mt-14 mb-4 text-2xl font-semibold">The best AI game makers right now</h2>
   <RankTable ranked={makers} limit={8} />
-  <p><a href="/best/ai-game-makers">See the full ranking of {makers.length} AI game makers →</a></p>
+  <p class="mt-3"><a class="text-brand text-sm font-medium hover:underline" href="/best/ai-game-makers">See the full ranking of {makers.length} AI game makers →</a></p>
 
   <Faq faqs={faqs} />
 </Base>

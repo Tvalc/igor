@@ -12,19 +12,60 @@ platforms:
 - web
 - api
 engines: []
-exports: []
+exports:
+- glb
+- obj
+- fbx
+- usdz
 skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 20
+  notes: Free Tinkerer plan; Maker $20/mo (100 credits); Creative Pro $60/mo (400 credits); API billed in credits
 license:
   commercial_use: unknown
   open_source: false
 sources:
 - https://www.csm.ai
+- https://csm.ai/
+- https://www.csm.ai/faq
+- https://docs.csm.ai/quick-start
+- https://www.csm.ai/pricing
+- https://docs.csm.ai/sessions/retopology
+- https://www.csm.ai/blog/controllable-3d-world-generation-from-any-input
 needs_verification:
-- pricing
-- license
-- exports
-last_verified: '2026-10-16'
+- commercial use
+last_verified: '2026-10-21'
+features:
+  text_to_3d: 'yes'
+  image_to_3d: 'yes'
+  pbr_textures: 'yes'
+  low_poly: partial
+  api: 'yes'
+  auto_rigging: partial
+feature_notes:
+  low_poly: AI Retopology (Swift low-poly model) is enterprise only
+  pbr_textures: PBR texturing listed from Maker plan
+  auto_rigging: "Automatic rigging for humanoid characters only; animation is a paid-plan feature"
+plans:
+- name: Tinkerer
+  price_usd: 0
+  period: free
+  includes: 10 credits (~10 generations)
+- name: Maker
+  price_usd: 20
+  period: month
+  includes: 100 credits/mo, multi-view upload, PBR texturing
+- name: Creative Pro
+  price_usd: 60
+  period: month
+  includes: 400 credits/mo, priority support
+- name: Prime
+  price_usd: 111
+  period: month
+  includes: 1,000 credits/mo, 3D Video Studio
+- name: Enterprise
+  price_usd: null
+  period: custom
+  includes: Custom contract

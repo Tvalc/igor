@@ -19,13 +19,44 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 18
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: "Plask's FAQ says copyrights in animations created by subscribers belong to them, and its Terms grant commercial-use rights to paid commercial-plan subscribers, while the base service licence is personal and non-commercial."
 sources:
 - https://plask.ai
-needs_verification:
-- pricing
-- license
-last_verified: '2026-10-16'
+- https://plask.ai/pricing
+- https://plask.ai/docs
+- https://knowledge.plask.ai/how-do-you-use-the-automatic-retargeting-feature-in-plask
+- https://plask.ai/en-US/pricing
+- https://plask.ai/en-US/docs/8
+- https://plask.ai/en-US/docs/10040
+- https://plask.ai/en-US/docs/10035
+- https://plask.ai/en-US/docs/47
+- https://plask.ai/en-US/docs/faqs
+- https://plask.ai/en-US/docs/100002
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  video_mocap: 'yes'
+  multi_person: 'yes'
+  retarget: 'yes'
+  hands_face: partial
+  realtime: 'yes'
+feature_notes:
+  hands_face: Finger capture via Hand Animation (V1 model only); no face capture found
+  realtime: Live camera capture in Blender/Unreal Live Link (macOS 14+) and a realtime pose API
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 15 sec mocap/day, 1 GB storage, FBX/GLB/BVH export
+- name: Standard
+  price_usd: 18
+  period: month
+  includes: Billed yearly; 10 min mocap/mo, 3 GB storage
+- name: Pro
+  price_usd: 50
+  period: month
+  includes: Billed yearly; 1 hour mocap/mo

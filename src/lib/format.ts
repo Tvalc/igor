@@ -17,12 +17,18 @@ export const ENGINE_LABELS: Record<string, string> = {
   unity: 'Unity', unreal: 'Unreal', godot: 'Godot', roblox: 'Roblox', blender: 'Blender', aseprite: 'Aseprite', web: 'Web',
 };
 
+export const EXPORT_LABELS: Record<string, string> = {
+  web: 'Web', windows: 'Windows', mac: 'Mac', linux: 'Linux', ios: 'iOS', android: 'Android', steam: 'Steam',
+  png: 'PNG', webp: 'WebP', 'sprite-sheet': 'Sprite sheet', gif: 'GIF', glb: 'GLB', fbx: 'FBX', obj: 'OBJ', usdz: 'USDZ',
+  'pbr-maps': 'PBR maps', bvh: 'BVH', mp3: 'MP3', wav: 'WAV', 'source-code': 'Source code',
+};
+
 export const FREE_TIER_LABELS = {
   yes: 'Free tier', limited: 'Limited free tier', trial: 'Free trial', no: 'No free tier', unknown: 'Unverified',
 } as const;
 
 export const COMMERCIAL_LABELS = {
-  yes: 'Allowed', 'paid-plans': 'Paid plans only', restricted: 'Restricted', no: 'Not allowed', unknown: 'Unverified',
+  yes: 'Allowed', 'paid-plans': 'Allowed on paid plans', restricted: 'Restricted', no: 'Not allowed', unknown: 'Unverified',
 } as const;
 
 export const STATUS_LABELS = {
@@ -53,3 +59,19 @@ export const lc = (s: string) =>
 
 /** Score band used for colors: 85+ top, 70+ good, 55+ ok, below that low. */
 export const tier = (score: number) => (score >= 85 ? 'top' : score >= 70 ? 'good' : score >= 55 ? 'ok' : 'low');
+
+/** The four facts every ranking leans on. A low score with few of these verified is a data gap, not a verdict. */
+export const verifiedFacts = (t: Tool) => {
+  const p = t.data.pricing;
+  const checks: [string, boolean][] = [
+    ['free tier', p.free_tier !== 'unknown'],
+    ['price', p.starting_price_usd !== null || p.model === 'free' || p.model === 'open-source'],
+    ['commercial use', t.data.license.commercial_use !== 'unknown'],
+    ['exports', t.data.exports.length > 0],
+  ];
+  return { n: checks.filter(([, ok]) => ok).length, total: checks.length, missing: checks.filter(([, ok]) => !ok).map(([k]) => k) };
+};
+
+/** Customer-facing wording for a fact we haven't confirmed. Data and agent mirrors keep "Unverified". */
+export const shown = (v: string, kind: 'price' | 'fact' = 'fact') =>
+  v === 'Unverified' ? (kind === 'price' ? 'See site for pricing' : 'Not listed') : v;

@@ -13,19 +13,64 @@ status: active
 platforms:
 - web
 engines: []
-exports: []
+exports:
+- web
+- source-code
+- fbx
+- obj
+- glb
 skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 20
+  notes: Free 200 Koins/mo; Standard $20/mo ($17 annual, 2,000 Koins); Pro $50/mo ($39 annual, 6,000); Ultra $200/mo
+    ($167 annual, 25,000)
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: Commercial-use rights require Pro ($50/mo) or above, not Standard
 sources:
 - https://www.seeles.ai
-needs_verification:
-- pricing
-- license
-- exports
-last_verified: '2026-10-16'
+- https://www.seeles.ai/upgrade
+- https://www.seeles.ai/compare/seele-vs-roblox-ai
+- https://www.seeles.ai/features/create/ai-game-maker
+- https://www.seeles.ai/compare/seele-vs-upit
+- https://www.seeles.ai/compare/seele-vs-tripo-ai
+- https://www.seeles.ai/aigamemaker
+- https://www.seeles.ai/features/create/ai-powered-code-editor
+- https://www.seeles.ai/features-list
+- https://www.seeles.ai/resources/blogs/ai-mobile-game-development-platforms-2026
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  no_code: 'yes'
+  edit_code: 'yes'
+  ai_art: 'yes'
+  ai_audio: 'yes'
+  multiplayer: 'yes'
+  hosting: 'yes'
+  export_project: partial
+  mobile: partial
+feature_notes:
+  export_project: Unity project export requires Pro plan
+  mobile: Native iOS/Android via Unity export; browser builds are responsive web
+  multiplayer: Vendor claims built-in networking on all plans; no technical docs found
+  ai_audio: Background music, SFX and voice acting
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 200 Koin/mo, non-commercial
+- name: Standard
+  price_usd: 20
+  period: month
+  includes: 2,000 Koin/mo ($17/mo billed yearly)
+- name: Pro
+  price_usd: 50
+  period: month
+  includes: 6,000 Koin/mo, commercial use ($39/mo yearly)
+- name: Ultra
+  price_usd: 200
+  period: month
+  includes: 25,000 Koin/mo ($167/mo billed yearly)

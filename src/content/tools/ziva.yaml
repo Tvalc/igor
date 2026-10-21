@@ -13,18 +13,55 @@ platforms:
 - plugin
 engines:
 - godot
-exports: []
+exports:
+- source-code
 skill_level: intermediate
 pricing:
   model: freemium
-  free_tier: unknown
-  starting_price_usd: null
+  free_tier: 'yes'
+  starting_price_usd: 20
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: "Ziva's Terms say you keep all rights to the code and content you create with it, on every plan."
 sources:
 - https://ziva.sh
-needs_verification:
-- pricing
-- license
-last_verified: '2026-10-16'
+- https://ziva.sh/docs/usage-limit-best-practices
+- https://ziva.sh/godot-llm
+- https://ziva.sh/blogs/ziva-3-release
+- https://ziva.sh/blogs/ziva-vs-gdai-mcp
+- https://ziva.sh/blogs/ai-agent-playtest-godot-game
+- https://ziva.sh/terms
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  engine_integration: 'yes'
+  mcp: 'yes'
+  scene_editing: 'yes'
+  model_choice: 'yes'
+  local_models: 'yes'
+  runs_game: partial
+feature_notes:
+  engine_integration: Godot 4.2+ editor plugin
+  runs_game: Playtest Agent on Pro plan and up; no running-game input simulation
+plans:
+- name: Hobby
+  price_usd: 0
+  period: free
+  includes: $3 AI usage/mo, 50 Baby msgs/day, BYO provider or local models
+- name: Basic
+  price_usd: 20
+  period: month
+  includes: $60 AI usage/mo, no message cap
+- name: Pro
+  price_usd: 50
+  period: month
+  includes: $150 AI usage/mo, Genius model, Playtest Agent
+- name: Ultra
+  price_usd: 200
+  period: month
+  includes: $600 AI usage/mo
+- name: Enterprise
+  price_usd: null
+  period: custom
+  includes: Custom pricing

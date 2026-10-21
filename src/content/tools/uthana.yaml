@@ -14,17 +14,49 @@ platforms:
 engines: []
 exports:
 - fbx
+- glb
+- bvh
 skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
   starting_price_usd: null
+  notes: "Pay-as-you-go credits only (new subscriptions ended Aug 2026): text-to-motion $0.02-$0.10/s, video-to-motion $0.05/input s, locomotion $0.02/s, auto-rig $0.15, character $0.75; credits never expire."
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: Paid usage includes commercial rights. On the Free Plan, Uthana owns outputs and licenses them under Creative
+    Commons.
 sources:
 - https://uthana.com
-needs_verification:
-- pricing
-- license
-last_verified: '2026-10-16'
+- https://uthana.com/pricing
+- https://uthana.com/terms
+- https://uthana.com/faq
+- https://uthana.com/models/text-to-motion
+- https://uthana.com/models/video-to-motion
+- https://uthana.com/docs/api/capabilities/text-to-motion
+- https://uthana.com/product/auto-rigging
+- https://uthana.com/solutions/3d-games-studios
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  text_to_motion: 'yes'
+  video_mocap: 'yes'
+  retarget: 'yes'
+  realtime: 'yes'
+  hands_face: partial
+  multi_person: 'no'
+feature_notes:
+  hands_face: Video-to-motion captures fingers; no facial capture mentioned
+  video_mocap: Best with a single person, full body visible
+  realtime: Control and record characters live with mouse, keyboard or gamepad
+  multi_person: "Videos should contain one person; crop to a single performer"
+plans:
+- name: "Pay-as-you-go"
+  price_usd: 0
+  period: usage
+  includes: "Text-to-motion $0.02-0.10/s; video $0.05/s; rig $0.15"
+- name: "Enterprise"
+  price_usd: null
+  period: custom
+  includes: "Datasets, custom data, integrations quoted per project"

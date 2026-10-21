@@ -17,19 +17,73 @@ platforms:
 engines:
 - unity
 - unreal
-exports: []
+exports:
+- mp3
+- wav
 skill_level: advanced
 pricing:
   model: freemium
   free_tier: limited
-  starting_price_usd: null
+  starting_price_usd: 25
+  notes: On-Demand free pay-as-you-go (up to 70 min TTS included); Creator $25/mo; Builder $100; Developer $300;
+    Growth $1,500; Enterprise custom
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
+  notes: Commercial licence on every plan incl. free On-Demand; must have rights to any voice you clone
 sources:
 - https://inworld.ai
-needs_verification:
-- pricing
-- license
-- engines
-last_verified: '2026-10-16'
+- https://inworld.ai/pricing
+- https://docs.inworld.ai/portal/billing
+- https://inworld.ai/voice-generator
+- https://inworld.ai/voice-cloning
+- https://inworld.ai/gaming-media
+- https://docs.inworld.ai/docs/Unity/runtime/get-started
+- https://inworld.ai/blog/introducing-unreal-ai-runtime-sdk
+- https://docs.inworld.ai/realtime/usage/long-term-memory
+- https://docs.inworld.ai/realtime/usage/tool-calling
+- https://inworld.ai/on-device
+- https://docs.inworld.ai/tts/capabilities/steering
+- https://docs.inworld.ai/realtime/overview
+- https://docs.inworld.ai/tts/capabilities/generating-audio.md
+- https://docs.inworld.ai/llms.txt
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  cloning: 'yes'
+  voice_design: 'yes'
+  multilingual: 'yes'
+  api: 'yes'
+  voice: 'yes'
+  unity_sdk: 'yes'
+  unreal_sdk: 'yes'
+  memory: partial
+  actions: 'yes'
+  on_device: partial
+  emotion_control: 'yes'
+  speech_to_speech: partial
+feature_notes:
+  multilingual: 100+ languages
+  unity_sdk: "Unity 2022.3 LTS or later; Windows, Mac, Android and iOS"
+  memory: "Realtime API keeps memory per session; your app must save and restore it between sessions"
+  actions: "Tool calling lets the AI call functions your game handles"
+  on_device: "On-device text to speech is in private preview, by request"
+  emotion_control: "Natural-language delivery steering on TTS-2, plus emotion tags"
+  speech_to_speech: "Realtime API does spoken conversations; no voice changer to re-voice your recordings"
+plans:
+- name: On-Demand
+  price_usd: 0
+  period: usage
+  includes: Pay as you go, up to 70 min TTS included
+- name: Creator
+  price_usd: 25
+  period: month
+- name: Builder
+  price_usd: 100
+  period: month
+- name: Developer
+  price_usd: 300
+  period: month
+- name: Enterprise
+  price_usd: null
+  period: custom

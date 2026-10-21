@@ -22,12 +22,69 @@ skill_level: intermediate
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 25
+  notes: Pro $25/mo (100 credits/mo + 5 daily); Business $50/mo; Free 5 daily credits (up to 30/mo)
 license:
   commercial_use: 'yes'
   open_source: false
+  notes: Users own apps, code and content and can use them commercially, subject to third-party/open-source rights
 sources:
 - https://lovable.dev
-needs_verification:
-- pricing
-last_verified: '2026-10-16'
+- https://lovable.dev/students
+- https://lovable.dev/faq/billing/plans
+- https://docs.lovable.dev/introduction/faq
+- https://lovable.dev/pricing
+- https://lovable.dev/faq/billing/plans/lovable-pricing
+- https://docs.lovable.dev/integrations/github
+- https://lovable.dev/solutions/use-case/front-end-app-interactive-games
+- https://docs.lovable.dev/tips-tricks/using-images
+- https://docs.lovable.dev/features/ai
+- https://lovable.dev/faq/capabilities/mobile/publish-app-store-google-play
+- https://docs.lovable.dev/integrations/mcp-servers
+- https://docs.lovable.dev/features/preview-toolbar
+- https://docs.lovable.dev/features/browser-testing
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  no_code: 'yes'
+  edit_code: 'yes'
+  hosting: 'yes'
+  export_project: partial
+  ai_art: 'yes'
+  ai_audio: partial
+  mobile: partial
+  engine_integration: 'no'
+  mcp: 'yes'
+  scene_editing: partial
+  runs_game: partial
+  model_choice: 'no'
+  local_models: 'no'
+feature_notes:
+  export_project: Download codebase on paid plans only; two-way GitHub sync available
+  hosting: Publishes to a Lovable-hosted URL; custom domains on paid plans
+  ai_art: "Agent can generate images and add them to your project"
+  ai_audio: "Audio comes from AI features built into your app (music models, ElevenLabs connector)"
+  mobile: "Mobile-friendly web apps and PWAs only; no native iOS or Android builds"
+  engine_integration: "Builds web apps on a fixed web stack; doesn't work inside Unity, Godot or Unreal"
+  mcp: "Connect prebuilt or custom MCP servers on all plans"
+  scene_editing: "Point at page elements or images in the preview to change them; no game scene editor"
+  runs_game: "Tests your app in a real browser, but can't interact with canvas-based content"
+  model_choice: "Lovable picks the model that builds your app; you only choose models for in-app AI"
+  local_models: "Runs on Lovable-chosen cloud models; no local or offline option"
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 5 daily credits, max 30/mo
+- name: Pro
+  price_usd: 25
+  period: month
+  includes: 100 monthly + 5 daily credits, custom domains, unlimited users
+- name: Business
+  price_usd: 50
+  period: month
+  includes: Pro plus SSO, team workspace, security center
+- name: Enterprise
+  price_usd: null
+  period: custom
+  includes: Audit logs, dedicated support; priced by company size

@@ -1,7 +1,9 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { publishedLists, LIST_ICONS } from '../../lib/lists';
-import Icon, { type IconName } from '../../components/Icon.astro';
+import { publishedLists } from '../../lib/lists';
+import { LIST_ICON } from '../../components/site/icons';
+import { ToolLogo } from '../../components/site/ToolLogo';
+import { ArrowRight, Trophy } from 'lucide-react';
 import { SITE } from '../../site';
 
 const lists = await publishedLists();
@@ -12,24 +14,34 @@ const lists = await publishedLists();
   description="Ranked lists of the best AI tools for making games: game makers, sprite and 3D generators, Unity, Godot and Unreal AI, voice, music and NPC tools."
   crumbs={[{ name: 'Best lists', href: '/best/' }]}
 >
-  <h1>Best AI game dev tools, by category</h1>
-  <div class="answer">
-    <p>
-      Pick the job you need done. Each list ranks every tool we track for that job on the same public rubric, with
-      free tiers, pricing and commercial rights side by side.
+  <header class="mt-6 mb-10 max-w-3xl">
+    <h1 class="text-3xl font-bold sm:text-5xl">Best AI game dev tools, by category</h1>
+    <p class="text-muted-foreground mt-4 text-lg">
+      Pick the job you need done. Every list ranks the tools for that job with the same public scoring method, with free
+      plans, pricing and commercial rights side by side.
     </p>
-  </div>
-  <div class="grid">
+  </header>
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
     {
-      lists.map(({ def, ranked }) => (
-        <a class="card" href={`/best/${def.slug}`}>
-          <span class="card-icon"><Icon name={(LIST_ICONS[def.slug] ?? 'gamepad') as IconName} /></span>
-          <h3>{def.title}</h3>
-          <p>
-            {ranked.length} tools · #1 {ranked[0].tool.data.name}
-          </p>
-        </a>
-      ))
+      lists.map(({ def, ranked }) => {
+        const I = LIST_ICON[def.slug] ?? Trophy;
+        return (
+          <a href={`/best/${def.slug}`} class="group bg-card hover:border-foreground/20 flex flex-col gap-4 rounded-xl border p-5 shadow-sm transition-all hover:shadow-md">
+            <div class="flex items-center gap-3">
+              <span class="bg-brand/10 text-brand grid size-10 place-items-center rounded-lg"><I className="size-5" /></span>
+              <span class="font-display font-semibold leading-snug">{def.title}</span>
+            </div>
+            <p class="text-muted-foreground text-sm">{def.blurb}</p>
+            <div class="mt-auto flex items-center justify-between border-t pt-4">
+              <span class="flex items-center gap-2 text-sm">
+                <span class="flex -space-x-2">{ranked.slice(0, 3).map((s) => <ToolLogo name={s.tool.data.name} url={s.tool.data.url} size="sm" className="ring-background ring-2" />)}</span>
+                <span class="text-muted-foreground">{ranked.length} tools</span>
+              </span>
+              <ArrowRight className="text-muted-foreground size-4 transition-transform group-hover:translate-x-0.5" />
+            </div>
+          </a>
+        );
+      })
     }
   </div>
 </Base>

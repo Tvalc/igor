@@ -22,12 +22,65 @@ skill_level: intermediate
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 20
+  notes: Starter free (daily Agent credits, 1 published app); Core $20/mo ($18/mo billed annually); Pro $100/mo
+    ($90/mo annually).
 license:
   commercial_use: 'yes'
   open_source: false
 sources:
 - https://replit.com
-needs_verification:
-- pricing
-last_verified: '2026-10-16'
+- https://replit.com/blog/pro-plan
+- https://replit.com/pricing
+- https://docs.replit.com/build/your-first-app
+- https://docs.replit.com/build/mobile-first-app
+- https://docs.replit.com/platforms/mobile-app
+- https://docs.replit.com/help/pricing-and-plans.md
+- https://docs.replit.com/help/pricing-and-plans
+- https://docs.replit.com/help/projects-and-files
+- https://blog.replit.com/image-generation
+- https://docs.replit.com/features/agent/model-selector
+- https://docs.replit.com/build/connect-via-mcp
+- https://docs.replit.com/features/agent/overview
+- https://docs.replit.com/features/agent/audio-generation
+- https://replit.com/builds/video-game
+- https://docs.replit.com/design/visual-editor
+- https://docs.replit.com/help/agent-and-ai
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  hosting: 'yes'
+  mobile: 'yes'
+  runs_game: 'yes'
+  no_code: 'yes'
+  edit_code: 'yes'
+  ai_art: 'yes'
+  export_project: 'yes'
+  mcp: 'yes'
+  model_choice: partial
+  ai_audio: 'yes'
+  multiplayer: 'yes'
+  scene_editing: partial
+  local_models: 'no'
+feature_notes:
+  ai_art: Image Generation toggle in Agent Tools (e.g. game sprites)
+  export_project: Download as zip or sync to GitHub
+  mcp: Agent connects to remote MCP servers (since Dec 2025)
+  model_choice: Manual model pick only on Core/Pro in Power/Max modes; Free uses Auto
+  ai_audio: "Agent generates music, sound effects and voice-overs (powered by ElevenLabs)"
+  multiplayer: "Replit's game guide suggests adding multiplayer with a follow-up Agent prompt"
+  scene_editing: "Visual Editor tweaks UI elements and swaps images in the preview; no game scene editor"
+  local_models: "Agent runs on Replit's cloud models; you can't swap in a local model"
+plans:
+- name: Starter
+  price_usd: 0
+  period: free
+  includes: Daily Agent allowance, 1 published app
+- name: Core
+  price_usd: 20
+  period: month
+  includes: $20 credits/mo, 5 collaborators ($18/mo yearly)
+- name: Pro
+  price_usd: 100
+  period: month
+  includes: Tiered credits, 15 builders, 10 parallel tasks ($90 yearly)

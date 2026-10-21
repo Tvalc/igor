@@ -1,8 +1,8 @@
 name: Sprite-AI
 url: https://www.sprite-ai.art
 tagline: Text-to-pixel-sprite generation with a built-in editor.
-description: Sprite-AI generates pixel-art sprites from text and includes an editor to clean them up. It uses tokens
-  rather than a free tier.
+description: Sprite-AI generates pixel-art sprites and animations from text and includes an editor to clean them
+  up. It has a 15-generation free tier and token-based plans.
 best_for: Quick pixel sprites from text.
 categories:
 - art-2d
@@ -16,17 +16,56 @@ platforms:
 engines: []
 exports:
 - png
+- gif
+- sprite-sheet
 skill_level: beginner
 pricing:
-  model: paid
-  free_tier: 'no'
-  starting_price_usd: null
+  model: freemium
+  free_tier: limited
+  starting_price_usd: 8
+  notes: Free 15 generations; Creator $8/mo (100 tokens), Studio $24 (400), Production $50 (900); one-time packs
+    $10-$60.
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
 sources:
 - https://www.sprite-ai.art
-needs_verification:
-- pricing
-- license
-last_verified: '2026-10-16'
+- https://www.sprite-ai.art/pricing
+- https://www.sprite-ai.art/blog/best-pixel-art-generators-2026
+- https://alternativeto.net/software/sprite-ai/about
+- https://www.sprite-ai.art/docs/api-reference
+- https://www.sprite-ai.art/guides/isometric-pixel-art
+- https://www.sprite-ai.art/docs/aseprite
+- https://www.sprite-ai.art/docs/introduction
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  pixel_art: 'yes'
+  sprite_sheets: 'yes'
+  transparent_bg: 'yes'
+  consistent_characters: 'yes'
+  tilesets: partial
+  multi_direction: 'yes'
+  api: 'yes'
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 15 generations, no card required
+- name: Creator
+  price_usd: 8
+  period: month
+  includes: Paid generation allowance
+- name: Studio
+  price_usd: 24
+  period: month
+  includes: Larger generation allowance
+- name: Production
+  price_usd: 50
+  period: month
+  includes: Largest generation allowance
+feature_notes:
+  consistent_characters: "Reference sprites and restyle keep the same character and pose"
+  tilesets: "Generates single tiles; no one-click tileset with edge and corner transitions"
+  multi_direction: "Rotates a sprite to all 8 directions or the 4 cardinal ones"
+  api: "REST API with a key from a free account; also an MCP server and Aseprite plugin"

@@ -1,5 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import react from '@astrojs/react';
+import tailwindcss from '@tailwindcss/vite';
 
 // Production domain. Override with SITE_URL for preview deployments.
 export default defineConfig({
@@ -9,5 +11,9 @@ export default defineConfig({
   trailingSlash: 'ignore',
   build: {
     format: 'preserve',
+  },
+  integrations: [react()],
+  vite: {
+    plugins: [tailwindcss()],
   },
 });

@@ -1,73 +1,25 @@
 ---
 import Base from '../../layouts/Base.astro';
-import Monogram from '../../components/Monogram.astro';
+import Listing from '../../components/site/Listing.astro';
 import { activeTools } from '../../lib/lists';
 import { scoreTool } from '../../lib/score';
-import { CATEGORY_LABELS, FREE_TIER_LABELS, STATUS_LABELS, tier } from '../../lib/format';
-import { CATEGORIES } from '../../content.config';
 import { SITE } from '../../site';
 
-const tools = (await activeTools()).map((t) => scoreTool(t));
+const tools = (await activeTools()).map((t) => scoreTool(t)).sort((a, b) => b.score - a.score);
 const live = tools.filter((s) => s.tool.data.status !== 'discontinued').length;
 ---
 
 <Base
   title={`All AI Game Development Tools (${live} tracked, ${SITE.year})`}
-  description={`Directory of ${live} AI game development tools: game makers, sprite and 3D generators, coding assistants, voice, music and NPC AI, with pricing and commercial rights.`}
+  description={`Filter and compare ${live} AI game development tools by category, price, free plan, commercial rights, engine and export format.`}
   crumbs={[{ name: 'Tools', href: '/tools/' }]}
 >
-  <h1>Every AI game dev tool we track</h1>
-  <div class="answer">
-    <p>
-      {live} active AI game development tools, each with verified pricing, commercial rights, engine support and a
-      score. Filter by category, or open a <a href="/best/">best list</a> for rankings.
+  <header class="mt-6 mb-10 max-w-3xl">
+    <h1 class="text-3xl font-bold sm:text-5xl">All AI game dev tools</h1>
+    <p class="text-muted-foreground mt-4 text-lg">
+      {live} active tools with prices, free plans and commercial rights checked against each vendor's site. Filter to what
+      you need, tick up to four and compare them side by side.
     </p>
-  </div>
-
-  <div class="filters" role="group" aria-label="Filter by category">
-    <button type="button" data-filter="all" aria-pressed="true">All</button>
-    {CATEGORIES.map((c) => <button type="button" data-filter={c} aria-pressed="false">{CATEGORY_LABELS[c]}</button>)}
-  </div>
-
-  <div class="table-wrap">
-    <table id="tools">
-      <thead>
-        <tr><th>Tool</th><th>Category</th><th>Free tier</th><th>Score</th></tr>
-      </thead>
-      <tbody>
-        {
-          tools.map((s) => (
-            <tr data-cats={s.tool.data.categories.join(' ')}>
-              <td>
-                <div class="tool-cell">
-                  <Monogram name={s.tool.data.name} size="sm" />
-                  <span>
-                    <a href={`/tools/${s.tool.id}`}>{s.tool.data.name}</a>
-                    {s.tool.data.status !== 'active' && <span class="pill">{STATUS_LABELS[s.tool.data.status]}</span>}
-                    <br />
-                    <span class="meta">{s.tool.data.tagline}</span>
-                  </span>
-                </div>
-              </td>
-              <td>{s.tool.data.categories.map((c) => CATEGORY_LABELS[c]).join(', ')}</td>
-              <td>{FREE_TIER_LABELS[s.tool.data.pricing.free_tier]}</td>
-              <td class="num">{s.tool.data.status === 'discontinued' ? '—' : <span class={`score tier-${tier(s.score)}`}>{s.score}</span>}</td>
-            </tr>
-          ))
-        }
-      </tbody>
-    </table>
-  </div>
-
-  <script>
-    const buttons = document.querySelectorAll<HTMLButtonElement>('.filters button');
-    const rows = document.querySelectorAll<HTMLTableRowElement>('#tools tbody tr');
-    buttons.forEach((btn) =>
-      btn.addEventListener('click', () => {
-        const f = btn.dataset.filter!;
-        buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
-        rows.forEach((r) => (r.hidden = f !== 'all' && !r.dataset.cats!.split(' ').includes(f)));
-      }),
-    );
-  </script>
+  </header>
+  <Listing items={tools} views />
 </Base>

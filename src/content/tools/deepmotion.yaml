@@ -20,13 +20,52 @@ skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
+  starting_price_usd: 15
+  notes: "Animate 3D: Freemium 25 credits/mo (personal use only); Starter $15/mo, Innovator $48, Professional $117, Studio $300 on monthly billing ($9/$17/$39/$83 per month billed annually)."
 license:
-  commercial_use: unknown
+  commercial_use: paid-plans
   open_source: false
+  notes: "Freemium accounts are personal/non-commercial only; a commercial licence comes with the paid Starter, Innovator, Professional and Studio plans."
 sources:
 - https://www.deepmotion.com
-needs_verification:
-- pricing
-- license
-last_verified: '2026-10-16'
+- https://deepmotion.com/faq
+- https://www.deepmotion.com/pricing-animate3d
+- https://deepmotion.com/post/multi-person-tracking
+- https://deepmotion.com/post/multi-person-tracking-guide
+- https://deepmotion.com/post/deepmotion-ue5-animation-retargeting-just-got-easier
+- https://www.deepmotion.com/post/the-next-generation-of-motion-intelligence-solutions-from-deepmotion
+- https://www.deepmotion.com/animate-3d
+needs_verification: []
+last_verified: '2026-10-21'
+features:
+  video_mocap: 'yes'
+  multi_person: partial
+  hands_face: 'yes'
+  text_to_motion: 'yes'
+  retarget: 'yes'
+  realtime: partial
+feature_notes:
+  text_to_motion: Via SayMotion text-to-animation product
+  retarget: Custom Character upload with automatic retargeting; SayMotion auto-retargeting for UE5
+  realtime: "Animate 3D Real-Time SDK, a lightweight version, is offered through sales; the web app processes uploads"
+plans:
+- name: "Freemium"
+  price_usd: 0
+  period: free
+  includes: "25 credits/mo, 20 s clips, non-commercial"
+- name: "Starter"
+  price_usd: 15
+  period: month
+  includes: "180 credits/mo, commercial licence; $9/mo billed annually"
+- name: "Innovator"
+  price_usd: 48
+  period: month
+  includes: "480 credits/mo, 30 s clips; $17/mo billed annually"
+- name: "Professional"
+  price_usd: 117
+  period: month
+  includes: "1,500 credits/mo, 120 s clips, 4K; $39/mo billed annually"
+- name: "Studio"
+  price_usd: 300
+  period: month
+  includes: "Unlimited credits (7,200 high priority), 8K; $83/mo annually"
