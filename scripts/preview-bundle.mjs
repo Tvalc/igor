@@ -72,6 +72,12 @@ while ([...assets].some((a) => !done.has(a))) {
     mkdirSync(dirname(dest), { recursive: true });
     if (a.endsWith('.css')) writeFileSync(dest, rewrite(readFileSync(join(dist, a), 'utf8'), a, false));
     else cpSync(join(dist, a), dest);
+    // Script chunks import shared chunks by relative path; bring those along too.
+    if (a.endsWith('.js')) {
+      for (const [, rel] of readFileSync(join(dist, a), 'utf8').matchAll(/(?:from|import)\s*["']\.\/([^"']+)["']/g)) {
+        assets.add(posix.join(posix.dirname(a), rel));
+      }
+    }
   }
 }
 
