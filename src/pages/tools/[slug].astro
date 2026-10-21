@@ -21,7 +21,7 @@ import {
   CATEGORY_LABELS, COMMERCIAL_LABELS, ENGINE_LABELS, EXPORT_LABELS, FREE_TIER_LABELS, STATUS_LABELS,
   isoDate, lc, list, outboundRel, outboundUrl, shown,
 } from '../../lib/format';
-import { fromPrice, priceLabel } from '../../lib/compare';
+import { fromPrice, priceHeadline, priceLabel } from '../../lib/compare';
 import { SITE } from '../../site';
 
 export async function getStaticPaths() {
@@ -55,6 +55,7 @@ const facts: [string, string, string | undefined][] = [
 const featureDefs = featuresFor(d.categories);
 const compareIds = [tool.id, ...alternatives.slice(0, 2).map((s) => s.tool.id)];
 const startPrice = fromPrice(tool);
+const headline = priceHeadline(tool);
 const dead = d.status === 'discontinued';
 const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what to use instead` : `${d.name} Review (${SITE.year}): Pricing, Features & Alternatives`;
 ---
@@ -84,8 +85,8 @@ const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what t
       !dead && (
         <div class="flex flex-col gap-3 md:min-w-52 md:items-stretch md:text-center">
           <div>
-            <div class="font-display text-2xl font-semibold">{priceLabel(tool) === 'Unverified' ? <span class="text-muted-foreground text-base font-normal">See site for pricing</span> : priceLabel(tool)}</div>
-            <div class="text-muted-foreground text-xs">{priceLabel(tool) === 'Free plan' ? '' : d.pricing.free_tier === 'yes' ? 'Free plan available' : startPrice ? 'starting price' : ''}</div>
+            <div class="font-display text-2xl font-semibold">{priceLabel(tool) === 'Unverified' ? <span class="text-muted-foreground text-base font-normal">{headline.main}</span> : headline.main}</div>
+            <div class="text-muted-foreground text-xs">{headline.sub}</div>
           </div>
           <a class={buttonVariants({ size: 'lg' })} href={outboundUrl(tool)} rel={outboundRel(tool)} target="_blank">Visit {d.name} <ArrowUpRight /></a>
           <label class="text-muted-foreground flex cursor-pointer items-center justify-center gap-2 text-sm">

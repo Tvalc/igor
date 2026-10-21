@@ -11,7 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/ca
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table';
 import { cn } from '../../lib/utils';
 import { ArrowUpRight, Check, Plus, Trophy } from 'lucide-react';
-import { COMMERCIAL_RANK, FREE_RANK, fromPrice, priceLabel, sharedFeatures } from '../../lib/compare';
+import { COMMERCIAL_RANK, FREE_RANK, fromPrice, priceHeadline, priceLabel, sharedFeatures } from '../../lib/compare';
 import { comparisonPairs, toolsWithAlternatives, type ListDef } from '../../lib/lists';
 import { scoreTool, FACTOR_LABELS, type Factor, type Group, type Tool } from '../../lib/score';
 import { faqPage } from '../../lib/jsonld';
@@ -122,11 +122,11 @@ const faqs = [
         <ToolLogo name={s.tool.data.name} url={s.tool.data.url} size="lg" />
         <a href={`/tools/${s.tool.id}`} class="font-display text-xl font-semibold hover:underline">{s.tool.data.name}</a>
         <Stars score={s.score} />
-        {winner?.tool.id === s.tool.id ? (
-          <Badge variant="pick"><Trophy /> Higher score</Badge>
-        ) : (
-          <Badge variant="secondary">{shown(priceLabel(s.tool), 'price')}</Badge>
-        )}
+        {winner?.tool.id === s.tool.id && <Badge variant="pick"><Trophy /> Higher score</Badge>}
+        <p class="text-sm leading-tight">
+          <span class="font-semibold">{priceHeadline(s.tool).main}</span>
+          {priceHeadline(s.tool).sub && <span class="text-muted-foreground block text-xs">{priceHeadline(s.tool).sub}</span>}
+        </p>
         {s.tool.data.status !== 'discontinued' && (
           <a class={buttonVariants({ size: 'sm', variant: winner?.tool.id === s.tool.id ? 'default' : 'outline' })} href={outboundUrl(s.tool)} rel={outboundRel(s.tool)} target="_blank">Visit site <ArrowUpRight /></a>
         )}

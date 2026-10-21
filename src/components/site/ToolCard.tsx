@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import type { Scored } from '@/lib/score';
-import { fromPrice, priceLabel } from '@/lib/compare';
+import { fromPrice, priceHeadline } from '@/lib/compare';
 import { CATEGORY_LABELS, ENGINE_LABELS, STATUS_LABELS, outboundRel, outboundUrl } from '@/lib/format';
 import { ToolLogo } from './ToolLogo';
 import { Stars } from './Stars';
@@ -18,7 +18,7 @@ export function ToolCard({ scored, rank, pick, details = false, as = 'li' }: Pro
   const d = t.data;
   const dead = d.status === 'discontinued';
   const p = fromPrice(t);
-  const label = priceLabel(t);
+  const price = priceHeadline(t);
   const badges: [string, 'pick' | 'success' | 'brand' | 'secondary'][] = [];
   if (pick) badges.push([pick, 'pick']);
   if (d.pricing.free_tier === 'yes') badges.push(['Free plan', 'success']);
@@ -103,9 +103,9 @@ export function ToolCard({ scored, rank, pick, details = false, as = 'li' }: Pro
           >
             <div className={cn(details && 'sm:text-right')}>
               <div className="font-display text-base font-semibold whitespace-nowrap">
-                {label === 'Unverified' ? <span className="text-muted-foreground text-sm font-normal">See site for pricing</span> : label}
+                {price.main !== 'See site for pricing' ? price.main : <span className="text-muted-foreground text-sm font-normal">{price.main}</span>}
               </div>
-              {p !== null && p > 0 && <div className="text-muted-foreground text-xs">starting price</div>}
+              {price.sub && <div className="text-muted-foreground text-xs">{price.sub}</div>}
             </div>
             {!dead && (
               <div className="flex items-center gap-3">

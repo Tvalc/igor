@@ -29,6 +29,17 @@ export const priceLabel = (t: Tool) => {
   return t.data.pricing.free_tier === 'yes' ? 'Free plan' : label;
 };
 
+/** Card and header price: a confirmed free plan leads, with the paid entry point underneath. */
+export const priceHeadline = (t: Tool): { main: string; sub: string } => {
+  const label = priceLabel(t);
+  const n = fromPrice(t);
+  if (t.data.pricing.free_tier === 'yes' && n !== null && n > 0) {
+    return { main: 'Free plan', sub: label.startsWith('From ') ? `Paid plans ${label.replace('From ', 'from ')}` : `Paid: ${label}` };
+  }
+  if (label === 'Unverified') return { main: shown(label, 'price'), sub: '' };
+  return { main: label, sub: n !== null && n > 0 ? 'starting price' : '' };
+};
+
 export async function clientTools() {
   return (await activeTools())
     .filter((t) => t.data.status !== 'discontinued')
