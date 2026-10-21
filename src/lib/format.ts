@@ -19,7 +19,7 @@ export const ENGINE_LABELS: Record<string, string> = {
 
 export const EXPORT_LABELS: Record<string, string> = {
   web: 'Web', windows: 'Windows', mac: 'Mac', linux: 'Linux', ios: 'iOS', android: 'Android', steam: 'Steam',
-  png: 'PNG', 'sprite-sheet': 'Sprite sheet', gif: 'GIF', glb: 'GLB', fbx: 'FBX', obj: 'OBJ', usdz: 'USDZ',
+  png: 'PNG', webp: 'WebP', 'sprite-sheet': 'Sprite sheet', gif: 'GIF', glb: 'GLB', fbx: 'FBX', obj: 'OBJ', usdz: 'USDZ',
   'pbr-maps': 'PBR maps', bvh: 'BVH', mp3: 'MP3', wav: 'WAV', 'source-code': 'Source code',
 };
 

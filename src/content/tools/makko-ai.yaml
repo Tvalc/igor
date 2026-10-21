@@ -16,15 +16,18 @@ tags:
 status: active
 platforms:
 - web
-engines: []
-exports: []
+engines:
+- aseprite
+exports:
+- png
+- webp
 skill_level: beginner
 pricing:
   model: freemium
   free_tier: 'yes'
-  starting_price_usd: null
-  notes: 'Free tier: 150 Art Budget per month and 70 AI requests per week; paid subscriptions and one-time credit
-    top-ups available.'
+  starting_price_usd: 20
+  notes: Free plan with 150 Art Budget a month and 70 AI requests a week (no card needed); paid plans $20, $50,
+    $100 and $200 a month; one-time credit top-ups that never expire.
 license:
   commercial_use: 'yes'
   open_source: false
@@ -43,9 +46,8 @@ sources:
 - https://blog.makko.ai/what-is-makko-art-studio-the-ai-game-asset-generator-built-for-game-developers/
 - https://blog.makko.ai/7-best-no-code-game-makers-in-2026/
 - https://blog.makko.ai/makko-ai-is-live-make-2d-games-with-ai-no-drawing-no-coding/
-needs_verification:
-- price
-- exports
+- https://blog.makko.ai/best-free-ai-game-making-tools-2026/
+needs_verification: []
 last_verified: '2026-10-21'
 features:
   sprite_sheets: 'yes'
@@ -65,3 +67,17 @@ plans:
   price_usd: 0
   period: free
   includes: 150 Art Budget/mo, 70 AI requests/wk
+- name: Starter
+  price_usd: 20
+  period: month
+  includes: 500 AI credits/wk
+- name: Creator
+  price_usd: 50
+  period: month
+- name: Hobbyist
+  price_usd: 100
+  period: month
+- name: Pro
+  price_usd: 200
+  period: month
+  includes: Highest limits, frontier AI models

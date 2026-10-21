@@ -478,3 +478,13 @@ category (defined in `src/lib/features.ts`) and its current pricing plans.
   - God Mode AI plans (taken from a mirror copy of its pricing page)
   - Bezi Ultimate (docs and pricing page disagree)
   - Krotos Studio prices raised to $19.99/$49.99 per its current pricing page
+
+### Makko update, 2026-10-21
+- **Exports:** PNG and WebP, in formats Aseprite accepts. Confirmed by the Makko team, who run this site
+  (disclosed site-wide).
+- **Plans:** Free, $20, $50, $100 and $200 a month. The prices were confirmed by the Makko team and match
+  makko.ai/pricing.
+  - Free plan: 150 Art Budget a month and 70 AI requests a week, per the pricing page.
+  - Starter credits and Pro's frontier models: per blog.makko.ai.
+- **Plan names:** Creator and Hobbyist come from a third-party listing and still need checking against
+  the pricing page.

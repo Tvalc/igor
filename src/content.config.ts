@@ -22,7 +22,7 @@ export const ENGINES = ['unity', 'unreal', 'godot', 'roblox', 'blender', 'asepri
 
 export const EXPORTS = [
   'web', 'windows', 'mac', 'linux', 'ios', 'android', 'steam',
-  'png', 'sprite-sheet', 'gif', 'glb', 'fbx', 'obj', 'usdz', 'pbr-maps', 'bvh',
+  'png', 'webp', 'sprite-sheet', 'gif', 'glb', 'fbx', 'obj', 'usdz', 'pbr-maps', 'bvh',
   'mp3', 'wav', 'source-code',
 ] as const;
 
