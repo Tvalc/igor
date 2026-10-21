@@ -85,9 +85,9 @@ const presets = lists.map(({ def, ranked }) => ({
     const links = siteLinks();
     const FREE: Record<string, number> = { yes: 4, limited: 3, trial: 2, no: 1, unknown: 0 };
     const COMM: Record<string, number> = { yes: 4, 'paid-plans': 3, restricted: 2, no: 1, unknown: 0 };
-    // Unverified features score nothing, so a star means another tool is known to lack or limit it.
+    // Unconfirmed features score nothing, so a star means another tool is known to lack or limit it.
     const FEAT: Record<string, number> = { yes: 2, partial: 1, no: 0 };
-    const ICON: Record<string, [string, string]> = { yes: ['✓', 'Yes'], partial: ['◐', 'Partly'], no: ['✕', 'No'], unknown: ['?', 'Unverified'] };
+    const ICON: Record<string, [string, string]> = { yes: ['✓', 'Yes'], partial: ['◐', 'Partly'], no: ['✕', 'No'], unknown: ['?', 'Not confirmed'] };
 
     const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
     const fromUrl = (new URLSearchParams(location.search).get('tools') ?? '').split(',').filter((id) => byId.has(id));
@@ -164,8 +164,9 @@ const presets = lists.map(({ def, ranked }) => ({
               return p.name.toLowerCase() === cost ? esc(p.name) : `${esc(p.name)}: ${cost}`;
             })
             .join('<br>')
-        : '<span class="unverified">Unverified</span>';
-    const text = (s: string) => (s === 'Unverified' ? '<span class="unverified">Unverified</span>' : esc(s));
+        : '<span class="unverified">See site for pricing</span>';
+    const text = (s: string, kind: 'price' | 'fact' = 'fact') =>
+      s === 'Unverified' ? `<span class="unverified">${kind === 'price' ? 'See site for pricing' : 'Not listed'}</span>` : esc(s);
 
     function renderTable() {
       const box = document.getElementById('compare-table')!;
@@ -196,7 +197,7 @@ const presets = lists.map(({ def, ranked }) => ({
             ${row('Best for', tools, (t) => esc(t.best))}
             ${row('Category', tools, (t) => esc(t.catLabel))}
             ${row('Free tier', tools, (t) => text(t.freeLabel), (t) => FREE[t.free] || null)}
-            ${row('Starting price', tools, (t) => text(t.priceLabel), (t) => t.price, 'min')}
+            ${row('Starting price', tools, (t) => text(t.priceLabel, 'price'), (t) => t.price, 'min')}
             ${row('Commercial use', tools, (t) => text(t.commercialLabel), (t) => COMM[t.commercial] || null)}
             ${row('Plans', tools, plans)}
             ${row('Engines', tools, (t) => text(t.engines))}
@@ -207,7 +208,7 @@ const presets = lists.map(({ def, ranked }) => ({
             ${featureRows}
           </tbody>
         </table></div>
-        <p class="meta">★ best in row. "Unverified" means we haven't confirmed it yet, not that it's missing.${
+        <p class="meta">★ marks the best option in each row.${
           tools.some((t) => t.owned) ? ' Disclosure: Makko is built by the team that runs this site and is scored by the same rules.' : ''
         }</p>
         ${data.pairs.includes(pair) ? `<p><a class="btn" href="${links.pair(pair)}">Read the full ${esc(tools[0].name)} vs ${esc(tools[1].name)} verdict</a></p>` : ''}`;

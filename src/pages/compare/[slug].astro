@@ -13,7 +13,7 @@ import {
   COMMERCIAL_LABELS, ENGINE_LABELS, EXPORT_LABELS, FREE_TIER_LABELS, STATUS_LABELS, isoDate, list, tier,
 } from '../../lib/format';
 import { SITE } from '../../site';
-import { outboundRel, outboundUrl } from '../../lib/format';
+import { outboundRel, outboundUrl, shown } from '../../lib/format';
 
 export async function getStaticPaths() {
   return [...(await comparisonPairs()).entries()].map(([slug, p]) => ({ params: { slug }, props: p }));
@@ -45,7 +45,7 @@ const rows: Row[] = [
   ['Best for', (t) => t.data.best_for],
   ['Free tier', (t) => FREE_TIER_LABELS[t.data.pricing.free_tier], (t) => FREE_RANK[t.data.pricing.free_tier] || null],
   ['Starting price', (t) => priceLabel(t), (t) => fromPrice(t), 'min'],
-  ['Commercial use', (t) => COMMERCIAL_LABELS[t.data.license.commercial_use] + (t.data.license.open_source ? ' (open source)' : ''), (t) => COMMERCIAL_RANK[t.data.license.commercial_use] || null],
+  ['Commercial use', (t) => (t.data.license.open_source ? `${shown(COMMERCIAL_LABELS[t.data.license.commercial_use])} (open source)` : COMMERCIAL_LABELS[t.data.license.commercial_use]), (t) => COMMERCIAL_RANK[t.data.license.commercial_use] || null],
   ['Engines', (t) => list(t.data.engines, ENGINE_LABELS)],
   ['Exports', (t) => list(t.data.exports, EXPORT_LABELS)],
   ['Skill level', (t) => t.data.skill_level],
@@ -91,8 +91,8 @@ const faqs = [
   {
     q: `Is ${a.data.name} or ${b.data.name} better?`,
     a: winner
-      ? `${winner.tool.data.name} scores higher on our ${listDef.title.replace(/^Best /, '')} rubric (${sa.score} vs ${sb.score}). The right pick depends on the job. ${a.data.name} is best for: ${a.data.best_for} ${b.data.name} is best for: ${b.data.best_for}`
-      : `They tie at ${sa.score}/100 on our rubric. ${a.data.name} is best for: ${a.data.best_for} ${b.data.name} is best for: ${b.data.best_for}`,
+      ? `${winner.tool.data.name} scores higher in our ${listDef.title.replace(/^Best /, '')} ranking (${sa.score} vs ${sb.score}). The right pick depends on the job. ${a.data.name} is best for: ${a.data.best_for} ${b.data.name} is best for: ${b.data.best_for}`
+      : `They tie at ${sa.score}/100 in our scoring. ${a.data.name} is best for: ${a.data.best_for} ${b.data.name} is best for: ${b.data.best_for}`,
   },
   {
     q: `Which is cheaper, ${a.data.name} or ${b.data.name}?`,
@@ -116,7 +116,7 @@ const faqs = [
           <ToolLogo name={s.tool.data.name} url={s.tool.data.url} size="lg" />
           <a class="vs-name" href={`/tools/${s.tool.id}`}>{s.tool.data.name}</a>
           <Stars score={s.score} />
-          {winner?.tool.id === s.tool.id ? <span class="badge badge-pick">Higher score</span> : <span class="badge badge-muted">{priceLabel(s.tool)}</span>}
+          {winner?.tool.id === s.tool.id ? <span class="badge badge-pick">Higher score</span> : <span class="badge badge-muted">{shown(priceLabel(s.tool), 'price')}</span>}
           {s.tool.data.status !== 'discontinued' && (
             <a class="btn btn-sm" href={outboundUrl(s.tool)} rel={outboundRel(s.tool)} target="_blank">Visit site</a>
           )}
@@ -131,10 +131,10 @@ const faqs = [
           <>
             <strong>{winner.tool.data.name}</strong> comes out ahead, {Math.max(sa.score, sb.score)} to{' '}
             {Math.min(sa.score, sb.score)}, on our{' '}
-            {listDef.title.replace(/^Best /, '')} rubric.
+            {listDef.title.replace(/^Best /, '')} ranking.
           </>
         ) : (
-          <>They tie at {sa.score}/100 on our rubric.</>
+          <>They tie at {sa.score}/100 in our scoring.</>
         )
       }
       {aWins.length > 0 && <> {a.data.name} leads on {aWins.join(', ')}.</>}
@@ -145,7 +145,7 @@ const faqs = [
   {
     hasMakko && (
       <p class="notice">
-        Disclosure: this site is run by {SITE.owner}. Both tools are scored by the same public rubric.
+        Disclosure: this site is run by {SITE.owner}. Both tools are scored the same way.
       </p>
     )
   }
@@ -174,8 +174,8 @@ const faqs = [
             return (
               <tr class:list={[{ same: fn(a) === fn(b) }]}>
                 <td><strong>{label}</strong></td>
-                <td class:list={[{ best: win === a.id }, { unverified: fn(a) === 'Unverified' }]}>{fn(a)}</td>
-                <td class:list={[{ best: win === b.id }, { unverified: fn(b) === 'Unverified' }]}>{fn(b)}</td>
+                <td class:list={[{ best: win === a.id }, { unverified: fn(a) === 'Unverified' }]}>{shown(fn(a), label === 'Starting price' ? 'price' : 'fact')}</td>
+                <td class:list={[{ best: win === b.id }, { unverified: fn(b) === 'Unverified' }]}>{shown(fn(b), label === 'Starting price' ? 'price' : 'fact')}</td>
               </tr>
             );
           })
@@ -184,7 +184,7 @@ const faqs = [
     </table>
   </div>
 
-  <p class="meta">★ marks the better value where the facts differ. "Unverified" means we haven't confirmed it yet.</p>
+  <p class="meta">★ marks the better option in each row.</p>
 
   {
     (chooseA.length > 0 || chooseB.length > 0) && (
@@ -222,7 +222,7 @@ const faqs = [
         {[a, b].map((t) => (
           <>
             <h3>{t.data.name}</h3>
-            {t.data.plans.length ? <Plans tool={t} /> : <p class="unverified">{t.data.pricing.notes ?? 'Plans not yet verified.'}</p>}
+            {t.data.plans.length ? <Plans tool={t} /> : <p class="unverified">{t.data.pricing.notes ?? 'See the vendor site for current plans.'}</p>}
           </>
         ))}
       </>

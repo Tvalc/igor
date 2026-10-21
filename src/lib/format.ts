@@ -71,3 +71,7 @@ export const verifiedFacts = (t: Tool) => {
   ];
   return { n: checks.filter(([, ok]) => ok).length, total: checks.length, missing: checks.filter(([, ok]) => !ok).map(([k]) => k) };
 };
+
+/** Customer-facing wording for a fact we haven't confirmed. Data and agent mirrors keep "Unverified". */
+export const shown = (v: string, kind: 'price' | 'fact' = 'fact') =>
+  v === 'Unverified' ? (kind === 'price' ? 'See site for pricing' : 'Not listed') : v;

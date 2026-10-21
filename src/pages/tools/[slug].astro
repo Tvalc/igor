@@ -15,7 +15,7 @@ import { scoreTool, groupOf, GROUP_LABELS, type Tool } from '../../lib/score';
 import { softwareApp } from '../../lib/jsonld';
 import {
   CATEGORY_LABELS, COMMERCIAL_LABELS, ENGINE_LABELS, EXPORT_LABELS, FREE_TIER_LABELS, STATUS_LABELS,
-  isoDate, list, outboundRel, outboundUrl,
+  isoDate, lc, list, outboundRel, outboundUrl, shown,
 } from '../../lib/format';
 import { fromPrice, priceLabel } from '../../lib/compare';
 import { SITE } from '../../site';
@@ -41,7 +41,7 @@ const facts: [string, string, string | undefined][] = [
   ['Status', STATUS_LABELS[d.status], undefined],
   ['Free tier', FREE_TIER_LABELS[d.pricing.free_tier], undefined],
   ['Price', priceLabel(tool), d.plans.length ? undefined : d.pricing.notes],
-  ['Commercial use', COMMERCIAL_LABELS[d.license.commercial_use] + (d.license.open_source ? ' · Open source' : ''), d.license.notes],
+  ['Commercial use', d.license.open_source ? `${shown(COMMERCIAL_LABELS[d.license.commercial_use])} · Open source` : COMMERCIAL_LABELS[d.license.commercial_use], d.license.notes],
   ['Engines', list(d.engines, ENGINE_LABELS), undefined],
   ['Exports', list(d.exports, EXPORT_LABELS), undefined],
   ['Runs on', list(d.platforms, { web: 'Web', desktop: 'Desktop', plugin: 'Plugin', api: 'API', cli: 'CLI', 'self-hosted': 'Self-hosted' }), undefined],
@@ -49,7 +49,6 @@ const facts: [string, string, string | undefined][] = [
   ['Last verified', isoDate(d.last_verified), undefined],
 ];
 const featureDefs = featuresFor(d.categories);
-const knownFeatures = featureDefs.filter((f) => d.features[f.key] !== undefined).length;
 const compareIds = [tool.id, ...alternatives.slice(0, 2).map((s) => s.tool.id)];
 const startPrice = fromPrice(tool);
 const dead = d.status === 'discontinued';
@@ -79,8 +78,8 @@ const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what t
       !dead && (
         <div class="product-cta">
           <div class="price-big">
-            {priceLabel(tool) === 'Unverified' ? <span class="unverified">Price unverified</span> : priceLabel(tool)}
-            <small>{d.pricing.free_tier === 'yes' ? 'Free plan available' : startPrice ? 'starting price' : ''}</small>
+            {priceLabel(tool) === 'Unverified' ? <span class="unverified">{shown('Unverified', 'price')}</span> : priceLabel(tool)}
+            <small>{priceLabel(tool) === 'Free plan' ? '' : d.pricing.free_tier === 'yes' ? 'Free plan available' : startPrice ? 'starting price' : ''}</small>
           </div>
           <a class="btn" href={outboundUrl(tool)} rel={outboundRel(tool)} target="_blank">Visit {d.name} <Icon name="external" size={16} /></a>
           <label class="tcard-cmp" style="justify-content:center"><input type="checkbox" data-compare={tool.id} /> Add to compare</label>
@@ -93,7 +92,7 @@ const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what t
   {
     d.makko_owned && (
       <p class="notice">
-        Disclosure: {SITE.name} is run by {SITE.owner}. {d.name} is scored by exactly the same rubric and data rules as
+        Disclosure: {SITE.name} is run by {SITE.owner}. {d.name} is scored exactly the same way as
         every other tool. <a href="/disclosure">Read our disclosure</a>.
       </p>
     )
@@ -128,7 +127,7 @@ const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what t
               ) : (
                 <>
                   <strong>{d.name}</strong>: {d.tagline} It scores <strong>{scored.score}/100</strong> on our{' '}
-                  {GROUP_LABELS[group]} rubric. Best for: {d.best_for}
+                  {lc(GROUP_LABELS[group])} ranking. Best for: {d.best_for}
                 </>
               )
             }
@@ -166,10 +165,7 @@ const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what t
                 </li>
               ))}
             </ul>
-            <p class="meta">
-              {knownFeatures} of {featureDefs.length} features verified from {d.name}'s own site, docs or pricing page.
-              "Unverified" means we couldn't confirm it either way yet.
-            </p>
+            <p class="meta">Checked against {d.name}'s own site, docs and pricing page. <a href="/methodology">How we check</a></p>
           </section>
         )
       }
@@ -180,8 +176,8 @@ const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what t
             <h2>Score breakdown: {scored.score}/100</h2>
             <ScoreBars scored={scored} group={group} />
             <p class="meta">
-              {scored.handsOn ? <>Includes our hands-on test ({d.hands_on!.score}/10).</> : <>Facts-based score. A hands-on test hasn't been published yet.</>}{' '}
-              <a href="/methodology">How scores work</a>
+              {scored.handsOn ? <>Includes our hands-on test ({d.hands_on!.score}/10).</> : <>Based on price, free plan, commercial rights, exports and features.</>}{' '}
+              <a href="/methodology">How we score</a>
             </p>
             {inLists.length > 0 && (
               <>
@@ -253,17 +249,12 @@ const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what t
           <div>
             <dt>{label}</dt>
             <dd class={value === 'Unverified' ? 'unverified' : undefined}>
-              {label === 'Website' ? <a href={d.url} rel="noopener">{value}</a> : value}
+              {label === 'Website' ? <a href={d.url} rel="noopener">{value}</a> : shown(value, label === 'Price' ? 'price' : 'fact')}
               {note && <span class="note">{note}</span>}
             </dd>
           </div>
         ))}
       </dl>
-      {
-        d.needs_verification.length > 0 && (
-          <p class="meta" style="margin:10px 0 0">Still verifying: {d.needs_verification.join(', ')}.</p>
-        )
-      }
     </aside>
   </div>
 </Base>

@@ -8,7 +8,7 @@ const factors = Object.keys(FACTOR_LABELS) as Factor[];
 
 <Base
   title="How We Rank AI Game Dev Tools"
-  description="The public scoring rubric behind every Make AI Games ranking: factors, weights per category, how unknown facts are handled, and how hands-on tests are added."
+  description="The public scoring method behind every Make AI Games ranking: factors, weights per category, how unknown facts are handled, and how hands-on tests are added."
   crumbs={[{ name: 'How we rank', href: '/methodology' }]}
 >
   <article class="prose">
@@ -52,18 +52,17 @@ const factors = Object.keys(FACTOR_LABELS) as Factor[];
     <ul>
       <li>
         <strong>Facts come from primary sources.</strong> Each tool page lists its sources and a last-verified date.
-        Fields we haven't confirmed are marked "Unverified".
+        Anything we haven't confirmed shows as "Not listed", "Not confirmed" or "See site for pricing", never as a yes or a no.
       </li>
       <li>
         <strong>Unknown never helps a tool.</strong> An unverified fact scores below the midpoint, so verifying a tool
-        can only move it in the direction the facts point. Every ranking shows how many of the four key facts (free
-        tier, price, commercial use, exports) are verified for each tool, so a low score caused by missing data is
-        visible as such. Vendors can send a primary source to fill a gap.
+        can only move it in the direction the facts point. The four key facts are free tier, price, commercial use and exports; a tool missing
+        some of them scores lower until they're confirmed. Vendors can send a primary source to fill a gap.
       </li>
       <li>
         <strong>Features are checked, not assumed.</strong> Every tool has a feature checklist for its category (for
         example pixel art, sprite sheets and 8-direction views for sprite tools). A feature is marked Yes, Partly or No
-        only when the vendor's own site, docs or pricing page says so; everything else shows as Unverified. Features
+        only when the vendor's own site, docs or pricing page says so; everything else shows as "Not confirmed". Features
         power the comparison tables and don't change scores.
       </li>
       <li>

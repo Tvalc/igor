@@ -1,5 +1,5 @@
 ---
-// One feature cell: yes / partly / no, or "unverified" when we have no source either way.
+// One feature cell: yes / partly / no, or "not confirmed" when we have no source either way.
 interface Props {
   value?: string;
   note?: string;
@@ -7,7 +7,7 @@ interface Props {
 const { value, note } = Astro.props;
 const v = value ?? 'unknown';
 const ICON = { yes: '✓', partial: '◐', no: '✕', unknown: '?' } as Record<string, string>;
-const TEXT = { yes: 'Yes', partial: 'Partly', no: 'No', unknown: 'Unverified' } as Record<string, string>;
+const TEXT = { yes: 'Yes', partial: 'Partly', no: 'No', unknown: 'Not confirmed' } as Record<string, string>;
 ---
 
 <span class={`fm fm-${v}`} title={note}><span class="fm-ico" aria-hidden="true">{ICON[v]}</span>{TEXT[v]}</span>

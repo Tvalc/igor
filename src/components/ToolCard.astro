@@ -58,14 +58,14 @@ if (d.status !== 'active') badges.push([STATUS_LABELS[d.status], 'badge-muted'])
         <p class="tcard-specs">
           <span><b>Type:</b> {d.categories.map((c) => CATEGORY_LABELS[c]).join(', ')}</span>
           {d.engines.length > 0 && <span><b>Engines:</b> {d.engines.map((e) => ENGINE_LABELS[e]).join(', ')}</span>}
-          <span><b>Runs on:</b> {d.platforms.length ? d.platforms.join(', ') : 'Unverified'}</span>
+          {d.platforms.length > 0 && <span><b>Runs on:</b> {d.platforms.join(', ')}</span>}
         </p>
       )
     }
   </div>
   <div class="tcard-side">
     <div class="tcard-price">
-      {label === 'Unverified' ? <span class="unverified">Price unverified</span> : label}
+      {label === 'Unverified' ? <span class="unverified">See site for pricing</span> : label}
       {p !== null && p > 0 && <small>starting price</small>}
     </div>
     {

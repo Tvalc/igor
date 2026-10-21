@@ -50,6 +50,6 @@ const free = alts.find((s) => s.tool.data.pricing.free_tier === 'yes');
   </div>
   <ol class="tool-list" style="margin-top:22px">{alts.map((s, i) => <ToolCard scored={s} rank={i + 1} details />)}</ol>
   <p class="meta">
-    Ranked on our {lc(CATEGORY_LABELS[d.categories[0]])} rubric. <a href={`/tools/${tool.id}`}>Back to the {d.name} review</a>
+    Ranked on our {lc(CATEGORY_LABELS[d.categories[0]])} scoring. <a href={`/tools/${tool.id}`}>Back to the {d.name} review</a>
   </p>
 </Base>

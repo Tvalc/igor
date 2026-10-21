@@ -21,7 +21,7 @@ export function prosCons(t: Tool) {
   else if (d.license.commercial_use === 'no') cons.push('No commercial use');
 
   if (d.license.open_source) pros.push('Open source');
-  if (d.skill_level === 'beginner') pros.push(d.categories.includes('game-maker') ? 'No coding needed' : 'Beginner friendly');
+  if (d.skill_level === 'beginner' && d.features.no_code !== 'yes') pros.push(d.categories.includes('game-maker') ? 'No coding needed' : 'Beginner friendly');
   if (d.skill_level === 'advanced') cons.push('Needs technical skills');
   if (d.engines.length) pros.push(`Works with ${d.engines.map((e) => ENGINE_LABELS[e]).slice(0, 3).join(', ')}`);
   if (d.exports.length >= 3) pros.push(`Exports ${d.exports.slice(0, 3).map((e) => EXPORT_LABELS[e]).join(', ')}`);

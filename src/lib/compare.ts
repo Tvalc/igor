@@ -2,7 +2,7 @@ import { activeTools, comparisonPairs } from './lists';
 import { scoreTool, type Tool } from './score';
 import { FEATURES, featuresFor } from './features';
 import {
-  CATEGORY_LABELS, COMMERCIAL_LABELS, ENGINE_LABELS, EXPORT_LABELS, FREE_TIER_LABELS, STATUS_LABELS, list, price, tier,
+  CATEGORY_LABELS, COMMERCIAL_LABELS, ENGINE_LABELS, EXPORT_LABELS, FREE_TIER_LABELS, STATUS_LABELS, list, price, shown, tier,
 } from './format';
 
 // Shared by the compare builder and the directory filters: one compact record per tool, embedded in the page as
@@ -50,7 +50,9 @@ export async function clientTools() {
         price: fromPrice(t),
         priceLabel: priceLabel(t),
         commercial: d.license.commercial_use,
-        commercialLabel: COMMERCIAL_LABELS[d.license.commercial_use] + (d.license.open_source ? ' (open source)' : ''),
+        commercialLabel: d.license.open_source
+          ? `${shown(COMMERCIAL_LABELS[d.license.commercial_use])} (open source)`
+          : COMMERCIAL_LABELS[d.license.commercial_use],
         engines: list(d.engines, ENGINE_LABELS),
         exports: list(d.exports, EXPORT_LABELS),
         platforms: list(d.platforms, { web: 'Web', desktop: 'Desktop', plugin: 'Plugin', api: 'API', cli: 'CLI', 'self-hosted': 'Self-hosted' }),

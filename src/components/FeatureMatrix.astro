@@ -38,11 +38,3 @@ const rows = defs.filter((f) => tools.some((t) => t.data.features[f.key] !== und
     </div>
   )
 }
-{
-  rows.length < defs.length && (
-    <p class="meta">
-      {defs.length - rows.length} more {defs.length - rows.length === 1 ? 'feature isn’t' : 'features aren’t'} shown
-      because we haven't verified {defs.length - rows.length === 1 ? 'it' : 'them'} for any of these tools yet.
-    </p>
-  )
-}

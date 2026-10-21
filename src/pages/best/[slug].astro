@@ -49,8 +49,8 @@ const faqs = [
     q: `Can I sell games made with these tools?`,
     a:
       commercialOnes.length > 0
-        ? `We've verified that ${names(commercialOnes)} allow commercial use outright. Others allow it only on paid plans, or we haven't verified it yet. Each tool page shows the current status.`
-        : `We haven't yet verified unrestricted commercial use for any tool on this list. Several allow it on paid plans. Check each tool page before shipping.`,
+        ? `We've verified that ${names(commercialOnes)} allow commercial use outright. Others allow it only on paid plans or don't say. Each tool page shows the details.`
+        : `None of these tools clearly allows commercial use on every plan. Several allow it on paid plans, so check each tool page before shipping.`,
   },
   beginnerOnes.length > 0 && {
     q: `Which tools work for complete beginners?`,
@@ -58,7 +58,7 @@ const faqs = [
   },
   {
     q: 'How are these tools ranked?',
-    a: `Every tool is scored on the same public rubric: accessibility, output and integrations, commercial rights, value and maturity. Hands-on test results are added as tests are published. Affiliate links and sponsorships never change a score.`,
+    a: `Every tool is scored the same way, on accessibility, output and integrations, commercial rights, value and maturity. Hands-on test results are added as tests are published. Affiliate links and sponsorships never change a score.`,
   },
 ].filter(Boolean) as { q: string; a: string }[];
 
@@ -93,7 +93,7 @@ const description = `${def.title}, ranked: ${names(ranked)} and more, compared o
   {
     hasMakko && (
       <p class="notice">
-        Disclosure: this site is run by {SITE.owner}. Makko appears on this list, ranked by the same rubric as
+        Disclosure: this site is run by {SITE.owner}. Makko appears on this list, scored the same way as
         everything else.
       </p>
     )
