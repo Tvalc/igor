@@ -4,7 +4,8 @@
 //
 // Usage: node scripts/preview-bundle.mjs <dist> <out> [page.html ...]
 //   With no pages listed, every HTML page is included. Links to pages left out become "#not-in-preview".
-import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { buildSync } from 'esbuild';
 import { dirname, extname, join, posix, relative } from 'node:path';
 
 const [dist, out, ...only] = process.argv.slice(2);
@@ -80,6 +81,49 @@ while ([...assets].some((a) => !done.has(a))) {
     }
   }
 }
+
+// Preview hosts sandbox pages without a real origin, which blocks module scripts (they load in CORS mode).
+// Rebundle each page entry script into a classic deferred script with its shared chunks inlined.
+const entries = new Set();
+for (const page of pages) {
+  const html = readFileSync(join(out, page), 'utf8');
+  for (const [, src] of html.matchAll(/<script type="module" src="([^"]+)"/g)) entries.add(posix.join(posix.dirname(page), src));
+}
+for (const e of entries) {
+  buildSync({ entryPoints: [join(out, e)], bundle: true, format: 'iife', minify: true, target: 'es2020', outfile: join(out, e.replace(/\.js$/, '.classic.js')), allowOverwrite: true, logLevel: 'error' });
+}
+for (const page of pages) {
+  const f = join(out, page);
+  writeFileSync(f, readFileSync(f, 'utf8').replace(/<script type="module" src="([^"]+)\.js"/g, '<script defer src="$1.classic.js"'));
+}
+// Only the classic builds are referenced now.
+for (const a of [...done].filter((a) => a.endsWith('.js'))) rmSync(join(out, a));
+// Some hosts reserve top-level names starting with "_", so ship the asset folder as "assets".
+if (existsSync(join(out, '_astro'))) {
+  renameSync(join(out, '_astro'), join(out, 'assets'));
+  for (const f of walk(out).filter((f) => /\.(html|css)$/.test(f))) {
+    const p = join(out, f);
+    writeFileSync(p, readFileSync(p, 'utf8').replaceAll('_astro/', 'assets/'));
+  }
+}
+
+// The preview host's content policy blocks images from other sites, so drop vendor logo images there; the
+// monogram underneath shows instead.
+for (const page of pages) {
+  const f = join(out, page);
+  writeFileSync(f, readFileSync(f, 'utf8').replace(/<img src="https:\/\/www\.google\.com\/s2\/favicons[^>]*>/g, ''));
+}
+
+// Fonts are CORS fetches too, so embed them in the stylesheet.
+for (const f of walk(out).filter((f) => f.endsWith('.css'))) {
+  const p = join(out, f);
+  const css = readFileSync(p, 'utf8').replace(/url\(([^)'"]+\.woff2)\)/g, (_, rel) => {
+    const font = join(dirname(p), rel);
+    return existsSync(font) ? `url(data:font/woff2;base64,${readFileSync(font).toString('base64')})` : `url(${rel})`;
+  });
+  writeFileSync(p, css);
+}
+for (const f of walk(out).filter((f) => f.endsWith('.woff2'))) rmSync(join(out, f));
 
 const leftover = walk(out).filter((f) => /\.(html|css)$/.test(f)).filter((f) =>
   /\b(?:href|src)="\/(?!\/)|url\(['"]?\/(?!\/)/.test(readFileSync(join(out, f), 'utf8')),
