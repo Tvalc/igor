@@ -64,7 +64,7 @@ export function groupOf(tool: Tool): Group {
   return 'art';
 }
 
-export function factors(tool: Tool, group: Group, featureCat?: string): Record<Factor, number> {
+export function factors(tool: Tool, group: Group, featureCat?: string | string[]): Record<Factor, number> {
   const d = tool.data;
   const skillWeight = group === 'code' ? 0.2 : 0.4;
   const access = (1 - skillWeight) * FREE_TIER[d.pricing.free_tier] + skillWeight * SKILL[d.skill_level];
@@ -83,7 +83,7 @@ export function factors(tool: Tool, group: Group, featureCat?: string): Record<F
   // A category ranking judges every tool on that category's checklist; elsewhere, the checklists for the tool's
   // categories in this group (all its categories if none fall in the group).
   const inGroup = d.categories.filter((c) => GROUP_CATEGORIES[group].includes(c));
-  const checklist = featuresFor(featureCat ? [featureCat] : inGroup.length ? inGroup : d.categories);
+  const checklist = featuresFor(featureCat ? [featureCat].flat() : inGroup.length ? inGroup : d.categories);
   const have = d.features as Record<string, string>;
   const features = checklist.length
     ? checklist.reduce((sum, f) => sum + (have[f.key] ? FEATURE[have[f.key]] : FEATURE_UNKNOWN), 0) / checklist.length
@@ -99,7 +99,7 @@ export interface Scored {
   handsOn: boolean;
 }
 
-export function scoreTool(tool: Tool, group: Group = groupOf(tool), featureCat?: string): Scored {
+export function scoreTool(tool: Tool, group: Group = groupOf(tool), featureCat?: string | string[]): Scored {
   const f = factors(tool, group, featureCat);
   const w = WEIGHTS[group];
   let facts = 0;
@@ -109,7 +109,7 @@ export function scoreTool(tool: Tool, group: Group = groupOf(tool), featureCat?:
   return { tool, score: Math.round(combined * 100), factors: f, handsOn: Boolean(h) };
 }
 
-export function rank(tools: Tool[], group: Group, featureCat?: string): Scored[] {
+export function rank(tools: Tool[], group: Group, featureCat?: string | string[]): Scored[] {
   return tools
     .filter((t) => t.data.status !== 'discontinued')
     .map((t) => scoreTool(t, group, featureCat))

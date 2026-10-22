@@ -7,7 +7,7 @@ export interface ListDef {
   query: string; // the search phrase this page answers
   question: string; // lead FAQ question, phrased the way people ask it
   group: Group | 'mixed'; // 'mixed' lists score each tool with its own category's rubric
-  features?: string; // category whose feature checklist this list's matrix shows
+  features?: string | string[]; // categories whose feature checklists this list scores and shows
   blurb: string;
   filter: (t: Tool) => boolean;
 }
@@ -24,7 +24,7 @@ export const LISTS: ListDef[] = [
     filter: (t) => has(t, 'game-maker'),
   },
   {
-    slug: '2d-game-makers', features: 'game-maker', title: 'Best AI Tools to Make 2D Games', question: 'What is the best AI tool to make a 2D game?',
+    slug: '2d-game-makers', features: ['game-maker', 'art-2d'], title: 'Best AI Tools to Make 2D Games', question: 'What is the best AI tool to make a 2D game?',
     query: 'make 2D games with AI', group: 'maker',
     blurb: 'AI game makers that handle 2D games well, including tools that generate the sprites too.',
     filter: (t) => has(t, 'game-maker') && tag(t, '2d'),
