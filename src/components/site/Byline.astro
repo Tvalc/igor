@@ -10,5 +10,5 @@ const { updated, note } = Astro.props;
 ---
 
 <p class="meta">
-  By <a href={EDITOR.url}>{EDITOR.name}</a>, {EDITOR.role.split(',')[0].toLowerCase()} · Updated <time datetime={isoDate(updated)}>{longDate(updated)}</time>{note && <> · {note}</>}
+  By <a href={EDITOR.url}>{EDITOR.name}</a>, {EDITOR.role} · Updated <time datetime={isoDate(updated)}>{longDate(updated)}</time>{note && <> · {note}</>}
 </p>

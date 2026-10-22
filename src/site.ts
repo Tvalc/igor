@@ -8,15 +8,15 @@ export const SITE = {
   owner: 'the Makko AI team',
   ownerProduct: 'makko-ai',
   year: 2026,
-  // Where vendors and readers send corrections. Forwarded to the team inbox.
-  contact: 'corrections@makeaigames.com',
+  // Where vendors and readers send corrections.
+  contact: 'support@makko.ai',
 };
 
 // The named editor on reviews, rankings and guides (Person in JSON-LD, byline on pages).
 export const EDITOR = {
-  name: 'Tony',
-  role: 'Editor, Make AI Games',
-  bio: 'Builds AI game tools at Makko and runs the data, scoring and tests behind this site.',
+  name: 'Tony Valcarcel',
+  role: 'Co-Founder, Makko.ai',
+  bio: 'Technologist, father and goofball. Runs the data, scoring and tests behind this site.',
   url: '/about#editor',
 };
 
