@@ -23,6 +23,7 @@ exports:
 - obj
 - fbx
 - pbr-maps
+- sprite-sheet
 skill_level: intermediate
 pricing:
   model: freemium

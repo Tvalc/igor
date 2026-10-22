@@ -21,6 +21,9 @@ engines:
 exports:
 - png
 - webp
+- sprite-sheet
+- web
+- source-code
 skill_level: beginner
 pricing:
   model: freemium
@@ -35,6 +38,7 @@ license:
     takes no revenue share or royalties.'
 makko_owned: true
 sources:
+- https://www.makko.ai/help/left-toolbar-files-source-control
 - https://www.makko.ai/pricing
 - https://makko.ai
 - https://blog.makko.ai/best-ai-game-makers-in-2026-7-tools-compared/

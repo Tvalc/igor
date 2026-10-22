@@ -9,7 +9,7 @@ import Listing from '../../components/site/Listing.astro';
 import { buttonVariants } from '../../components/ui/button';
 import { computePicks } from '../../lib/picks';
 import { ArrowRight, BadgeCheck, CalendarDays, ListOrdered, Trophy } from 'lucide-react';
-import { FEATURES } from '../../lib/features';
+import { featuresFor } from '../../lib/features';
 import { publishedLists, toolsWithAlternatives, type ListDef } from '../../lib/lists';
 import { FACTOR_LABELS, strengths, type Scored } from '../../lib/score';
 import { article, itemList, faqPage } from '../../lib/jsonld';
@@ -34,7 +34,7 @@ const beginnerOnes = ranked.filter((s) => s.tool.data.skill_level === 'beginner'
 const hasMakko = ranked.some((s) => s.tool.data.makko_owned);
 const withAlts = await toolsWithAlternatives();
 const matrixTools = ranked.slice(0, 6).map((s) => s.tool);
-const matrixDefs = def.features ? FEATURES[def.features] : [];
+const matrixDefs = def.features ? featuresFor([def.features].flat()) : [];
 const pickLabel = new Map(computePicks(ranked).map((p) => [p.s.tool.id, p.label]));
 const names = (xs: Scored[], n = 3) => xs.slice(0, n).map((s) => s.tool.data.name).join(', ');
 

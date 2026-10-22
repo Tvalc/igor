@@ -7,6 +7,7 @@ best_for: Indie devs who want an AI agent inside a full engine.
 categories:
 - game-maker
 - code
+- art-2d
 tags:
 - godot
 - agent
@@ -49,6 +50,9 @@ sources:
 - https://www.summerengine.com/terms
 - https://www.summerengine.com/legal/runtime-license
 - https://www.summerengine.com/legal/ai-terms
+- https://www.summerengine.com/create/effects
+- https://docs.summerengine.com/art-system/ai-generation.md
+- https://www.summerengine.com/mcp
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -66,6 +70,11 @@ features:
   engine_integration: 'yes'
   local_models: partial
   hosting: partial
+  pixel_art: 'yes'
+  sprite_sheets: 'yes'
+  transparent_bg: 'yes'
+  multi_direction: partial
+  api: partial
 feature_notes:
   model_choice: Via external MCP clients (Claude Code, Cursor, Codex)
   ai_art: Cloud generation of images and 3D models uses credits
@@ -78,6 +87,11 @@ feature_notes:
   engine_integration: "The AI agent is built into Summer's own Godot-compatible engine"
   local_models: "Local models via Ollama through an external agent app; built-in AI is hosted"
   hosting: "Publishes web builds to Summer Games, but every release needs owner approval and staff review"
+  pixel_art: "Pixel Art and Retro 16-bit style presets, plus a Pixel sprite tool that works from one image"
+  sprite_sheets: "Sprite sheet tool on the Effects tab builds a sheet from one uploaded image"
+  transparent_bg: "Background removal after generation, not a transparent output option"
+  multi_direction: "Turnaround sheets from one image; set 4- or 8-direction sprite views aren't advertised"
+  api: "Asset generation through the Summer MCP server for AI agents; no API key or REST API"
 plans:
 - name: Hobby
   price_usd: 0

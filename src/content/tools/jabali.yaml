@@ -6,6 +6,7 @@ description: Jabali is an AI game engine that takes a game from brainstorm throu
 best_for: Hobbyists who want one tool from idea to published game.
 categories:
 - game-maker
+- art-2d
 tags:
 - no-code
 - 2d
@@ -40,6 +41,7 @@ sources:
 - https://www.jabali.ai/product-updates/
 - https://www.jabali.ai/terms-and-conditions/
 - https://www.jabali.ai/license/
+- https://jaabaali.github.io/docs/studio/assets/images/
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -51,11 +53,17 @@ features:
   mobile: partial
   edit_code: partial
   ai_audio: partial
+  pixel_art: 'yes'
+  transparent_bg: 'yes'
+  consistent_characters: partial
 feature_notes:
   multiplayer: Multiplayer games via Jabali Studio (waitlist) and the separate FriendJam product
   mobile: Runs in mobile browsers; no native app yet
   edit_code: Source code access only in Jabali Studio (waitlist)
   ai_audio: "Music, vocal track and SFX generation in Jabali's FriendJam builder, paid with Sparks"
+  pixel_art: "Pixel art by asking for it in the prompt; no dedicated pixel-art mode"
+  transparent_bg: "Remove Background option when generating, or on an existing image"
+  consistent_characters: "Match an existing asset's look by adding it as an input image; no dedicated character tool"
 plans:
 - name: Free
   price_usd: 0

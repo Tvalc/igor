@@ -18,6 +18,7 @@ engines:
 - aseprite
 exports:
 - png
+- sprite-sheet
 skill_level: intermediate
 pricing:
   model: one-time
