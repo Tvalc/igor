@@ -136,7 +136,7 @@ export async function rankedList(def: ListDef): Promise<Scored[]> {
       .map((t) => scoreTool(t))
       .sort((a, b) => b.score - a.score || a.tool.data.name.localeCompare(b.tool.data.name));
   }
-  return rank(matching, def.group);
+  return rank(matching, def.group, def.features);
 }
 
 let listsCache: Promise<{ def: ListDef; ranked: Scored[] }[]> | undefined;

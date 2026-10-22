@@ -21,6 +21,7 @@ engines:
 exports:
 - png
 - webp
+- sprite-sheet
 skill_level: beginner
 pricing:
   model: freemium

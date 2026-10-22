@@ -32,8 +32,8 @@ interface Props {
   list: ListDef;
 }
 const { a, b, group, list: listDef } = Astro.props;
-const sa = scoreTool(a, group);
-const sb = scoreTool(b, group);
+const sa = scoreTool(a, group, listDef.features);
+const sb = scoreTool(b, group, listDef.features);
 const winner = sa.score === sb.score ? null : sa.score > sb.score ? sa : sb;
 const factorKeys = Object.keys(sa.factors) as Factor[];
 const edge = (k: Factor) =>
