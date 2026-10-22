@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { activeTools, comparisonPairs, publishedLists, toolsWithAlternatives } from '../lib/lists';
 import { isoDate } from '../lib/format';
+import { GUIDES } from '../site';
 
 export const GET: APIRoute = async ({ site }) => {
   const base = site!.toString().replace(/\/$/, '');
@@ -10,8 +11,10 @@ export const GET: APIRoute = async ({ site }) => {
   const urls: { loc: string; lastmod: string }[] = [];
   const add = (path: string, lastmod = newest) => urls.push({ loc: base + path, lastmod });
 
-  for (const p of ['/', '/best/', '/tools/', '/compare/', '/methodology', '/disclosure', '/about']) add(p);
-  for (const g of ['how-to-make-a-game-with-ai', 'make-2d-games-with-ai', 'make-game-art-with-ai']) add(`/guides/${g}`);
+  for (const p of ['/', '/best/', '/tools/', '/compare/', '/methodology', '/disclosure', '/about', '/editorial-policy', '/stats', '/data', '/badges']) add(p);
+  for (const g of GUIDES) add(`/guides/${g}`);
+  const log = (await getCollection('changelog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  if (log.length) add('/changelog', isoDate(log[0].data.date));
   for (const { def } of await publishedLists()) add(`/best/${def.slug}`);
   const withAlts = await toolsWithAlternatives();
   for (const t of tools) {

@@ -114,6 +114,42 @@ export const LISTS: ListDef[] = [
     filter: (t) => has(t, 'npc'),
   },
   {
+    slug: 'ai-browser-game-makers', features: 'game-maker', title: 'Best AI Browser Game Makers', question: 'What is the best AI tool to make a browser game?',
+    query: 'make a browser game with AI', group: 'maker',
+    blurb: 'AI game makers that publish playable web games you can share with a link.',
+    filter: (t) => has(t, 'game-maker') && (t.data.exports.includes('web') || tag(t, 'browser') || engine(t, 'web')),
+  },
+  {
+    slug: 'ai-mobile-game-makers', features: 'game-maker', title: 'Best AI Tools to Make Mobile Games', question: 'What is the best AI tool to make a mobile game?',
+    query: 'make a mobile game with AI', group: 'maker',
+    blurb: 'AI game makers whose games run on phones, in the mobile browser or as iOS and Android builds.',
+    filter: (t) => has(t, 'game-maker') && (['yes', 'partial'].includes(t.data.features.mobile ?? '') || t.data.exports.some((e) => e === 'ios' || e === 'android')),
+  },
+  {
+    slug: 'ai-multiplayer-game-makers', features: 'game-maker', title: 'Best AI Tools to Make Multiplayer Games', question: 'Can AI make a multiplayer game?',
+    query: 'make a multiplayer game with AI', group: 'maker',
+    blurb: 'AI game makers with built-in multiplayer, so friends can play together without a server of your own.',
+    filter: (t) => has(t, 'game-maker') && ['yes', 'partial'].includes(t.data.features.multiplayer ?? ''),
+  },
+  {
+    slug: 'ai-for-roblox', title: 'Best AI Tools for Roblox', question: 'What is the best AI tool for Roblox?',
+    query: 'AI for Roblox Studio', group: 'mixed',
+    blurb: 'AI assistants and generators that work with Roblox Studio.',
+    filter: (t) => engine(t, 'roblox') || tag(t, 'roblox'),
+  },
+  {
+    slug: 'mcp-servers-for-game-dev', title: 'Best MCP Servers for Game Development', question: 'What is the best MCP server for game development?',
+    query: 'MCP server for Unity, Godot, Unreal or Blender', group: 'mixed',
+    blurb: 'Model Context Protocol servers that let Claude, Cursor and other AI agents drive a game engine or Blender.',
+    filter: (t) => tag(t, 'mcp'),
+  },
+  {
+    slug: 'open-source-ai-game-dev-tools', title: 'Best Open-Source AI Game Development Tools', question: 'What are the best open-source AI tools for game development?',
+    query: 'open source AI game development tools', group: 'mixed',
+    blurb: 'Open-source and open-weight tools you can inspect, self-host and modify.',
+    filter: (t) => t.data.license.open_source || tag(t, 'open-source'),
+  },
+  {
     slug: 'free-ai-game-dev-tools', title: 'Best Free AI Game Development Tools', question: 'What are the best free AI tools for game development?',
     query: 'free AI tools for game development', group: 'mixed',
     blurb: 'Every tool with a genuinely free tier or open-source license, across all categories.',

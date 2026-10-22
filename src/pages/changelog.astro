@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { isoDate, longDate } from '../lib/format';
+
+const entries = (await getCollection('changelog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf() || a.id.localeCompare(b.id));
+const tools = new Map((await getCollection('tools')).map((t) => [t.id, t.data.name]));
+---
+
+<Base
+  title="Changelog: Data and Ranking Updates"
+  description="Every change to Make AI Games tool data, scores and rankings, newest first, with the tools affected. Also available as an RSS feed."
+  crumbs={[{ name: 'Changelog', href: '/changelog' }]}
+>
+  <article class="prose">
+    <h1>Changelog</h1>
+    <div class="answer">
+      <p>
+        Every change to our tool data, scores and rankings, newest first. Tool facts are re-checked weekly against
+        each vendor's own pages. Follow along with the <a href="/changelog.xml">RSS feed</a>.
+      </p>
+    </div>
+    {
+      entries.map((e) => (
+        <section id={e.id}>
+          <h2><time datetime={isoDate(e.data.date)}>{longDate(e.data.date)}</time>: {e.data.title}</h2>
+          <p>{e.data.body}</p>
+          {e.data.tools.length > 0 && (
+            <p class="meta">Tools: {e.data.tools.map((id, i) => <>{i > 0 && ', '}<a href={`/tools/${id}`}>{tools.get(id) ?? id}</a></>)}</p>
+          )}
+        </section>
+      ))
+    }
+  </article>
+</Base>

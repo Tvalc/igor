@@ -1,0 +1,111 @@
+---
+import Base from '../../layouts/Base.astro';
+import Byline from '../../components/site/Byline.astro';
+import { RankTable } from '../../components/site/RankTable';
+import { Faq } from '../../components/site/Faq';
+import { activeTools, LISTS, rankedList } from '../../lib/lists';
+import { article, faqPage } from '../../lib/jsonld';
+import { isoDate, newestVerified } from '../../lib/format';
+import { SITE } from '../../site';
+
+const makers = await rankedList(LISTS.find((l) => l.slug === 'ai-game-makers')!);
+const steam = makers.filter((s) => s.tool.data.exports.includes('steam'));
+const desktop = makers.filter((s) => !s.tool.data.exports.includes('steam') && s.tool.data.exports.some((e) => ['windows', 'mac', 'linux', 'source-code'].includes(e)));
+const names = (xs: typeof makers, n = 3) => xs.slice(0, n).map((s) => s.tool.data.name).join(', ');
+
+const VALVE = 'https://steamcommunity.com/groups/steamworks/announcements/detail/3862463747997849619';
+const faqs = [
+  {
+    q: 'Can I sell a game made with AI on Steam?',
+    a: 'Yes. Since January 2024 Steam accepts games made with AI tools, as long as you disclose the AI content in the Content Survey and the game contains nothing illegal or infringing. Live-generated AI content also needs guardrails you describe to Valve.',
+  },
+  {
+    q: 'Do I have to disclose that I used AI on Steam?',
+    a: 'You disclose AI-generated content that players experience: art, audio, text or other assets made with AI during development, and anything generated while the game runs. As reported in January 2026, Valve\'s survey says back-end tools that don\'t ship in the game, such as coding assistants, are not the focus of the disclosure.',
+  },
+  {
+    q: 'Which AI game makers can publish to Steam?',
+    a: steam.length
+      ? `${names(steam)} ${steam.length === 1 ? 'lists' : 'list'} Steam publishing directly. Tools that export Windows builds or source code, such as ${names(desktop, 2)}, can also get you there with an extra step.`
+      : 'None of the AI game makers we track publish to Steam directly yet. Tools that export Windows builds or source code can get you there with an extra step.',
+  },
+  {
+    q: 'How much does it cost to publish on Steam?',
+    a: 'Steam Direct charges a $100 fee per game, which Valve pays back once the game earns $1,000 in gross revenue. Valve takes a 30% revenue share by default.',
+  },
+];
+const title = `How to Publish an AI-Made Game on Steam (${SITE.year})`;
+const description = "How to publish a game made with AI on Steam: Valve's AI disclosure rules, which AI game makers export Steam-ready builds, the $100 fee, and a step-by-step checklist.";
+const base = Astro.site!.toString().replace(/\/$/, '');
+const updated = newestVerified(await activeTools());
+---
+
+<Base
+  title={title}
+  description={description}
+  crumbs={[{ name: 'Guides', href: '/guides/how-to-make-a-game-with-ai' }, { name: 'Publish an AI game on Steam', href: '/guides/publish-ai-game-on-steam' }]}
+  jsonLd={[faqPage(faqs), article({ headline: title, description, url: `${base}/guides/publish-ai-game-on-steam`, dateModified: isoDate(updated) }, base)]}
+>
+  <article class="prose">
+    <h1>How to publish an AI-made game on Steam</h1>
+    <div class="answer">
+      <p>
+        Steam accepts games made with AI. You disclose the AI-generated content in Steamworks' Content Survey, confirm
+        you have the rights to everything in the game, and pay the $100 Steam Direct fee.
+        {steam.length > 0 && <><strong>{names(steam)}</strong> can publish to Steam directly; </>}
+        other AI game makers get there through a Windows build or exported source code.
+      </p>
+    </div>
+    <Byline updated={updated} note="Not legal advice. Check Valve's current Steamworks documentation before you submit." />
+
+    <h2>1. Make sure your tool can produce a Steam build</h2>
+    <p>
+      Steam needs a downloadable build, usually Windows. Browser-only game makers can't ship to Steam unless they
+      export a desktop build or the project's source code, which you then package in an engine.
+      {steam.length > 0 && <> Tools we've confirmed list Steam publishing: {names(steam, 5)}.</>}
+      {desktop.length > 0 && <> Tools with Windows or source-code export: {names(desktop, 5)}.</>}
+    </p>
+
+    <h2>2. Check commercial rights on your plan</h2>
+    <p>
+      Many AI tools grant commercial rights only on paid plans. Check the "Commercial use" row on each tool page for
+      every tool that made an asset in your game, and keep a list of which tool made what. See
+      <a href="/guides/who-owns-ai-game-assets">who owns AI game assets</a>.
+    </p>
+
+    <h2>3. Fill in the AI disclosure</h2>
+    <p>
+      <a href={VALVE} rel="noopener">Valve's January 2024 rules</a> split AI use into two kinds:
+    </p>
+    <ul>
+      <li><strong>Pre-generated:</strong> art, code, sound or other content made with AI tools during development. You promise it isn't illegal or infringing, and Valve checks your game against the disclosure in review.</li>
+      <li><strong>Live-generated:</strong> content AI creates while the game runs. You must also describe the guardrails that stop it producing illegal content. Players can report such content from the Steam overlay.</li>
+    </ul>
+    <p>
+      Much of the disclosure appears on your store page. In January 2026 Valve's survey was
+      <a href="https://respawn.outlookindia.com/gaming/gaming-news/valve-clarifies-steam-ai-policy-focus-shifts-to-content-consumed" rel="noopener">reported</a>
+      to say that efficiency tools that don't ship in the game, such as coding assistants, are not the focus of
+      the section; content players see or hear is.
+    </p>
+
+    <h2>4. Submit through Steamworks</h2>
+    <ol>
+      <li>Create a Steamworks partner account and pay the $100 Steam Direct fee for the game.</li>
+      <li>Build the store page: capsule art, screenshots, trailer, description and the AI disclosure.</li>
+      <li>Upload your build with SteamPipe and request review of the store page and build.</li>
+      <li>Wait the required period between paying the fee and launching, then release.</li>
+    </ol>
+
+    <h2>5. Before launch</h2>
+    <p>
+      Play the whole game on a clean Windows machine, make sure no generated asset copies a known character or brand,
+      and keep your prompt and tool records in case Valve asks.
+    </p>
+  </article>
+
+  <h2 class="mt-14 mb-4 text-2xl font-semibold">AI game makers, ranked</h2>
+  <RankTable ranked={makers} limit={8} />
+  <p class="mt-3"><a class="text-brand text-sm font-medium hover:underline" href="/best/ai-game-makers">Full AI game maker ranking →</a></p>
+
+  <Faq faqs={faqs} />
+</Base>

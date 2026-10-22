@@ -23,6 +23,7 @@ import {
 } from '../../lib/format';
 import { fromPrice, priceHeadline, priceLabel } from '../../lib/compare';
 import { SITE } from '../../site';
+import { badgeFor } from '../../lib/badge';
 
 export async function getStaticPaths() {
   return (await getCollection('tools')).map((tool) => ({ params: { slug: tool.id }, props: { tool } }));
@@ -57,6 +58,9 @@ const compareIds = [tool.id, ...alternatives.slice(0, 2).map((s) => s.tool.id)];
 const startPrice = fromPrice(tool);
 const headline = priceHeadline(tool);
 const dead = d.status === 'discontinued';
+const badge = dead ? undefined : await badgeFor(tool);
+const badgeCode = badge && `<a href="${base}/tools/${tool.id}"><img src="${base}/badges/${tool.id}.svg" alt="${badge.alt}" height="28"></a>`;
+const correction = `mailto:${SITE.contact}?subject=${encodeURIComponent(`Correction: ${d.name}`)}&body=${encodeURIComponent(`Page: ${base}/tools/${tool.id}\n\nWhat is wrong:\n\nWhat it should say:\n\nPrimary source (link):\n`)}`;
 const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what to use instead` : `${d.name} Review (${SITE.year}): Pricing & Alternatives`;
 ---
 
@@ -246,6 +250,23 @@ const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what t
           </section>
         )
       }
+
+      <section id="corrections" class="bg-muted/30 scroll-mt-32 rounded-xl border p-5 text-sm">
+        <h2 class="mb-2 text-lg font-semibold">Something wrong or out of date?</h2>
+        <p class="text-muted-foreground">
+          We fix verified errors within a week and log them in the <a class="underline" href="/changelog">changelog</a>.
+          <a class="text-brand font-medium hover:underline" href={correction}>Send a correction</a> with a link to a primary source.
+          See our <a class="underline" href="/editorial-policy">editorial policy</a>.
+        </p>
+        {badge && badgeCode && (
+          <details class="mt-4">
+            <summary class="cursor-pointer font-medium">Work on {d.name}? Embed your badge</summary>
+            <p class="text-muted-foreground mt-3"><img src={`/badges/${tool.id}.svg`} alt={badge.alt} height="28" loading="lazy" /></p>
+            <p class="text-muted-foreground mt-3">Paste this into your site or README. It updates when your ranking changes. <a class="underline" href="/badges">About badges</a></p>
+            <pre class="bg-background mt-2 overflow-x-auto rounded-md border p-3 text-xs"><code>{badgeCode}</code></pre>
+          </details>
+        )}
+      </section>
     </div>
 
     <aside class="lg:sticky lg:top-32 lg:self-start">

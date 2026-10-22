@@ -1,5 +1,5 @@
 import { defineCollection, z } from 'astro:content';
-import { glob } from 'astro/loaders';
+import { file, glob } from 'astro/loaders';
 import { FEATURE_VALUES, featuresFor } from './lib/features';
 
 // Every fact on the site comes from these schemas. Automation agents edit the YAML files;
@@ -107,4 +107,14 @@ const tests = defineCollection({
   }),
 });
 
-export const collections = { tools, tests };
+const changelog = defineCollection({
+  loader: file('./src/data/changelog.yaml'),
+  schema: z.object({
+    date: z.coerce.date(),
+    title: z.string(),
+    body: z.string(),
+    tools: z.array(z.string()).default([]),
+  }),
+});
+
+export const collections = { tools, tests, changelog };

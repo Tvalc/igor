@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import { publishedLists } from '../lib/lists';
+import { badgeFor } from '../lib/badge';
+
+const base = Astro.site!.toString().replace(/\/$/, '');
+const sample = (await publishedLists())[0].ranked[0].tool;
+const b = await badgeFor(sample);
+const code = `<a href="${base}/tools/${sample.id}"><img src="${base}/badges/${sample.id}.svg" alt="${b.alt}" height="28"></a>`;
+---
+
+<Base
+  title="Ranking Badges for AI Game Dev Tools"
+  description="Embed a live Make AI Games badge that shows your tool's ranking or score. It updates automatically when the data changes."
+  crumbs={[{ name: 'Badges', href: '/badges' }]}
+>
+  <article class="prose">
+    <h1>Ranking badges</h1>
+    <div class="answer">
+      <p>
+        Every tool on Make AI Games has a live badge showing its best placement in our rankings, or its score. Copy the
+        code from your tool's page, under "Embed your badge". The image updates whenever your ranking changes.
+      </p>
+    </div>
+    <p><img src={`/badges/${sample.id}.svg`} alt={b.alt} height="28" /></p>
+    <pre class="bg-muted overflow-x-auto rounded-md border p-3 text-xs"><code>{code}</code></pre>
+    <h2>How it works</h2>
+    <ul>
+      <li>The badge shows your best position if you're in the top 10 of any ranking, otherwise your score out of 100.</li>
+      <li>It's an SVG served from <code>{base}/badges/your-tool.svg</code>, rebuilt with the site.</li>
+      <li>Badges can't be bought, and showing one doesn't change your score.</li>
+      <li>Think a fact behind your ranking is wrong? See <a href="/editorial-policy#corrections">corrections</a>.</li>
+    </ul>
+  </article>
+</Base>

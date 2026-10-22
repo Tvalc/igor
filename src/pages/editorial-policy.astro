@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import { EDITOR, SITE } from '../site';
+
+const mail = `mailto:${SITE.contact}?subject=${encodeURIComponent('Correction')}&body=${encodeURIComponent('Page:\n\nWhat is wrong:\n\nWhat it should say:\n\nPrimary source (link):\n')}`;
+---
+
+<Base
+  title="Editorial Policy & Corrections"
+  description="How Make AI Games researches, scores and updates AI game dev tool rankings, who edits them, how we handle our own product, and how to request a correction."
+  crumbs={[{ name: 'Editorial policy', href: '/editorial-policy' }]}
+>
+  <article class="prose">
+    <h1>Editorial policy and corrections</h1>
+    <div class="answer">
+      <p>
+        Every fact on {SITE.name} comes from a primary source we link to, every score is computed by published code,
+        and every change is logged. {EDITOR.name} edits the site. Verified errors are fixed within a week.
+      </p>
+    </div>
+
+    <h2>Who writes and edits</h2>
+    <p>
+      Rankings, reviews and guides are edited by <a href={EDITOR.url}>{EDITOR.name}</a> ({EDITOR.role}). Tool data is
+      researched by people and by AI research agents working from vendor sources; a person reviews every change before
+      it goes live.
+    </p>
+
+    <h2>Where facts come from</h2>
+    <ul>
+      <li>Pricing from the vendor's pricing page, licensing from its terms or license file, features from its docs.</li>
+      <li>Every source is listed on the tool's page. A fact we can't confirm is shown as not listed, never guessed.</li>
+      <li>Every tool is re-checked at least monthly, most weekly, and the date is shown on the page.</li>
+    </ul>
+
+    <h2>How scores are made</h2>
+    <p>
+      Scores come from the <a href="/methodology">published method</a>, computed by code from the facts. Nobody types
+      in a score or a rank. Hands-on test results are added only after the full test, with every output, is published.
+    </p>
+
+    <h2>Our own product</h2>
+    <p>
+      {SITE.name} is run by {SITE.owner}, which makes <a href="/tools/makko-ai">Makko</a>. Makko gets the same data
+      rules and the same scoring code as every other tool, is labeled wherever it appears, and gets no editorial
+      extras. See the full <a href="/disclosure">ownership and affiliate disclosure</a>.
+    </p>
+
+    <h2 id="corrections">Corrections</h2>
+    <p>
+      If a fact is wrong or out of date, <a href={mail}>email {SITE.contact}</a> with the page, what should change and a
+      link to a primary source (a pricing page, docs, terms or changelog). Vendors are welcome to write in. We reply
+      within two business days, fix verified errors within a week, and log every fix in the
+      <a href="/changelog">changelog</a>. We don't remove accurate facts on request, and we don't change scores by hand.
+    </p>
+  </article>
+</Base>

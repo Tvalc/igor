@@ -30,3 +30,7 @@ from this data by `src/lib/score.ts`. Never edit scores, weights or page templat
 5. Run `node scripts/validate-data.mjs` and `npm run build`. Both must pass.
 6. Open a pull request titled `Data refresh YYYY-MM-DD`. Its body has a table of every changed field (tool,
    field, old value, new value, source URL) and a list of new tools.
+7. For every change a reader would notice (a price, plan, license, export or status change, or a new tool), add
+   an entry at the top of `src/data/changelog.yaml`: a unique `id` (date plus a short slug), `date`, a plain
+   `title`, a one-sentence `body` that says what changed and the source, and `tools` with the affected slugs.
+   Group small changes to one tool into one entry. Don't log tools you checked where nothing changed.

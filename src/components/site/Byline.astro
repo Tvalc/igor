@@ -1,0 +1,14 @@
+---
+import { EDITOR } from '../../site';
+import { isoDate, longDate } from '../../lib/format';
+
+interface Props {
+  updated: Date;
+  note?: string;
+}
+const { updated, note } = Astro.props;
+---
+
+<p class="meta">
+  By <a href={EDITOR.url}>{EDITOR.name}</a>, {EDITOR.role} · Updated <time datetime={isoDate(updated)}>{longDate(updated)}</time>{note && <> · {note}</>}
+</p>

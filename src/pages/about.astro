@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { SITE } from '../site';
+import { EDITOR, SITE } from '../site';
 ---
 
 <Base
@@ -20,7 +20,7 @@ import { SITE } from '../site';
     <h2>Why it exists</h2>
     <p>
       Most "best AI game maker" articles are written by vendors ranking themselves first. We wanted one place with a
-      a published scoring method, verified facts and side-by-side comparisons. We're vendors too (see our
+      published scoring method, verified facts and side-by-side comparisons. We're vendors too (see our
       <a href="/disclosure">disclosure</a>), which is why the rules are public and the scores are computed rather than
       hand-picked.
     </p>
@@ -29,6 +29,12 @@ import { SITE } from '../site';
       Tool data lives in structured files. Automated agents re-check every tool weekly against its own pricing,
       changelog and status pages and propose changes with sources. Automated checks run before anything goes
       live.
+    </p>
+    <h2 id="editor">Who runs it</h2>
+    <p>
+      <strong>{EDITOR.name}</strong>, {EDITOR.role}. {EDITOR.bio} Read the <a href="/editorial-policy">editorial
+      policy</a>, see every change in the <a href="/changelog">changelog</a>, or download the
+      <a href="/data">open dataset</a>.
     </p>
   </article>
 </Base>

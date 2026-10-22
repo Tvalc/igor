@@ -14,7 +14,7 @@ import { publishedLists, toolsWithAlternatives, type ListDef } from '../../lib/l
 import { FACTOR_LABELS, strengths, type Scored } from '../../lib/score';
 import { article, itemList, faqPage } from '../../lib/jsonld';
 import { isoDate, longDate, newestVerified } from '../../lib/format';
-import { SITE } from '../../site';
+import { EDITOR, SITE } from '../../site';
 
 export async function getStaticPaths() {
   return (await publishedLists()).map(({ def, ranked }) => ({ params: { slug: def.slug }, props: { def, ranked } }));
@@ -85,7 +85,7 @@ const ListIcon = LIST_ICON[def.slug] ?? Trophy;
     <span class="eyebrow"><ListIcon className="size-3.5" /> Ranking</span>
     <h1 class="mt-3 text-3xl font-bold sm:text-5xl">{title}</h1>
     <div class="text-muted-foreground mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
-      <span class="inline-flex items-center gap-1.5"><CalendarDays className="size-4" /> Updated <time datetime={isoDate(updated)}>{longDate(updated)}</time></span>
+      <span class="inline-flex items-center gap-1.5"><CalendarDays className="size-4" /> By <a href={EDITOR.url} class="hover:text-foreground underline">{EDITOR.name}</a> · Updated <time datetime={isoDate(updated)}>{longDate(updated)}</time></span>
       <span class="inline-flex items-center gap-1.5"><ListOrdered className="size-4" /> {ranked.length} tools compared</span>
       <a href="/methodology" class="hover:text-foreground inline-flex items-center gap-1.5 underline"><BadgeCheck className="size-4" /> How we rank</a>
     </div>

@@ -8,6 +8,16 @@ export const SITE = {
   owner: 'the Makko AI team',
   ownerProduct: 'makko-ai',
   year: 2026,
+  // Where vendors and readers send corrections.
+  contact: 'support@makko.ai',
+};
+
+// The named editor on reviews, rankings and guides (Person in JSON-LD, byline on pages).
+export const EDITOR = {
+  name: 'Tony Valcarcel',
+  role: 'Co-Founder, Makko.ai',
+  bio: 'Technologist, father and goofball. Runs the data, scoring and tests behind this site.',
+  url: '/about#editor',
 };
 
 export const NAV = [
@@ -20,3 +30,9 @@ export const NAV = [
 
 // Directory-style pages, served as /x/index.html. Their canonical URLs end with a slash.
 export const SECTION_INDEXES = ['/', '/best/', '/tools/', '/compare/', '/tests/'];
+
+// Guide pages under /guides/, for the sitemap.
+export const GUIDES = [
+  'how-to-make-a-game-with-ai', 'make-2d-games-with-ai', 'make-game-art-with-ai',
+  'publish-ai-game-on-steam', 'who-owns-ai-game-assets', 'ai-game-dev-tool-pricing',
+];
