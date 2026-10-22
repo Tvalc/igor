@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import { dataset } from '../lib/jsonld';
+import { datasetRows, siteStats } from '../lib/stats';
+import { SITE } from '../site';
+
+const base = Astro.site!.toString().replace(/\/$/, '');
+const stats = await siteStats();
+const cols = Object.keys((await datasetRows(base))[0]);
+const description = `Free, open data on ${stats.total} AI game development tools: categories, scores, pricing, free tiers, commercial rights, engines and exports. CSV and JSON, CC BY 4.0.`;
+---
+
+<Base
+  title="Open Data: AI Game Dev Tools Dataset"
+  description={description}
+  crumbs={[{ name: 'Open data', href: '/data' }]}
+  jsonLd={[dataset({ name: `${SITE.name} AI game dev tools dataset`, description, url: `${base}/data`, dateModified: stats.updatedIso }, base)]}
+>
+  <article class="prose">
+    <h1>Open data</h1>
+    <div class="answer">
+      <p>
+        Download every tool in our database, {stats.total} AI game dev tools, with its score, pricing, free tier,
+        commercial rights, engines and exports. The data is free to use under
+        <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>: credit "{SITE.name}" with a
+        link to {base}.
+      </p>
+    </div>
+    <ul>
+      <li><a href="/data/tools.csv">tools.csv</a> (spreadsheets)</li>
+      <li><a href="/data/tools.json">tools.json</a> (code)</li>
+    </ul>
+    <p>
+      The files rebuild with the site; the latest fact was verified on {stats.updatedIso}. Scores follow the
+      <a href="/methodology">published method</a>, and every change is in the <a href="/changelog">changelog</a>.
+      For headline numbers, see <a href="/stats">AI game dev tools by the numbers</a>.
+    </p>
+    <h2>Columns</h2>
+    <p><code>{cols.join(', ')}</code>. Lists inside a cell are separated by semicolons. Empty means not yet verified.</p>
+  </article>
+</Base>

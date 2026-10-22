@@ -64,6 +64,7 @@ if (crumbs.length) {
     {markdownPath && <link rel="alternate" type="text/markdown" href={markdownPath} />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="home" href="/" />
+    <link rel="alternate" type="application/rss+xml" title={`${SITE.name} changelog`} href="/changelog.xml" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:title" content={fullTitle} />
@@ -172,6 +173,10 @@ if (crumbs.length) {
             <li><a class="text-muted-foreground hover:text-foreground" href="/guides/how-to-make-a-game-with-ai">Make a game with AI</a></li>
             <li><a class="text-muted-foreground hover:text-foreground" href="/guides/make-2d-games-with-ai">Make 2D games with AI</a></li>
             <li><a class="text-muted-foreground hover:text-foreground" href="/guides/make-game-art-with-ai">Make game art with AI</a></li>
+            <li><a class="text-muted-foreground hover:text-foreground" href="/guides/publish-ai-game-on-steam">Publish an AI game on Steam</a></li>
+            <li><a class="text-muted-foreground hover:text-foreground" href="/guides/who-owns-ai-game-assets">Who owns AI game assets</a></li>
+            <li><a class="text-muted-foreground hover:text-foreground" href="/guides/ai-game-dev-tool-pricing">AI game dev tool pricing</a></li>
+            <li><a class="text-muted-foreground hover:text-foreground" href="/stats">AI game dev tools by the numbers</a></li>
             <li><a class="text-muted-foreground hover:text-foreground" href="/compare/">Compare tools</a></li>
             <li><a class="text-muted-foreground hover:text-foreground" href="/tools/">All tools</a></li>
           </ul>
@@ -181,6 +186,10 @@ if (crumbs.length) {
           <ul class="space-y-2 text-sm">
             <li><a class="text-muted-foreground hover:text-foreground" href="/methodology">How we rank</a></li>
             <li><a class="text-muted-foreground hover:text-foreground" href="/disclosure">Ownership &amp; disclosure</a></li>
+            <li><a class="text-muted-foreground hover:text-foreground" href="/editorial-policy">Editorial policy &amp; corrections</a></li>
+            <li><a class="text-muted-foreground hover:text-foreground" href="/changelog">Changelog</a></li>
+            <li><a class="text-muted-foreground hover:text-foreground" href="/data">Open data</a></li>
+            <li><a class="text-muted-foreground hover:text-foreground" href="/badges">Badges for vendors</a></li>
             <li><a class="text-muted-foreground hover:text-foreground" href="/about">About</a></li>
             <li><a class="text-muted-foreground hover:text-foreground" href="/sitemap.xml">Sitemap</a></li>
           </ul>
@@ -188,7 +197,7 @@ if (crumbs.length) {
       </div>
       <div class="border-t">
         <p class="text-muted-foreground mx-auto max-w-7xl px-4 py-6 text-xs sm:px-6">
-          © {SITE.year} {SITE.name}. Tool names and trademarks belong to their owners. Facts are checked against each vendor's own site; corrections welcome.
+          © {SITE.year} {SITE.name}. Tool names and trademarks belong to their owners. Facts are checked against each vendor's own site; <a class="underline" href="/editorial-policy#corrections">corrections welcome</a>.
         </p>
       </div>
     </footer>

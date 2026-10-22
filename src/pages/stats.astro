@@ -1,0 +1,82 @@
+---
+import Base from '../layouts/Base.astro';
+import Byline from '../components/site/Byline.astro';
+import { Faq } from '../components/site/Faq';
+import { article, faqPage } from '../lib/jsonld';
+import { siteStats } from '../lib/stats';
+import { lc } from '../lib/format';
+import { SITE } from '../site';
+
+const s = await siteStats();
+const base = Astro.site!.toString().replace(/\/$/, '');
+const usd = (n: number | null) => (n === null ? 'Not enough data' : `$${Number.isInteger(n) ? n : n.toFixed(2)}/mo`);
+const biggest = [...s.categories].sort((a, b) => b.tools - a.tools)[0];
+
+const faqs = [
+  { q: 'How many AI game development tools are there?', a: `We track ${s.total} active AI game development tools across ${s.categories.length} categories. The largest category is ${lc(biggest.label)}, with ${biggest.tools} tools.` },
+  { q: 'Are most AI game dev tools free?', a: `${s.freeTier}% of the tools we track have a genuine free tier, and ${s.anyFree}% offer some way to start free (a free tier, limited plan, trial or open-source license).` },
+  { q: 'How much do AI game dev tools cost?', a: `The median entry-level paid plan is ${usd(s.medianPaid)} across all ${s.total} tools. Prices vary by category; see the table on this page.` },
+  { q: 'Can I sell games made with AI tools?', a: `${s.commercialAll}% of tools allow commercial use on every plan, and another ${s.commercialPaidOnly}% allow it only on paid plans. Check the license on each tool page before you ship.` },
+];
+const title = `AI Game Dev Tools by the Numbers (${SITE.year})`;
+const description = `Statistics on ${s.total} AI game development tools: how many are free, typical prices, commercial rights, source-code export and engine support. Updated from our verified data.`;
+---
+
+<Base
+  title={title}
+  description={description}
+  crumbs={[{ name: 'Stats', href: '/stats' }]}
+  jsonLd={[faqPage(faqs), article({ headline: title, description, url: `${base}/stats`, dateModified: s.updatedIso }, base)]}
+>
+  <article class="prose">
+    <h1>AI game dev tools by the numbers</h1>
+    <div class="answer">
+      <p>
+        We track <strong>{s.total} active AI game development tools</strong>. {s.freeTier}% have a genuine free tier,
+        the median entry-level paid plan is <strong>{usd(s.medianPaid)}</strong>, and only {s.commercialAll}% allow
+        commercial use on every plan. Of {s.makers} AI game makers, {s.makersSourceCode}% let you export the game's
+        source or project files.
+      </p>
+    </div>
+    <Byline updated={s.updated} note="Every number on this page is computed from our tool data at build time." />
+
+    <h2>Key numbers</h2>
+    <ul>
+      <li><strong>{s.total}</strong> active tools across {s.categories.length} categories.</li>
+      <li><strong>{s.freeTier}%</strong> have a genuine free tier; <strong>{s.anyFree}%</strong> offer some way to start free.</li>
+      <li><strong>{s.commercialAll}%</strong> allow commercial use on every plan; <strong>{s.commercialPaidOnly}%</strong> only on paid plans; {s.commercialUnknown}% don't say clearly.</li>
+      <li><strong>{usd(s.medianPaid)}</strong> is the median cheapest paid plan.</li>
+      <li><strong>{s.makersSourceCode}%</strong> of {s.makers} AI game makers export source code or the project; {s.makersNoCode}% need no coding.</li>
+      <li><strong>{s.makersSteam.length}</strong> AI game makers publish straight to Steam{s.makersSteam.length > 0 && <> ({s.makersSteam.join(', ')})</>}.</li>
+      <li><strong>{s.mcp}</strong> tools are MCP servers that let AI agents drive an engine or Blender; <strong>{s.openSource}</strong> are open source.</li>
+      <li><strong>{s.beginner}%</strong> of tools are usable by complete beginners.</li>
+    </ul>
+  </article>
+
+  <h2 class="mt-12 mb-4 text-2xl font-semibold">By category</h2>
+  <div class="overflow-x-auto rounded-xl border">
+    <table class="w-full text-sm">
+      <thead class="bg-muted/50 text-left">
+        <tr><th class="p-3">Category</th><th class="p-3 text-right">Tools</th><th class="p-3 text-right">Free tier</th><th class="p-3 text-right">Commercial use on all plans</th><th class="p-3 text-right">Median paid plan</th><th class="p-3">Cheapest paid</th></tr>
+      </thead>
+      <tbody class="divide-y">
+        {s.categories.map((c) => (
+          <tr>
+            <td class="p-3 font-medium">{c.label}</td>
+            <td class="p-3 text-right">{c.tools}</td>
+            <td class="p-3 text-right">{c.freeTier}%</td>
+            <td class="p-3 text-right">{c.commercialAll}%</td>
+            <td class="p-3 text-right">{c.pricedPaid >= 2 ? usd(c.medianPaid) : 'Not enough data'}</td>
+            <td class="p-3">{c.cheapestPaid ? <a class="text-brand hover:underline" href={`/tools/${c.cheapestPaid.id}`}>{c.cheapestPaid.name}</a> : 'None verified'}{c.cheapestPaid && ` (${usd(c.cheapestPaid.price)})`}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p class="text-muted-foreground mt-3 text-sm">
+    A tool can sit in more than one category. Prices are the cheapest paid monthly plan in USD from each vendor's pricing page; one-time and custom prices are left out.
+    Cite these numbers as "{SITE.name}, {s.updatedIso}". Raw data: <a class="underline" href="/data">open dataset</a>.
+  </p>
+
+  <Faq faqs={faqs} />
+</Base>

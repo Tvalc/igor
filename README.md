@@ -17,12 +17,16 @@ Brand name, logo and owner disclosure all come from `src/site.ts`.
   `/methodology` renders the same weights, so the page can't drift from the code. Hands-on test scores
   are blended in only after a test is published in `src/content/tests/`.
 - **Pages** (all generated from the data):
-  - `/best/*`: 17 ranked lists, defined in `src/lib/lists.ts`.
+  - `/best/*`: ranked lists, defined in `src/lib/lists.ts` (a list publishes once it has 3 tools).
   - `/tools/*`: one review page per tool.
   - `/compare/a-vs-b`: every pair among the top 5 of each list.
   - `/alternatives/*`: alternatives for each tool.
-  - `/guides/*`: three pillar guides.
-  - `/methodology`, `/disclosure`, `/about`.
+  - `/guides/*`: pillar guides (make a game, 2D games, game art) plus Steam publishing, asset ownership and pricing.
+  - `/stats` and `/data`: market numbers and the open CSV/JSON dataset, computed from the tool data.
+  - `/changelog` and `/changelog.xml`: public log of data changes, from `src/data/changelog.yaml`.
+  - `/badges/*.svg`: live ranking badges vendors can embed; `/editorial-policy` covers sources and corrections.
+  - `/methodology`, `/disclosure`, `/about`. The named editor and corrections inbox are set in `src/site.ts`.
+- **AI citation tracking:** `docs/ai-citations.md` has the monthly query list and log.
 - **Built for answer engines:**
   - Every page opens with a direct answer box.
   - JSON-LD structured data (SoftwareApplication + Review, ItemList, FAQPage, BreadcrumbList).

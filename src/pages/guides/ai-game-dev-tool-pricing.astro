@@ -1,0 +1,84 @@
+---
+import Base from '../../layouts/Base.astro';
+import Byline from '../../components/site/Byline.astro';
+import { RankTable } from '../../components/site/RankTable';
+import { Faq } from '../../components/site/Faq';
+import { LISTS, rankedList } from '../../lib/lists';
+import { article, faqPage } from '../../lib/jsonld';
+import { siteStats } from '../../lib/stats';
+import { SITE } from '../../site';
+
+const s = await siteStats();
+const free = await rankedList(LISTS.find((l) => l.slug === 'free-ai-game-dev-tools')!);
+const usd = (n: number | null) => (n === null ? 'not enough data' : `$${Number.isInteger(n) ? n : n.toFixed(2)}/mo`);
+const maker = s.categories.find((c) => c.key === 'game-maker');
+const art = s.categories.find((c) => c.key === 'art-2d');
+const names = (xs: typeof free, n = 3) => xs.slice(0, n).map((x) => x.tool.data.name).join(', ');
+
+const faqs = [
+  { q: 'How much do AI game dev tools cost?', a: `The median entry-level paid plan across the ${s.total} tools we track is ${usd(s.medianPaid)}. ${s.freeTier}% have a genuine free tier.` },
+  maker && { q: 'How much does an AI game maker cost?', a: `AI game makers start at a median of ${usd(maker.medianPaid)} for the cheapest paid plan${maker.cheapestPaid ? `; the cheapest we've verified is ${maker.cheapestPaid.name} at $${maker.cheapestPaid.price}/mo` : ''}. ${maker.freeTier}% have a free tier.` },
+  { q: 'What are the best free AI game dev tools?', a: `On our scoring, ${names(free)} lead the free tools. Free tiers often limit exports, credits or commercial use.` },
+  { q: 'Is it cheaper to use one AI game maker or several specialist tools?', a: 'One game maker is usually cheaper for a first game, since it bundles code, art and hosting. Specialist art, audio and coding tools cost more together but give more control and better export options.' },
+].filter(Boolean) as { q: string; a: string }[];
+const title = `AI Game Dev Tool Pricing Compared (${SITE.year})`;
+const description = `What AI game development tools cost: median and cheapest paid plans by category, how many are free, and the best free options, from verified pricing on ${s.total} tools.`;
+const base = Astro.site!.toString().replace(/\/$/, '');
+---
+
+<Base
+  title={title}
+  description={description}
+  crumbs={[{ name: 'Guides', href: '/guides/how-to-make-a-game-with-ai' }, { name: 'AI game dev tool pricing', href: '/guides/ai-game-dev-tool-pricing' }]}
+  jsonLd={[faqPage(faqs), article({ headline: title, description, url: `${base}/guides/ai-game-dev-tool-pricing`, dateModified: s.updatedIso }, base)]}
+>
+  <article class="prose">
+    <h1>AI game dev tool pricing, compared</h1>
+    <div class="answer">
+      <p>
+        Most AI game dev tools cost little to start: {s.freeTier}% have a free tier, and the median cheapest paid plan
+        is <strong>{usd(s.medianPaid)}</strong>.
+        {maker && <> AI game makers start at a median of {usd(maker.medianPaid)}</>}{art && <>, 2D art and sprite tools at {usd(art.medianPaid)}</>}.
+        Watch for credits and for commercial rights that only come with paid plans.
+      </p>
+    </div>
+    <Byline updated={s.updated} note="Prices come from each vendor's pricing page and update with our data." />
+  </article>
+
+  <h2 class="mt-12 mb-4 text-2xl font-semibold">Prices by category</h2>
+  <div class="overflow-x-auto rounded-xl border">
+    <table class="w-full text-sm">
+      <thead class="bg-muted/50 text-left">
+        <tr><th class="p-3">Category</th><th class="p-3 text-right">Tools</th><th class="p-3 text-right">Free tier</th><th class="p-3 text-right">Median paid plan</th><th class="p-3">Cheapest paid</th></tr>
+      </thead>
+      <tbody class="divide-y">
+        {s.categories.map((c) => (
+          <tr>
+            <td class="p-3 font-medium">{c.label}</td>
+            <td class="p-3 text-right">{c.tools}</td>
+            <td class="p-3 text-right">{c.freeTier}%</td>
+            <td class="p-3 text-right">{c.pricedPaid >= 2 ? usd(c.medianPaid) : 'Not enough data'}</td>
+            <td class="p-3">{c.cheapestPaid ? <a class="text-brand hover:underline" href={`/tools/${c.cheapestPaid.id}`}>{c.cheapestPaid.name}</a> : 'None verified'}{c.cheapestPaid && ` (${usd(c.cheapestPaid.price)})`}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <article class="prose mt-10">
+    <h2>What to watch for</h2>
+    <ul>
+      <li><strong>Credits.</strong> Many plans meter generations; a cheap plan can run out mid-project.</li>
+      <li><strong>Commercial rights.</strong> {s.commercialPaidOnly}% of tools allow selling what you make only on paid plans. See <a href="/guides/who-owns-ai-game-assets">who owns AI game assets</a>.</li>
+      <li><strong>Exports.</strong> Downloading your project or source code is sometimes a higher tier.</li>
+      <li><strong>Annual billing.</strong> Prices here are monthly; yearly plans are often cheaper per month.</li>
+    </ul>
+    <p>More numbers: <a href="/stats">AI game dev tools by the numbers</a>.</p>
+  </article>
+
+  <h2 class="mt-14 mb-4 text-2xl font-semibold">Best free AI game dev tools</h2>
+  <RankTable ranked={free} limit={8} />
+  <p class="mt-3"><a class="text-brand text-sm font-medium hover:underline" href="/best/free-ai-game-dev-tools">All free tools →</a></p>
+
+  <Faq faqs={faqs} />
+</Base>

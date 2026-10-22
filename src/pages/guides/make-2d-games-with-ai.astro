@@ -1,10 +1,11 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Byline from '../../components/site/Byline.astro';
 import { RankTable } from '../../components/site/RankTable';
 import { Faq } from '../../components/site/Faq';
 import { activeTools, LISTS, rankedList } from '../../lib/lists';
 import { article, faqPage } from '../../lib/jsonld';
-import { isoDate, longDate, newestVerified } from '../../lib/format';
+import { isoDate, newestVerified } from '../../lib/format';
 import { SITE } from '../../site';
 
 const get = async (slug: string) => rankedList(LISTS.find((l) => l.slug === slug)!);
@@ -53,7 +54,7 @@ const updated = newestVerified(await activeTools());
         tilesets. Lock your art style first. Then build one level, playtest it, and expand.
       </p>
     </div>
-    <p class="meta">Updated <time datetime={isoDate(updated)}>{longDate(updated)}</time> · Rankings below update automatically from our tool data.</p>
+    <Byline updated={updated} note="Rankings below update automatically from our tool data." />
 
     <h2>1. Decide your art style before anything else</h2>
     <p>

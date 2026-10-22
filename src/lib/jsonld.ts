@@ -1,10 +1,15 @@
-import { SITE } from '../site';
+import { EDITOR, SITE } from '../site';
 import type { Scored } from './score';
 import { isoDate } from './format';
 
 const APP_CATEGORY: Record<string, string> = {
   'game-maker': 'GameApplication', code: 'DeveloperApplication',
 };
+
+// The named editor behind reviews and rankings, linked to the About page.
+export function editor(base: string) {
+  return { '@type': 'Person', name: EDITOR.name, jobTitle: EDITOR.role, url: `${base}${EDITOR.url}`, worksFor: { '@type': 'Organization', name: SITE.name, url: `${base}/` } };
+}
 
 export function softwareApp(s: Scored, base: string) {
   const d = s.tool.data;
@@ -25,7 +30,8 @@ export function softwareApp(s: Scored, base: string) {
           : undefined,
     review: {
       '@type': 'Review',
-      author: { '@type': 'Organization', name: SITE.name, url: base },
+      author: editor(base),
+      publisher: { '@type': 'Organization', name: SITE.name, url: `${base}/` },
       datePublished: isoDate(d.last_verified),
       reviewRating: { '@type': 'Rating', ratingValue: s.score, bestRating: 100, worstRating: 0 },
       reviewBody: `${d.tagline} Best for: ${d.best_for}`,
@@ -75,7 +81,26 @@ export function article(a: { headline: string; description: string; url: string;
     mainEntityOfPage: a.url,
     image: `${base}/og.png`,
     dateModified: a.dateModified,
-    author: org,
+    author: editor(base),
     publisher: org,
+  };
+}
+
+// The open tool dataset (/data/tools.json and .csv), so search engines and models can find and cite it.
+export function dataset(d: { name: string; description: string; url: string; dateModified: string }, base: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Dataset',
+    name: d.name,
+    description: d.description,
+    url: d.url,
+    dateModified: d.dateModified,
+    license: 'https://creativecommons.org/licenses/by/4.0/',
+    isAccessibleForFree: true,
+    creator: { '@type': 'Organization', name: SITE.name, url: `${base}/` },
+    distribution: [
+      { '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `${base}/data/tools.json` },
+      { '@type': 'DataDownload', encodingFormat: 'text/csv', contentUrl: `${base}/data/tools.csv` },
+    ],
   };
 }

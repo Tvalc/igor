@@ -1,0 +1,46 @@
+# Public log of data and ranking changes, newest first. Shown at /changelog and /changelog.xml.
+# The weekly refresh job appends one entry per meaningful change: what changed, on which tool, and the source.
+- id: 2026-10-22-new-lists
+  date: 2026-10-22
+  title: Five new rankings
+  body: Added rankings for browser game makers, mobile game makers, multiplayer game makers, MCP servers for game development and open-source tools.
+- id: 2026-10-22-2d-art
+  date: 2026-10-22
+  title: 2D art generation recorded for four game makers
+  body: Confirmed in-editor 2D art generation for Summer Engine, Rosebud, Jabali and Buildbox from their own docs.
+  tools: [summer-engine, rosebud-ai, jabali, buildbox]
+- id: 2026-10-22-makko-exports
+  date: 2026-10-22
+  title: Makko exports web games and source code
+  body: Makko's help docs confirm a ZIP download of the game's web build and source code.
+  tools: [makko-ai]
+- id: 2026-10-22-features-checklist
+  date: 2026-10-22
+  title: Lists score features on their own checklist
+  body: Each ranking now scores features on its category's checklist, and sprite-sheet exports are recorded the same way for every tool.
+- id: 2026-10-21-features-weight
+  date: 2026-10-21
+  title: Features count for 15% of every score
+  body: Vendor-confirmed features from each category's checklist now make up 15% of a tool's score. See the methodology.
+- id: 2026-10-21-verification
+  date: 2026-10-21
+  title: Direct-read verification of 42 features and 37 facts
+  body: Re-checked features and facts against vendor pages; four tools were retired and CGDream was marked discontinued.
+  tools: [cgdream]
+- id: 2026-10-21-free-pick
+  date: 2026-10-21
+  title: Stricter "Best free option" pick
+  body: The pick now goes only to tools you can genuinely use for free.
+- id: 2026-10-21-rosebud-plans
+  date: 2026-10-21
+  title: Rosebud plans updated from its pricing page
+  body: Plan names, prices and the commercial-rights tier now match Rosebud's own pricing page.
+  tools: [rosebud-ai]
+- id: 2026-10-21-feature-checks
+  date: 2026-10-21
+  title: 129 feature checks filled from vendor sources
+  body: Feature checklists were filled across categories from vendor documentation.
+- id: 2026-10-16-audit
+  date: 2026-10-16
+  title: Launch audit of tool facts
+  body: Every tool's pricing, licensing and exports were audited against vendor sources before launch.

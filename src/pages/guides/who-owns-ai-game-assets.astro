@@ -1,0 +1,96 @@
+---
+import Base from '../../layouts/Base.astro';
+import Byline from '../../components/site/Byline.astro';
+import { Faq } from '../../components/site/Faq';
+import { activeTools } from '../../lib/lists';
+import { article, faqPage } from '../../lib/jsonld';
+import { isoDate, newestVerified, COMMERCIAL_LABELS } from '../../lib/format';
+import { siteStats } from '../../lib/stats';
+import { SITE } from '../../site';
+
+const tools = (await activeTools()).filter((t) => t.data.status !== 'discontinued');
+const s = await siteStats();
+const paidOnly = tools.filter((t) => t.data.license.commercial_use === 'paid-plans').sort((a, b) => a.data.name.localeCompare(b.data.name));
+const USCO = 'https://www.copyright.gov/ai/Copyright-and-Artificial-Intelligence-Part-2-Copyrightability-Report.pdf';
+const THALER = 'https://foleyhoag.com/news-and-insights/publications/alerts-and-updates/2025/march/dc-circuit-holds-that-ai-generated-artwork-is-ineligible-for-copyright-protection/';
+
+const faqs = [
+  {
+    q: 'Can I copyright AI-generated game art?',
+    a: 'In the US, not if a machine generated it from prompts alone. The Copyright Office said so in January 2025, and the D.C. Circuit upheld the human-authorship rule in Thaler v. Perlmutter in March 2025. Your own edits, drawing over, and the selection and arrangement of assets can still be protected.',
+  },
+  {
+    q: 'Can I sell a game that uses AI art?',
+    a: `Usually yes, if the tool's terms allow commercial use on your plan. Of the ${s.total} tools we track, ${s.commercialAll}% allow commercial use on every plan and ${s.commercialPaidOnly}% only on paid plans.`,
+  },
+  {
+    q: 'Who owns the code an AI wrote for my game?',
+    a: 'Most coding assistants assign you whatever rights exist in the output. Code you write, edit and structure yourself is protected as normal; long stretches generated with little human change may not be.',
+  },
+  {
+    q: 'Is this legal advice?',
+    a: 'No. This is a summary of public US rulings and tool terms. Rules differ by country, so talk to a lawyer before a big commercial release.',
+  },
+];
+const title = `Who Owns AI-Generated Game Assets? (${SITE.year})`;
+const description = 'Can you copyright or sell AI-generated game art, music and code? US Copyright Office guidance, Thaler v. Perlmutter, and which AI game tools limit commercial use to paid plans.';
+const base = Astro.site!.toString().replace(/\/$/, '');
+const updated = newestVerified(tools);
+---
+
+<Base
+  title={title}
+  description={description}
+  crumbs={[{ name: 'Guides', href: '/guides/how-to-make-a-game-with-ai' }, { name: 'Who owns AI game assets', href: '/guides/who-owns-ai-game-assets' }]}
+  jsonLd={[faqPage(faqs), article({ headline: title, description, url: `${base}/guides/who-owns-ai-game-assets`, dateModified: isoDate(updated) }, base)]}
+>
+  <article class="prose">
+    <h1>Who owns AI-generated game assets?</h1>
+    <div class="answer">
+      <p>
+        Two separate questions decide it. <strong>Can you use it?</strong> That's set by each tool's terms, and
+        {s.commercialPaidOnly}% of the tools we track allow commercial use only on paid plans. <strong>Can anyone
+        else copy it?</strong> In the US, purely AI-generated assets aren't protected by copyright, but your own
+        edits and the way you combine assets into a game are.
+      </p>
+    </div>
+    <Byline updated={updated} note="Not legal advice." />
+
+    <h2>What US law says</h2>
+    <ul>
+      <li>
+        The US Copyright Office's <a href={USCO} rel="noopener">January 2025 report on copyrightability</a> says
+        material generated from prompts alone isn't copyrightable, because prompts don't give enough control over the
+        output. Human edits, original drawing and creative selection and arrangement can be.
+      </li>
+      <li>
+        In <a href={THALER} rel="noopener">Thaler v. Perlmutter</a> (D.C. Circuit, March 18, 2025), the court held
+        that the Copyright Act requires a human author.
+      </li>
+      <li>Other countries differ. The UK, for example, has a specific rule for computer-generated works.</li>
+    </ul>
+
+    <h2>What this means for your game</h2>
+    <ul>
+      <li>Your game as a whole (design, code you wrote, level layout, story, the combination of assets) is still yours.</li>
+      <li>A raw AI sprite or track on its own may be copyable by others. Editing it by hand strengthens your claim.</li>
+      <li>Keep records: which tool, which plan, which prompts, and what you changed.</li>
+      <li>Don't generate known characters, logos or a living artist's style; that's an infringement risk, whoever owns the output.</li>
+    </ul>
+
+    <h2>Tools that allow commercial use only on paid plans</h2>
+    <p>
+      If you're on a free plan with these tools, you may not be allowed to sell what you make. Check the tool page for
+      the exact plan.
+    </p>
+    <ul>
+      {paidOnly.map((t) => <li><a href={`/tools/${t.id}`}>{t.data.name}</a>: {t.data.license.notes ?? COMMERCIAL_LABELS[t.data.license.commercial_use]}</li>)}
+    </ul>
+    <p>
+      Publishing on Steam? See <a href="/guides/publish-ai-game-on-steam">how to publish an AI game on Steam</a> for
+      Valve's disclosure rules.
+    </p>
+  </article>
+
+  <Faq faqs={faqs} />
+</Base>
