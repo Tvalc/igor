@@ -38,6 +38,8 @@ jobs:
         run: |
           gh api -X PUT "repos/${{ github.repository }}/pages" -f build_type=workflow -f cname=makeaigames.com || \
           gh api -X POST "repos/${{ github.repository }}/pages" -f build_type=workflow
+          # Redirect http to https once the certificate exists; needs admin rights, so it may be refused.
+          gh api -X PUT "repos/${{ github.repository }}/pages" -F https_enforced=true || echo "Enforce HTTPS not set: tick it in Settings > Pages"
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
