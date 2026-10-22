@@ -6,6 +6,7 @@ description: Rosebud AI turns text prompts into playable browser games and lets 
 best_for: Non-coders who want a playable browser game from a prompt.
 categories:
 - game-maker
+- art-2d
 tags:
 - no-code
 - browser
@@ -40,6 +41,8 @@ sources:
 - https://rosebud.ai/ai-game-assets
 - https://rosebud.ai/g/multiplayer
 - https://rosebud.ai/online-game-maker
+- https://rosebud.ai/2d-assets
+- https://rosebud.ai/sprite-animations
 needs_verification: []
 last_verified: '2026-10-21'
 features:
@@ -51,11 +54,21 @@ features:
   ai_audio: 'yes'
   multiplayer: 'yes'
   mobile: 'yes'
+  pixel_art: 'yes'
+  sprite_sheets: 'yes'
+  transparent_bg: 'yes'
+  multi_direction: 'yes'
+  tilesets: partial
 feature_notes:
   export_project: Code download and Windows export on Pro plan and higher
   ai_audio: "Sound effects and music tracks generated in the editor, paid with credits"
   multiplayer: "Built-in real-time multiplayer with a multiplayer starter template"
   mobile: "Games play in a phone's web browser from the share link, no install"
+  pixel_art: "Pixel art via prompt in the 2D generator; the sprite sheet generator outputs pixel-art animations"
+  sprite_sheets: "Idle, walk, attack, jump or custom motion; transparent PNG sheet plus JSON frame timing"
+  transparent_bg: "Sprites, icons, UI and portraits come back with the background removed"
+  multi_direction: "Choose from 8 facings in top-down, isometric or side view; one facing per generation"
+  tilesets: "Generates individual floor, wall and terrain tiles to build a tileset, not a full tileset sheet"
 plans:
 - name: Newbie
   price_usd: 0
