@@ -17,9 +17,10 @@ import { featuresFor } from '../../lib/features';
 import { alternativesFor, listsContaining, comparisonPairs } from '../../lib/lists';
 import { scoreTool, groupOf, GROUP_LABELS, type Tool } from '../../lib/score';
 import { softwareApp } from '../../lib/jsonld';
+import { AffiliateNote } from '../../components/site/AffiliateNote';
 import {
   CATEGORY_LABELS, COMMERCIAL_LABELS, ENGINE_LABELS, EXPORT_LABELS, FREE_TIER_LABELS, STATUS_LABELS,
-  isoDate, lc, list, outboundRel, outboundUrl, shown,
+  isAffiliate, isoDate, lc, list, outboundData, outboundRel, outboundUrl, shown,
 } from '../../lib/format';
 import { fromPrice, priceHeadline, priceLabel } from '../../lib/compare';
 import { SITE } from '../../site';
@@ -92,7 +93,8 @@ const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what t
             <div class="font-display text-2xl font-semibold">{priceLabel(tool) === 'Unverified' ? <span class="text-muted-foreground text-base font-normal">{headline.main}</span> : headline.main}</div>
             <div class="text-muted-foreground text-xs">{headline.sub}</div>
           </div>
-          <a class={buttonVariants({ size: 'lg' })} href={outboundUrl(tool)} rel={outboundRel(tool)} target="_blank">Visit {d.name} <ArrowUpRight /></a>
+          <a class={buttonVariants({ size: 'lg' })} href={outboundUrl(tool)} rel={outboundRel(tool)} target="_blank" {...outboundData(tool)}>Visit {d.name} <ArrowUpRight /></a>
+          {isAffiliate(tool) && <AffiliateNote className="-mt-2 text-center" />}
           <label class="text-muted-foreground flex cursor-pointer items-center justify-center gap-2 text-sm">
             <input type="checkbox" data-compare={tool.id} class="accent-brand size-4" /> Add to compare
           </label>

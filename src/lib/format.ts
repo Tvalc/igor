@@ -53,6 +53,10 @@ export const longDate = (d: Date) => d.toLocaleDateString('en-US', { year: 'nume
 export const newestVerified = (tools: Tool[]) => new Date(Math.max(...tools.map((t) => t.data.last_verified.valueOf())));
 
 export const outboundUrl = (t: Tool) => t.data.affiliate?.url ?? t.data.url;
+/** True once we have a referral link for the tool's affiliate program (not merely a known program). */
+export const isAffiliate = (t: Tool) => Boolean(t.data.affiliate?.url);
+/** Attributes on every Visit link: Base.astro reports clicks on them to analytics. */
+export const outboundData = (t: Tool) => ({ 'data-outbound': t.id, 'data-affiliate': isAffiliate(t) ? '1' : '0' });
 export const outboundRel = (t: Tool) =>
   t.data.affiliate?.url || t.data.sponsored ? 'sponsored noopener' : 'noopener';
 

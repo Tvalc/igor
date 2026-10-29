@@ -19,7 +19,8 @@ import {
   COMMERCIAL_LABELS, ENGINE_LABELS, EXPORT_LABELS, FREE_TIER_LABELS, STATUS_LABELS, isoDate, list, tier,
 } from '../../lib/format';
 import { SITE } from '../../site';
-import { outboundRel, outboundUrl, shown } from '../../lib/format';
+import { isAffiliate, outboundData, outboundRel, outboundUrl, shown } from '../../lib/format';
+import { AffiliateNote } from '../../components/site/AffiliateNote';
 
 export async function getStaticPaths() {
   return [...(await comparisonPairs()).entries()].map(([slug, p]) => ({ params: { slug }, props: p }));
@@ -131,8 +132,9 @@ const title = vs.length <= 30 ? `${vs}: Which Is Better?` : vs;
           {priceHeadline(s.tool).sub && <span class="text-muted-foreground block text-xs">{priceHeadline(s.tool).sub}</span>}
         </p>
         {s.tool.data.status !== 'discontinued' && (
-          <a class={buttonVariants({ size: 'sm', variant: winner?.tool.id === s.tool.id ? 'default' : 'outline' })} href={outboundUrl(s.tool)} rel={outboundRel(s.tool)} target="_blank">Visit site <ArrowUpRight /></a>
+          <a class={buttonVariants({ size: 'sm', variant: winner?.tool.id === s.tool.id ? 'default' : 'outline' })} href={outboundUrl(s.tool)} rel={outboundRel(s.tool)} target="_blank" {...outboundData(s.tool)}>Visit site <ArrowUpRight /></a>
         )}
+        {s.tool.data.status !== 'discontinued' && isAffiliate(s.tool) && <AffiliateNote className="-mt-1" />}
       </Card>
     ))}
     <span class="bg-primary text-primary-foreground font-display ring-background absolute top-1/2 left-1/2 hidden size-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full text-sm font-bold ring-8 sm:grid">VS</span>

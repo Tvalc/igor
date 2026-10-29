@@ -69,9 +69,12 @@ const tools = defineCollection({
       .default([]),
     affiliate: z
       .object({
-        url: z.string().url().optional(), // filled in once the program is joined
+        url: z.string().url().optional(), // our referral link, filled in once the program approves us
         program: z.string(),
+        network: z.string().optional(), // PartnerStack, Impact, Rewardful, in-house…
+        signup: z.string().url().optional(), // where a publisher applies
         commission: z.string().optional(),
+        cookie: z.string().optional(),
       })
       .optional(),
     sponsored: z.boolean().default(false),
