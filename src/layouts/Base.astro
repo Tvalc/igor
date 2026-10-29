@@ -27,7 +27,10 @@ const base = Astro.site!.toString().replace(/\/$/, '');
 const path = Astro.url.pathname.replace(/\.html$/, '').replace(/(\/index)?\/?$/, '');
 const canonical = new URL(SECTION_INDEXES.includes(`${path}/`) ? `${path}/` : path || '/', Astro.site).toString();
 const fullTitle = title.includes(SITE.name) ? title : `${title} | ${SITE.name}`;
-const ogImage = new URL('/og.png', Astro.site).toString();
+// Tool, list and versus pages each have their own social image (src/pages/og); everything else uses the site card.
+const [, section, leaf, extra] = path.split('/');
+const ownCard = ['tools', 'best', 'compare'].includes(section) && Boolean(leaf) && extra === undefined;
+const ogImage = new URL(ownCard ? `/og${path}.png` : '/og.png', Astro.site).toString();
 const lists = await publishedLists();
 const footerLists = lists.slice(0, 8);
 // Compact indexes for the ⌘K search and the compare tray, embedded once per page.
