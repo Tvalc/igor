@@ -12,6 +12,12 @@ tags:
 - browser
 - 2d
 - 3d
+- genre-platformer
+- genre-rpg
+- genre-visual-novel
+- genre-puzzle
+- genre-shooter
+- genre-horror
 status: active
 platforms:
 - web
@@ -48,6 +54,10 @@ sources:
 - https://rosebud.ai/online-game-maker
 - https://rosebud.ai/2d-assets
 - https://rosebud.ai/sprite-animations
+- https://rosebud.ai/
+- https://lab.rosebud.ai/ai-visual-novel-maker
+- https://rosebud.ai/ai-game-creator
+- https://rosebud.ai/3d-game-maker
 needs_verification: []
 last_verified: '2026-10-21'
 features:

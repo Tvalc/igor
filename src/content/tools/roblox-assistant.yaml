@@ -11,6 +11,8 @@ categories:
 tags:
 - roblox
 - 3d
+- genre-rpg
+- genre-shooter
 status: active
 platforms:
 - desktop
@@ -46,6 +48,7 @@ sources:
 - https://create.roblox.com/docs/reference/engine/classes/GenerationService
 - https://en.help.roblox.com/hc/en-us/articles/115004647846-Roblox-Terms-of-Use
 - https://create.roblox.com/docs/en-us/art/modeling/gltf-export.md
+- https://create.roblox.com/docs/ai/build-with-assistant
 needs_verification:
 - exports
 last_verified: '2026-10-21'

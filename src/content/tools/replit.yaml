@@ -11,6 +11,7 @@ tags:
 - browser
 - general-purpose
 - agent
+- genre-platformer
 status: active
 platforms:
 - web
@@ -46,6 +47,7 @@ sources:
 - https://replit.com/builds/video-game
 - https://docs.replit.com/design/visual-editor
 - https://docs.replit.com/help/agent-and-ai
+- https://replit.com/usecases/ai-game-builder
 needs_verification: []
 last_verified: '2026-10-21'
 features:

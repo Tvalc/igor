@@ -13,6 +13,12 @@ tags:
 - agent
 - 2d
 - 3d
+- genre-platformer
+- genre-rpg
+- genre-visual-novel
+- genre-puzzle
+- genre-shooter
+- genre-horror
 status: active
 platforms:
 - desktop
@@ -53,6 +59,8 @@ sources:
 - https://www.summerengine.com/create/effects
 - https://docs.summerengine.com/art-system/ai-generation.md
 - https://www.summerengine.com/mcp
+- https://www.summerengine.com/templates
+- https://www.summerengine.com/
 needs_verification: []
 last_verified: '2026-10-21'
 features:

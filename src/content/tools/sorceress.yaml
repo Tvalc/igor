@@ -13,6 +13,12 @@ tags:
 - browser
 - sprites
 - 2d
+- genre-platformer
+- genre-rpg
+- genre-visual-novel
+- genre-puzzle
+- genre-shooter
+- genre-horror
 status: active
 platforms:
 - web
@@ -53,6 +59,12 @@ sources:
 - https://sorceress.games/wiki/sorceress/sfx-gen
 - https://sorceress.games/wiki/sorceress/publishing-my-games
 - https://sorceress.games/wiki/wizard-genie/engine-integrations
+- https://sorceress.games/blog/jump-how-to-make-a-platformer-game-browser-run-loop-2026
+- https://sorceress.games/blog/quest-how-to-make-an-rpg-browser-slice
+- https://sorceress.games/blog/pen-how-to-make-a-visual-novel-browser-scene-loop-2026
+- https://sorceress.games/blog/vault-how-to-make-a-puzzle-game-browser-ai-2026
+- https://sorceress.games/blog/top-how-to-make-a-shooter-game-browser-top-down-2026
+- https://sorceress.games/blog/haunt-how-to-make-a-horror-game-browser-ai-2026
 needs_verification: []
 last_verified: '2026-10-21'
 features:

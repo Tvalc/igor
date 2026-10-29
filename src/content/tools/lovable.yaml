@@ -11,6 +11,7 @@ tags:
 - browser
 - general-purpose
 - agent
+- genre-puzzle
 status: active
 platforms:
 - web
@@ -48,6 +49,7 @@ sources:
 - https://docs.lovable.dev/integrations/mcp-servers
 - https://docs.lovable.dev/features/preview-toolbar
 - https://docs.lovable.dev/features/browser-testing
+- https://lovable.dev/solutions/use-case/trivia-puzzle-games
 needs_verification: []
 last_verified: '2026-10-21'
 features:
