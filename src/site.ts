@@ -15,7 +15,7 @@ export const SITE = {
 // PostHog visitor analytics. The project key is public by design (it ships in every page).
 // Leave it empty and no analytics script is added.
 export const ANALYTICS = {
-  posthogKey: '',
+  posthogKey: 'phc_sgvPA98rpFYmTj7TK6fTXnowRKwK7J7i7n4HMhFhM7Un',
   posthogHost: 'https://us.i.posthog.com',
 };
 
