@@ -12,6 +12,13 @@ export const SITE = {
   contact: 'support@makko.ai',
 };
 
+// PostHog visitor analytics. The project key is public by design (it ships in every page).
+// Leave it empty and no analytics script is added.
+export const ANALYTICS = {
+  posthogKey: 'phc_sgvPA98rpFYmTj7TK6fTXnowRKwK7J7i7n4HMhFhM7Un',
+  posthogHost: 'https://us.i.posthog.com',
+};
+
 // The named editor on reviews, rankings and guides (Person in JSON-LD, byline on pages).
 export const EDITOR = {
   name: 'Tony Valcarcel',
