@@ -30,6 +30,11 @@ license:
   commercial_use: paid-plans
   open_source: false
   notes: Commercial-use rights require Pro ($50/mo) or above, not Standard
+affiliate:
+  program: SEELE AI Affiliate Program
+  network: In-house
+  signup: "https://www.seeles.ai/resources/affiliate"
+  commission: 30% of net revenue for 12 months
 sources:
 - https://www.seeles.ai
 - https://www.seeles.ai/upgrade

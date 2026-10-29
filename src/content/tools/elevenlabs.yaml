@@ -32,7 +32,9 @@ license:
   open_source: false
   notes: All paid plans include a commercial licence (except Beta Services); the free plan cannot be used commercially
 affiliate:
-  program: ElevenLabs Affiliate Program (PartnerStack)
+  program: ElevenLabs Affiliate Program
+  network: PartnerStack
+  signup: "https://elevenlabs.io/app/home?affiliate=true"
   commission: 22% for 12 months
 sources:
 - https://elevenlabs.io/affiliate

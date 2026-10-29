@@ -25,6 +25,11 @@ license:
   commercial_use: paid-plans
   open_source: false
   notes: Commercial use only on Plus tier and above (not Starter); free outputs may carry a watermark.
+affiliate:
+  program: OpenArt Affiliate Program
+  network: Tolt
+  signup: "https://form.typeform.com/to/mHWzRs5Z"
+  commission: 20% for 12 months on monthly plans
 sources:
 - https://openart.ai
 - https://openart.ai/suite/terms

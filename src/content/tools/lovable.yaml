@@ -28,6 +28,11 @@ license:
   commercial_use: 'yes'
   open_source: false
   notes: Users own apps, code and content and can use them commercially, subject to third-party/open-source rights
+affiliate:
+  program: Lovable Affiliate Partners
+  network: Impact
+  signup: "https://app.impact.com/campaign-campaign-info-v2/Lovable-Labs.brand"
+  commission: Up to $100 per new subscriber
 sources:
 - https://lovable.dev
 - https://lovable.dev/students

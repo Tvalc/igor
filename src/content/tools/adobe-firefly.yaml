@@ -31,7 +31,11 @@ license:
   notes: Commercial use allowed for non-beta Firefly features; outputs from third-party partner models fall under
     those models' own terms.
 affiliate:
-  program: Adobe affiliate program
+  program: Adobe Affiliate Program
+  network: Partnerize
+  signup: "https://signup.partnerize.com/signup/en/adobe"
+  commission: 85% of the first month's fee on Creative Cloud plans
+  cookie: 30 days
 sources:
 - https://firefly.adobe.com
 - https://helpx.adobe.com/creative-cloud/apps/generative-ai/generative-credits-faq.html

@@ -12,6 +12,7 @@ const AFFILIATE_HOSTS = [
   'partnerstack.com', 'grsm.io', 'impact.com', 'sjv.io', 'pxf.io', 'ojrq.net', 'rewardful.com', 'getrewardful.com',
   'firstpromoter.com', 'fpr.io', 'tolt.io', 'tolt.com', 'dub.sh', 'dub.co', 'refer.io', 'awin1.com', 'anrdoezrs.net',
   'jdoqocy.com', 'tkqlhce.com', 'dpbolvw.net', 'kqzyfj.com', 'shareasale.com', 'lemonsqueezy.com', 'affiliatly.com',
+  'prf.hn', 'partnerize.com', 'refersion.com', 'partnero.io', 'partneroapp.com', 'creem.io', 'promotekit.com', 'cello.so',
 ];
 
 for (const f of readdirSync(TOOLS).filter((f) => f.endsWith('.yaml'))) {

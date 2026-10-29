@@ -26,6 +26,11 @@ license:
   open_source: false
   notes: 'Free: no commercial use. Indie: commercial use only if revenue or funding is under $100k/yr. Pro and Teams:
     full commercial use.'
+affiliate:
+  program: Cascadeur Affiliate Program
+  network: Tolt
+  signup: "https://cascadeur.tolt.io"
+  commission: 25% of the first payment
 sources:
 - https://cascadeur.com
 - https://cascadeur.com/plans

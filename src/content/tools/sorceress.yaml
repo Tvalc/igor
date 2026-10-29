@@ -30,6 +30,12 @@ pricing:
 license:
   commercial_use: 'yes'
   open_source: false
+affiliate:
+  program: Sorceress Affiliate Program
+  network: In-house
+  signup: "https://sorceress.games/affiliate"
+  commission: 40% of the $49 lifetime plan
+  cookie: 90 days
 sources:
 - https://sorceress.games
 - https://sorceress.games/plans

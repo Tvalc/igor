@@ -32,6 +32,12 @@ license:
   commercial_use: 'no'
   open_source: false
   notes: 'Open beta under Evaluation Version terms: non-commercial/testing only until GA. Users own inputs/outputs.'
+affiliate:
+  program: Unity Affiliate Program
+  network: Partnerize
+  signup: "https://join.partnerize.com/unitytechnologies/en"
+  commission: "$62.50 per Unity Pro subscription"
+  cookie: 30 days
 sources:
 - https://www.buildfastwithai.com/blogs/unity-ai-open-beta-guide-2026
 - https://unity.com/features/ai

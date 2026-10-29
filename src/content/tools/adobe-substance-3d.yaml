@@ -24,7 +24,9 @@ license:
   commercial_use: unknown
   open_source: false
 affiliate:
-  program: Adobe affiliate program
+  program: Adobe Affiliate Program
+  network: Partnerize
+  signup: "https://signup.partnerize.com/signup/en/adobe"
 sources:
 - https://www.adobe.com/products/substance3d.html
 - https://helpx.adobe.com/substance-3d/pricing-change.html

@@ -32,6 +32,11 @@ license:
   open_source: false
   notes: Commercial rights only on 10x Dev ($30/mo) and Pro; not on Free or Indie Dev; Rosebud takes no revenue
     share
+affiliate:
+  program: Rosebud AI Creator Circle
+  network: In-house
+  signup: "https://airtable.com/appNQ5ebLpLBrO5l4/pagdw5v8OAtvFZDAG/form"
+  commission: 20%
 sources:
 - https://rosebud.ai
 - https://rosebud.ai/pricing
