@@ -32,6 +32,10 @@ license:
   open_source: false
   notes: 'AI textures: unrestricted royalty-free commercial license; ToS asks attribution for public display of
     generated models.'
+affiliate:
+  program: Polycam Affiliate Program
+  network: In-house
+  signup: "https://docs.google.com/forms/d/e/1FAIpQLSccL0cWqm1hzvvjHNnsDUUwV9uPO5lFniOwSK1wKCxkFamVYA/viewform"
 sources:
 - https://poly.cam
 - https://poly.cam/pricing

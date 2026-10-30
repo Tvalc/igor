@@ -11,6 +11,7 @@ tags:
 - browser
 - general-purpose
 - agent
+- genre-puzzle
 status: active
 platforms:
 - web
@@ -28,6 +29,11 @@ license:
   commercial_use: 'yes'
   open_source: false
   notes: Users own apps, code and content and can use them commercially, subject to third-party/open-source rights
+affiliate:
+  program: Lovable Affiliate Partners
+  network: Impact
+  signup: "https://app.impact.com/campaign-campaign-info-v2/Lovable-Labs.brand"
+  commission: Up to $100 per new subscriber
 sources:
 - https://lovable.dev
 - https://lovable.dev/students
@@ -43,6 +49,7 @@ sources:
 - https://docs.lovable.dev/integrations/mcp-servers
 - https://docs.lovable.dev/features/preview-toolbar
 - https://docs.lovable.dev/features/browser-testing
+- https://lovable.dev/solutions/use-case/trivia-puzzle-games
 needs_verification: []
 last_verified: '2026-10-21'
 features:

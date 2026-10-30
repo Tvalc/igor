@@ -11,6 +11,11 @@ tags:
 - mobile
 - 3d
 - 2d
+- genre-platformer
+- genre-rpg
+- genre-visual-novel
+- genre-puzzle
+- genre-shooter
 status: active
 platforms:
 - desktop
@@ -44,6 +49,7 @@ sources:
 - https://signup.buildbox.com/product/bb4
 - https://www.buildbox.com/terms/
 - https://www.buildbox.com/sale-terms-of-service/
+- https://www.buildbox.com/buildbox-3-sneak-peek-rpg-example/
 needs_verification: []
 last_verified: '2026-10-21'
 features:

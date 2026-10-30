@@ -13,6 +13,12 @@ tags:
 - 2d
 - browser
 - sprites
+- genre-platformer
+- genre-rpg
+- genre-visual-novel
+- genre-puzzle
+- genre-shooter
+- genre-horror
 status: active
 platforms:
 - web
@@ -54,6 +60,8 @@ sources:
 - https://www.makko.ai/news/frontier-models-studio-tools-july-2026
 - https://www.makko.ai/news/quests-new-models-mobile-september-2026
 - https://www.makko.ai/help/save-any-image-as-any-game-asset
+- https://blog.makko.ai/visual-novel-tutorial-episode-1-getting-started-with-makko-ai/
+- https://blog.makko.ai/one-pixel-art-character-powers-two-games-how-to-build-genre-specific-movesets-and-animations/
 needs_verification: []
 last_verified: '2026-10-21'
 features:

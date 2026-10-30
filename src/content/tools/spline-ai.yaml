@@ -27,6 +27,11 @@ license:
   commercial_use: 'yes'
   open_source: false
   notes: "Users keep all ownership of their User Content on every plan; Spline Community remixes come under a Standard Commercial License that allows personal and commercial use."
+affiliate:
+  program: Spline Affiliate Program
+  network: Dub
+  signup: "https://partners.dub.co/spline/apply"
+  commission: 15% of the first sale
 sources:
 - https://spline.design
 - https://docs.spline.design/generate/ai-3d-generation

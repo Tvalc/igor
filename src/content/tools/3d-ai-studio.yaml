@@ -30,6 +30,11 @@ license:
   commercial_use: 'yes'
   open_source: false
   notes: "Generated assets are private and owned by you, and the pricing page says commercial use is allowed on all generated models; the API terms also allow commercial use of outputs, subject to third-party model terms."
+affiliate:
+  program: 3D AI Studio Affiliate Program
+  network: Lemon Squeezy
+  signup: "https://3daistudio.lemonsqueezy.com/affiliates"
+  commission: Up to $417 per sale
 sources:
 - https://www.3daistudio.com/blog/best-ai-texture-and-pbr-generators-2026
 - https://www.3daistudio.com/Pricing

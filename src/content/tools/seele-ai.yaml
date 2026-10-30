@@ -9,6 +9,12 @@ tags:
 - no-code
 - gdd
 - 3d
+- genre-platformer
+- genre-rpg
+- genre-visual-novel
+- genre-puzzle
+- genre-shooter
+- genre-horror
 status: active
 platforms:
 - web
@@ -30,6 +36,11 @@ license:
   commercial_use: paid-plans
   open_source: false
   notes: Commercial-use rights require Pro ($50/mo) or above, not Standard
+affiliate:
+  program: SEELE AI Affiliate Program
+  network: In-house
+  signup: "https://www.seeles.ai/resources/affiliate"
+  commission: 30% of net revenue for 12 months
 sources:
 - https://www.seeles.ai
 - https://www.seeles.ai/upgrade
@@ -41,6 +52,11 @@ sources:
 - https://www.seeles.ai/features/create/ai-powered-code-editor
 - https://www.seeles.ai/features-list
 - https://www.seeles.ai/resources/blogs/ai-mobile-game-development-platforms-2026
+- https://www.seeles.ai/solutions/2d-games
+- https://www.seeles.ai/features/create/rpg-creator
+- https://www.seeles.ai/features/create/interactive-story-maker
+- https://www.seeles.ai/features/create/ai-game-generator
+- https://www.seeles.ai/features/create/3d-ai-game-maker
 needs_verification: []
 last_verified: '2026-10-21'
 features:

@@ -4,7 +4,8 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import type { Scored } from '@/lib/score';
 import { computePicks } from '@/lib/picks';
-import { outboundRel, outboundUrl } from '@/lib/format';
+import { isAffiliate, outboundData, outboundRel, outboundUrl } from '@/lib/format';
+import { AffiliateNote } from './AffiliateNote';
 import { ToolLogo } from './ToolLogo';
 import { Stars } from './Stars';
 
@@ -33,10 +34,11 @@ export function PicksBox({ ranked }: { ranked: Scored[] }) {
             </div>
             <p className="text-muted-foreground flex-1 text-sm">{p.why}</p>
             <Button asChild size="sm" variant={i === 0 ? 'default' : 'outline'} className="w-full">
-              <a href={outboundUrl(p.s.tool)} rel={outboundRel(p.s.tool)} target="_blank">
+              <a href={outboundUrl(p.s.tool)} rel={outboundRel(p.s.tool)} target="_blank" {...outboundData(p.s.tool)}>
                 Visit {p.s.tool.data.name}
               </a>
             </Button>
+            {isAffiliate(p.s.tool) && <AffiliateNote className="text-center" />}
           </CardContent>
         </Card>
       ))}

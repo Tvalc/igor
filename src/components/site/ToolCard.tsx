@@ -5,7 +5,8 @@ import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import type { Scored } from '@/lib/score';
 import { fromPrice, priceHeadline } from '@/lib/compare';
-import { CATEGORY_LABELS, ENGINE_LABELS, STATUS_LABELS, outboundRel, outboundUrl } from '@/lib/format';
+import { CATEGORY_LABELS, ENGINE_LABELS, STATUS_LABELS, isAffiliate, outboundData, outboundRel, outboundUrl } from '@/lib/format';
+import { AffiliateNote } from './AffiliateNote';
 import { ToolLogo } from './ToolLogo';
 import { Stars } from './Stars';
 import { ProsCons } from './ProsCons';
@@ -113,11 +114,14 @@ export function ToolCard({ scored, rank, pick, details = false, as = 'li' }: Pro
                   <input type="checkbox" data-compare={t.id} aria-label={`Compare ${d.name}`} className="accent-brand size-4 rounded" />
                   Compare
                 </label>
-                <Button asChild size="sm">
-                  <a href={outboundUrl(t)} rel={outboundRel(t)} target="_blank">
-                    Visit <ArrowUpRight />
-                  </a>
-                </Button>
+                <span className="flex flex-col items-center gap-0.5">
+                  <Button asChild size="sm">
+                    <a href={outboundUrl(t)} rel={outboundRel(t)} target="_blank" {...outboundData(t)}>
+                      Visit <ArrowUpRight />
+                    </a>
+                  </Button>
+                  {isAffiliate(t) && <AffiliateNote />}
+                </span>
               </div>
             )}
           </div>

@@ -39,7 +39,10 @@ license:
     attribution
 affiliate:
   program: Meshy Affiliate Program
+  network: Impact
+  signup: "https://app.impact.com/campaign-campaign-info-v2/Meshy.brand"
   commission: 20% for 12 months
+  cookie: 45 days
 sources:
 - https://meshy.ai/affiliates
 - https://help.meshy.ai/en/articles/9992001-can-i-use-my-generated-assets-for-commercial-projects

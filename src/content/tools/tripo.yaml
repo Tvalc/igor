@@ -38,7 +38,9 @@ license:
   notes: "Free-plan models are public and for non-commercial use only; Pro, Max and Team plans make models private and include commercial use."
 affiliate:
   program: Tripo Affiliate Program
-  commission: up to 30% for 12 months
+  network: Impact
+  signup: "https://app.impact.com/campaign-campaign-info-v2/Tripo.brand"
+  commission: 60% of the first month, then 20% for 11 months
 sources:
 - https://www.tripo3d.ai/affiliate
 - https://www.tripo3d.ai/blog/tripo-dcc-bridge-guide-hub

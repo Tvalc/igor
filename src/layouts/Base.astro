@@ -27,7 +27,10 @@ const base = Astro.site!.toString().replace(/\/$/, '');
 const path = Astro.url.pathname.replace(/\.html$/, '').replace(/(\/index)?\/?$/, '');
 const canonical = new URL(SECTION_INDEXES.includes(`${path}/`) ? `${path}/` : path || '/', Astro.site).toString();
 const fullTitle = title.includes(SITE.name) ? title : `${title} | ${SITE.name}`;
-const ogImage = new URL('/og.png', Astro.site).toString();
+// Tool, list and versus pages each have their own social image (src/pages/og); everything else uses the site card.
+const [, section, leaf, extra] = path.split('/');
+const ownCard = ['tools', 'best', 'compare'].includes(section) && Boolean(leaf) && extra === undefined;
+const ogImage = new URL(ownCard ? `/og${path}.png` : '/og.png', Astro.site).toString();
 const lists = await publishedLists();
 const footerLists = lists.slice(0, 8);
 // Compact indexes for the ⌘K search and the compare tray, embedded once per page.
@@ -100,6 +103,11 @@ if (crumbs.length) {
         // PostHog loader stub: queues calls until array.js arrives from the host.
         !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
         posthog.init(key, { api_host: host, person_profiles: 'identified_only' });
+        // Which tools people leave to, from which pages, and whether the link earns a commission.
+        document.addEventListener('click', function (e) {
+          var a = e.target && e.target.closest ? e.target.closest('a[data-outbound]') : null;
+          if (a) posthog.capture('outbound_click', { tool: a.dataset.outbound, affiliate: a.dataset.affiliate === '1', path: location.pathname });
+        }, true);
       </script>
     )}
   </head>

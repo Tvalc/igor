@@ -32,7 +32,10 @@ license:
   notes: "The free Guest plan is personal-use only; Plus and Pro include a commercial licence, only Pro allows redistribution or marketplace reselling, and commercial rights stop for new work after you cancel."
 affiliate:
   program: Sloyd Affiliate Program
+  network: Partnero
+  signup: "https://sloyd.partneroapp.com/"
   commission: 20% for 12 months
+  cookie: 1 year
 sources:
 - https://sloyd.ai/affiliate
 - https://www.sloyd.ai/blog/ai-3d-model-generator-pricing

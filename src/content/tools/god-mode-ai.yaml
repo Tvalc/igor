@@ -32,6 +32,11 @@ license:
   commercial_use: 'yes'
   open_source: false
   notes: Outputs usable commercially, no royalty or credit required.
+affiliate:
+  program: God Mode AI Affiliate Program
+  network: In-house
+  signup: "https://www.godmodeai.co/affiliate"
+  commission: 30% of referral purchases
 sources:
 - https://skillsplayground.com/connectors/co-godmodeai-sprites/
 - https://www.godmodeai.co/term-of-use

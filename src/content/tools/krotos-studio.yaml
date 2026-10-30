@@ -25,6 +25,12 @@ license:
   commercial_use: restricted
   open_source: false
   notes: Royalty-free; base Studio tier covers ads/client work only; Pro/Max needed for video games, TV, film.
+affiliate:
+  program: Krotos Studio Affiliate Program
+  network: Refersion
+  signup: "https://krotos.refersion.com/affiliate/registration"
+  commission: 15% of the first payment
+  cookie: 90 days
 sources:
 - https://www.krotos.studio
 - https://krotos.studio/premiere-pro-plugin

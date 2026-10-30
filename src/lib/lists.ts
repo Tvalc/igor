@@ -131,6 +131,43 @@ export const LISTS: ListDef[] = [
     blurb: 'AI game makers with built-in multiplayer, so friends can play together without a server of your own.',
     filter: (t) => has(t, 'game-maker') && ['yes', 'partial'].includes(t.data.features.multiplayer ?? ''),
   },
+  // Genre lists: a genre-* tag means the vendor's own templates, tutorials or copy show that genre being built.
+  {
+    slug: 'ai-platformer-makers', features: 'game-maker', title: 'Best AI Tools to Make a Platformer', question: 'Can AI make a platformer game?',
+    query: 'make a platformer with AI', group: 'maker',
+    blurb: 'AI game makers whose own templates, tutorials or docs show platformers being built.',
+    filter: (t) => has(t, 'game-maker') && tag(t, 'genre-platformer'),
+  },
+  {
+    slug: 'ai-rpg-makers', features: 'game-maker', title: 'Best AI RPG Makers', question: 'What is the best AI tool to make an RPG?',
+    query: 'make an RPG with AI', group: 'maker',
+    blurb: 'AI game makers whose own templates, tutorials or docs show RPGs being built.',
+    filter: (t) => has(t, 'game-maker') && tag(t, 'genre-rpg'),
+  },
+  {
+    slug: 'ai-visual-novel-makers', features: 'game-maker', title: 'Best AI Visual Novel Makers', question: 'What is the best AI tool to make a visual novel?',
+    query: 'make a visual novel with AI', group: 'maker',
+    blurb: 'AI game makers whose own templates, tutorials or docs show visual novels being built.',
+    filter: (t) => has(t, 'game-maker') && tag(t, 'genre-visual-novel'),
+  },
+  {
+    slug: 'ai-puzzle-game-makers', features: 'game-maker', title: 'Best AI Tools to Make a Puzzle Game', question: 'Can AI make a puzzle game?',
+    query: 'make a puzzle game with AI', group: 'maker',
+    blurb: 'AI game makers whose own templates, tutorials or docs show puzzle games being built.',
+    filter: (t) => has(t, 'game-maker') && tag(t, 'genre-puzzle'),
+  },
+  {
+    slug: 'ai-shooter-game-makers', features: 'game-maker', title: 'Best AI Tools to Make a Shooter', question: 'Can AI make a shooter game?',
+    query: 'make a shooter game with AI', group: 'maker',
+    blurb: 'AI game makers whose own templates, tutorials or docs show shooters being built.',
+    filter: (t) => has(t, 'game-maker') && tag(t, 'genre-shooter'),
+  },
+  {
+    slug: 'ai-horror-game-makers', features: 'game-maker', title: 'Best AI Tools to Make a Horror Game', question: 'Can AI make a horror game?',
+    query: 'make a horror game with AI', group: 'maker',
+    blurb: 'AI game makers whose own templates, tutorials or docs show horror games being built.',
+    filter: (t) => has(t, 'game-maker') && tag(t, 'genre-horror'),
+  },
   {
     slug: 'ai-for-roblox', title: 'Best AI Tools for Roblox', question: 'What is the best AI tool for Roblox?',
     query: 'AI for Roblox Studio', group: 'mixed',

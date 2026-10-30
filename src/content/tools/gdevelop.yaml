@@ -11,6 +11,11 @@ tags:
 - 2d
 - open-source
 - agent
+- genre-platformer
+- genre-rpg
+- genre-puzzle
+- genre-shooter
+- genre-horror
 status: active
 platforms:
 - web
@@ -42,6 +47,8 @@ sources:
 - https://gdevelop.io/blog/why-use-gdevelop-when-you-can-use-ai
 - https://gdevelop.io/blog/make-games-with-ai-agent-gdevelop-automated-prompt
 - https://en.wikipedia.org/wiki/GDevelop
+- https://gdevelop.io/game-example
+- https://gdevelop.io/game-example/free/starting-first-person-horror
 needs_verification: []
 last_verified: '2026-10-21'
 features:

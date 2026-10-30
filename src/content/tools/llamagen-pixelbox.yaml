@@ -26,6 +26,11 @@ license:
   commercial_use: restricted
   open_source: false
   notes: Outputs usable for any purpose incl. commercial; companies over $500K/yr revenue must be on Pro or Unlimited.
+affiliate:
+  program: LlamaGen.Ai Affiliate Program
+  network: Creem
+  signup: "https://affiliates.creem.io/join/llamagen"
+  commission: 5% recurring
 sources:
 - https://llamagen.ai
 - https://llamagen.ai/pricing

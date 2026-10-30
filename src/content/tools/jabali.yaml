@@ -10,6 +10,11 @@ categories:
 tags:
 - no-code
 - 2d
+- genre-platformer
+- genre-rpg
+- genre-visual-novel
+- genre-puzzle
+- genre-shooter
 status: active
 platforms:
 - web
@@ -42,6 +47,11 @@ sources:
 - https://www.jabali.ai/terms-and-conditions/
 - https://www.jabali.ai/license/
 - https://jaabaali.github.io/docs/studio/assets/images/
+- https://www.jabali.ai/blog/how-to-make-a-platformer-with-ai/
+- https://www.jabali.ai/blog/create-ai-games-a-simple-guide-to-different-genres/
+- https://www.jabali.ai/blog/mixing-visual-novel-elements-with-rpg-mechanics/
+- https://www.jabali.ai/blog/how-to-build-mind-bending-puzzle-games-in-jabali-studio/
+- https://www.jabali.ai/blog/create-a-fixed-shooter-arcade-game/
 needs_verification: []
 last_verified: '2026-10-21'
 features:
