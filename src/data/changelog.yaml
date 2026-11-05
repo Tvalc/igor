@@ -1,5 +1,9 @@
 # Public log of data and ranking changes, newest first. Shown at /changelog and /changelog.xml.
 # The weekly refresh job appends one entry per meaningful change: what changed, on which tool, and the source.
+- id: 2026-11-05-new-lists
+  date: 2026-11-05
+  title: Four new rankings
+  body: Added rankings for free AI game makers, AI 3D game makers, AI tools to make a Steam game and AI tools for Blender.
 - id: 2026-10-22-new-lists
   date: 2026-10-22
   title: Five new rankings

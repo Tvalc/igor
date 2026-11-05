@@ -18,4 +18,5 @@ export const LIST_ICON: Record<string, LucideIcon> = {
   'ai-multiplayer-game-makers': Users, 'ai-for-roblox': Cpu, 'mcp-servers-for-game-dev': Plug, 'open-source-ai-game-dev-tools': GitBranch,
   'ai-platformer-makers': Footprints, 'ai-rpg-makers': Swords, 'ai-visual-novel-makers': BookOpen,
   'ai-puzzle-game-makers': Puzzle, 'ai-shooter-game-makers': Crosshair, 'ai-horror-game-makers': Ghost,
+  'free-ai-game-makers': Gift, 'ai-3d-game-makers': Box, 'ai-steam-game-makers': Gamepad2, 'ai-for-blender': Box,
 };

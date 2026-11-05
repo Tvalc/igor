@@ -10,6 +10,6 @@ export async function getStaticPaths() {
 }
 
 export const GET: APIRoute = async ({ props }) => {
-  const { label } = await badgeFor((props as { tool: Tool }).tool);
-  return new Response(badgeSvg(label), { headers: { 'Content-Type': 'image/svg+xml; charset=utf-8' } });
+  const svg = await badgeSvg(await badgeFor((props as { tool: Tool }).tool));
+  return new Response(svg, { headers: { 'Content-Type': 'image/svg+xml; charset=utf-8' } });
 };
