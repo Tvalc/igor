@@ -1,12 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
 import { publishedLists } from '../lib/lists';
-import { badgeFor } from '../lib/badge';
+import { BADGE_STYLES, DEFAULT_BADGE_STYLE, badgeEmbed, badgeFor, type BadgeStyle } from '../lib/badge';
 
 const base = Astro.site!.toString().replace(/\/$/, '');
 const sample = (await publishedLists())[0].ranked[0].tool;
 const b = await badgeFor(sample);
-const code = `<a href="${base}/tools/${sample.id}"><img src="${base}/badges/${sample.id}.svg" alt="${b.alt}" height="28"></a>`;
+const styles = (Object.keys(BADGE_STYLES) as BadgeStyle[]).sort((x, y) => Number(y === DEFAULT_BADGE_STYLE) - Number(x === DEFAULT_BADGE_STYLE));
+const src = (s: BadgeStyle) => (s === DEFAULT_BADGE_STYLE ? `/badges/${sample.id}.svg` : `/badges/${s}/${sample.id}.svg`);
 ---
 
 <Base
@@ -18,15 +19,23 @@ const code = `<a href="${base}/tools/${sample.id}"><img src="${base}/badges/${sa
     <h1>Ranking badges</h1>
     <div class="answer">
       <p>
-        Every tool on Make AI Games has a live badge showing its best placement in our rankings, or its score. Copy the
-        code from your tool's page, under "Embed your badge". The image updates whenever your ranking changes.
+        Every tool on Make AI Games has a live badge showing its best placement in our rankings, or its score. Pick a
+        design below, or copy the code from your tool's page under "Embed your badge". The image updates whenever your
+        ranking changes.
       </p>
     </div>
-    <p><img src={`/badges/${sample.id}.svg`} alt={b.alt} height="28" /></p>
-    <pre class="bg-muted overflow-x-auto rounded-md border p-3 text-xs"><code>{code}</code></pre>
+    {styles.map((s) => (
+      <section>
+        <h2>{BADGE_STYLES[s].name}{s === DEFAULT_BADGE_STYLE && ' (default)'}</h2>
+        <p>{BADGE_STYLES[s].note}</p>
+        <p><img src={src(s)} alt={b.alt} width={BADGE_STYLES[s].width} height={BADGE_STYLES[s].height} /></p>
+        <pre class="bg-muted overflow-x-auto rounded-md border p-3 text-xs"><code>{badgeEmbed(base, sample.id, b.alt, s)}</code></pre>
+      </section>
+    ))}
     <h2>How it works</h2>
     <ul>
       <li>The badge shows your best position if you're in the top 10 of any ranking, otherwise your score out of 100.</li>
+      <li>Top-three placements get gold, silver and bronze. Everything else is violet.</li>
       <li>It's an SVG served from <code>{base}/badges/your-tool.svg</code>, rebuilt with the site.</li>
       <li>Badges can't be bought, and showing one doesn't change your score.</li>
       <li>Think a fact behind your ranking is wrong? See <a href="/editorial-policy#corrections">corrections</a>.</li>

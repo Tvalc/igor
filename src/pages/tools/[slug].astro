@@ -24,7 +24,7 @@ import {
 } from '../../lib/format';
 import { fromPrice, priceHeadline, priceLabel } from '../../lib/compare';
 import { SITE } from '../../site';
-import { badgeFor } from '../../lib/badge';
+import { BADGE_STYLES, DEFAULT_BADGE_STYLE, badgeEmbed, badgeFor } from '../../lib/badge';
 
 export async function getStaticPaths() {
   return (await getCollection('tools')).map((tool) => ({ params: { slug: tool.id }, props: { tool } }));
@@ -60,7 +60,7 @@ const startPrice = fromPrice(tool);
 const headline = priceHeadline(tool);
 const dead = d.status === 'discontinued';
 const badge = dead ? undefined : await badgeFor(tool);
-const badgeCode = badge && `<a href="${base}/tools/${tool.id}"><img src="${base}/badges/${tool.id}.svg" alt="${badge.alt}" height="28"></a>`;
+const badgeCode = badge && badgeEmbed(base, tool.id, badge.alt);
 const correction = `mailto:${SITE.contact}?subject=${encodeURIComponent(`Correction: ${d.name}`)}&body=${encodeURIComponent(`Page: ${base}/tools/${tool.id}\n\nWhat is wrong:\n\nWhat it should say:\n\nPrimary source (link):\n`)}`;
 const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what to use instead` : `${d.name} Review (${SITE.year}): Pricing & Alternatives`;
 ---
@@ -263,8 +263,8 @@ const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what t
         {badge && badgeCode && (
           <details class="mt-4">
             <summary class="cursor-pointer font-medium">Work on {d.name}? Embed your badge</summary>
-            <p class="text-muted-foreground mt-3"><img src={`/badges/${tool.id}.svg`} alt={badge.alt} height="28" loading="lazy" /></p>
-            <p class="text-muted-foreground mt-3">Paste this into your site or README. It updates when your ranking changes. <a class="underline" href="/badges">About badges</a></p>
+            <p class="text-muted-foreground mt-3"><img src={`/badges/${tool.id}.svg`} alt={badge.alt} width={BADGE_STYLES[DEFAULT_BADGE_STYLE].width} height={BADGE_STYLES[DEFAULT_BADGE_STYLE].height} loading="lazy" /></p>
+            <p class="text-muted-foreground mt-3">Paste this into your site or README. It updates when your ranking changes. <a class="underline" href="/badges">Other designs</a></p>
             <pre class="bg-background mt-2 overflow-x-auto rounded-md border p-3 text-xs"><code>{badgeCode}</code></pre>
           </details>
         )}

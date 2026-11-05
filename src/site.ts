@@ -12,6 +12,10 @@ export const SITE = {
   contact: 'support@makko.ai',
 };
 
+// The badge design served at /badges/<tool>.svg and shown in embed codes: 'plaque', 'seal' or 'light'.
+// All three are also served at /badges/<style>/<tool>.svg.
+export const BADGE_STYLE: 'plaque' | 'seal' | 'light' = 'plaque';
+
 // PostHog visitor analytics. The project key is public by design (it ships in every page).
 // Leave it empty and no analytics script is added.
 export const ANALYTICS = {
