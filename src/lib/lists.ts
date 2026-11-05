@@ -131,6 +131,24 @@ export const LISTS: ListDef[] = [
     blurb: 'AI game makers with built-in multiplayer, so friends can play together without a server of your own.',
     filter: (t) => has(t, 'game-maker') && ['yes', 'partial'].includes(t.data.features.multiplayer ?? ''),
   },
+  {
+    slug: 'free-ai-game-makers', features: 'game-maker', title: 'Best Free AI Game Makers', question: 'What is the best free AI game maker?',
+    query: 'free AI game maker', group: 'maker',
+    blurb: 'AI game makers with a real free tier or open-source license, so you can build and play a game without paying.',
+    filter: (t) => has(t, 'game-maker') && t.data.pricing.free_tier === 'yes',
+  },
+  {
+    slug: 'ai-3d-game-makers', features: 'game-maker', title: 'Best AI 3D Game Makers', question: 'Can AI make a 3D game?',
+    query: 'make a 3D game with AI', group: 'maker',
+    blurb: 'AI game makers that build 3D games, not just 2D ones.',
+    filter: (t) => has(t, 'game-maker') && tag(t, '3d'),
+  },
+  {
+    slug: 'ai-steam-game-makers', features: 'game-maker', title: 'Best AI Tools to Make a Steam Game', question: 'Can I make a Steam game with AI?',
+    query: 'make a Steam game with AI', group: 'maker',
+    blurb: 'AI game makers that export desktop builds you can ship on Steam.',
+    filter: (t) => has(t, 'game-maker') && t.data.exports.includes('steam'),
+  },
   // Genre lists: a genre-* tag means the vendor's own templates, tutorials or copy show that genre being built.
   {
     slug: 'ai-platformer-makers', features: 'game-maker', title: 'Best AI Tools to Make a Platformer', question: 'Can AI make a platformer game?',
@@ -173,6 +191,12 @@ export const LISTS: ListDef[] = [
     query: 'AI for Roblox Studio', group: 'mixed',
     blurb: 'AI assistants and generators that work with Roblox Studio.',
     filter: (t) => engine(t, 'roblox') || tag(t, 'roblox'),
+  },
+  {
+    slug: 'ai-for-blender', title: 'Best AI Tools for Blender', question: 'What is the best AI tool for Blender?',
+    query: 'AI for Blender', group: 'mixed',
+    blurb: 'AI add-ons, MCP servers and generators that work inside Blender or export straight into it.',
+    filter: (t) => engine(t, 'blender') || tag(t, 'blender'),
   },
   {
     slug: 'mcp-servers-for-game-dev', title: 'Best MCP Servers for Game Development', question: 'What is the best MCP server for game development?',
