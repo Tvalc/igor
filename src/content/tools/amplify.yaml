@@ -1,0 +1,82 @@
+name: Amplify
+url: https://amplify.is
+tagline: Describe a browser game in plain words, refine it by chat and publish it on its own link.
+description: "Amplify is a web-based AI builder from Iceland that turns a plain-English description into a playable
+  browser game (it also builds websites and web apps). You change the game by chatting and publish it for free on
+  its own address or your own domain. A remote MCP server lets AI assistants build and edit projects. Built by solo
+  founder Gudmundur Kristjansson; not related to AWS Amplify."
+best_for: Beginners who want a small browser game from a prompt with no install and pay-as-you-go credits.
+categories:
+- game-maker
+tags:
+- no-code
+- browser
+- 2d
+- mcp
+- genre-puzzle
+status: active
+platforms:
+- web
+engines: []
+exports:
+- web
+skill_level: beginner
+pricing:
+  model: freemium
+  free_tier: limited
+  starting_price_usd: 5
+  notes: "100 free credits on sign-up, no card. One-time credit packs, no subscription: $5 (500), $10 (1,000),
+    $25 (3,000), $50 (7,000), $100 (14,000). A quick game is about 6 credits on Fast; a Standard build starts at 21."
+license:
+  commercial_use: unknown
+  open_source: false
+  notes: "Amplify's site does not state who owns generated games or whether they can be used commercially."
+sources:
+- https://amplify.is/
+- https://amplify.is/games
+- https://amplify.is/faq
+- https://amplify.is/about
+- https://amplify.is/share
+- https://play-snake.amplify.is
+needs_verification:
+- commercial_use
+- export_project
+- ai_art
+- ai_audio
+- multiplayer
+last_verified: '2026-11-05'
+features:
+  no_code: 'yes'
+  edit_code: partial
+  hosting: 'yes'
+  mobile: partial
+feature_notes:
+  no_code: "Describe a game in plain English and change it by chatting"
+  edit_code: "The builder's Code tab shows the files it wrote; changes are made through chat"
+  hosting: "Free publishing to its own address or a custom domain; anyone with the link can play without an account"
+  mobile: "Starter games include touch and swipe controls; no general mobile statement"
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: 100 credits on sign-up, no card needed
+- name: Top-up
+  price_usd: 5
+  period: one-time
+  includes: 500 credits (about 50 edits)
+- name: Starter
+  price_usd: 10
+  period: one-time
+  includes: 1,000 credits (about 45 builds or 100 edits)
+- name: Pro
+  price_usd: 25
+  period: one-time
+  includes: 3,000 credits
+- name: Max
+  price_usd: 50
+  period: one-time
+  includes: 7,000 credits
+- name: Studio
+  price_usd: 100
+  period: one-time
+  includes: 14,000 credits

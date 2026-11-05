@@ -1,5 +1,10 @@
 # Public log of data and ranking changes, newest first. Shown at /changelog and /changelog.xml.
 # The weekly refresh job appends one entry per meaningful change: what changed, on which tool, and the source.
+- id: 2026-11-05-flockbay-amplify
+  date: 2026-11-05
+  title: Added Flockbay and Amplify
+  body: Flockbay (a free desktop AI game maker built on the official Godot editor) and Amplify (a prompt-to-browser-game builder) were suggested by their makers and scored from their own sites, pricing pages and terms under the same rules as every other tool.
+  tools: [flockbay, amplify]
 - id: 2026-11-05-new-lists
   date: 2026-11-05
   title: Four new rankings
