@@ -1,0 +1,99 @@
+name: Flockbay
+url: https://flockbay.com
+tagline: Free desktop AI game maker that runs the official Godot editor with an agent built in.
+description: "Flockbay is a free desktop app for Windows, macOS and Linux that runs the official Godot 4 editor
+  with an AI agent and MCP server built in. The agent writes GDScript and scenes, playtests the game and fixes
+  errors, models props in a bundled Blender, and helps market the game with trailers, Shorts and a Steam page draft.
+  Projects stay normal Godot projects on your own disk. Made by 9560-9970 Québec inc. in Montréal."
+best_for: Godot developers who want an AI agent inside the real Godot editor, free or with their own Claude or ChatGPT.
+categories:
+- game-maker
+- code
+tags:
+- godot
+- agent
+- mcp
+- desktop
+- 2d
+- 3d
+status: active
+platforms:
+- desktop
+engines:
+- godot
+exports:
+- windows
+- mac
+- linux
+- web
+- source-code
+skill_level: intermediate
+pricing:
+  model: freemium
+  free_tier: 'yes'
+  starting_price_usd: 20
+  notes: "Free plan has a daily hosted AI allowance (Demo model) plus unlimited use of your own Claude, ChatGPT,
+    agent or API key. Paid: Hobby $20, Indie Developer $60, Studio $200 a month."
+license:
+  commercial_use: 'yes'
+  open_source: false
+  notes: "You keep ownership of your content and Flockbay takes no share of a game's sales. The Terms make you
+    responsible for clearing the licenses of AI outputs and assets before commercial use."
+sources:
+- https://flockbay.com/
+- https://flockbay.com/pricing/
+- https://flockbay.com/terms/
+- https://flockbay.com/docs/
+- https://flockbay.com/docs/export-your-game/
+- https://flockbay.com/docs/multiplayer/
+- https://flockbay.com/docs/ship/
+- https://flockbay.com/docs/which-models-can-i-use/
+- https://flockbay.com/docs/mcp-tool-reference/
+- https://godotengine.org/asset-library/asset/5542
+needs_verification:
+- mobile
+- local_models
+last_verified: '2026-11-05'
+features:
+  no_code: 'yes'
+  edit_code: 'yes'
+  ai_art: partial
+  ai_audio: partial
+  multiplayer: partial
+  hosting: partial
+  export_project: 'yes'
+  engine_integration: 'yes'
+  mcp: 'yes'
+  scene_editing: 'yes'
+  runs_game: 'yes'
+  model_choice: 'yes'
+feature_notes:
+  no_code: "Describe the change in chat and the agent writes the GDScript and scenes"
+  edit_code: "Projects are plain Godot 4 projects (GDScript or C#) you can open in Godot, VS Code, Cursor, Rider or Zed"
+  ai_art: "Agent models 3D props and characters in a bundled Blender; placeholder models via Tripo need your own key"
+  ai_audio: "Placeholder looping music built in; sound and voice need your own ElevenLabs key"
+  multiplayer: "Test rooms work only inside Flockbay; Steam multiplayer for a shipped game is added on request"
+  hosting: "Playtest links (paid plans) open in the Flockbay Playtest app, not the browser; marketing sites on flockbay.app"
+  export_project: "Your game is a normal Godot project folder on your own disk"
+  engine_integration: "Runs the official Godot editor, not a fork, with the agent built in"
+  mcp: "flockbay mcp connects Claude Code, Codex, Cursor, Gemini CLI, Cline or any MCP client"
+  scene_editing: "Agent writes scenes and places props, not just scripts"
+  runs_game: "Runs headless tests, sends input, captures the viewport and reads the live scene tree and profiler"
+  model_choice: "Free Demo model, hosted Claude, GPT and Gemini models on paid plans, your own Claude Code or ChatGPT plan, or API keys"
+plans:
+- name: Free
+  price_usd: 0
+  period: free
+  includes: Daily hosted AI on the Demo model, unlimited own AI, full editor, one free video
+- name: Hobby
+  price_usd: 20
+  period: month
+  includes: 1x usage, 54 hosted models, Steam page drafting, 1 site, 3 playtest links
+- name: Indie Developer
+  price_usd: 60
+  period: month
+  includes: 3x Hobby usage, 92 hosted models, trailers, ad cuts, 5 sites, 20 playtest links
+- name: Studio
+  price_usd: 200
+  period: month
+  includes: 10x Hobby usage, 112 hosted models, 25 sites, 100 playtest links
