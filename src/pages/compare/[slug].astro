@@ -113,7 +113,7 @@ const title = vs.length <= 30 ? `${vs}: Which Is Better?` : vs;
 
 <Base
   title={title}
-  description={`${a.data.name} vs ${b.data.name} compared on free tiers, pricing, commercial rights, engines and exports. Scores: ${sa.score} vs ${sb.score}.`}
+  description={`${winner ? `${winner.tool.data.name} scores higher, ${sa.score} vs ${sb.score}.` : `They tie at ${sa.score}/100.`} Compare ${a.data.name} and ${b.data.name} side by side: free tiers, pricing, commercial rights, engines and exports.`}
   crumbs={[{ name: 'Compare', href: '/compare/' }, { name: `${a.data.name} vs ${b.data.name}`, href: `/compare/${a.id}-vs-${b.id}` }]}
   jsonLd={[faqPage(faqs)]}
 >
