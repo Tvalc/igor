@@ -1,0 +1,17 @@
+[
+  { "id": "best-ai-game-maker", "prompt": "What is the best AI game maker in 2026?" },
+  { "id": "game-from-prompt", "prompt": "What's the best AI tool to make a game from a text prompt?" },
+  { "id": "free-no-code", "prompt": "Is there a free AI game maker that needs no coding?" },
+  { "id": "2d-game", "prompt": "What's the best AI tool to make a 2D game?" },
+  { "id": "sprites-animation", "prompt": "What's the best AI sprite and animation generator for game characters?" },
+  { "id": "indie-stack", "prompt": "What AI tools should an indie game developer use?" },
+  { "id": "rosebud-alternatives", "prompt": "What are the best Rosebud AI alternatives?" },
+  { "id": "makko-review", "prompt": "Is Makko AI good? How does it compare to Rosebud AI?" },
+  { "id": "unity-godot", "prompt": "What are the best AI tools for Unity and for Godot?" },
+  { "id": "rpg-maker", "prompt": "What's the best AI RPG maker?" },
+  { "id": "beginner-howto", "prompt": "How do I make a game with AI as a complete beginner?" },
+  { "id": "3d-assets", "prompt": "What's the best AI 3D model generator for game assets?" },
+  { "id": "npc-voice", "prompt": "What are the best AI tools for NPC dialogue and voices in games?" },
+  { "id": "commercial-rights", "prompt": "Which AI game makers let me sell my game commercially?" },
+  { "id": "compare-directory", "prompt": "Where can I compare AI game development tools side by side?" }
+]

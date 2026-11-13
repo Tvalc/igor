@@ -5,6 +5,7 @@ import { breadcrumbs as breadcrumbsLd } from '../lib/jsonld';
 import { activeTools, publishedLists } from '../lib/lists';
 import { priceLabel } from '../lib/compare';
 import { CATEGORY_LABELS } from '../lib/format';
+import { generatedMarkdownPath } from '../lib/html-markdown';
 import BrandMark from '../components/BrandMark.astro';
 import {
   Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator,
@@ -21,10 +22,11 @@ interface Props {
   wide?: boolean; // no max-width container (pages that bring their own sections)
 }
 
-const { title, description, crumbs = [], jsonLd = [], markdownPath, noindex = false } = Astro.props;
+const { title, description, crumbs = [], jsonLd = [], noindex = false } = Astro.props;
 const base = Astro.site!.toString().replace(/\/$/, '');
 // Section indexes keep their trailing slash (/tools/); leaf pages are extensionless (/tools/x).
 const path = Astro.url.pathname.replace(/\.html$/, '').replace(/(\/index)?\/?$/, '');
+const markdownPath = Astro.props.markdownPath ?? (noindex ? undefined : generatedMarkdownPath(path));
 const canonical = new URL(SECTION_INDEXES.includes(`${path}/`) ? `${path}/` : path || '/', Astro.site).toString();
 const fullTitle = title.includes(SITE.name) ? title : `${title} | ${SITE.name}`;
 // Tool, list and versus pages each have their own social image (src/pages/og); everything else uses the site card.

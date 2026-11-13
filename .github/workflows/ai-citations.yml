@@ -1,0 +1,64 @@
+name: Daily AI answer tracker
+
+# Asks ChatGPT, Claude, Perplexity and Gemini our buyer questions every day and records what they
+# cite and whether they name Makko AI or Make AI Games (scripts/ai-citations.mjs).
+# Each engine runs only when its secret is set: ANTHROPIC_API_KEY, OPENAI_API_KEY,
+# PERPLEXITY_API_KEY, GEMINI_API_KEY. Results go to the ai-citations-data branch, never to main,
+# so they don't trigger a site deploy. Summary: README.md on that branch.
+
+on:
+  schedule:
+    - cron: '23 13 * * *' # daily 13:23 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ai-citations
+  cancel-in-progress: false
+
+jobs:
+  track:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check for at least one engine key
+        id: keys
+        run: echo "any=${{ secrets.ANTHROPIC_API_KEY != '' || secrets.OPENAI_API_KEY != '' || secrets.PERPLEXITY_API_KEY != '' || secrets.GEMINI_API_KEY != '' }}" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v4
+        if: steps.keys.outputs.any == 'true'
+      - uses: actions/setup-node@v4
+        if: steps.keys.outputs.any == 'true'
+        with:
+          node-version: 22
+          cache: npm
+      - if: steps.keys.outputs.any == 'true'
+        run: npm ci
+      - name: Check out the data branch (created on first run)
+        if: steps.keys.outputs.any == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898299+github-actions[bot]@users.noreply.github.com"
+          if git ls-remote --exit-code --heads origin ai-citations-data >/dev/null; then
+            git fetch origin ai-citations-data
+            git worktree add ai-citations-data origin/ai-citations-data
+            git -C ai-citations-data checkout -B ai-citations-data
+          else
+            git worktree add --orphan -b ai-citations-data ai-citations-data
+          fi
+      - name: Ask the engines
+        if: steps.keys.outputs.any == 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node scripts/ai-citations.mjs ai-citations-data
+      - name: Commit results
+        if: steps.keys.outputs.any == 'true'
+        run: |
+          cd ai-citations-data
+          git add -A
+          git commit -m "AI answers $(date -u +%F)" || exit 0
+          git push origin ai-citations-data
