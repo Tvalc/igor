@@ -73,7 +73,7 @@ plans:
 - name: "Pixel Apprentice"
   price_usd: 12
   period: month
-  includes: "2,000 generations/mo, up to 320x320, animation and map tools; loyalty discount brings it down to $9/mo (per PixelLab, Nov 2026)"
+  includes: "2,000 generations/mo, up to 320x320, animation and map tools; loyalty discount to $9/mo"
 - name: "Pixel Artisan"
   price_usd: 24
   period: month
