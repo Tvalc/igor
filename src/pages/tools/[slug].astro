@@ -69,7 +69,7 @@ const title = dead
   : `${d.name} Review (${SITE.year}): Pricing${d.pricing.free_tier === 'yes' ? ', Free Plan' : ''} & Alternatives`;
 const description = dead
   ? `${d.description} The closest working alternatives${altNames ? `: ${altNames}` : ' are listed below'}, compared on price and commercial rights.`
-  : `${d.name}: ${d.tagline} Price: ${priceLabel(tool)}.${d.pricing.free_tier === 'unknown' ? '' : ` ${FREE_TIER_LABELS[d.pricing.free_tier]}.`} Our score: ${scored.score}/100.${altNames ? ` Alternatives: ${altNames}.` : ''}`;
+  : `${d.name}: ${d.tagline} Price: ${priceLabel(tool)}.${d.pricing.free_tier === 'unknown' ? '' : d.pricing.free_tier === 'yes' ? ' Has a free tier.' : ` ${FREE_TIER_LABELS[d.pricing.free_tier]}.`} Our score: ${scored.score}/100.${altNames ? ` Alternatives: ${altNames}.` : ''}`;
 ---
 
 <Base
