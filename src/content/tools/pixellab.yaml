@@ -26,7 +26,7 @@ pricing:
   model: freemium
   free_tier: 'yes'
   starting_price_usd: 12
-  notes: "Free: 40 fast generations, then 5 slower generations per day (up to 200x200 px, no map tools); Pixel Apprentice $12/mo, Pixel Artisan $24/mo, Pixel Architect $50/mo; ~25% off annually; Enterprise custom."
+  notes: "Free: 40 fast generations, then 5 slower generations per day (up to 200x200 px, no map tools); Pixel Apprentice $12/mo (loyalty discount to $9/mo, per PixelLab), Pixel Artisan $24/mo, Pixel Architect $50/mo; ~25% off annually; Enterprise custom."
 license:
   commercial_use: 'yes'
   open_source: false
@@ -73,7 +73,7 @@ plans:
 - name: "Pixel Apprentice"
   price_usd: 12
   period: month
-  includes: "2,000 generations/mo, up to 320x320, animation and map tools"
+  includes: "2,000 generations/mo, up to 320x320, animation and map tools; loyalty discount brings it down to $9/mo (per PixelLab, Nov 2026)"
 - name: "Pixel Artisan"
   price_usd: 24
   period: month
