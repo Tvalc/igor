@@ -62,12 +62,19 @@ const dead = d.status === 'discontinued';
 const badge = dead ? undefined : await badgeFor(tool);
 const badgeStyles = (Object.keys(BADGE_STYLES) as BadgeStyle[]).sort((x, y) => Number(y === DEFAULT_BADGE_STYLE) - Number(x === DEFAULT_BADGE_STYLE));
 const correction = `mailto:${SITE.contact}?subject=${encodeURIComponent(`Correction: ${d.name}`)}&body=${encodeURIComponent(`Page: ${base}/tools/${tool.id}\n\nWhat is wrong:\n\nWhat it should say:\n\nPrimary source (link):\n`)}`;
-const title = d.status === 'discontinued' ? `${d.name}: discontinued, and what to use instead` : `${d.name} Review (${SITE.year}): Pricing & Alternatives`;
+// Search snippets: lead with the answer people search for (status, price, free plan) and name real alternatives.
+const altNames = alternatives.slice(0, 3).map((s) => s.tool.data.name).join(', ');
+const title = dead
+  ? `Is ${d.name} Discontinued? Status & Alternatives (${SITE.year})`
+  : `${d.name} Review (${SITE.year}): Pricing${d.pricing.free_tier === 'yes' ? ', Free Plan' : ''} & Alternatives`;
+const description = dead
+  ? `${d.description} The closest working alternatives${altNames ? `: ${altNames}` : ' are listed below'}, compared on price and commercial rights.`
+  : `${d.name}: ${d.tagline} Price: ${priceLabel(tool)}.${d.pricing.free_tier === 'unknown' ? '' : d.pricing.free_tier === 'yes' ? ' Has a free tier.' : ` ${FREE_TIER_LABELS[d.pricing.free_tier]}.`} Our score: ${scored.score}/100.${altNames ? ` Alternatives: ${altNames}.` : ''}`;
 ---
 
 <Base
   title={title}
-  description={`${d.name}: ${d.tagline} Pricing, commercial rights, exports and our ${scored.score}/100 score, plus the best alternatives.`}
+  description={description}
   crumbs={[{ name: 'Tools', href: '/tools/' }, { name: d.name, href: `/tools/${tool.id}` }]}
   markdownPath={`/tools/${tool.id}.md`}
   jsonLd={dead ? [] : [softwareApp(scored, base)]}

@@ -23,11 +23,14 @@ const base = Astro.site!.toString().replace(/\/$/, '');
 const alts = await alternativesFor(tool, 8);
 const successor = d.successor ? await getEntry('tools', d.successor) : undefined;
 const free = alts.find((s) => s.tool.data.pricing.free_tier === 'yes');
+const top3 = alts.slice(0, 3).map((s) => s.tool.data.name).join(', ');
+const title = `${alts.length} Best ${d.name} Alternatives (${SITE.year})${free ? ', Free & Paid' : ''}`;
+const description = `${d.status === 'discontinued' ? `${d.name} is discontinued. ` : `Looking for a ${d.name} alternative? `}We compared ${alts.length} options: ${top3} and more.${free ? ` ${free.tool.data.name} has a free plan.` : ''} Price, commercial rights and exports side by side.`;
 ---
 
 <Base
-  title={`Best ${d.name} Alternatives (${SITE.year})`}
-  description={`The best ${d.name} alternatives for ${lc(CATEGORY_LABELS[d.categories[0]])}: ${alts.slice(0, 3).map((s) => s.tool.data.name).join(', ')} and more, compared on price and rights.`}
+  title={title}
+  description={description}
   crumbs={[{ name: d.name, href: `/tools/${tool.id}` }, { name: 'Alternatives', href: `/alternatives/${tool.id}` }]}
   jsonLd={[itemList(`${d.name} alternatives`, alts.map((s) => ({ name: s.tool.data.name, url: `${base}/tools/${s.tool.id}` })))]}
 >

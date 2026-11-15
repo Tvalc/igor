@@ -28,9 +28,9 @@ pricing:
   notes: "100 free credits on sign-up, no card. One-time credit packs, no subscription: $5 (500), $10 (1,000),
     $25 (3,000), $50 (7,000), $100 (14,000). A quick game is about 6 credits on Fast; a Standard build starts at 21."
 license:
-  commercial_use: unknown
+  commercial_use: 'yes'
   open_source: false
-  notes: "Amplify's site does not state who owns generated games or whether they can be used commercially."
+  notes: "Terms section 4: you own your content, including generated code and pages, to the extent the law allows; the terms do not restrict commercial use of your own content."
 sources:
 - https://amplify.is/
 - https://amplify.is/games
@@ -38,23 +38,26 @@ sources:
 - https://amplify.is/about
 - https://amplify.is/share
 - https://play-snake.amplify.is
-needs_verification:
-- commercial_use
-- export_project
-- ai_art
-- ai_audio
-- multiplayer
-last_verified: '2026-11-05'
+- https://amplify.is/terms
+last_verified: '2026-11-13'
 features:
   no_code: 'yes'
   edit_code: partial
   hosting: 'yes'
   mobile: partial
+  ai_art: 'yes'
+  ai_audio: 'no'
+  multiplayer: partial
+  export_project: partial
 feature_notes:
   no_code: "Describe a game in plain English and change it by chatting"
   edit_code: "The builder's Code tab shows the files it wrote; changes are made through chat"
   hosting: "Free publishing to its own address or a custom domain; anyone with the link can play without an account"
   mobile: "Starter games include touch and swipe controls; no general mobile statement"
+  ai_art: "AI image generation is built in (confirmed by Amplify, Nov 2026)"
+  ai_audio: "No AI sound; games use built-in sound effects and a music toggle (confirmed by Amplify, Nov 2026)"
+  multiplayer: "Shared rooms for 2D games and apps; not yet for 3D games (confirmed by Amplify, Nov 2026)"
+  export_project: "No one-click download or zip; owners can read every code file in the Code tab and copy it out (confirmed by Amplify, Nov 2026)"
 plans:
 - name: Free
   price_usd: 0
