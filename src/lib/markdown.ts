@@ -1,14 +1,16 @@
 // Plain-markdown renderings of pages, served at <page>.md and bundled into /llms-full.txt.
 // Answer engines and agents parse these far more reliably than HTML.
-import { SITE } from '../site';
+import { EDITOR, SITE } from '../site';
 import type { ListDef } from './lists';
 import { FACTOR_LABELS, type Factor, type Scored } from './score';
 import { featuresFor } from './features';
 import {
-  CATEGORY_LABELS, COMMERCIAL_LABELS, ENGINE_LABELS, EXPORT_LABELS, FREE_TIER_LABELS, STATUS_LABELS, isoDate, list, price,
+  CATEGORY_LABELS, COMMERCIAL_LABELS, ENGINE_LABELS, EXPORT_LABELS, FREE_TIER_LABELS, STATUS_LABELS, isoDate, list, newestVerified, price,
 } from './format';
 
 const cell = (s: string) => s.replace(/\|/g, '\\|');
+const disclosure = (base: string) =>
+  `${SITE.name} is run by ${SITE.owner}. Makko AI is scored with the same public rubric as every other tool: ${base}/disclosure`;
 
 export function toolMarkdown(s: Scored, base: string): string {
   const d = s.tool.data;
@@ -16,6 +18,8 @@ export function toolMarkdown(s: Scored, base: string): string {
     `# ${d.name} review (${SITE.year})`,
     '',
     `> ${d.tagline}`,
+    '',
+    `**Quick facts:** ${FREE_TIER_LABELS[d.pricing.free_tier]}, ${price(s.tool)}. Commercial use: ${COMMERCIAL_LABELS[d.license.commercial_use].toLowerCase()}. Exports: ${list(d.exports, EXPORT_LABELS)}. Last verified ${isoDate(d.last_verified)}.`,
     '',
     d.description,
     '',
@@ -52,7 +56,9 @@ export function toolMarkdown(s: Scored, base: string): string {
   if (d.license.notes) lines.push('', `License note: ${d.license.notes}`);
   if (d.pricing.notes) lines.push('', `Pricing note: ${d.pricing.notes}`);
   if (d.needs_verification.length) lines.push('', `Pending verification: ${d.needs_verification.join(', ')}.`);
-  if (d.makko_owned) lines.push('', `Disclosure: ${SITE.name} is run by ${SITE.owner}. ${d.name} is scored with the same rubric as every other tool.`);
+  lines.push('', d.makko_owned
+    ? `Disclosure: ${SITE.name} is run by ${SITE.owner}, which makes ${d.name}. ${d.name} is scored with the same rubric as every other tool: ${base}/disclosure`
+    : `Disclosure: ${disclosure(base)}`);
   if (d.sources.length) lines.push('', '## Sources', '', ...d.sources.map((u) => `- ${u}`));
   lines.push('', `Canonical: ${base}/tools/${s.tool.id}`);
   return lines.join('\n') + '\n';
@@ -62,6 +68,8 @@ export function listMarkdown(def: ListDef, ranked: Scored[], base: string): stri
   const top = ranked.slice(0, 3).map((s) => s.tool.data.name);
   const lines = [
     `# ${def.title} (${SITE.year})`,
+    '',
+    `Updated ${isoDate(newestVerified(ranked.map((s) => s.tool)))} by ${EDITOR.name}.`,
     '',
     `${def.question} On the facts-based ${SITE.name} score, the top picks are ${top.join(', ')}. ${def.blurb}`,
     '',
@@ -73,6 +81,8 @@ export function listMarkdown(def: ListDef, ranked: Scored[], base: string): stri
     ),
     '',
     `Scores are computed from verified facts with a public rubric (${base}/methodology). Hands-on test scores are added as tests are published.`,
+    '',
+    `Disclosure: ${disclosure(base)}`,
     '',
     `Canonical: ${base}/best/${def.slug}`,
   ];
