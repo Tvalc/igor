@@ -32,18 +32,19 @@ sources:
 - https://ziva.sh/blogs/ziva-vs-gdai-mcp
 - https://ziva.sh/blogs/ai-agent-playtest-godot-game
 - https://ziva.sh/terms
+- https://ziva.sh/docs/creating
 needs_verification: []
-last_verified: '2026-10-21'
+last_verified: '2026-11-27'
 features:
   engine_integration: 'yes'
   mcp: 'yes'
   scene_editing: 'yes'
   model_choice: 'yes'
   local_models: 'yes'
-  runs_game: partial
+  runs_game: 'yes'
 feature_notes:
   engine_integration: Godot 4.2+ editor plugin
-  runs_game: Playtest Agent on Pro plan and up; no running-game input simulation
+  runs_game: Every plan runs the game with keyboard and mouse input, takes a screenshot and reads errors. On Pro and Ultra, the Full Game Playtest Agent plays the game and reports pass, fail or blocked, with optional video.
 plans:
 - name: Hobby
   price_usd: 0
