@@ -1,8 +1,9 @@
 name: Layer
 url: https://www.layer.ai
 tagline: Studio art platform for producing on-style game assets.
-description: Layer is an AI art platform used by studios such as Zynga and Tripledot to produce game art that stays
-  in a consistent style.
+description: Layer is an AI production workspace for image, video, 3D and audio, used by studios such as Zynga and Tripledot.
+  You can train a custom style on your own art so characters, environments and props share one look, and a free Godot
+  plugin places sprites, sprite sheets, 9-slice UI and tiles straight into the scene.
 best_for: Mobile and live-ops studios producing art at volume.
 categories:
 - art-2d
@@ -13,7 +14,9 @@ tags:
 status: active
 platforms:
 - web
-engines: []
+engines:
+- godot
+- blender
 exports:
 - png
 - sprite-sheet
@@ -47,8 +50,11 @@ sources:
 - https://layer.ai/use-cases/game-tilesets
 - https://layer.ai/docs/models/pixelcut-background-removal
 - https://layer.ai/docs
+- https://layer.ai/features/custom-model-training
+- https://layer.ai/integrations/godot
+- https://layer.ai/integrations/blender
 needs_verification: []
-last_verified: '2026-10-21'
+last_verified: '2026-11-27'
 features:
   pixel_art: 'yes'
   sprite_sheets: 'yes'
@@ -60,6 +66,7 @@ features:
   api: 'yes'
 feature_notes:
   consistent_characters: Via single-character style training
+  custom_training: "LoRA, Edit-LoRA and Recraft style training on your own art; a trained style covers characters, environments and icons"
   tilesets: "Tile atlas with edges, corners and transitions; you map tiles to your engine's rules"
   transparent_bg: "Background removal models give cut-out images with transparent backgrounds"
   api: "API with access to 500+ models; uses Creative Units"
